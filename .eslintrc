@@ -1,0 +1,23 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-bitwise": "off",
+    "no-continue": "off",
+    "one-var": "off",
+    "curly": "off",
+    "camelcase": "off",
+    "prefer-destructuring": "off",
+    "object-curly-newline": "off",
+    "no-mixed-operators": "off",
+    "no-restricted-properties": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off",
+    "no-loop-func": "off",
+    "function-paren-newline": "off",
+    "one-var-declaration-per-line": "off",
+    "import/prefer-default-export": "off",
+    "arrow-parens": "off",
+    "no-undef": "off"
+  }
+}
