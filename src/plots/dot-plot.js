@@ -1,14 +1,28 @@
 import Plot from './plot';
 
+/**
+ * Dot plot
+ */
 export default class DotPlot extends Plot {
+  /**
+   * @returns {string} plot color
+   */
   get color() {
     return this.options.color || '#012';
   }
 
+  /**
+   * @returns {number} line width
+   */
   get lineWidth() {
     return this.options.width || 1;
   }
 
+  /**
+   * Renders dot plot to canvas context
+   * @param {CanvasRenderingContext2D} ctx canvas context instance
+   * @param {d3.scale} scale y-scale
+   */
   plot(ctx, scale) {
     const {
       scale: xscale,

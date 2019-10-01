@@ -2,7 +2,21 @@ import { line, area } from 'd3';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 
+/**
+ * Differential plot
+ */
 export default class DifferentialPlot extends Plot {
+  /**
+   * Create instance
+   * @param {*} id plot id
+   * @param {d3.scale} scale1 scale for data serie 1 values
+   * @param {d3.scale} scale2 scale for data serie 2 values
+   * @param {{
+   *  serie1: {color:string,lineWidth:number,fill:string},
+   *  serie2: {color:string,lineWidth:number,fill:string},
+   *  fillOpacity:number,
+   * }} options plot options
+   */
   constructor(id, scale1, scale2, options) {
     super(id, null, options);
     this.scale1 = scale1;
@@ -10,11 +24,20 @@ export default class DifferentialPlot extends Plot {
     this.setRange = this.setRange.bind(this);
   }
 
+  /**
+   * Override of base to support multiple scales
+   * @param {number[]} range new range
+   */
   setRange(range) {
     if (this.scale1) this.scale1.range(range);
     if (this.scale2) this.scale2.range(range);
   }
 
+  /**
+   * Renders differential plot to canvas context
+   * @param {CanvasRenderingContext2D} ctx canvas context instance
+   * @param {d3.scale} scale y-scale
+   */
   plot(ctx, scale) {
     const {
       scale1: xscale1,

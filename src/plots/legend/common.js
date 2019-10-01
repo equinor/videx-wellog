@@ -1,3 +1,13 @@
+/**
+ * Renders label, min/max values for domain and unit
+ * @param {SVGGElement} g SVG group element to append to
+ * @param {{width:number,height:number,top:number,left:number}} bounds bounding box
+ * @param {string} label label
+ * @param {string} unit unit
+ * @param {number[]} domain data domain (scale)
+ * @param {string} color plot color
+ * @param {boolean} addLabelBg whether to add a background rectangle behind label or not
+ */
 export function renderTextLabels(
   g,
   bounds,
@@ -92,6 +102,16 @@ export function renderTextLabels(
     });
 }
 
+/**
+ * Renders a basic/standard set of layout that are common for most plot-type legends
+ * @param {SVGGElement} g SVG group element to append to
+ * @param {{width:number,height:number,top:number,left:number}} bounds bounding box
+ * @param {string} label label
+ * @param {string} unit unit
+ * @param {number[]} domain data domain (scale)
+ * @param {string} color plot color
+ * @param {boolean} addLabelBg whether to add a background rectangle behind label or not
+ */
 export function renderBasicPlotLegend(g, bounds, label, unit, domain, color, addLabelBg = false) {
   const x1 = bounds.left + 2;
   const x2 = Math.max(x1, bounds.left + bounds.width - 2);

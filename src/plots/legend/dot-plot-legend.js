@@ -1,5 +1,12 @@
 import { renderTextLabels } from './common';
 
+/**
+ * Renders Dot Plot legend to a SVG group element according to bounds.
+ * @param {SVGGElement} g SVG g element to append legend to
+ * @param {{width:number,height:number,top:number,left:number}} bounds bounding box
+ * @param {{label:string,unit:string}} legendInfo legend label and unit
+ * @param {DotPlot} plot Dot plot instance
+ */
 export default function renderDotPlotLegend(g, bounds, legendInfo, plot) {
   const { top, left, width } = bounds;
   const r = Math.min(5, (left + width) * 0.04);

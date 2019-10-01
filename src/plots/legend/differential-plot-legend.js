@@ -1,5 +1,15 @@
 import { renderBasicPlotLegend } from './common';
 
+/**
+ * Renders differential plot legend to a SVG group element according to bounds.
+ * @param {SVGGElement} g SVG g element to append legend to
+ * @param {{width:number,height:number,top:number,left:number}} bounds bounding box
+ * @param {{
+ *  serie1:{label:string,unit:string,show:boolean},
+ *  serie2:{label:string,unit:string,show:boolean},
+ * }} legendInfo legend label and unit
+ * @param {DifferentialPlot} plot differential plot instance
+ */
 export default function renderDifferentialPlotLegend(g, bounds, legendInfo, plot) {
   const { top, left, width, height } = bounds;
 

@@ -1,5 +1,12 @@
 import { renderBasicPlotLegend } from './common';
 
+/**
+ * Renders area legend to a SVG group element according to bounds.
+ * @param {SVGGElement} g SVG g element to append legend to
+ * @param {{width:number,height:number,top:number,left:number}} bounds bounding box
+ * @param {{label:string,unit:string}} legendInfo legend label and unit
+ * @param {AreaPlot} plot Area plot instance
+ */
 export default function renderAreaPlotLegend(g, bounds, legendInfo, plot) {
   const { top, left, width, height } = bounds;
   const shadeH = height / 2;

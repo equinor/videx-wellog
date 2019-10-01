@@ -39,6 +39,7 @@ function createLogTicks(scale) {
 /**
  * Creates linear major and minor ticks
  * @param {d3.ScaleLinear} scale linear scale
+ * @param {number} [num=10] preferred number of ticks
  * @returns {{major: number[], minor: number[]}} dictionary of major and minor ticks
  */
 function createLinearTicks(scale, num = 10) {

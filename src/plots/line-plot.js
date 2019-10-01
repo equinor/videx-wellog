@@ -1,15 +1,29 @@
 import { line } from 'd3';
 import Plot from './plot';
 
+/**
+ * Line plot
+ */
 export default class LinePlot extends Plot {
+  /**
+   * @returns {string} plot color
+   */
   get color() {
     return this.options.color || '#012';
   }
 
+  /**
+   * @returns {number} line width
+   */
   get lineWidth() {
     return this.options.width || 1;
   }
 
+  /**
+   * Renders line plot to canvas context
+   * @param {CanvasRenderingContext2D} ctx canvas context instance
+   * @param {d3.scale} scale y-scale
+   */
   plot(ctx, scale) {
     const {
       scale: xscale,

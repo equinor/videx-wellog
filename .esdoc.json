@@ -1,6 +1,6 @@
 {
   "source": "./src",
-  "destination": "./docs",
+  "destination": "./api-docs",
   "plugins": [
   {
     "name": "esdoc-standard-plugin",
@@ -11,6 +11,20 @@
         "includes": ["(spec|Spec|test|Test)\\.js$"],
         "excludes": ["\\.config\\.js$"]
       }
+    }
+  },
+  {
+    "name": "esdoc-ecmascript-proposal-plugin",
+    "option": {
+      "classProperties": true,
+      "objectRestSpread": true,
+      "doExpressions": true,
+      "functionBind": true,
+      "functionSent": true,
+      "asyncGenerators": true,
+      "decorators": true,
+      "exportExtensions": true,
+      "dynamicImport": true
     }
   }]
 }

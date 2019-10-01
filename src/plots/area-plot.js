@@ -1,20 +1,47 @@
 import { area } from 'd3';
 import Plot from './plot';
 
+/**
+ * Area plot
+ */
 export default class AreaPlot extends Plot {
+  /**
+   * Create instance
+   * @param {*} id plot id
+   * @param {d3.scale} scale scale for data serie values
+   * @param {{
+   *  useMinAsBase:boolean,
+   *  color:string,
+   *  inverseColor:string,
+   *  width:number,
+   *  fill:string,
+   *  fillOpacity:number,
+   * }} options plot options
+   */
   constructor(id, scale, options) {
     super(id, scale, options);
     this.useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
   }
 
+  /**
+   * @returns {string} plot color
+   */
   get color() {
     return this.options.color || '#012';
   }
 
+  /**
+   * @returns {number} line width
+   */
   get lineWidth() {
     return this.options.width || 1;
   }
 
+  /**
+   * Renders area plot to canvas context
+   * @param {CanvasRenderingContext2D} ctx canvas context instance
+   * @param {d3.scale} scale y-scale
+   */
   plot(ctx, scale) {
     const {
       scale: xscale,

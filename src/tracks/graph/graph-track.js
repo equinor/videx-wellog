@@ -1,6 +1,6 @@
 
 import CanvasTrack from '../canvas-track';
-import { createScale, createPlot } from './factory';
+import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper } from '../../utils/index';
 
 export default class GraphTrack extends CanvasTrack {
@@ -15,7 +15,12 @@ export default class GraphTrack extends CanvasTrack {
     this.plots = [];
 
     if (options.plots) {
-      this.plots = options.plots.map(p => createPlot(p, this.trackScale));
+      const plotFactory = options.plotFactory || defaultPlotFactory;
+      this.plots = options.plots.map(p => {
+        const createPlot = plotFactory[p.type];
+        if (!createPlot) throw Error(`No factory function for creating '${p.type}'-plot!`);
+        return createPlot(p, this.trackScale);
+      });
     }
 
     this.plot = this.plot.bind(this);
