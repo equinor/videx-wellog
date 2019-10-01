@@ -9,3 +9,9 @@ npm install @equinor-internal/videx-wellog --registry https://npm.equinor.com
 `
 npm run docs
 `
+
+## Storybook
+
+`
+npm run storybook
+`
