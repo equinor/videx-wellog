@@ -1,4 +1,5 @@
-import { ScaleHelper, DataHelper } from '../utils';
+import ScaleHelper from './scale-helper';
+import DataHelper from './data-helper';
 
 /**
  * A Recall log data transformation implementation to downsample log data.

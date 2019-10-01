@@ -2,6 +2,7 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import { dependencies } from './package.json';
 
 const input = {
   index: 'src/index.js',
@@ -14,9 +15,12 @@ const onwarn = (warning, warn) => {
   warn(warning);
 };
 
+/*
 const external = [
   'd3',
 ];
+*/
+const external = Object.keys(dependencies);
 
 export default [
   // CommonJS

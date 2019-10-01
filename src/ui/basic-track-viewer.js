@@ -32,9 +32,9 @@ export default class BasicTrackViewer {
    * Hook up to DOM element and add child elements and event handlers
    * @param {HTMLElement} elm
    */
-  init(elm) {
-    this.width = elm.clientWidth;
-    this.height = elm.clientHeight;
+  init(elm, options = {}) {
+    this.width = options.width || elm.clientWidth;
+    this.height = options.height || elm.clientHeight;
 
     const root = select(elm);
 

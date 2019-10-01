@@ -38,9 +38,7 @@
     "rollup-plugin-node-resolve": "^5.2.0"
   },
   "dependencies": {
-    "d3": "^5.9.2"
-  },
-  "peerDependencies": {
+    "d3": "^5.9.2",
     "d3-selection-multi": "^1.0.1"
   },
   "scripts": {
