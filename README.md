@@ -12,6 +12,8 @@ npm run docs
 
 ## Storybook
 
-`
+```
+# from root:
+cd examples/plain-javascript-example
 npm run storybook
-`
+```
