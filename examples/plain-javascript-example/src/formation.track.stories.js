@@ -1,8 +1,8 @@
 import { FormationTrack, BasicTrackViewer } from '../../../src/index';
 
-export default { title: 'Formation track' };
+export default { title: 'Tracks' };
 
-export const withFormationTrack = () => {
+export const formationTrack = () => {
   const data = [
     {
       from: 142.2,
