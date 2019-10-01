@@ -1,5 +1,12 @@
 import { select } from 'd3';
 
+/**
+ * Renders scale ticks to selection
+ * @param {d3.selection} selection d3 selection
+ * @param {d3.scale} x x-scale
+ * @param {object} lb label bounds
+ * @param {number} max max width
+ */
 export function renderTicks(selection, x, lb, max) {
   // label
   let labelX;
@@ -69,6 +76,11 @@ export function renderTicks(selection, x, lb, max) {
   selection.exit().remove();
 }
 
+/**
+ * Computes the label bounds at a given scale
+ * @param {d3.ScaleLinear} xscale scale to use for calculation
+ * @returns {object} containing size and orientation etc. for tick label
+ */
 export function computeLabelBounds(xscale) {
   const [, max] = xscale.domain();
   const [, width] = xscale.range();
@@ -107,7 +119,12 @@ export function computeLabelBounds(xscale) {
   });
 }
 
-
+/**
+ * Callback when legend needs to be updated
+ * @param {SVGElement} elm legend container
+ * @param {{height:number,width:number}} bounds legend bounds
+ * @param {ScaleTrack|DualScaleTrack} track track instance
+ */
 function onUpdateLegend(elm, bounds, track) {
   const lg = select(elm);
 
@@ -146,6 +163,9 @@ function onUpdateLegend(elm, bounds, track) {
   unit.text('meters');
 }
 
+/**
+ * Config object required for track config in order to add legend
+ */
 export const scaleLegendConfig = ({
   elementType: 'svg',
   getLegendRows: () => 2,

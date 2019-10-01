@@ -1,8 +1,14 @@
 import { select, scaleLinear } from 'd3';
 import SvgTrack from './svg-track';
 
+/**
+ * Default color
+ */
 const cementDefaultColor = 'white';
 
+/**
+ * Color mapping
+ */
 const cementQualityColors = new Map([
   ['CEM 1A', 'green'],
   ['CEM 1B', 'green'],
@@ -37,6 +43,13 @@ const cementQualityColors = new Map([
   [undefined, 'white'],
 ]);
 
+/**
+ * Renders cement label
+ * @param {SVGGElement} g
+ * @param {object} d data record
+ * @param {d3.scale} x x-scale
+ * @param {number[]} offsets label offsets
+ */
 function plotLabel(g, d, x, offsets) {
   // label
   const textSize = Math.min(18, x(0.35));
@@ -78,11 +91,23 @@ function plotLabel(g, d, x, offsets) {
   }
 }
 
+/**
+ * Get color by name
+ * @param {string} name key
+ * @returns {string} color
+ */
 function getCementQualityColor(name) {
   return cementQualityColors.get(name) || cementDefaultColor;
 }
 
+/**
+ * Track for showing cement data
+ */
 export default class CementTrack extends SvgTrack {
+  /**
+   * Override of onMount from base class
+   * @param {object} event
+   */
   onMount(event) {
     super.onMount(event);
 
@@ -103,17 +128,28 @@ export default class CementTrack extends SvgTrack {
     }
   }
 
+  /**
+   * Override of onUpdate from base class
+   * @param {object} event
+   */
   onUpdate(event) {
     super.onUpdate(event);
     this.xscale.range([0, this.elm.clientWidth]);
     this.plot();
   }
 
+  /**
+   * Override of onRescale from base class
+   * @param {object} event
+   */
   onRescale(event) {
     super.onRescale(event);
     this.plot();
   }
 
+  /**
+   * Override plot from base class. Plots track data.
+   */
   plot() {
     const {
       plotGroup: g,

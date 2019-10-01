@@ -7,11 +7,22 @@ import {
 } from '../../plots/legend/index';
 import LegendHelper from '../../utils/legend-helper';
 
-
+/**
+ * Function for calculating the number of legend rows required by the track
+ * @param {GraphTrack} track track instance
+ * @returns {number} number of legend rows required, based on current assigned plot instances
+ */
 function getGraphTrackLegendRows(track) {
   return track.plots.reduce((rows, p) => rows + p.options.legendRows || 0, 0);
 }
 
+/**
+ * Updates the selection of legend rows of a graph track
+ * @param {d3.Selection} selection selection to update
+ * @param {{top:number,left:number,width:number,heigh:number}} bounds bounding box
+ * @param {number} width clientWidth of container element
+ * @param {GraphTrack} track track instance
+ */
 function updateLegendRows(selection, bounds, width, track) {
   let posY = bounds.top;
 
@@ -47,6 +58,12 @@ function updateLegendRows(selection, bounds, width, track) {
   });
 }
 
+/**
+ * Updates the legend section of a graph track
+ * @param {HTMLElement} elm legend container
+ * @param {{top:number,left:number,width:number,heigh:number}} bounds bounding box
+ * @param {GraphTrack} track track instance
+ */
 function onUpdateLegend(elm, bounds, track) {
   const lg = select(elm);
 
@@ -62,4 +79,7 @@ function onUpdateLegend(elm, bounds, track) {
   g.selectAll('.legend-row').call(updateLegendRows, bounds, w, track);
 }
 
+/**
+ * A legend config object that can be added to a graph track config
+ */
 export default LegendHelper.basicLegendSvgConfig(getGraphTrackLegendRows, onUpdateLegend);

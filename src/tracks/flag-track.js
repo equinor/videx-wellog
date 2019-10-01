@@ -1,6 +1,11 @@
 import CanvasTrack from './canvas-track';
 import DataHelper from '../utils/data-helper';
 
+/**
+ * trim and reduce data according to scale
+ * @param {d3.scale} scale y-scale
+ * @param {number[][]} data Flag data
+ */
 function trimData(scale, data) {
   if (data && DataHelper.isWithinBounds(scale, data)) {
     let startPoint = data[0][0];
@@ -24,8 +29,14 @@ function trimData(scale, data) {
   return [];
 }
 
+/**
+ * Track for visualising flag (on/off) type of data.
+ */
 export default class FlagTrack extends CanvasTrack {
-  // override
+  /**
+   * Override of onMount from base class
+   * @param {object} event
+   */
   onMount(event) {
     super.onMount(event);
 
@@ -45,18 +56,27 @@ export default class FlagTrack extends CanvasTrack {
     }
   }
 
-  // override
+  /**
+   * Override of onRescale from base class
+   * @param {object} event
+   */
   onRescale(event) {
     super.onRescale(event);
     this.plot();
   }
 
-  // override
+  /**
+   * Override of onUpdate from base class
+   * @param {object} event
+   */
   onUpdate(event) {
     super.onUpdate(event);
     this.plot();
   }
 
+  /**
+   * Override plot from base class. Plots track data.
+   */
   plot() {
     const {
       ctx,

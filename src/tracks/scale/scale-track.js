@@ -3,6 +3,9 @@ import SvgTrack from '../svg-track';
 import { renderTicks, computeLabelBounds } from './common';
 import ScaleHelper from '../../utils/scale-helper';
 
+/**
+ * Track for visualising y-scale
+ */
 export default class ScaleTrack extends SvgTrack {
   constructor(id, options) {
     super(id, options);
@@ -14,13 +17,19 @@ export default class ScaleTrack extends SvgTrack {
     this.plot = this.plot.bind(this);
   }
 
-  // override
+  /**
+   * Override of onMount from base class
+   * @param {object} trackEvent
+   */
   onMount(trackEvent) {
     super.onMount(trackEvent);
     this.createTicks();
   }
 
-  // override
+  /**
+   * Override of onRescale from base class
+   * @param {object} trackEvent
+   */
   onRescale(trackEvent) {
     super.onRescale(trackEvent);
     this.createTicks();
@@ -28,7 +37,10 @@ export default class ScaleTrack extends SvgTrack {
     this.plot();
   }
 
-  // override
+  /**
+   * Override of onUpdate from base class
+   * @param {object} trackEvent
+   */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
     const { elm } = this;
@@ -36,6 +48,9 @@ export default class ScaleTrack extends SvgTrack {
     this.plot();
   }
 
+  /**
+   * Create scale tick intervals
+   */
   createTicks() {
     const {
       scale,
@@ -44,6 +59,10 @@ export default class ScaleTrack extends SvgTrack {
     else this.ticks = ScaleHelper.createTicks(scale).major;
   }
 
+  /**
+   * Create scale ruler ticks and render
+   * @param {SVGGElement} g
+   */
   createRuler(g) {
     const {
       xscale,
@@ -63,6 +82,9 @@ export default class ScaleTrack extends SvgTrack {
       .call(renderTicks, xscale, labelBounds, max);
   }
 
+  /**
+   * Plot
+   */
   plot() {
     const {
       createRuler,
@@ -79,6 +101,9 @@ export default class ScaleTrack extends SvgTrack {
     createRuler(g);
   }
 
+  /**
+   * Getter for scale extent
+   */
   get extent() {
     return this.scale.domain();
   }

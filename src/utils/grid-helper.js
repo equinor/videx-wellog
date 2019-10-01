@@ -2,9 +2,13 @@
  * Helper for rendering grid to canvas, used by GraphTrack
  */
 
+/** major ticks color */
 const colorMajor = '#ccc';
+/** minor ticks color */
 const colorMinor = '#ddd';
+/** major stroke width */
 const strokeMajor = 2;
+/** minor stroke width */
 const strokeMinor = 1;
 
 /**

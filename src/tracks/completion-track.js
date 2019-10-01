@@ -1,6 +1,13 @@
 import { scaleLinear, max as d3max } from 'd3';
 import SvgTrack from './svg-track';
 
+/**
+ * Plot completion data.
+ * @param {SVGGElement} g
+ * @param {object} data
+ * @param {function} lengthAtMd calculate curve position from measured depth
+ * @param {class} generator completion shape generator
+ */
 function plotCompletion(g, data, lengthAtMd, generator) {
   const completion = data
     .map((d) => {
@@ -25,6 +32,15 @@ function plotCompletion(g, data, lengthAtMd, generator) {
   selection.exit().remove();
 }
 
+/**
+ * Plot casing data.
+ * @param {SVGGElement} g
+ * @param {object} data
+ * @param {function} lengthAtMd calculate curve position from measured depth
+ * @param {function} coordsAtMd calculate xy coordinates from measured depth
+ * @param {d3.scaleLinear} dx diameter scale
+ * @param {class} generator completion shape generator
+ */
 function plotCasings(g, data, lengthAtMd, coordsAtMd, dx, generator) {
   const casings = data
     .sort((a, b) => b.innerdiameter - a.innerdiameter)
@@ -58,6 +74,13 @@ function plotCasings(g, data, lengthAtMd, coordsAtMd, dx, generator) {
   selection.exit().remove();
 }
 
+/**
+ * Plot fish data.
+ * @param {SVGGElement} g
+ * @param {object} data
+ * @param {function} lengthAtMd calculate curve position from measured depth
+ * @param {class} generator completion shape generator
+ */
 function plotFish(g, data, lengthAtMd, generator) {
   if (!data) {
     return;
@@ -84,6 +107,12 @@ function plotFish(g, data, lengthAtMd, generator) {
   selection.exit().remove();
 }
 
+/**
+ * Track for visualising completion data within a track.
+ * NOTE: This track requires a shape generator instance that is not
+ * part of this library. The shape generator is responsible for the
+ * rendering of the different objects.
+ */
 export default class CompletionTrack extends SvgTrack {
   constructor(id, options) {
     if (!options.shapeGenerator) throw Error('No shape-generator function provided in options!');
@@ -92,6 +121,10 @@ export default class CompletionTrack extends SvgTrack {
     this.shapeGenerator = options.shapeGenerator;
   }
 
+  /**
+   * Override of onMount from base class
+   * @param {object} event
+   */
   onMount(event) {
     super.onMount(event);
 
@@ -121,17 +154,28 @@ export default class CompletionTrack extends SvgTrack {
     };
   }
 
+  /**
+   * Override of onUpdate from base class
+   * @param {object} event
+   */
   onUpdate(event) {
     super.onUpdate(event);
     this.xscale.range([0, this.elm.clientWidth]);
     this.plot();
   }
 
+  /**
+   * Override of onRescale from base class
+   * @param {object} event
+   */
   onRescale(event) {
     super.onRescale(event);
     this.plot();
   }
 
+  /**
+   * Override plot from base class. Plots track data.
+   */
   plot() {
     const {
       plotGroup,

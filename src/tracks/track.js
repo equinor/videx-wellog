@@ -1,11 +1,22 @@
 import { select } from 'd3';
 
+/**
+ * Default options
+ */
 const defaults = {
   width: 3,
   maxWidth: null,
 };
 
+/**
+ * Abstract base class for wellog tracks
+ */
 export default class Track {
+  /**
+   * Create instance
+   * @param {*} id Track id
+   * @param {object} options track options
+   */
   constructor(id, options = {}) {
     this.options = {
       ...defaults,
@@ -26,6 +37,19 @@ export default class Track {
     this.transform = { k: 1, y: 0, x: 0 };
   }
 
+  /**
+   * Handler for onMount event. Called by container when track DOM element
+   * is added to the DOM model.
+   * @param {{
+   *   elm:HTMLElement,
+   *   scale:d3.scale,
+   *   scaleHandler:[object]
+   * }} trackEvent Event object containing DOM element reference for track
+   * DOM element and y-scale from container. Whether scaleHandler is passed along
+   * depends on the container - this is required if you want to use the dual scale track.
+   * In general, the container may add whatever it wants (to allow custom behaviour),
+   * but elm and scale must be present.
+   */
   onMount(trackEvent) {
     const {
       elm,
@@ -40,12 +64,25 @@ export default class Track {
     this._mounted = true;
   }
 
+  /**
+   * Handler for onUnmount event. Called when track DOM-element is remove from the
+   * DOM model. Typically, trackEvent will be an empty object, but depends on container.
+   * @param {object} trackEvent
+   */
   onUnmount(trackEvent = {}) {
     if (this.options.onUnmount) {
       this.options.onUnmount(trackEvent, this);
     }
   }
 
+  /**
+   * Handler for onChange event. Called by container when track is resized.
+   * @param {{
+   *   elm:HTMLElement,
+   *   scale:d3.scale,
+   * }} trackEvent Event object containing DOM element reference for track
+   * DOM-element and y-scale from container
+   */
   onUpdate(trackEvent) {
     if (!this._mounted) return;
 
@@ -55,7 +92,13 @@ export default class Track {
       this.options.onUpdate(trackEvent, this);
     }
   }
-
+  /**
+   * Handler for onRescale event. Called by container when y-scale domain/transform is changed.
+   * @param {{
+   *   scale:d3.scale,
+   *   transform:{x:number,y:number,k:number},
+   * }} trackEvent Event object containing the updated scale and transform
+   */
   onRescale(trackEvent) {
     const {
       scale,
@@ -72,6 +115,9 @@ export default class Track {
     }
   }
 
+  /**
+   * Allow triggering of update event without parameters
+   */
   refresh() {
     const { scale } = this;
     if (scale) {
@@ -79,10 +125,18 @@ export default class Track {
     }
   }
 
+  /**
+   * Getter for _isLoading
+   * @returns {boolean}
+   */
   get isLoading() {
     return this._isLoading;
   }
 
+  /**
+   * Setter for _isLoading
+   * @param {boolean} val
+   */
   set isLoading(val) {
     this._isLoading = !!val;
     if (this.loader) {

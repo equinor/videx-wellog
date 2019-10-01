@@ -1,6 +1,15 @@
 import { select } from 'd3';
 import LegendHelper from '../../utils/legend-helper';
 
+/**
+ * Renders confidence legend box to legend section
+ * @param {number} lineNumber legend row number
+ * @param {SVGGElement} g
+ * @param {number} w width
+ * @param {number} textSize
+ * @param {string} color
+ * @param {string} text
+ */
 function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
   const lblGroup = g.append(['g']).attr('class', 'legend-row');
   const xCenter = w * 0.5;
@@ -53,6 +62,11 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
   });
 }
 
+/**
+ * Renders confidence legend to legend section
+ * @param {SVGGElement} g
+ * @param {{height:number,width:number}} bounds legend bounds
+ */
 function renderConfidenceLegend(g, bounds) {
   g.selectAll(['g', 'line']).remove();
 
@@ -77,6 +91,12 @@ function renderConfidenceLegend(g, bounds) {
   renderConfidenceLegendBox(2, g, w, textSize, 'red', 'Poor');
 }
 
+/**
+ * Callback when legend needs to be updated
+ * @param {SVGElement} elm legend container
+ * @param {{height:number,width:number}} bounds legend bounds
+ * @param {ChronostratTrack} track track instance
+ */
 function onUpdateLegend(elm, bounds, track) {
   const lg = select(elm);
   const g = lg.select('.svg-legend');
@@ -108,6 +128,9 @@ function onUpdateLegend(elm, bounds, track) {
   renderConfidenceLegend(g.append('g'), bounds);
 }
 
+/**
+ * Legend config object that can be used in track config for wellog component
+ */
 const legendHelper = LegendHelper.basicLegendSvgConfig(() => 3, onUpdateLegend);
 
 export default legendHelper;

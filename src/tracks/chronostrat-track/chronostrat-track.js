@@ -2,7 +2,15 @@ import { scaleLinear } from 'd3';
 import SvgTrack from '../svg-track';
 import ChronostratLane from './chronostrat-lane';
 
+/**
+ * Chrono Strat Track
+ */
 export default class ChronoStratTrack extends SvgTrack {
+  /**
+   * Create instance
+   * @param {*} id Track id
+   * @param {object} options Chronostrat track options
+   */
   constructor(id, options) {
     super(id, options);
 

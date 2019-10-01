@@ -3,7 +3,23 @@ import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper } from '../../utils/index';
 
+/**
+ * An extension to CanvasTrack for rendering plots
+ *
+ * See ./readme.md in source code for more info
+ */
 export default class GraphTrack extends CanvasTrack {
+  /**
+   * Create instance
+   * @param {*} id Track id
+   * @param {{
+   *  scale:string,
+   *  domain:number[],
+   *  plotFactory: [object],
+   *  plots: object[],
+   *  data: function,
+   * }} options Track options
+   */
   constructor(id, options) {
     super(id, options);
 
@@ -31,7 +47,10 @@ export default class GraphTrack extends CanvasTrack {
     this.debounced = {};
   }
 
-  // override
+  /**
+   * Override of onMount to load track data
+   * @param {object} trackEvent track onMount event data
+   */
   onMount(trackEvent) {
     super.onMount(trackEvent);
 
@@ -50,6 +69,12 @@ export default class GraphTrack extends CanvasTrack {
     }
   }
 
+  /**
+   * Function for allowing functions to be called with debounce
+   * @param {function} func function to be called/debounced
+   * @param {string} key identificator to map debounce timeout reference to
+   * @param {number} [delay=20] optional debounce delay
+   */
   debounce(func, key, delay = 20) {
     const {
       debounced,
@@ -64,14 +89,20 @@ export default class GraphTrack extends CanvasTrack {
     }, delay);
   }
 
-  // override
+  /**
+   * Override to allow data transformations, like resampling and filtering
+   * @param {object} trackEvent onRescale event
+   */
   onRescale(trackEvent) {
     super.onRescale(trackEvent);
     this.debounce(this.prepareData, 'prepareData', 20);
     this.plot();
   }
 
-  // override
+  /**
+   * Override to resize plots and scales
+   * @param {object} trackEvent onUpdate event type
+   */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
     const range = [0, this.elm.clientWidth];
@@ -87,6 +118,10 @@ export default class GraphTrack extends CanvasTrack {
     this.plot();
   }
 
+  /**
+   * Updates all plots with data by triggering each plot's data accessor function
+   * @param {object} data track data object
+   */
   setPlotData(data) {
     const { plots } = this;
 
@@ -98,6 +133,10 @@ export default class GraphTrack extends CanvasTrack {
     });
   }
 
+  /**
+   * Execute configured transform function if applicable on the track's data
+   * and update plots with the result
+   */
   prepareData() {
     const {
       setPlotData,
@@ -119,6 +158,9 @@ export default class GraphTrack extends CanvasTrack {
     }
   }
 
+  /**
+   * Plot graph track
+   */
   plot() {
     const {
       ctx,

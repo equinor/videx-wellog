@@ -1,8 +1,14 @@
 import { select } from 'd3';
 import Track from './track';
 
+/**
+ * Base track for tracks that renders HTML content
+ */
 export default class HtmlTrack extends Track {
-  // override
+  /**
+   * Override to add HMTL container for plotting track data
+   * @param {object} trackEvent
+   */
   onMount(trackEvent) {
     super.onMount(trackEvent);
     this.container = select(trackEvent.elm).append('div').styles({
@@ -10,7 +16,10 @@ export default class HtmlTrack extends Track {
     });
   }
 
-  // override
+  /**
+   * Override to scale HTML container on resize
+   * @param {object} trackEvent
+   */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
 

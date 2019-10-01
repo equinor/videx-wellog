@@ -1,8 +1,14 @@
 import { select } from 'd3';
 import Track from './track';
 
+/**
+ * Base track for tracks that renders to a canvas context
+ */
 export default class CanvasTrack extends Track {
-  // override
+  /**
+   * Override to add canvas element for plotting track data
+   * @param {object} trackEvent
+   */
   onMount(trackEvent) {
     super.onMount(trackEvent);
     const canvas = select(trackEvent.elm).append('canvas').styles({
@@ -11,6 +17,10 @@ export default class CanvasTrack extends Track {
     this.ctx = canvas.node().getContext('2d');
   }
 
+  /**
+   * Override to scale canvas element on resize
+   * @param {object} trackEvent
+   */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
     const {

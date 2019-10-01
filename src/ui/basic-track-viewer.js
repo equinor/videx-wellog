@@ -6,7 +6,17 @@ import {
   event as d3event,
 } from 'd3';
 
+/**
+ * A minimalistic wellog track container for displaying wellog tracks.
+ * May be helpful as a starting point if you want to create your own
+ * custom wellog container.
+ */
 export default class BasicTrackViewer {
+  /**
+   * Create instance
+   * @param {Track[]} tracks tracks to be added
+   * @param {number[]} domain y-scale domain
+   */
   constructor(tracks, domain = [0, 1000]) {
     this.tracks = tracks;
     this.zoom = null;
@@ -18,7 +28,10 @@ export default class BasicTrackViewer {
     this.zoomed = this.zoomed.bind(this);
   }
 
-  // hook up to DOM element and add child elements and event handlers
+  /**
+   * Hook up to DOM element and add child elements and event handlers
+   * @param {HTMLElement} elm
+   */
   init(elm) {
     this.width = elm.clientWidth;
     this.height = elm.clientHeight;
@@ -54,7 +67,9 @@ export default class BasicTrackViewer {
     this.update();
   }
 
-  // update child elements and scale - execute callbacks on addded tracks
+  /**
+   * Update child elements and scale - execute callbacks on addded tracks
+   */
   update() {
     const {
       container,
@@ -96,7 +111,9 @@ export default class BasicTrackViewer {
     }));
   }
 
-  // handle zoom/pan events
+  /**
+   * Handle zoom/pan events
+   */
   zoomed() {
     const { transform } = d3event;
 
@@ -111,7 +128,9 @@ export default class BasicTrackViewer {
     this.rescale();
   }
 
-  // notify tracks about changed scale/transform so tracks may react to user interaction
+  /**
+   * Notify tracks about changed scale/transform so tracks may react to user interaction
+   */
   rescale() {
     this.tracks.forEach(track => {
       window.requestAnimationFrame(() => track.onRescale({

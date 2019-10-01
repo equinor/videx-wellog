@@ -3,7 +3,21 @@ import SvgTrack from '../svg-track';
 import { renderTicks, computeLabelBounds } from './common';
 import ScaleHelper from '../../utils/scale-helper';
 
+/**
+ * A scale track that supports interpolation between two
+ * scale domains. Requires container to supply a scale handler
+ * in the onMount event.
+ *
+ * The dual scale has a master/slave mode, which can be toggled
+ * to change its behaviour (switch between domains), using the
+ * scale-handler's setMode-function.
+ */
 export default class DualScaleTrack extends SvgTrack {
+  /**
+   * Create instance
+   * @param {*} id Track id
+   * @param {object} options Track options
+   */
   constructor(id, options) {
     super(id, options);
 
@@ -15,12 +29,20 @@ export default class DualScaleTrack extends SvgTrack {
     this.createRuler = this.createRuler.bind(this);
   }
 
+  /**
+   * Override of onMount from base class
+   * @param {object} trackEvent
+   */
   onMount(trackEvent) {
     super.onMount(trackEvent);
     this.scaleHandler = trackEvent.scaleHandler;
     this.createTicks();
   }
 
+  /**
+   * Override of onRescale from base class
+   * @param {object} trackEvent
+   */
   onRescale(trackEvent) {
     super.onRescale(trackEvent);
     this.createTicks();
@@ -28,7 +50,10 @@ export default class DualScaleTrack extends SvgTrack {
     this.plot();
   }
 
-  // override
+  /**
+   * Override of onUpdate from base class
+   * @param {object} trackEvent
+   */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
     const { elm } = this;
@@ -36,6 +61,9 @@ export default class DualScaleTrack extends SvgTrack {
     this.plot();
   }
 
+  /**
+   * Create scale tick intervals according to mode
+   */
   createTicks() {
     const {
       scaleHandler,
@@ -44,6 +72,10 @@ export default class DualScaleTrack extends SvgTrack {
     else this.ticks = ScaleHelper.createTicks(scaleHandler.internalScale).major;
   }
 
+  /**
+   * Create scale ruler ticks base on current mode and render
+   * @param {SVGGElement} g
+   */
   createRuler(g) {
     const {
       xscale,
@@ -63,6 +95,10 @@ export default class DualScaleTrack extends SvgTrack {
       .call(renderTicks, xscale, labelBounds, max);
   }
 
+  /**
+   * Create ticks for inverse mode
+   * @param {SVGGElement} g
+   */
   createMeasures(g) {
     const {
       xscale,
@@ -94,6 +130,9 @@ export default class DualScaleTrack extends SvgTrack {
       .call(renderTicks, xscale, labelBounds, max);
   }
 
+  /**
+   * Plot the scale track
+   */
   plot() {
     const {
       createRuler,
@@ -117,6 +156,10 @@ export default class DualScaleTrack extends SvgTrack {
     }
   }
 
+  /**
+   * Getter for determining if the track is in master mode or not
+   * @returns {boolean}
+   */
   get isMaster() {
     const {
       viewMode,
@@ -126,6 +169,9 @@ export default class DualScaleTrack extends SvgTrack {
     return viewMode === scaleHandler.mode;
   }
 
+  /**
+   * Getter for scale extent according to mode
+   */
   get extent() {
     const {
       viewMode,

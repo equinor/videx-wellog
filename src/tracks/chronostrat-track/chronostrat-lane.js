@@ -26,6 +26,11 @@ const nonDepthBoxCenterLine = {
   'stroke-dasharray': '5 4',
 };
 
+/**
+ * render normal section
+ * @param {d3.selection} selection
+ * @param {d3.scale} x x-scale
+ */
 function renderNormalSection(selection, x) {
   selection.select('rect').attrs((d) => {
     let from = d.yFrom;
@@ -89,6 +94,11 @@ function renderNormalSection(selection, x) {
   }));
 }
 
+/**
+ * re-render normal section
+ * @param {d3.selection} selection
+ * @param {d3.scale} x x-scale
+ */
 function reRenderNormalSection(selection, x) {
   selection.append('rect').attrs((d) => {
     let from = d.yFrom;
@@ -158,11 +168,20 @@ function reRenderNormalSection(selection, x) {
   }));
 }
 
+/**
+ * checkDist
+ * @param {number} dist
+ * @param {boolean} hasDepth
+ */
 function checkDist(dist, hasDepth) {
   if (hasDepth) return dist;
   return (dist > 40 ? dist : dist / 2);
 }
 
+/**
+ * get min distance
+ * @param {object} d
+ */
 function getMinDist(d) {
   const distTop = checkDist(d.yFrom - d.top.max, d.top.hasDepth);
   const distBottom = checkDist(d.bottom.max - d.yTo, d.bottom.hasDepth);
@@ -170,6 +189,12 @@ function getMinDist(d) {
   return minDist < 20 ? minDist : 20;
 }
 
+/**
+ * Create a renderable data object from records with no height
+ * @param {object} d data record
+ * @param {d3.scale} x x-scale
+ * @param {object} style css styles
+ */
 function getNoDepthPolygon(d, x, style) {
   const dist = getMinDist(d);
 
@@ -204,6 +229,13 @@ function getNoDepthPolygon(d, x, style) {
   });
 }
 
+/**
+ * Renders a label for a data record
+ * @param {SVGGElement} g svg group to append to
+ * @param {object} d data record
+ * @param {d3.scale} x x-scale
+ * @param {number[]} offsets label offsets
+ */
 function plotLabel(g, d, x, offsets) {
   const textSize = Math.min(14, x(0.2));
   const textCenter = textSize / 3;
@@ -258,6 +290,11 @@ function plotLabel(g, d, x, offsets) {
   }
 }
 
+/**
+ * Renders svg element for records with no height
+ * @param {d3.selection} selection d3 selection
+ * @param {d3.scale} x x-scale
+ */
 function renderNoDepthSection(selection, x) {
   selection.select('polygon.polygon-outline')
     .attrs(d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle));
@@ -286,6 +323,11 @@ function renderNoDepthSection(selection, x) {
   }));
 }
 
+/**
+ * Re-renders svg element for records with no height
+ * @param {d3.selection} selection d3 selection
+ * @param {d3.scale} x x-scale
+ */
 function reRenderNoDepthSection(selection, x) {
   selection.append('polygon')
     .attrs(d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle))
@@ -318,7 +360,18 @@ function reRenderNoDepthSection(selection, x) {
   }));
 }
 
+/**
+ * Class for seperating a track in multiple "lanes"
+ */
 export default class ChronostratLane {
+  /**
+   * Create instance
+   * @param {SVGGElement} g container
+   * @param {string} title lane title
+   * @param {string} abbr lane abbreviated title
+   * @param {number} percent width percentage of total track width
+   * @param {boolean} addSeparator whether or not to draw a vertical seperator line
+   */
   constructor(g, title, abbr, percent, addSeparator = true) {
     this.title = title;
     this.abbr = abbr;
@@ -330,10 +383,19 @@ export default class ChronostratLane {
     this.plotGroup = g.append('g').attr('class', 'lane-plot-group');
   }
 
+  /**
+   * Handle onChange events from parent track
+   */
   onUpdate() {
     this.xScale.range(this.xRange);
   }
 
+  /**
+   * Renders vertical line at position x
+   * @param {SVGGElement} plotGroup container
+   * @param {number} x x-position (pixels relative to container)
+   * @param {number} yMax y-poistion to end the line (pixels relative to container)
+   */
   renderLaneSeparator(plotGroup, x, yMax) {
     if (!this.addSeparator) return;
 
@@ -359,6 +421,11 @@ export default class ChronostratLane {
     }
   }
 
+  /**
+   * Plots the data for this lane
+   * @param {d3.scale} scale y-scale
+   * @param {object[]} data lane data
+   */
   plot(scale, data) {
     const {
       xScale: x,
