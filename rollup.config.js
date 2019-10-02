@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
+import copy from 'rollup-plugin-copy';
 import { dependencies } from './package.json';
 
 const input = {
@@ -18,6 +19,12 @@ const onwarn = (warning, warn) => {
 };
 
 const external = Object.keys(dependencies);
+
+const exportedStyles = {
+  styles: 'src/styles.scss',
+  'scale-styles': 'src/tracks/scale/styles.scss',
+  'wellog-styles': 'src/ui/wellog-styles.scss',
+};
 
 export default [
   // CommonJS
@@ -51,11 +58,11 @@ export default [
     ],
     onwarn,
   },
-  // css styles
+  // styles
   {
     input: 'src/styles.scss',
     output: {
-      file: 'dist/scale-styles.css',
+      file: 'dist/styles/styles.css',
       format: 'es',
     },
     plugins: [
@@ -65,6 +72,13 @@ export default [
         ],
         extract: true,
         extensions: ['.scss', '.css'],
+      }),
+      copy({
+        targets: Object.entries(exportedStyles).map(d => ({
+          src: d[1],
+          dest: 'dist/styles',
+          rename: `${d[0]}.scss`,
+        })),
       }),
     ],
   },

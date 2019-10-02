@@ -31,6 +31,7 @@ export default class BasicTrackViewer {
   /**
    * Hook up to DOM element and add child elements and event handlers
    * @param {HTMLElement} elm
+   * @param {{width:number,height:number}} options
    */
   init(elm, options = {}) {
     if (options.width) {
