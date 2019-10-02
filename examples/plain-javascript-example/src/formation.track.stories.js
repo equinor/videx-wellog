@@ -1,7 +1,5 @@
 import { FormationTrack, BasicTrackViewer } from '../../../src/index';
 
-export default { title: 'Tracks' };
-
 export const formationTrack = () => {
   const data = [
     {
