@@ -1,5 +1,5 @@
 import { BasicTrackViewer } from '../../../../src/index';
-import { scaleTrack, formationTrack } from './tracks';
+import { scaleTrack, formationTrack } from '../shared/standard-tracks';
 
 export const withFormationTrack = () => {
   const div = document.createElement('div');

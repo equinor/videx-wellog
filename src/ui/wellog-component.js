@@ -130,7 +130,7 @@ export default class WellogComponent {
       .scaleExtent([1, 256])
       .on('zoom', this.zoomed);
 
-    const root = select(elm);
+    const root = select(elm).classed('well-log', true);
 
     root.styles({
       position: 'relative',
