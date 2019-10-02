@@ -2,6 +2,8 @@
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import autoprefixer from 'autoprefixer';
+import postcss from 'rollup-plugin-postcss';
 import { dependencies } from './package.json';
 
 const input = {
@@ -15,11 +17,6 @@ const onwarn = (warning, warn) => {
   warn(warning);
 };
 
-/*
-const external = [
-  'd3',
-];
-*/
 const external = Object.keys(dependencies);
 
 export default [
@@ -53,5 +50,22 @@ export default [
       resolve(),
     ],
     onwarn,
+  },
+  // css styles
+  {
+    input: 'src/styles.scss',
+    output: {
+      file: 'dist/scale-styles.css',
+      format: 'es',
+    },
+    plugins: [
+      postcss({
+        plugins: [
+          autoprefixer,
+        ],
+        extract: true,
+        extensions: ['.scss', '.css'],
+      }),
+    ],
   },
 ];

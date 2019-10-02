@@ -33,8 +33,18 @@ export default class BasicTrackViewer {
    * @param {HTMLElement} elm
    */
   init(elm, options = {}) {
-    this.width = options.width || elm.clientWidth;
-    this.height = options.height || elm.clientHeight;
+    if (options.width) {
+      this.width = options.width;
+      elm.style.width = `${options.width}px`;
+    } else {
+      this.width = elm.clientWidth;
+    }
+    if (options.height) {
+      this.height = options.height;
+      elm.style.height = `${options.height}px`;
+    } else {
+      this.height = elm.clientHeight;
+    }
 
     const root = select(elm);
 
