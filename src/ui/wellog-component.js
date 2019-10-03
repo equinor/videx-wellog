@@ -16,6 +16,9 @@ const defaultOptions = {
     bottom: 0,
     left: 0,
   },
+  showRubberband: true,
+  rubberbandUpdate: () => ({}),
+  rubberbandExit: () => ({}),
 };
 
 const titleBarBaseSize = 18;
@@ -26,53 +29,6 @@ const wheelPanFactor = 50;
 
 const transitionDuration = 200;
 const debounceInterval = 20;
-
-/**
- * Updates the rubber band controller
- * @param {DOMElement} rbc rubber band container
- * @param {number} w width
- * @param {number} h height
- */
-function updateRubberBand(rbc, w, h) {
-  if (w <= 0 || h <= 0) return;
-
-  let rb = rbc.select('rect.rubber-band');
-  if (rb.empty()) {
-    rb = rbc.append('rect').attr('class', 'rubber-band');
-    const rbs = rbc.append('rect').attrs({
-      class: 'tracker-rect',
-      x: 0,
-      y: 0,
-      width: w,
-      height: h,
-      stroke: 'none',
-      fill: 'transparent',
-    });
-
-    rbs.on('mousemove', function rbmm() {
-      const mousePos = mouse(this);
-      rb.attrs({
-        y: mousePos[1] - 1,
-      }).style('visibility', 'visible');
-    });
-
-    rbs.on('mouseout', () => {
-      rb.style('visibility', 'hidden');
-    });
-  }
-  rbc.select('rect.tracker-rect').attrs({
-    width: w,
-    height: h,
-  });
-
-  rb.attrs({
-    x: 0,
-    width: w,
-    y: 0,
-    height: 1,
-    class: 'rubber-band',
-  }).style('visibility', 'hidden');
-}
 
 /**
  * A container component for wellog tracks, supporting track titles,
@@ -105,12 +61,14 @@ export default class WellogComponent {
     this.notify = this.notify.bind(this);
     this.debounce = this.debounce.bind(this);
     this.addTrack = this.addTrack.bind(this);
+    this.setTracks = this.setTracks.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
     this.adjustToSize = this.adjustToSize.bind(this);
     this.updateTracks = this.updateTracks.bind(this);
     this.postUpdateTracks = this.postUpdateTracks.bind(this);
     this.updateLegendRows = this.updateLegendRows.bind(this);
     this.updateLegend = this.updateLegend.bind(this);
+    this.updateRubberband = this.updateRubberband.bind(this);
     this.processLegendConfig = this.processLegendConfig.bind(this);
     this._trackExit = this._trackExit.bind(this);
     this._trackEnter = this._trackEnter.bind(this);
@@ -302,7 +260,20 @@ export default class WellogComponent {
   }
 
   /**
-   * Adds a track to the wellog component
+   * Set tracks
+   * @param {...Track} tracks array of tracks
+   */
+  setTracks(...tracks) {
+    this.tracks = tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
+    this.tracks.sort((a, b) => a.order - b.order);
+    this.updateLegendRows();
+    if (this._initialized) {
+      this.debounce('updateTracks');
+    }
+  }
+
+  /**
+   * Adds a single track to the wellog component
    * @param {Track} track track to be added
    */
   addTrack(track) {
@@ -354,6 +325,7 @@ export default class WellogComponent {
       options: {
         margin,
       },
+      updateRubberband,
       innerWidth: oldInnerWidth,
       innerHeight: oldInnerHeight,
       _titleHeight: oldTitleHeight,
@@ -400,7 +372,9 @@ export default class WellogComponent {
         height: this._plotHeight,
       });
 
-      updateRubberBand(overlay, this.innerWidth, this._plotHeight);
+      if (this.options.showRubberband) {
+        updateRubberband(overlay, this.innerWidth, this._plotHeight);
+      }
     }
   }
 
@@ -434,6 +408,66 @@ export default class WellogComponent {
     }
   }
 
+  /**
+   * Updates the rubber band controller
+   * @param {DOMElement} rbc rubber band container
+   * @param {number} w width
+   * @param {number} h height
+   */
+  updateRubberband(rbc, w, h) {
+    if (w <= 0 || h <= 0) return;
+
+    let rb = rbc.select('rect.rubber-band');
+    if (rb.empty()) {
+      rb = rbc.append('rect')
+        .attr('class', 'rubber-band')
+        .style('stroke-width', 5);
+
+      const rbs = rbc.append('rect').attrs({
+        class: 'tracker-rect',
+        x: 0,
+        y: 0,
+        width: w,
+        height: h,
+        stroke: 'none',
+        fill: 'transparent',
+      });
+
+      const _self = this;
+      rbs.on('mousemove', function rbmm() {
+        const [mx, my] = mouse(this);
+        rb.attrs({
+          y: my,
+        }).style('visibility', 'visible');
+
+        requestAnimationFrame(() => _self.options.rubberbandUpdate({
+          x: mx,
+          y: my,
+          source: _self,
+        }));
+      });
+
+      rbs.on('mouseout', () => {
+        rb.style('visibility', 'hidden');
+        requestAnimationFrame(() => _self.options.rubberbandExit({
+          source: _self,
+        }));
+      });
+    }
+
+    rbc.select('rect.tracker-rect').attrs({
+      width: w,
+      height: h,
+    });
+
+    rb.attrs({
+      x: 0,
+      width: w,
+      y: 0,
+      height: 1,
+      class: 'rubber-band',
+    }).style('visibility', 'hidden');
+  }
   /**
    * Adjust track titles according to available space. Uses abbrievation
    * istead of full label if not enough space.
@@ -629,3 +663,4 @@ export default class WellogComponent {
     return this.scaleHandler.internalScale;
   }
 }
+
