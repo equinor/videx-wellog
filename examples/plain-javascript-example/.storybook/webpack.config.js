@@ -7,5 +7,10 @@ module.exports = async ({ config }) => {
     loaders: ["style-loader", "css-loader", "sass-loader"],
     include: path.resolve(__dirname, "../../../src")
   });
+  config.module.rules.push({
+    test: /\.story\.js?$/,
+    loaders: [require.resolve('@storybook/source-loader')],
+    enforce: 'pre',
+  });
   return config;
 };

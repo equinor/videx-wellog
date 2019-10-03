@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.2",
+    "@storybook/addon-storysource": "^5.2.1",
     "@storybook/html": "^5.2.1",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
