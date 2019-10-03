@@ -23,10 +23,11 @@ export default class BasicScaleHandler {
    * @param {d3.transform} transform transform from d3.event
    */
   rescale(transform) {
-    const transScale = this.scale.copy().domain(this.baseDomain);
+    const transScale = this.scale.copy().domain(this._baseDomain);
     const range = transScale.range().map(transform.invertY, transform);
     const domain = range.map(transScale.invert, transScale);
     this.scale.domain(domain);
+    return this;
   }
 
   /**
@@ -38,20 +39,30 @@ export default class BasicScaleHandler {
   }
 
   /**
-   * Getter for base domain
-   * @returns {number[]} the handler's base domain
+   * set or get base domain
+   * @param {number[]} [newDomain] new domain to set as base domain
+   * @returns {this|number[]} Is newDomain is not provided, the current base domain is returned.
    */
-  get baseDomain() {
+  baseDomain(newDomain) {
+    if (newDomain) {
+      this._baseDomain = newDomain;
+      this.scale.domain(newDomain);
+      return this;
+    }
     return this._baseDomain;
   }
 
   /**
-   * Setter for base domain
-   * @param {number[]} domain new base domain
+   * set or get scale's range
+   * @param {number[]} [newRange] new range to set as scale range
+   * @returns {this|number[]} Is newRange is not provided, the current scale range is returned.
    */
-  set baseDomain(domain) {
-    this._baseDomain = domain;
-    this.scale.domain(domain);
+  range(newRange) {
+    if (newRange) {
+      this.scale.range(newRange);
+      return this;
+    }
+    return this.scale.range();
   }
 
   /**

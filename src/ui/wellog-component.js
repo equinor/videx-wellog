@@ -174,7 +174,7 @@ export default class WellogComponent {
    */
   adjustZoomTransform() {
     const overlay = this.root.select('.overlay');
-    const [d1, d2] = this.scaleHandler.baseDomain;
+    const [d1, d2] = this.scaleHandler.baseDomain();
     if (d1 === d2) return;
 
     const y1 = this.scale(d1);
@@ -616,7 +616,7 @@ export default class WellogComponent {
    */
   set domain(value) {
     if (value && Array.isArray(value)) {
-      this.scaleHandler.baseDomain = value;
+      this.scaleHandler.baseDomain(value);
       this.rescale();
     }
   }

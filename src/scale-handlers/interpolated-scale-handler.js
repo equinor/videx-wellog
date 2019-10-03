@@ -33,7 +33,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
 
     this._mode = 0;
     this.interpolator = interpolator || noInterpolator;
-    this._alternateBase = interpolator.reverseInterpolatedDomain(baseDomain);
+    this._alternateBase = this.interpolator.reverseInterpolatedDomain(baseDomain);
 
     this.ticks = this.ticks.bind(this);
   }
@@ -99,6 +99,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
       d = interpolator.forwardInterpolatedDomain(scale.domain());
     }
     scale.domain(d);
+    return this;
   }
 
   /**
@@ -128,32 +129,28 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   }
 
   /**
-   * Getter for base domain, according to current on mode
-   * @returns {number[]} the handler's base domain
+   * set or get base domain, according to current on mode
+   * @param {number[]} [newDomain] new domain to set as base domain
+   * @returns {this|number[]} Is newDomain is not provided, the current base domain is returned.
    */
-  get baseDomain() {
-    return this._mode === 1 ? this._alternateBase : this._baseDomain;
-  }
+  baseDomain(newDomain) {
+    if (newDomain) {
+      const {
+        _mode: mode,
+        interpolator,
+        scale,
+      } = this;
 
-  /**
-   * Setter for base domain (according to master mode)
-   * @param {number[]} domain new base domain
-   */
-  set baseDomain(domain) {
-    const {
-      _mode: mode,
-      interpolator,
-      scale,
-    } = this;
+      this._baseDomain = newDomain;
 
-    this._baseDomain = domain;
-
-    if (mode === 1) {
-      this._alternateBase = [...domain];
-    } else {
-      this._alternateBase = interpolator.reverseInterpolatedDomain(domain);
+      if (mode === 1) {
+        this._alternateBase = [...newDomain];
+      } else {
+        this._alternateBase = interpolator.reverseInterpolatedDomain(newDomain);
+      }
+      scale.domain(newDomain);
     }
-    scale.domain(domain);
+    return this._mode === 1 ? this._alternateBase : this._baseDomain;
   }
 
   /**
