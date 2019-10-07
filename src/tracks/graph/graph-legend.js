@@ -6,7 +6,7 @@ import {
   renderDotPlotLegend,
 } from '../../plots/legend/index';
 import LegendHelper from '../../utils/legend-helper';
-import { LinePlot, AreaPlot, DifferentialPlot } from '../../plots';
+import { LinePlot, AreaPlot, DotPlot, DifferentialPlot } from '../../plots';
 
 /**
  * Function for calculating the number of legend rows required by the track
