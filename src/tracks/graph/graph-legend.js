@@ -6,6 +6,7 @@ import {
   renderDotPlotLegend,
 } from '../../plots/legend/index';
 import LegendHelper from '../../utils/legend-helper';
+import { LinePlot, AreaPlot, DifferentialPlot } from '../../plots';
 
 /**
  * Function for calculating the number of legend rows required by the track
@@ -48,12 +49,14 @@ function updateLegendRows(selection, bounds, width, track) {
       plot.options.legendInfo(track.data) :
       {};
 
-    switch (plot.type) {
-      case 'line': renderLinePlotLegend(g, rowBounds, legendInfo, plot); break;
-      case 'area': renderAreaPlotLegend(g, rowBounds, legendInfo, plot); break;
-      case 'dot': renderDotPlotLegend(g, rowBounds, legendInfo, plot); break;
-      case 'differential': renderDifferentialPlotLegend(g, rowBounds, legendInfo, plot); break;
-      default: break;
+    if (plot instanceof LinePlot) {
+      renderLinePlotLegend(g, rowBounds, legendInfo, plot);
+    } else if (plot instanceof AreaPlot) {
+      renderAreaPlotLegend(g, rowBounds, legendInfo, plot);
+    } else if (plot instanceof DotPlot) {
+      renderDotPlotLegend(g, rowBounds, legendInfo, plot);
+    } else if (plot instanceof DifferentialPlot) {
+      renderDifferentialPlotLegend(g, rowBounds, legendInfo, plot);
     }
   });
 }
