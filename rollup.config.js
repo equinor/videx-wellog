@@ -21,7 +21,6 @@ const onwarn = (warning, warn) => {
 const external = Object.keys(dependencies);
 
 const exportedStyles = {
-  styles: 'src/styles.scss',
   'scale-styles': 'src/tracks/scale/styles.scss',
   'wellog-styles': 'src/ui/wellog-styles.scss',
 };
