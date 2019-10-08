@@ -1,5 +1,6 @@
 import { select } from 'd3';
 import Track from './track';
+import { setStyles } from '../utils';
 
 /**
  * Base track for tracks that renders HTML content
@@ -11,9 +12,7 @@ export default class HtmlTrack extends Track {
    */
   onMount(trackEvent) {
     super.onMount(trackEvent);
-    this.container = select(trackEvent.elm).append('div').styles({
-      position: 'relative',
-    });
+    this.container = select(trackEvent.elm).append('div').style('position', 'relative');
   }
 
   /**
@@ -28,7 +27,7 @@ export default class HtmlTrack extends Track {
       elm,
     } = this;
     if (container) {
-      container.styles({
+      setStyles(container, {
         width: `${elm.clientWidth}px`,
         height: `${elm.clientHeight}px`,
       });

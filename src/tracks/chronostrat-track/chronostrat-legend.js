@@ -1,5 +1,6 @@
 import { select } from 'd3';
 import LegendHelper from '../../utils/legend-helper';
+import { setProps, setAttrs } from '../../utils';
 
 /**
  * Renders confidence legend box to legend section
@@ -17,11 +18,15 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
   const lblLineBlack = lblGroup.append('line');
   const lblLine = lblGroup.append('line');
   const labelBg = lblGroup.append('rect');
-  const label = lblGroup.append('text').attrs({
-    transform: `translate(${xCenter},0)`,
-    'font-size': `${textSize}px`,
-  }).styles({
-    'text-anchor': 'middle',
+  const label = lblGroup.append('text');
+  setProps(label, {
+    attrs: {
+      transform: `translate(${xCenter},0)`,
+      'font-size': `${textSize}px`,
+    },
+    styles: {
+      'text-anchor': 'middle',
+    },
   });
 
   label.text(text).style('fill', color);
@@ -30,7 +35,7 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
 
   const yCenter = -(lblBbox.height / 3);
 
-  lblLineBlack.attrs({
+  setAttrs(lblLineBlack, {
     x1: 2,
     x2: w - 2,
     y1: yCenter,
@@ -39,7 +44,7 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
     'stroke-width': 1.5,
   });
 
-  lblLine.attrs({
+  setAttrs(lblLine, {
     x1: w * 0.1,
     x2: w * 0.9,
     y1: yCenter,
@@ -48,7 +53,7 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
     'stroke-width': 1.5,
   });
 
-  labelBg.attrs({
+  setAttrs(labelBg, {
     x: xCenter - (lblBbox.width * 0.5) - 2,
     y: lblBbox.y,
     width: lblBbox.width + 4,
@@ -57,9 +62,7 @@ function renderConfidenceLegendBox(lineNumber, g, w, textSize, color, text) {
     class: 'confidence-background',
   });
 
-  lblGroup.attrs({
-    transform: `translate(0,${textSize * lineNumber})`,
-  });
+  lblGroup.attr('transform', `translate(0,${textSize * lineNumber})`);
 }
 
 /**
@@ -76,7 +79,7 @@ function renderConfidenceLegend(g, bounds) {
 
   g.attr('transform', `translate(0,${y})rotate(0)`);
 
-  g.append('line').attrs({
+  setAttrs(g.append('line'), {
     x1: 0,
     x2: w + 2,
     y1: -(h * 0.15),

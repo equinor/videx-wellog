@@ -1,5 +1,6 @@
 import { select } from 'd3';
 import Track from './track';
+import { setProps } from '../utils';
 
 /**
  * Base track for tracks that renders to a canvas context
@@ -11,9 +12,7 @@ export default class CanvasTrack extends Track {
    */
   onMount(trackEvent) {
     super.onMount(trackEvent);
-    const canvas = select(trackEvent.elm).append('canvas').styles({
-      position: 'absolute',
-    });
+    const canvas = select(trackEvent.elm).append('canvas').style('position', 'absolute');
     this.ctx = canvas.node().getContext('2d');
   }
 
@@ -25,16 +24,22 @@ export default class CanvasTrack extends Track {
     super.onUpdate(trackEvent);
     const {
       ctx,
+      elm,
     } = this;
 
     if (ctx) {
-      select(ctx.canvas).styles({
-        width: `${this.elm.clientWidth}px`,
-        height: `${this.elm.clientHeight}px`,
-      }).attrs({
-        width: ctx.canvas.clientWidth,
-        height: ctx.canvas.clientHeight,
-      });
+      const canvas = select(ctx.canvas);
+      const props = {
+        styles: {
+          width: `${elm.clientWidth}px`,
+          height: `${elm.clientHeight}px`,
+        },
+        attrs: {
+          width: elm.clientWidth,
+          height: elm.clientHeight,
+        },
+      };
+      setProps(canvas, props);
     }
   }
 }

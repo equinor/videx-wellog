@@ -74,9 +74,7 @@ function onUpdateLegend(elm, bounds, track) {
 
   const g = lg.select('.svg-legend');
   const rows = g.selectAll('.legend-row').data(track.plots);
-  rows.enter().append('g').attrs({
-    class: 'legend-row',
-  });
+  rows.enter().append('g').classed('legend-row', true);
   rows.exit().remove();
 
   g.selectAll('.legend-row').call(updateLegendRows, bounds, w, track);

@@ -1,4 +1,5 @@
 import { select } from 'd3';
+import { setAttrs } from '../../utils';
 
 /**
  * Renders scale ticks to selection
@@ -23,15 +24,11 @@ export function renderTicks(selection, x, lb, max) {
     labelTransform = `translate(${labelX},${labelY})`;
   }
 
-  selection.attrs(d => ({
-    transform: `translate(0,${d.y})`,
-  }));
+  selection.attr('transform', d => `translate(0,${d.y})`);
 
-  selection.select('line').attrs({
-    x2: x(max),
-  });
+  selection.select('line').attr('x2', x(max));
 
-  selection.select('rect').attrs({
+  setAttrs(selection.select('rect'), {
     x: lb.offsetX,
     y: lb.offsetY,
     width: lb.rotateText ? lb.size : lb.length,
@@ -42,18 +39,17 @@ export function renderTicks(selection, x, lb, max) {
     .attr('font-size', `${lb.size}px`)
     .attr('transform', labelTransform);
 
-  const newTicks = selection.enter().append('g').attrs(d => ({
-    class: 'major-tick',
-    transform: `translate(0,${d.y})`,
-  }));
+  const newTicks = selection.enter().append('g')
+    .classed('major-tick', true)
+    .attr('transform', d => `translate(0,${d.y})`);
 
-  newTicks.append('line').attrs({
+  setAttrs(newTicks.append('line'), {
     x1: 0,
     x2: x(max),
     class: 'major-tick-line',
   });
 
-  newTicks.append('rect').attrs({
+  setAttrs(newTicks.append('rect'), {
     x: lb.offsetX,
     y: lb.offsetY,
     class: 'label-bg',
@@ -61,17 +57,16 @@ export function renderTicks(selection, x, lb, max) {
     height: lb.rotateText ? lb.length : lb.size,
   });
 
-  newTicks.append('text').text(d => d.v)
-    .styles({
-      'text-anchor': 'middle',
-    })
-    .attrs({
-      class: 'label',
-      'font-size': `${lb.size}px`,
-      'stroke-width': 0.5,
-      'font-family': 'Verdana Tahoma Arial',
-      transform: labelTransform,
-    });
+  const tickText = newTicks.append('text').text(d => d.v)
+    .classed('label', true)
+    .style('text-anchor', 'middle');
+
+  setAttrs(tickText, {
+    'font-size': `${lb.size}px`,
+    'stroke-width': 0.5,
+    'font-family': 'Verdana Tahoma Arial',
+    transform: labelTransform,
+  });
 
   selection.exit().remove();
 }
@@ -143,24 +138,27 @@ function onUpdateLegend(elm, bounds, track) {
   const y3 = y2 + (textSize / 1.2);
 
   const g = lg.select('.scale-legend');
-  const lbl = g.select('text.scale-title').attrs({
+  const lbl = g.select('text.scale-title');
+  setAttrs(lbl, {
     transform: `translate(${x},${y1})`,
     'font-size': `${textSize}px`,
     fill: track.isMaster ? 'black' : '#555',
   });
-  lbl.text(track.label);
+  lbl.text(track.options.abbr || track.options.label);
 
-  const val = g.select('text.scale-range').attrs({
+  const val = g.select('text.scale-range');
+  setAttrs(val, {
     transform: `translate(${x},${y2})`,
     'font-size': `${textSize}px`,
   });
   val.text(Number.isNaN(span) ? '-' : span);
 
-  const unit = g.select('text.scale-units').attrs({
+  const unit = g.select('text.scale-units');
+  setAttrs(unit, {
     transform: `translate(${x},${y3})`,
     'font-size': `${textSize / 1.2}px`,
   });
-  unit.text('meters');
+  unit.text(track.options.units || 'units');
 }
 
 /**
@@ -177,18 +175,13 @@ export const scaleLegendConfig = ({
 
     const g = lg.append('g').attr('class', 'scale-legend');
 
-    g.append('text').attrs({
-      class: 'scale-title',
-      'font-weight': '600',
-    }).styles({
-      'text-anchor': 'middle',
-    });
-    g.append('text').attr('class', 'scale-range').styles({
-      'text-anchor': 'middle',
-    });
-    g.append('text').attr('class', 'scale-units').styles({
-      'text-anchor': 'middle',
-    });
+    g.append('text')
+      .classed('scale-title', true)
+      .attr('font-weight', '600')
+      .style('text-anchor', 'middle');
+
+    g.append('text').attr('class', 'scale-range').style('text-anchor', 'middle');
+    g.append('text').attr('class', 'scale-units').style('text-anchor', 'middle');
   },
   onUpdate: onUpdateLegend,
 });

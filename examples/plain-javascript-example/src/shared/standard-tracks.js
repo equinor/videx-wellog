@@ -9,6 +9,7 @@ import { formationData } from './mock-data';
 export const scaleTrack = new ScaleTrack('scale', {
   label: 'MD',
   abbr: 'MD',
+  units: 'meters',
   maxWidth: 45,
   legendConfig: scaleLegendConfig,
 });

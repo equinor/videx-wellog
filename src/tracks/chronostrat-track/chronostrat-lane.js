@@ -1,4 +1,5 @@
 import { select, scaleLinear } from 'd3';
+import { setProps, setAttrs } from '../../utils';
 
 const confidence = {
   E: 'green',
@@ -32,7 +33,7 @@ const nonDepthBoxCenterLine = {
  * @param {d3.scale} x x-scale
  */
 function renderNormalSection(selection, x) {
-  selection.select('rect').attrs((d) => {
+  setAttrs(selection.select('rect'), d => {
     let from = d.yFrom;
     let to = d.yTo;
 
@@ -47,7 +48,7 @@ function renderNormalSection(selection, x) {
     });
   });
 
-  selection.select('rect.lane-bg').attrs((d) => {
+  setAttrs(selection.select('rect.lane-bg'), d => {
     let from = d.yFrom;
     let to = d.yTo;
 
@@ -62,31 +63,31 @@ function renderNormalSection(selection, x) {
     });
   });
 
-  selection.select('line.line-top').attrs({
+  setAttrs(selection.select('line.line-top'), {
     x1: x(0),
     x2: x(1),
   });
 
-  selection.select('line.line-top-center').attrs({
+  setAttrs(selection.select('line.line-top-center'), {
     x1: x(0.15),
     x2: x(0.85),
   });
 
-  selection.select('line.line-middle').attrs(d => ({
+  setAttrs(selection.select('line.line-middle'), d => ({
     x1: x(0.5),
     x2: x(0.5),
     y1: 0,
     y2: d.yTo - d.yFrom,
   }));
 
-  selection.select('line.line-bottom').attrs(d => ({
+  setAttrs(selection.select('line.line-bottom'), d => ({
     x1: x(0),
     x2: x(1),
     y1: d.yTo - d.yFrom,
     y2: d.yTo - d.yFrom,
   }));
 
-  selection.select('line.line-bottom-center').attrs(d => ({
+  setAttrs(selection.select('line.line-bottom-center'), d => ({
     x1: x(0.15),
     x2: x(0.85),
     y1: d.yTo - d.yFrom,
@@ -100,7 +101,7 @@ function renderNormalSection(selection, x) {
  * @param {d3.scale} x x-scale
  */
 function reRenderNormalSection(selection, x) {
-  selection.append('rect').attrs((d) => {
+  setAttrs(selection.append('rect'), d => {
     let from = d.yFrom;
     let to = d.yTo;
 
@@ -118,7 +119,7 @@ function reRenderNormalSection(selection, x) {
     });
   });
 
-  selection.append('line').attrs({
+  setAttrs(selection.append('line'), {
     x1: x(0),
     x2: x(1),
     y1: 0,
@@ -128,7 +129,7 @@ function reRenderNormalSection(selection, x) {
     class: 'line-top',
   });
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0.15),
     x2: x(0.85),
     y1: 0,
@@ -138,7 +139,7 @@ function reRenderNormalSection(selection, x) {
     class: 'line-top-center',
   }));
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0.5),
     x2: x(0.5),
     y1: 0,
@@ -147,7 +148,7 @@ function reRenderNormalSection(selection, x) {
     class: 'line-middle',
   }));
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0),
     x2: x(1),
     y1: d.yTo - d.yFrom,
@@ -157,7 +158,7 @@ function reRenderNormalSection(selection, x) {
     class: 'line-bottom',
   }));
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0.15),
     x2: x(0.85),
     y1: d.yTo - d.yFrom,
@@ -261,18 +262,20 @@ function plotLabel(g, d, x, offsets) {
     .attr('class', 'label')
     .attr('transform', labelTransform);
   const labelBg = labelGroup.append('rect');
-  const label = labelGroup.append('text').text(name)
-    .styles({
+  const label = labelGroup.append('text').text(name);
+  setProps(label, {
+    styles: {
       'text-anchor': 'middle',
       'stroke-width': 0.5,
-    })
-    .attrs({
+    },
+    attrs: {
       class: 'label',
       fill: 'black',
       stroke: '#333',
       'text-anchor': 'middle',
       'font-size': `${textSize}px`,
-    });
+    },
+  });
 
   const bbox = label.node().getBBox();
   if ((d.hasDepth ? bbox.height > labelY : false) ||
@@ -280,7 +283,7 @@ function plotLabel(g, d, x, offsets) {
         d.name.length > 2 && chars <= 2) {
     labelGroup.remove();
   } else {
-    labelBg.attrs({
+    setAttrs(labelBg, {
       x: bbox.x - 2,
       y: bbox.y,
       width: bbox.width + 4,
@@ -296,31 +299,41 @@ function plotLabel(g, d, x, offsets) {
  * @param {d3.scale} x x-scale
  */
 function renderNoDepthSection(selection, x) {
-  selection.select('polygon.polygon-outline')
-    .attrs(d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle));
+  setAttrs(
+    selection.select('polygon.polygon-outline'),
+    d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle),
+  );
 
-  selection.select('polygon.polygon-content')
-    .attrs((d) => {
+  setAttrs(
+    selection.select('polygon.polygon-content'),
+    d => {
       nonDepthBoxContentStyle.stroke = confidence[d.confidenceEntry] || confidence.unknown;
       nonDepthBoxContentStyle.fill = d.color || 'white';
       return getNoDepthPolygon(d, x, nonDepthBoxContentStyle);
-    });
+    },
+  );
 
-  selection.select('line.line-center-left').attrs(d => ({
-    x1: x(0),
-    x2: x(0.25),
-    y1: d.yCenter,
-    y2: d.yCenter,
-    ...nonDepthBoxCenterLine,
-  }));
+  setAttrs(
+    selection.select('line.line-center-left'),
+    d => ({
+      x1: x(0),
+      x2: x(0.25),
+      y1: d.yCenter,
+      y2: d.yCenter,
+      ...nonDepthBoxCenterLine,
+    }),
+  );
 
-  selection.select('line.line-center-right').attrs(d => ({
-    x1: x(0.75),
-    x2: x(1),
-    y1: d.yCenter,
-    y2: d.yCenter,
-    ...nonDepthBoxCenterLine,
-  }));
+  setAttrs(
+    selection.select('line.line-center-right'),
+    d => ({
+      x1: x(0.75),
+      x2: x(1),
+      y1: d.yCenter,
+      y2: d.yCenter,
+      ...nonDepthBoxCenterLine,
+    }),
+  );
 }
 
 /**
@@ -329,19 +342,17 @@ function renderNoDepthSection(selection, x) {
  * @param {d3.scale} x x-scale
  */
 function reRenderNoDepthSection(selection, x) {
-  selection.append('polygon')
-    .attrs(d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle))
-    .classed('polygon-outline', true);
+  const polOutline = selection.append('polygon').classed('polygon-outline', true);
+  setAttrs(polOutline, d => getNoDepthPolygon(d, x, nonDepthBoxOutlineStyle));
 
-  selection.append('polygon')
-    .attrs((d) => {
-      nonDepthBoxContentStyle.stroke = confidence[d.confidenceEntry] || confidence.unknown;
-      nonDepthBoxContentStyle.fill = d.color || 'white';
-      return getNoDepthPolygon(d, x, nonDepthBoxContentStyle);
-    })
-    .classed('polygon-content', true);
+  const pol = selection.append('polygon').classed('polygon-content', true);
+  setAttrs(pol, d => {
+    nonDepthBoxContentStyle.stroke = confidence[d.confidenceEntry] || confidence.unknown;
+    nonDepthBoxContentStyle.fill = d.color || 'white';
+    return getNoDepthPolygon(d, x, nonDepthBoxContentStyle);
+  });
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0),
     x2: x(0.25),
     y1: d.yCenter,
@@ -350,7 +361,7 @@ function reRenderNoDepthSection(selection, x) {
     class: 'line-center-left',
   }));
 
-  selection.append('line').attrs(d => ({
+  setAttrs(selection.append('line'), d => ({
     x1: x(0.75),
     x2: x(1),
     y1: d.yCenter,
@@ -401,7 +412,7 @@ export default class ChronostratLane {
 
     const selection = plotGroup.select(`line.${this.className}-separator`);
     if (selection.empty()) {
-      plotGroup.append('line').attrs({
+      setAttrs(plotGroup.append('line'), {
         x1: x,
         x2: x,
         y1: 0,
@@ -411,7 +422,7 @@ export default class ChronostratLane {
         transform: `translate(${this.xTranslate},0)`,
       });
     } else {
-      selection.attrs({
+      setAttrs(selection, {
         x1: x,
         x2: x,
         y1: 0,
@@ -475,9 +486,7 @@ export default class ChronostratLane {
 
       const selection = plotGroup.selectAll(`g.${this.className}`).data(chronoData, d => d.name);
 
-      selection.attrs(d => ({
-        transform: `translate(${this.xTranslate},${d.yFrom})`,
-      }));
+      selection.attr('transform', d => `translate(${this.xTranslate},${d.yFrom})`);
 
       const selectionNoDepth = selection.filter(d => !d.hasDepth);
       renderNoDepthSection(selectionNoDepth, x);
@@ -485,10 +494,9 @@ export default class ChronostratLane {
       const selectionNormal = selection.filter(d => d.hasDepth);
       renderNormalSection(selectionNormal, x);
 
-      const newChronoLane = selection.enter().append('g').attrs(d => ({
-        class: this.className,
-        transform: `translate(${this.xTranslate},${d.yFrom})`,
-      }));
+      const newChronoLane = selection.enter().append('g')
+        .classed(this.className, true)
+        .attr('transform', d => `translate(${this.xTranslate},${d.yFrom})`);
 
       const newChronoLaneNoDepth = newChronoLane.filter(d => !d.hasDepth);
       reRenderNoDepthSection(newChronoLaneNoDepth, x);

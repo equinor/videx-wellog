@@ -6,7 +6,7 @@ import {
   zoomIdentity,
   zoomTransform,
 } from 'd3';
-
+import { setProps, setAttrs, setStyles } from '../utils';
 import BasicScaleHandler from '../scale-handlers/basic-scale-handler';
 
 const defaultOptions = {
@@ -90,22 +90,20 @@ export default class WellogComponent {
 
     const root = select(elm).classed('well-log', true);
 
-    root.styles({
+    setStyles(root, {
       position: 'relative',
     });
 
     const main = root
       .append('div')
-      .styles({
-        margin: `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
-      })
       .attr('class', 'main-group');
 
-    main.append('div').attr('class', 'tracks-group');
-
-    const overlay = main.append('svg').attrs({
-      class: 'overlay',
+    setStyles(main, {
+      margin: `${margin.top}px ${margin.right}px ${margin.bottom}px ${margin.left}px`,
     });
+    main.append('div').classed('tracks-group', true);
+
+    const overlay = main.append('svg').classed('overlay', true);
 
     overlay.call(this.zoom);
 
@@ -183,15 +181,19 @@ export default class WellogComponent {
 
     let legendElement = elm;
     if (legendConfig.elementType === 'svg') {
-      legendElement = select(elm).append('svg')
-        .attrs({
+      const legendSelection = select(elm).append('svg');
+
+      setProps(legendSelection, {
+        attrs: {
           width: '100%',
           height: '100%',
-        })
-        .styles({
+        },
+        styles: {
           flex: '1 1 auto',
-        })
-        .node();
+        },
+      });
+
+      legendElement = legendSelection.node();
     }
 
     if (legendConfig.onInit) {
@@ -365,11 +367,15 @@ export default class WellogComponent {
     // resize svg overlay
     if (this.innerWidth !== oldInnerWidth || this._plotHeight !== oldPlotHeight) {
       this.debounce('updateTracks');
-      const overlay = root.select('svg.overlay').styles({
-        top: `${this.innerHeight - this._plotHeight + 1}px`,
-      }).attrs({
-        width: this.innerWidth,
-        height: this._plotHeight,
+      const overlay = root.select('svg.overlay');
+      setProps(overlay, {
+        styles: {
+          top: `${this.innerHeight - this._plotHeight + 1}px`,
+        },
+        attrs: {
+          width: this.innerWidth,
+          height: this._plotHeight,
+        },
       });
 
       if (this.options.showRubberband) {
@@ -423,7 +429,8 @@ export default class WellogComponent {
         .attr('class', 'rubber-band')
         .style('stroke-width', 5);
 
-      const rbs = rbc.append('rect').attrs({
+      const rbs = rbc.append('rect');
+      setAttrs(rbs, {
         class: 'tracker-rect',
         x: 0,
         y: 0,
@@ -436,9 +443,7 @@ export default class WellogComponent {
       const _self = this;
       rbs.on('mousemove', function rbmm() {
         const [mx, my] = mouse(this);
-        rb.attrs({
-          y: my,
-        }).style('visibility', 'visible');
+        rb.attr('y', my).style('visibility', 'visible');
 
         requestAnimationFrame(() => _self.options.rubberbandUpdate({
           x: mx,
@@ -455,12 +460,12 @@ export default class WellogComponent {
       });
     }
 
-    rbc.select('rect.tracker-rect').attrs({
+    setAttrs(rbc.select('rect.tracker-rect'), {
       width: w,
       height: h,
     });
 
-    rb.attrs({
+    setAttrs(rb, {
       x: 0,
       width: w,
       y: 0,
@@ -534,32 +539,31 @@ export default class WellogComponent {
       _titleFontSize: fontSize,
     } = this;
 
-    const newtracks = selection.append('div').attr('class', 'track').styles({
+    const newtracks = selection.append('div').attr('class', 'track');
+    setStyles(newtracks, {
       flex: '0 0 0%',
       'max-width': d => (d.options.maxWidth ? `${d.options.maxWidth}px` : null),
     });
 
-    newtracks.append('div')
-      .attrs(d => ({
+    const trackGroup = newtracks.append('div');
+    setProps(trackGroup, {
+      attrs: d => ({
         class: 'track-title',
         title: d.options.label,
-      }))
-      .styles({
+      }),
+      styles: {
         height: `${titleHeight}px`,
         'font-size': `${fontSize}px`,
-      });
+      },
+    });
 
     newtracks.append('div')
       .classed('track-legend', true)
-      .styles({
-        height: `${legendHeight}px`,
-      });
+      .style('height', `${legendHeight}px`);
 
     newtracks.append('div').attr('class', 'track-plot');
 
-    const loader = newtracks.append('div').attrs({
-      class: 'loader hidden',
-    });
+    const loader = newtracks.append('div').classed('loader hidden', true);
 
     for (let i = 0; i < 3; i++) {
       loader.append('div').classed('loading-dots', true);
@@ -596,14 +600,12 @@ export default class WellogComponent {
     } = this;
 
     selection.style('flex', d => `${d.options.width}`);
-    selection.select('.track-title').styles({
+    setStyles(selection.select('.track-title'), {
       height: `${titleHeight}px`,
       'font-size': `${fontSize}px`,
     });
 
-    selection.select('.track-legend').styles({
-      height: `${legendHeight}px`,
-    });
+    selection.select('.track-legend').style('height', `${legendHeight}px`);
   }
 
   /**

@@ -1,4 +1,5 @@
 import { renderTextLabels } from './common';
+import { setProps } from '../../utils';
 
 /**
  * Renders Dot Plot legend to a SVG group element according to bounds.
@@ -18,20 +19,26 @@ export default function renderDotPlotLegend(g, bounds, legendInfo, plot) {
 
   g.selectAll('*').remove();
 
-  g.append('circle').attrs({
-    cx: cx1,
-    cy,
-    r,
-  }).styles({
-    fill: color,
+  setProps(g.append('circle'), {
+    attrs: {
+      cx: cx1,
+      cy,
+      r,
+    },
+    styles: {
+      fill: color,
+    },
   });
 
-  g.append('circle').attrs({
-    cx: cx2,
-    cy,
-    r,
-  }).styles({
-    fill: color,
+  setProps(g.append('circle'), {
+    attrs: {
+      cx: cx2,
+      cy,
+      r,
+    },
+    styles: {
+      fill: color,
+    },
   });
 
   renderTextLabels(

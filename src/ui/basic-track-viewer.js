@@ -5,6 +5,7 @@ import {
   select,
   event as d3event,
 } from 'd3';
+import { setStyles } from '../utils';
 
 /**
  * A minimalistic wellog track container for displaying wellog tracks.
@@ -49,23 +50,25 @@ export default class BasicTrackViewer {
 
     const root = select(elm);
 
-    root.styles({
+    setStyles(root, {
       'user-select': 'none',
       flex: '1 1 auto',
       'font-family': 'Verdana, Tahoma, sans-serif',
       display: 'flex',
-    }).selectAll('*').remove();
+    });
+    root.selectAll('*').remove();
 
     this.container = root
       .append('div')
-      .attr('class', 'tracks-group')
-      .styles({
-        position: 'relative',
-        'min-height': 0,
-        display: 'flex',
-        flex: '1 1 auto',
-        'background-color': 'white',
-      });
+      .attr('class', 'tracks-group');
+
+    setStyles(this.container, {
+      position: 'relative',
+      'min-height': 0,
+      display: 'flex',
+      flex: '1 1 auto',
+      'background-color': 'white',
+    });
 
     this.zoom = zoom()
       .scaleExtent([1, 256])
@@ -94,25 +97,26 @@ export default class BasicTrackViewer {
 
     const selection = container.selectAll('.track').data(tracks, d => d.id);
 
-    selection.enter().append('div')
-      .attr('class', 'track')
-      .styles(d => ({
-        flex: `${d.options.width}`,
-        'max-width': (d.options.maxWidth ? `${d.options.maxWidth}px` : null),
-        'border-right': '1.3px solid #333',
-        overflow: 'hidden',
-        padding: 0,
-        'pointer-events': 'none',
-        display: 'flex',
-        'flex-direction': 'column',
-      }))
-      .each(function addTrackCallback(d) {
-        const ev = {
-          elm: this,
-          scale,
-        };
-        d.onMount(ev);
-      });
+    const newTracks = selection.enter().append('div').classed('track', true);
+
+    setStyles(newTracks, d => ({
+      flex: `${d.options.width}`,
+      'max-width': (d.options.maxWidth ? `${d.options.maxWidth}px` : null),
+      'border-right': '1.3px solid #333',
+      overflow: 'hidden',
+      padding: 0,
+      'pointer-events': 'none',
+      display: 'flex',
+      'flex-direction': 'column',
+    }));
+
+    newTracks.each(function addTrackCallback(d) {
+      const ev = {
+        elm: this,
+        scale,
+      };
+      d.onMount(ev);
+    });
 
 
     selection.exit().remove();

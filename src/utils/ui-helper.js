@@ -1,22 +1,40 @@
 /**
- * Find and return the track instance positioned at a given
- * x-coordinate of the tracks container element.
- * NOTE: Requires tracks to be within the same containing DOM element
- * and that the tracks are stacked horizontally.
- * @param {Track[]} tracks Tracks to search.
+ * Find and return the element of elements positioned at a given
+ * x-coordinate of its container element.
+ * NOTE: Requires elements to be within the same containing DOM element
+ * and stacked side-by-side horizontally.
+ * @param {HTMLElement[]} elements html elements to search.
  * @param {number} xpos X position
  */
-function findTrackByXPosition(tracks, xpos) {
-  for (let i = 0; i < tracks.length; i++) {
-    const track = tracks[i];
-    const { elm } = track;
+function pickHStackedElement(elements, xpos) {
+  for (let i = 0; i < elements.length; i++) {
+    const elm = elements[i];
     if (xpos >= elm.offsetLeft && xpos <= elm.offsetLeft + elm.clientWidth) {
-      return track;
+      return elm;
+    }
+  }
+  return null;
+}
+
+/**
+ * Find and return the element of elements positioned at a given
+ * y-coordinate of its container element.
+ * NOTE: Requires elements to be within the same containing DOM element
+ * and stacked top-by-down vertically.
+ * @param {HTMLElement[]} elements html elements to search.
+ * @param {number} ypos Y position
+ */
+function pickVStackedElement(elements, ypos) {
+  for (let i = 0; i < elements.length; i++) {
+    const elm = elements[i];
+    if (ypos >= elm.offsetTop && ypos <= elm.offsetTop + elm.clientHeight) {
+      return elm;
     }
   }
   return null;
 }
 
 export default {
-  findTrackByXPosition,
+  pickHStackedElement,
+  pickVStackedElement,
 };

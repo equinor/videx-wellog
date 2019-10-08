@@ -1,4 +1,5 @@
 import { renderBasicPlotLegend } from './common';
+import { setAttrs } from '../../utils';
 
 /**
  * Renders differential plot legend to a SVG group element according to bounds.
@@ -35,7 +36,7 @@ export default function renderDifferentialPlotLegend(g, bounds, legendInfo, plot
   g.selectAll('*').remove();
 
   if (legend1 && legend1.show) {
-    g.append('rect').attrs({
+    setAttrs(g.append('rect'), {
       x: left + 2,
       y: shadeY,
       width: shadeW,
@@ -44,7 +45,7 @@ export default function renderDifferentialPlotLegend(g, bounds, legendInfo, plot
       'fill-opacity': fillOpacity,
     });
 
-    g.append('rect').attrs({
+    setAttrs(g.append('rect'), {
       x: centerX,
       y: shadeY,
       width: shadeW,

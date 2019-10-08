@@ -1,3 +1,5 @@
+import { setProps, setAttrs } from '../../utils';
+
 /**
  * Renders label, min/max values for domain and unit
  * @param {SVGGElement} g SVG group element to append to
@@ -32,26 +34,27 @@ export function renderTextLabels(
 
   let labelBg;
   if (addLabelBg) {
-    labelBg = g.append('rect').attrs({
-      class: 'label-bg',
-      fill: 'white',
-    });
+    labelBg = g.append('rect')
+      .classed('label-bg', true)
+      .attr('fill', 'white');
   }
 
-  const labelText = g.append('text').text(label)
-    .styles({
+  const labelText = g.append('text').text(label);
+  setProps(labelText, {
+    styles: {
       'text-anchor': 'middle',
       fill: color,
-    })
-    .attrs({
+    },
+    attrs: {
       class: 'legend-label',
       'font-size': `${textSize}px`,
       transform: labelTransform,
-    });
+    },
+  });
 
   if (addLabelBg) {
     const bbox = labelText.node().getBBox();
-    labelBg.attrs({
+    setAttrs(labelBg, {
       x: (centerX + bbox.x) - 1,
       y: top + 1,
       width: bbox.width + 2,
@@ -63,43 +66,49 @@ export function renderTextLabels(
   if (unit) {
     const unitX = centerX;
     const unitTransform = `translate(${unitX},${subY})`;
-    g.append('text').text(unit)
-      .styles({
+    const unitText = g.append('text').text(unit);
+    setProps(unitText, {
+      styles: {
         'text-anchor': 'middle',
         fill: color,
-      })
-      .attrs({
+      },
+      attrs: {
         class: 'legend-unit',
         'font-size': `${subTextSize}px`,
         transform: unitTransform,
-      });
+      },
+    });
   }
 
   const minText = min > 1000 ? `${Math.round(min / 1000)}k` : `${min}`;
   const maxText = max > 1000 ? `${Math.round(max / 1000)}k` : `${max}`;
   // domain
-  g.append('text').text(minText)
-    .styles({
+  const minDomain = g.append('text').text(minText);
+  setProps(minDomain, {
+    styles: {
       'text-anchor': 'start',
       fill: color,
-    })
-    .attrs({
+    },
+    attrs: {
       class: 'legend-domain',
       'font-size': `${subTextSize}px`,
       x: left + 2,
       y: subY,
-    });
-  g.append('text').text(maxText)
-    .styles({
+    },
+  });
+  const maxDomain = g.append('text').text(maxText);
+  setProps(maxDomain, {
+    styles: {
       'text-anchor': 'end',
       fill: color,
-    })
-    .attrs({
+    },
+    attrs: {
       class: 'legend-domain',
       'font-size': `${subTextSize}px`,
       x: left + w - 2,
       y: subY,
-    });
+    },
+  });
 }
 
 /**
@@ -119,15 +128,19 @@ export function renderBasicPlotLegend(g, bounds, label, unit, domain, color, add
   const lineY = bounds.top + (bounds.height * 0.5);
   const lineWidth = bounds.height * 0.1;
 
-  g.append('line').attrs({
-    x1,
-    x2,
-    y1: lineY,
-    y2: lineY,
-  }).styles({
-    'stroke-width': lineWidth,
-    stroke: color,
-    fill: color,
+  const line = g.append('line');
+  setProps(line, {
+    attrs: {
+      x1,
+      x2,
+      y1: lineY,
+      y2: lineY,
+    },
+    styles: {
+      'stroke-width': lineWidth,
+      stroke: color,
+      fill: color,
+    },
   });
 
   renderTextLabels(

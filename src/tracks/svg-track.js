@@ -1,5 +1,6 @@
 import { select } from 'd3';
 import Track from './track';
+import { setStyles } from '../utils';
 
 /**
  * Base track for tracks that renders SVG content
@@ -11,9 +12,7 @@ export default class SvgTrack extends Track {
    */
   onMount(trackEvent) {
     super.onMount(trackEvent);
-    this.plotGroup = select(trackEvent.elm).append('svg').styles({
-      position: 'absolute',
-    });
+    this.plotGroup = select(trackEvent.elm).append('svg').style('position', 'absolute');
   }
 
   /**
@@ -22,7 +21,7 @@ export default class SvgTrack extends Track {
    */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
-    this.plotGroup.styles({
+    setStyles(this.plotGroup, {
       height: `${this.elm.clientHeight}px`,
       width: `${this.elm.clientWidth}px`,
     });

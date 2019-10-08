@@ -1,5 +1,6 @@
 import { select, scaleLinear } from 'd3';
 import SvgTrack from './svg-track';
+import { setProps, setAttrs } from '../utils';
 
 /**
  * Default color
@@ -64,24 +65,26 @@ function plotLabel(g, d, x, offsets) {
     .attr('class', 'label')
     .attr('transform', labelTransform);
   const labelBg = labelGroup.append('rect');
-  const label = labelGroup.append('text').text(d.name)
-    .styles({
+  const label = labelGroup.append('text').text(d.name);
+  setProps(label, {
+    styles: {
       'text-anchor': 'middle',
       'stroke-width': 0.5,
-    })
-    .attrs({
+    },
+    attrs: {
       class: 'label',
       fill: 'black',
       stroke: '#333',
       'text-anchor': 'middle',
       'font-size': `${textSize}px`,
-    });
+    },
+  });
 
   const bbox = label.node().getBBox();
   if (bbox.width > height) {
     labelGroup.remove();
   } else {
-    labelBg.attrs({
+    setAttrs(labelBg, {
       x: bbox.x - 2,
       y: bbox.y,
       width: bbox.width + 4,
@@ -177,11 +180,9 @@ export default class CementTrack extends SvgTrack {
       }).filter(d => d !== null);
       const selection = g.selectAll('g.cement').data(cementData, d => d.name);
 
-      selection.attrs(d => ({
-        transform: `translate(0,${d.yFrom})`,
-      }));
+      selection.attr('transform', d => `translate(0,${d.yFrom})`);
 
-      selection.select('rect').attrs((d) => {
+      setAttrs(selection.select('rect'), d => {
         let from = d.yFrom;
         let to = d.yTo;
 
@@ -196,31 +197,33 @@ export default class CementTrack extends SvgTrack {
         });
       });
 
-      selection.select('line.line-top').attrs({
+      setAttrs(selection.select('line.line-top'), {
         x1: xscale(0.25),
         x2: xscale(0.75),
       });
 
-      selection.select('line.line-middle').attrs(d => ({
+      setAttrs(selection.select('line.line-middle'), d => ({
         x1: xscale(0.5),
         x2: xscale(0.5),
         y1: 0,
         y2: d.yTo - d.yFrom,
       }));
 
-      selection.select('line.line-bottom').attrs(d => ({
+      setAttrs(selection.select('line.line-bottom'), d => ({
         x1: xscale(0.25),
         x2: xscale(0.75),
         y1: d.yTo - d.yFrom,
         y2: d.yTo - d.yFrom,
       }));
 
-      const newCement = selection.enter().append('g').attrs(d => ({
+      const newCement = selection.enter().append('g');
+      setAttrs(newCement, d => ({
         class: 'cement',
         transform: `translate(0,${d.yFrom})`,
       }));
 
-      newCement.append('rect').attrs((d) => {
+      const box = newCement.append('rect');
+      setAttrs(box, d => {
         let from = d.yFrom;
         let to = d.yTo;
 
@@ -238,7 +241,8 @@ export default class CementTrack extends SvgTrack {
         });
       });
 
-      newCement.append('line').attrs({
+      const l1 = newCement.append('line');
+      setAttrs(l1, {
         x1: xscale(0.25),
         x2: xscale(0.75),
         y1: 0,
@@ -247,7 +251,8 @@ export default class CementTrack extends SvgTrack {
         class: 'line-top',
       });
 
-      newCement.append('line').attrs(d => ({
+      const l2 = newCement.append('line');
+      setAttrs(l2, d => ({
         x1: xscale(0.5),
         x2: xscale(0.5),
         y1: 0,
@@ -256,7 +261,8 @@ export default class CementTrack extends SvgTrack {
         class: 'line-middle',
       }));
 
-      newCement.append('line').attrs(d => ({
+      const l3 = newCement.append('line');
+      setAttrs(l3, d => ({
         x1: xscale(0.25),
         x2: xscale(0.75),
         y1: d.yTo - d.yFrom,

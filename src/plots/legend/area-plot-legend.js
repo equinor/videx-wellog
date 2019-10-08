@@ -1,4 +1,5 @@
 import { renderBasicPlotLegend } from './common';
+import { setAttrs } from '../../utils';
 
 /**
  * Renders area legend to a SVG group element according to bounds.
@@ -27,7 +28,7 @@ export default function renderAreaPlotLegend(g, bounds, legendInfo, plot) {
     const fillInv = plot.useMinAsBase && minIsLeft ?
       plot.options.inverseColor : plot.options.color;
 
-    g.append('rect').attrs({
+    setAttrs(g.append('rect'), {
       x: left + 2,
       y: shadeY,
       width: shadeW,
@@ -36,7 +37,7 @@ export default function renderAreaPlotLegend(g, bounds, legendInfo, plot) {
       'fill-opacity': fillOpacity,
     });
 
-    g.append('rect').attrs({
+    setAttrs(g.append('rect'), {
       x: centerX,
       y: shadeY,
       width: shadeW,
@@ -45,7 +46,7 @@ export default function renderAreaPlotLegend(g, bounds, legendInfo, plot) {
       'fill-opacity': fillOpacity,
     });
   } else {
-    g.append('rect').attrs({
+    setAttrs(g.append('rect'), {
       x: left + 2,
       y: shadeY,
       width: Math.max(0, width - 4),

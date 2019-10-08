@@ -38,12 +38,10 @@ function renderBasicVerticalSvgLabel(g, bounds, label, abbr) {
   const textSize = Math.min(12, Math.min(w, 40) / 3);
   const x = (left || 0) + Math.max(0, (w / 2) - (textSize / 3));
 
-  const lbl = g.append('text').attrs({
-    transform: `translate(${x},${y})rotate(90)`,
-    'font-size': `${textSize}px`,
-  }).styles({
-    'text-anchor': 'end',
-  });
+  const lbl = g.append('text')
+    .attr('transform', `translate(${x},${y})rotate(90)`)
+    .attr('font-size', `${textSize}px`)
+    .style('text-anchor', 'end');
   lbl.text(label);
 
   const bbox = lbl.node().getBBox();
