@@ -52,7 +52,7 @@ export default class WellogComponent {
 
     this._debounces = {};
 
-    this.scaleHandler = options.scaleHandler || new BasicScaleHandler();
+    this._scaleHandler = options.scaleHandler || new BasicScaleHandler();
 
     this.init = this.init.bind(this);
     this.rescale = this.rescale.bind(this);
@@ -512,6 +512,13 @@ export default class WellogComponent {
   }
 
   /**
+   * Remove all tracks and update ui
+   */
+  reset() {
+    this.setTracks([]);
+  }
+
+  /**
    * Remove DOM-elements belonging to removed tracks
    * @param {d3.Selection} selection
    */
@@ -647,7 +654,7 @@ export default class WellogComponent {
   }
 
   /**
-   * Setter from (base) domain
+   * Setter for (base) domain
    * @param {number[]} value
    */
   set domain(value) {
@@ -655,6 +662,23 @@ export default class WellogComponent {
       this.scaleHandler.baseDomain(value);
       this.rescale();
     }
+  }
+
+  /**
+   * Getter for scaleHandler
+   * @returns {class} current scale handler
+   */
+  get scaleHandler() {
+    return this._scaleHandler;
+  }
+
+  /**
+   * Setter for scaleHandler
+   * @param {class} newHandler new scale handler
+   */
+  set scaleHandler(newHandler) {
+    newHandler.range(this._scaleHandler.range());
+    this._scaleHandler = newHandler;
   }
 
   /**
