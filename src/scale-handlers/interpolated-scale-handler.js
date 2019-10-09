@@ -149,6 +149,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
         this._alternateBase = interpolator.reverseInterpolatedDomain(newDomain);
       }
       scale.domain(newDomain);
+      return this;
     }
     return this._mode === 1 ? this._alternateBase : this._baseDomain;
   }

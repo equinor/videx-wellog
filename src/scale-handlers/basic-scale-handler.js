@@ -23,7 +23,7 @@ export default class BasicScaleHandler {
    * @param {d3.transform} transform transform from d3.event
    */
   rescale(transform) {
-    const transScale = this.scale.copy().domain(this._baseDomain);
+    const transScale = this.scale.copy().domain(this.baseDomain());
     const range = transScale.range().map(transform.invertY, transform);
     const domain = range.map(transScale.invert, transScale);
     this.scale.domain(domain);
