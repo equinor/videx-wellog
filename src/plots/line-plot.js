@@ -33,6 +33,8 @@ export default class LinePlot extends Plot {
       options,
     } = this;
 
+    ctx.save();
+
     const lineFunction = line()
       .x(d => xscale(d[1]))
       .y(d => scale(d[0]))
@@ -52,5 +54,7 @@ export default class LinePlot extends Plot {
     } else {
       ctx.stroke();
     }
+
+    ctx.restore();
   }
 }

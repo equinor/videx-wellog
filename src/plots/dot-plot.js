@@ -33,6 +33,8 @@ export default class DotPlot extends Plot {
 
     const r = options.radius || Math.min(5, xscale.range()[1] * 0.04);
 
+    ctx.save();
+
     ctx.fillStyle = color;
     const arcL = Math.PI * 2;
     plotdata.forEach(d => {
@@ -40,5 +42,7 @@ export default class DotPlot extends Plot {
       ctx.arc(xscale(d[1]), scale(d[0]), r, 0, arcL);
       ctx.fill();
     });
+
+    ctx.restore();
   }
 }

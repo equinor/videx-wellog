@@ -53,6 +53,8 @@ export default class DifferentialPlot extends Plot {
 
     if (plotdata.length !== 2) return;
 
+    ctx.save();
+
     // render correlation areas
     const merged = DataHelper.mergeDataSeries(plotdata[0] || [], plotdata[1] || []);
     ctx.globalAlpha = fillOpacity || 0.5;
@@ -108,5 +110,7 @@ export default class DifferentialPlot extends Plot {
     ctx.lineWidth = serie2.lineWidth || 1;
     ctx.strokeStyle = serie2.color || 'blue';
     ctx.stroke();
+
+    ctx.restore();
   }
 }

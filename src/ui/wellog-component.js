@@ -85,7 +85,7 @@ export default class WellogComponent {
     const { margin } = this.options;
 
     this.zoom = zoom()
-      .scaleExtent([1, 256])
+      .scaleExtent([1, this.options.maxZoom || 256])
       .on('zoom', this.zoomed);
 
     const root = select(elm).classed('well-log', true);

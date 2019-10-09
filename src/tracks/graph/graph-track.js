@@ -171,7 +171,6 @@ export default class GraphTrack extends CanvasTrack {
 
     if (!ctx) return;
 
-
     ctx.save();
     ctx.clearRect(0, 0, ctx.canvas.clientWidth, ctx.canvas.clientHeight);
 

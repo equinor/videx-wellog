@@ -56,6 +56,9 @@ export default class AreaPlot extends Plot {
     const zeroValue = xscale(
       useMinAsBase ? Math.min(dmin, dmax) : Math.max(dmin, dmax),
     );
+
+    ctx.save();
+
     const areaFunction = area()
       .x1(d => xscale(d[1]))
       .x0(zeroValue)
@@ -92,5 +95,7 @@ export default class AreaPlot extends Plot {
     ctx.globalAlpha = 1;
     ctx.strokeStyle = color;
     ctx.stroke();
+
+    ctx.restore();
   }
 }

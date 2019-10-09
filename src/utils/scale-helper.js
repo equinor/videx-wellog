@@ -92,7 +92,10 @@ function createTicks(scale) {
   const minor = [];
 
   if (height > 0) {
-    const nTicks = Math.ceil(height / ticksFactor);
+    const nTicks = Math.min(
+      Math.ceil(height / ticksFactor),
+      Math.floor(dmax - dmin) * 2,
+    );
     major.push(...scale.ticks(nTicks));
 
     const tickHeight = height / major.length;
