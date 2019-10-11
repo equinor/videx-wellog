@@ -161,6 +161,8 @@ export default class CementTrack extends SvgTrack {
       data,
     } = this;
 
+    if (!g) return;
+
     if (!data || data.length === 0) {
       g.selectAll('g.cement').remove();
     } else {
