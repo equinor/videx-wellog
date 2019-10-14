@@ -336,8 +336,8 @@ export default class WellogComponent {
     } = this;
     const { width, height } = root.node().getBoundingClientRect();
 
-    this.innerWidth = Math.max(0, width - margin.left - margin.right);
-    this.innerHeight = Math.max(0, height - margin.top - margin.bottom);
+    this.innerWidth = width - margin.left - margin.right;
+    this.innerHeight = height - margin.top - margin.bottom;
 
     // exit early if nothing has changed
     if (!force && oldInnerWidth === this.innerWidth && oldInnerHeight === this.innerHeight) {
@@ -350,6 +350,8 @@ export default class WellogComponent {
     this._legendHeight = this.legendRows * legendBaseSize * this._uiScale;
     this._plotHeight = this.innerHeight - this._titleHeight - this._legendHeight;
     this._titleFontSize = this._titleHeight * titleFontSizeFactor;
+
+    if (this._plotHeight <= 0 || this.innerWidth <= 0) return;
 
     if (this._plotHeight !== oldPlotHeight) {
       this.scale.range([0, this._plotHeight]);
