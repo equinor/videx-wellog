@@ -73,6 +73,7 @@ export default class Track {
     if (this.options.onUnmount) {
       this.options.onUnmount(trackEvent, this);
     }
+    select(this.elm).selectAll('*').remove();
   }
 
   /**
