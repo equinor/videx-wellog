@@ -117,6 +117,24 @@ export default class Track {
   }
 
   /**
+   * Should be called from track implementation in case an
+   * unrecoverable error occurs.
+   * @param {Error} error Exception/error
+   */
+  onError(error) {
+    this._mounted = false;
+    this.isLoading = false;
+    this.error = error;
+    if (this.elm) {
+      select(this.elm).classed('error', true).selectAll('*').remove();
+    }
+    if (this.options.onError) {
+      this.options.onError(error, this);
+    }
+  }
+
+
+  /**
    * Allow triggering of update event without parameters
    */
   refresh() {

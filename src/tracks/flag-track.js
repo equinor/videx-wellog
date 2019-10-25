@@ -48,11 +48,14 @@ export default class FlagTrack extends CanvasTrack {
 
     if (options.data) {
       this.isLoading = true;
-      options.data().then(data => {
-        this.data = data;
-        this.isLoading = false;
-        // this.legendUpdate && this.legendUpdate();
-      });
+      options.data().then(
+        data => {
+          this.data = data;
+          this.isLoading = false;
+          // this.legendUpdate && this.legendUpdate();
+        },
+        error => super.onError(error),
+      );
     }
   }
 

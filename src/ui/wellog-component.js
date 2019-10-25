@@ -17,8 +17,6 @@ const defaultOptions = {
     left: 0,
   },
   showRubberband: true,
-  rubberbandUpdate: () => ({}),
-  rubberbandExit: () => ({}),
 };
 
 const titleBarBaseSize = 18;
@@ -71,8 +69,6 @@ export default class WellogComponent {
     this._trackExit = this._trackExit.bind(this);
     this._trackEnter = this._trackEnter.bind(this);
     this._trackUpdate = this._trackUpdate.bind(this);
-
-    this.getPanExcess = () => 0;
   }
 
   /**
@@ -147,12 +143,13 @@ export default class WellogComponent {
     const { transform } = event;
 
     this.scaleHandler.rescale(transform);
+    const panExcess = this.options.panExcess || [0, 0];
+    const { k } = this.currentTransform();
 
     this.zoom.translateExtent([
-      [0, 0],
-      [0, this._plotHeight + (this.getPanExcess() / this.currentTransform().k)],
+      [0, -Math.abs(panExcess[0] / k)],
+      [0, this._plotHeight + Math.abs(panExcess[1] / k)],
     ]);
-
     this.rescale();
   }
 
@@ -445,18 +442,22 @@ export default class WellogComponent {
         const [mx, my] = mouse(this);
         rb.attr('y', my).style('visibility', 'visible');
 
-        requestAnimationFrame(() => _self.options.rubberbandUpdate({
-          x: mx,
-          y: my,
-          source: _self,
-        }));
+        if (_self.options.rubberbandUpdate) {
+          requestAnimationFrame(() => _self.options.rubberbandUpdate({
+            x: mx,
+            y: my,
+            source: _self,
+          }));
+        }
       });
 
       rbs.on('mouseout', () => {
         rb.style('visibility', 'hidden');
-        requestAnimationFrame(() => _self.options.rubberbandExit({
-          source: _self,
-        }));
+        if (_self.options.rubberbandExit) {
+          requestAnimationFrame(() => _self.options.rubberbandExit({
+            source: _self,
+          }));
+        }
       });
     }
 

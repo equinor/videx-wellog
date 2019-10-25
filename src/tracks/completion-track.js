@@ -136,12 +136,15 @@ export default class CompletionTrack extends SvgTrack {
 
     if (options.data) {
       this.isLoading = true;
-      options.data().then(data => {
-        this.data = data;
-        this.isLoading = false;
-        this.plot();
-        // this.legendUpdate && this.legendUpdate();
-      });
+      options.data().then(
+        data => {
+          this.data = data;
+          this.isLoading = false;
+          this.plot();
+          // this.legendUpdate && this.legendUpdate();
+        },
+        error => super.onError(error),
+      );
     }
 
     const mdAtLength = l => l;

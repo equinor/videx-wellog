@@ -33,11 +33,14 @@ export default class ChronoStratTrack extends SvgTrack {
 
     if (options.data) {
       this.isLoading = true;
-      options.data().then(data => {
-        this.data = data;
-        this.isLoading = false;
-        this.plot();
-      });
+      options.data().then(
+        data => {
+          this.data = data;
+          this.isLoading = false;
+          this.plot();
+        },
+        error => super.onError(error),
+      );
     }
   }
 
