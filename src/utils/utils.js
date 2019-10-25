@@ -59,8 +59,8 @@ export function debouncer(debounceInterval = 20) {
       clearTimeout(_debounces[funcName]);
     }
     _debounces[funcName] = setTimeout(() => {
-      func(...args);
       delete _debounces[funcName];
+      func(...args);
     }, debounceInterval);
   }
 

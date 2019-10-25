@@ -236,6 +236,7 @@ function queryContinuousData(queryVal, data) {
  * value. The data set is considered to be discrete.
  * @param {number} queryVal query value
  * @param {number[][]} data data points to query
+ * @param {number} [threshold=0] proximity threshold
  * @returns {number|null}
  */
 function queryPointData(queryVal, data, threshold = 0) {
