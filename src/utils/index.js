@@ -4,4 +4,5 @@ export { default as GridHelper } from './grid-helper';
 export { default as LegendHelper } from './legend-helper';
 export { default as UIHelper } from './ui-helper';
 
+export * from './utils';
 export * from './d3-utils';

@@ -1,7 +1,7 @@
 
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
-import { GridHelper, ScaleHelper } from '../../utils/index';
+import { GridHelper, ScaleHelper, debouncer } from '../../utils/index';
 
 /**
  * An extension to CanvasTrack for rendering plots
@@ -42,9 +42,7 @@ export default class GraphTrack extends CanvasTrack {
     this.plot = this.plot.bind(this);
     this.setPlotData = this.setPlotData.bind(this);
     this.prepareData = this.prepareData.bind(this);
-    this.debounce = this.debounce.bind(this);
-
-    this.debounced = {};
+    this.debounce = debouncer();
   }
 
   /**
@@ -70,32 +68,12 @@ export default class GraphTrack extends CanvasTrack {
   }
 
   /**
-   * Function for allowing functions to be called with debounce
-   * @param {function} func function to be called/debounced
-   * @param {string} key identificator to map debounce timeout reference to
-   * @param {number} [delay=20] optional debounce delay
-   */
-  debounce(func, key, delay = 20) {
-    const {
-      debounced,
-    } = this;
-
-    if (debounced[key]) {
-      clearTimeout(debounced[key]);
-    }
-    debounced[key] = setTimeout(() => {
-      func();
-      delete debounced[key];
-    }, delay);
-  }
-
-  /**
    * Override to allow data transformations, like resampling and filtering
    * @param {object} trackEvent onRescale event
    */
   onRescale(trackEvent) {
     super.onRescale(trackEvent);
-    this.debounce(this.prepareData, 'prepareData', 20);
+    this.debounce(this.prepareData);
     this.plot();
   }
 

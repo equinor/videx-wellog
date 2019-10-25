@@ -6,7 +6,7 @@ import {
   zoomIdentity,
   zoomTransform,
 } from 'd3';
-import { setProps, setAttrs, setStyles } from '../utils';
+import { setProps, setAttrs, setStyles, debouncer } from '../utils';
 import BasicScaleHandler from '../scale-handlers/basic-scale-handler';
 
 const defaultOptions = {
@@ -28,7 +28,6 @@ const uiScaleFactor = 800;
 const wheelPanFactor = 50;
 
 const transitionDuration = 200;
-const debounceInterval = 20;
 
 /**
  * A container component for wellog tracks, supporting track titles,
@@ -50,7 +49,7 @@ export default class WellogComponent {
     this.legendRows = 0;
     this.legends = {};
 
-    this._debounces = {};
+    this.debounce = debouncer();
 
     this._scaleHandler = options.scaleHandler || new BasicScaleHandler();
 
@@ -59,7 +58,6 @@ export default class WellogComponent {
     this.adjustZoomTransform = this.adjustZoomTransform.bind(this);
     this.zoomed = this.zoomed.bind(this);
     this.notify = this.notify.bind(this);
-    this.debounce = this.debounce.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.setTracks = this.setTracks.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -270,7 +268,7 @@ export default class WellogComponent {
     this.tracks.sort((a, b) => a.order - b.order);
     this.updateLegendRows();
     if (this._initialized) {
-      this.debounce('updateTracks');
+      this.debounce(this.updateTracks);
     }
   }
 
@@ -290,7 +288,7 @@ export default class WellogComponent {
     }
 
     if (this._initialized) {
-      this.debounce('updateTracks');
+      this.debounce(this.updateTracks);
     }
   }
 
@@ -312,7 +310,7 @@ export default class WellogComponent {
         this.updateLegendRows();
       }
       if (this._initialized) {
-        this.debounce('updateTracks');
+        this.debounce(this.updateTracks);
       }
     }
   }
@@ -361,14 +359,14 @@ export default class WellogComponent {
 
     // see if tracks need to be updated in any way
     if (this._titleHeight !== oldTitleHeight || this._legendHeight !== oldLegendHeight) {
-      this.debounce('updateTracks');
+      this.debounce(this.updateTracks);
     } else if (this.innerWidth !== oldInnerWidth) {
       this.adjustTrackTitles();
     }
 
     // resize svg overlay
     if (this.innerWidth !== oldInnerWidth || this._plotHeight !== oldPlotHeight) {
-      this.debounce('updateTracks');
+      this.debounce(this.updateTracks);
       const overlay = root.select('svg.overlay');
       setProps(overlay, {
         styles: {
@@ -412,7 +410,7 @@ export default class WellogComponent {
     selection.call(trackUpdate);
 
     if (exit.empty() && enter.empty()) {
-      debounce('postUpdateTracks');
+      debounce(this.postUpdateTracks);
     }
   }
 
@@ -531,7 +529,7 @@ export default class WellogComponent {
       .transition()
       .duration(transitionDuration)
       .style('flex', '0 0 0%')
-      .on('end', () => this.debounce('postUpdateTracks'))
+      .on('end', () => this.debounce(this.postUpdateTracks))
       .remove();
   }
 
@@ -594,7 +592,7 @@ export default class WellogComponent {
       .transition()
       .duration(transitionDuration)
       .style('flex', d => `${d.options.width}`)
-      .on('end', () => this.debounce('postUpdateTracks'));
+      .on('end', () => this.debounce(this.postUpdateTracks));
   }
 
   /**
@@ -631,20 +629,6 @@ export default class WellogComponent {
         window.requestAnimationFrame(() => func(...args, track));
       }
     });
-  }
-
-  /**
-   * Throtteling of function calls
-   * @param {string} funcName name of function to be called
-   * @param  {...any} args arguments to be passed
-   */
-  debounce(funcName, ...args) {
-    if (this._debounces[funcName]) {
-      clearTimeout(this._debounces[funcName]);
-    }
-    const f = this[funcName];
-    this._debounces[funcName] = setTimeout(() =>
-      f(...args), debounceInterval);
   }
 
   /**

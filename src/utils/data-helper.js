@@ -205,6 +205,72 @@ function mergeDataSeries(arr1, arr2) {
   return [];
 }
 
+/**
+ * In a data set of two values, return the second element
+ * of the item where the first item is closest to the query
+ * value. The data set is considered to be contineous rather
+ * than discrete.
+ * @param {number} queryVal query value
+ * @param {number[][]} data data points to query
+ * @returns {number|null}
+ */
+function queryContinuousData(queryVal, data) {
+  if (queryVal < data[0][0] || queryVal > data[data.length - 1][0]) return null;
+  let idx = data.findIndex(d => queryVal <= d[0]);
+  if (idx > 0) {
+    const qFound = data[idx][0];
+    const qBefore = data[idx - 1][0];
+    if (queryVal - qBefore < qFound - queryVal) {
+      idx -= 1;
+    }
+  }
+  if (idx !== -1) {
+    return data[idx][1];
+  }
+  return null;
+}
+
+/**
+ * In a data set of two values, return the second element
+ * of the item where the first item is closest to the query
+ * value. The data set is considered to be discrete.
+ * @param {number} queryVal query value
+ * @param {number[][]} data data points to query
+ * @returns {number|null}
+ */
+function queryPointData(queryVal, data, threshold = 0) {
+  const bestMatch = data
+    .filter(d => queryVal - threshold <= d[0] && d[0] <= queryVal + threshold)
+    .reduce((match, d) => {
+      const rank = Math.abs(queryVal - d[0]);
+      if (match.rank === null || rank < match.rank) {
+        return { data: d, rank };
+      }
+      return match;
+    }, { data: null, rank: null }).data;
+
+  if (bestMatch !== null) {
+    return bestMatch[1];
+  }
+  return null;
+}
+
+/**
+ * In a data set of two values, return the second element
+ * of the item where the first item is closest to the query
+ * value. The data set is considered to be organized such that
+ * an item is the end of the previous item and the start of the
+ * next (zones).
+ * @param {number} queryVal query value
+ * @param {number[][]} data data points to query
+ * @returns {number|null}
+ */
+function queryZoneData(queryVal, data) {
+  const index = data.findIndex((d, i, arr) =>
+    (i < arr.length - 1 && d[1] !== null && d[0] <= queryVal && arr[i + 1][0] > queryVal));
+  return index > -1 ? data[index][1] : null;
+}
+
 export default {
   reduceSegment,
   isWithinBounds,
@@ -212,4 +278,7 @@ export default {
   resample,
   trimUndefinedValues,
   mergeDataSeries,
+  queryContinuousData,
+  queryPointData,
+  queryZoneData,
 };
