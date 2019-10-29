@@ -6,7 +6,7 @@ import {
   zoomIdentity,
   zoomTransform,
 } from 'd3';
-import { setProps, setAttrs, setStyles, debouncer } from '../utils';
+import { setProps, setAttrs, setStyles, debouncer, UIHelper } from '../utils';
 import BasicScaleHandler from '../scale-handlers/basic-scale-handler';
 
 const defaultOptions = {
@@ -447,6 +447,18 @@ export default class WellogComponent {
             x: mx,
             y: my,
             source: _self,
+            getTrackElement: () => UIHelper.pickHStackedElement(
+              _self.tracks.map(d => d.elm),
+              mx,
+            ),
+            getTrackDatum: () => {
+              const elm = UIHelper.pickHStackedElement(
+                _self.tracks.map(d => d.elm),
+                mx,
+              );
+              if (elm) return select(elm).datum();
+              return null;
+            },
           }));
         }
       });

@@ -1,5 +1,5 @@
-import { create, select, selectAll } from 'd3-selection';
-import { WellogComponent, UIHelper } from '../../../../src/index';
+import { create } from 'd3-selection';
+import { WellogComponent } from '../../../../src/index';
 import { scaleTrack, formationTrack } from '../shared/standard-tracks';
 
 // creates and hook up wellog component
@@ -13,18 +13,15 @@ function createComponent(wellogNode, options) {
 // output readout from rubberband position
 function readout(selection) {
   const event = selection.datum();
-  const trackElm = UIHelper.pickHStackedElement(
-    selectAll('.well-log .track-plot').nodes(),
-    event.x,
-  );
+  const track = event.getTrackDatum();
   selection.selectAll('*').remove();
   const eventInfo = selection.append('div');
   eventInfo.append('h3').text('Readout Info');
   eventInfo.append('p').text(d => `Depth (MD): ${Math.round(d.source.scaleHandler.scale.invert(d.y) * 10) / 10} meters`);
   eventInfo.append('p').text(d => `Mouse X: ${d.x}`);
   eventInfo.append('p').text(d => `Mouse Y: ${d.y}`);
-  if (trackElm) {
-    eventInfo.append('div').text(`Track: ${select(trackElm).datum().options.label}`);
+  if (track) {
+    eventInfo.append('div').text(`Track: ${track.options.label}`);
   }
 }
 
