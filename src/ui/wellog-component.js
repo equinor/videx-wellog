@@ -17,6 +17,7 @@ const defaultOptions = {
     left: 0,
   },
   showRubberband: true,
+  rubberbandSize: 6,
 };
 
 const titleBarBaseSize = 18;
@@ -423,8 +424,9 @@ export default class WellogComponent {
     let rb = rbc.select('rect.rubber-band');
     if (rb.empty()) {
       rb = rbc.append('rect')
-        .attr('class', 'rubber-band')
-        .style('stroke-width', 5);
+        .classed('rubber-band', true)
+        .attr('height', 1)
+        .style('stroke-width', this.options.rubberbandSize);
 
       const rbs = rbc.append('rect');
       setAttrs(rbs, {
@@ -440,7 +442,7 @@ export default class WellogComponent {
       const _self = this;
       rbs.on('mousemove', function rbmm() {
         const [mx, my] = mouse(this);
-        rb.attr('y', my).style('visibility', 'visible');
+        rb.attr('y', my - 2).style('visibility', 'visible');
 
         if (_self.options.rubberbandUpdate) {
           requestAnimationFrame(() => _self.options.rubberbandUpdate({
@@ -482,7 +484,6 @@ export default class WellogComponent {
       x: 0,
       width: w,
       y: 0,
-      height: 1,
       class: 'rubber-band',
     }).style('visibility', 'hidden');
   }
