@@ -60,11 +60,20 @@ export default class AreaPlot extends Plot {
     ctx.save();
 
     const areaFunction = area()
-      .x1(d => xscale(d[1]))
-      .x0(zeroValue)
-      .y(d => scale(d[0]))
       .defined(d => d[1] !== null)
       .context(ctx);
+
+    if (options.horizontal) {
+      areaFunction
+        .y1(d => xscale(d[1]))
+        .y0(zeroValue)
+        .x(d => scale(d[0]));
+    } else {
+      areaFunction
+        .x1(d => xscale(d[1]))
+        .x0(zeroValue)
+        .y(d => scale(d[0]));
+    }
 
     ctx.globalAlpha = options.fillOpacity || 1;
 
@@ -72,13 +81,22 @@ export default class AreaPlot extends Plot {
       const inverseValue = xscale(
         useMinAsBase ? Math.max(dmin, dmax) : Math.min(dmin, dmax),
       );
+
       const inverseAreaFunction = area()
-        .x1(d => Math.max(0, xscale(d[1])))
-        .x0(inverseValue)
-        .y(d => scale(d[0]))
         .defined(d => d[1] !== null)
         .context(ctx);
 
+      if (options.horizontal) {
+        inverseAreaFunction
+          .y1(d => Math.max(0, xscale(d[1])))
+          .y0(inverseValue)
+          .x(d => scale(d[0]));
+      } else {
+        inverseAreaFunction
+          .x1(d => Math.max(0, xscale(d[1])))
+          .x0(inverseValue)
+          .y(d => scale(d[0]));
+      }
       ctx.beginPath();
       inverseAreaFunction(plotdata);
       ctx.fillStyle = options.inverseColor;

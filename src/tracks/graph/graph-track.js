@@ -86,6 +86,14 @@ export default class GraphTrack extends CanvasTrack {
    */
   onUpdate(trackEvent) {
     super.onUpdate(trackEvent);
+    this.updateRange();
+    this.plot();
+  }
+
+  /**
+   * Set new range to track and plot scales
+   */
+  updateRange() {
     const range = [0, this.elm.clientWidth];
     this.trackScale.range(range);
     this.plots.forEach(plot => {
@@ -96,7 +104,6 @@ export default class GraphTrack extends CanvasTrack {
       }
       plot.setRange(r);
     });
-    this.plot();
   }
 
   /**

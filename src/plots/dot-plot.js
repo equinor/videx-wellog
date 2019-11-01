@@ -39,7 +39,11 @@ export default class DotPlot extends Plot {
     const arcL = Math.PI * 2;
     plotdata.forEach(d => {
       ctx.beginPath();
-      ctx.arc(xscale(d[1]), scale(d[0]), r, 0, arcL);
+      if (options.horizontal) {
+        ctx.arc(scale(d[0]), xscale(d[1]), r, 0, arcL);
+      } else {
+        ctx.arc(xscale(d[1]), scale(d[0]), r, 0, arcL);
+      }
       ctx.fill();
     });
 

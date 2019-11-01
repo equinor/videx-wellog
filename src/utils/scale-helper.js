@@ -3,6 +3,57 @@
  * Util functions for d3 scales
  */
 
+/**
+ * Get pixel ratio from scale
+ * @param {d3.ScaleLinear} scale linear scale
+ * @returns {number} units per pixels
+ */
+function getPixelRatio(scale) {
+  const [dmin, dmax] = scale.domain();
+  const [rmin, rmax] = scale.range();
+  const deltaDomain = Math.abs(dmax - dmin);
+  const deltaRange = Math.abs(rmax - rmin);
+  return deltaRange / deltaDomain;
+}
+
+/**
+ * Get domain ratio from scale
+ * @param {d3.ScaleLinear} scale linear scale
+ * @returns {number} pixels per units
+ */
+function getDomainRatio(scale) {
+  const [dmin, dmax] = scale.domain();
+  const [rmin, rmax] = scale.range();
+  const deltaDomain = Math.abs(dmax - dmin);
+  const deltaRange = Math.abs(rmax - rmin);
+  return deltaDomain / deltaRange;
+}
+
+/**
+ * Get the domain span of a scale in pixels
+ * @param {d3.scale} scale scale
+ * @param {number[]} [domain] optional domain - uses scale domain if omitted
+ * @returns {number} width in pixels of the domain span
+ */
+function getDomainSpan(scale, domain) {
+  const [d1, d2] = domain || scale.domain();
+
+  const y1 = scale(d1);
+  const y2 = scale(d2);
+
+  return Math.max(0, Math.abs(y2 - y1));
+}
+
+/**
+ * Get the range span of a scale in pixels
+ * @param {d3.scale} scale scale
+ * @returns {number} width in pixels of the range span
+ */
+function getRangeSpan(scale) {
+  const [r0, r1] = scale.range();
+  return Math.abs(r1 - r0);
+}
+
 const ticksFactor = 60;
 const minSize = 10;
 
@@ -24,13 +75,14 @@ function createLogTicks(scale) {
     guides.push(curr);
     curr *= 10;
   }
+
   const scaleTicks = scale.ticks().splice(1);
 
   scaleTicks.forEach((t) => {
     if (guides.includes(t)) {
-      ticks.major.push(scale(t));
+      ticks.major.push(t);
     } else {
-      ticks.minor.push(scale(t));
+      ticks.minor.push(t);
     }
   });
   return ticks;
@@ -44,7 +96,7 @@ function createLogTicks(scale) {
  */
 function createLinearTicks(scale, num = 10) {
   const hTicks = num;
-  const hStep = scale.range()[1] / hTicks;
+  const hStep = getRangeSpan(scale) / hTicks;
   const center = hTicks / 2;
   const ticks = {
     major: [],
@@ -54,9 +106,9 @@ function createLinearTicks(scale, num = 10) {
   for (let i = 1; i < hTicks; i += 1) {
     const x = i * hStep;
     if (center && (i % center) === 0) {
-      ticks.major.push(x);
+      ticks.major.push(scale.invert(x));
     } else {
-      ticks.minor.push(x);
+      ticks.minor.push(scale.invert(x));
     }
   }
   return ticks;
@@ -84,9 +136,8 @@ function createMinorTicks(v, steps, stepSize) {
  */
 function createTicks(scale) {
   const [dmin, dmax] = scale.domain();
-  const [rmin, rmax] = scale.range();
 
-  const height = rmax - rmin;
+  const height = getRangeSpan(scale);
 
   const major = [];
   const minor = [];
@@ -119,57 +170,6 @@ function createTicks(scale) {
     major,
     minor: minor.filter(t => t >= dmin && t <= dmax),
   };
-}
-
-/**
- * Get pixel ratio from scale
- * @param {d3.ScaleLinear} scale linear scale
- * @returns {number} units per pixels
- */
-function getPixelRatio(scale) {
-  const [dmin, dmax] = scale.domain();
-  const [rmin, rmax] = scale.range();
-  const deltaDomain = dmax - dmin;
-  const deltaRange = rmax - rmin;
-  return deltaRange / deltaDomain;
-}
-
-/**
- * Get domain ratio from scale
- * @param {d3.ScaleLinear} scale linear scale
- * @returns {number} pixels per units
- */
-function getDomainRatio(scale) {
-  const [dmin, dmax] = scale.domain();
-  const [rmin, rmax] = scale.range();
-  const deltaDomain = dmax - dmin;
-  const deltaRange = rmax - rmin;
-  return deltaDomain / deltaRange;
-}
-
-/**
- * Get the domain span of a scale in pixels
- * @param {d3.scale} scale scale
- * @param {number[]} [domain] optional domain - uses scale domain if omitted
- * @returns {number} width in pixels of the domain span
- */
-function getDomainSpan(scale, domain) {
-  const [d1, d2] = domain || scale.domain();
-
-  const y1 = scale(d1);
-  const y2 = scale(d2);
-
-  return Math.max(0, Math.abs(y2 - y1));
-}
-
-/**
- * Get the range span of a scale in pixels
- * @param {d3.scale} scale scale
- * @returns {number} width in pixels of the range span
- */
-function getRangeSpan(scale) {
-  const [r0, r1] = scale.range();
-  return r1 - r0;
 }
 
 export default {

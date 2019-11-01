@@ -25,13 +25,12 @@ function drawGrid(ctx, xscale, xticks, yscale, yticks) {
   const [y0, y1] = yscale.range();
 
   ctx.save();
-
   // vertical gridlines: MUST check if scale is linear/log
   ctx.strokeStyle = colorMinor;
   ctx.lineWidth = strokeMinor * 0.5;
 
   xticks.minor.forEach(tick => {
-    const x = tick;
+    const x = xscale(tick);
     ctx.beginPath();
     ctx.moveTo(x, y0);
     ctx.lineTo(x, y1);
@@ -40,7 +39,7 @@ function drawGrid(ctx, xscale, xticks, yscale, yticks) {
   ctx.strokeStyle = colorMajor;
   ctx.lineWidth = strokeMajor * 0.5;
   xticks.major.forEach(tick => {
-    const x = tick;
+    const x = xscale(tick);
     ctx.beginPath();
     ctx.moveTo(x, y0);
     ctx.lineTo(x, y1);

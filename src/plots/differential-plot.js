@@ -47,6 +47,7 @@ export default class DifferentialPlot extends Plot {
         serie1,
         serie2,
         fillOpacity,
+        horizontal,
       },
     } = this;
 
@@ -60,23 +61,37 @@ export default class DifferentialPlot extends Plot {
     ctx.globalAlpha = fillOpacity || 0.5;
 
     const areaFunction1 = area()
-      .x1(d => xscale1(d[1]))
-      .x0(d => xscale2(d[2]))
-      .y(d => scale(d[0]))
-      .defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) > xscale2(d[2]))
       .context(ctx);
 
+    if (horizontal) {
+      areaFunction1.defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) < xscale2(d[2]))
+        .y1(d => xscale1(d[1]))
+        .y0(d => xscale2(d[2]))
+        .x(d => scale(d[0]));
+    } else {
+      areaFunction1.defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) > xscale2(d[2]))
+        .x1(d => xscale1(d[1]))
+        .x0(d => xscale2(d[2]))
+        .y(d => scale(d[0]));
+    }
     ctx.beginPath();
     areaFunction1(merged);
     ctx.fillStyle = serie1.fill;
     ctx.fill();
 
-    const areaFunction2 = area()
-      .x1(d => xscale1(d[1]))
-      .x0(d => xscale2(d[2]))
-      .y(d => scale(d[0]))
-      .defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) < xscale2(d[2]))
-      .context(ctx);
+    const areaFunction2 = area().context(ctx);
+
+    if (horizontal) {
+      areaFunction2.defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) > xscale2(d[2]))
+        .y1(d => xscale1(d[1]))
+        .y0(d => xscale2(d[2]))
+        .x(d => scale(d[0]));
+    } else {
+      areaFunction2.defined(d => d[1] !== null && d[2] !== null && xscale1(d[1]) < xscale2(d[2]))
+        .x1(d => xscale1(d[1]))
+        .x0(d => xscale2(d[2]))
+        .y(d => scale(d[0]));
+    }
 
     ctx.beginPath();
     areaFunction2(merged);
@@ -88,10 +103,14 @@ export default class DifferentialPlot extends Plot {
     ctx.globalAlpha = 1;
 
     const lineFunction1 = line()
-      .x(d => xscale1(d[1]))
-      .y(d => scale(d[0]))
       .defined(d => d[1] !== null)
       .context(ctx);
+
+    if (horizontal) {
+      lineFunction1.y(d => xscale1(d[1])).x(d => scale(d[0]));
+    } else {
+      lineFunction1.x(d => xscale1(d[1])).y(d => scale(d[0]));
+    }
 
     ctx.beginPath();
     lineFunction1(plotdata[0]);
@@ -100,10 +119,14 @@ export default class DifferentialPlot extends Plot {
     ctx.stroke();
 
     const lineFunction2 = line()
-      .x(d => xscale2(d[1]))
-      .y(d => scale(d[0]))
       .defined(d => d[1] !== null)
       .context(ctx);
+
+    if (horizontal) {
+      lineFunction2.y(d => xscale2(d[1])).x(d => scale(d[0]));
+    } else {
+      lineFunction2.x(d => xscale2(d[1])).y(d => scale(d[0]));
+    }
 
     ctx.beginPath();
     lineFunction2(plotdata[1]);
