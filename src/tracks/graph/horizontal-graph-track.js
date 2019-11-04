@@ -1,4 +1,5 @@
 import GraphTrack from './graph-track';
+import { GridHelper, ScaleHelper } from '../../utils/index';
 
 /**
  * Track that renders plots horizontally. Designed to be used
