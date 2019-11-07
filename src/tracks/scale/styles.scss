@@ -1,0 +1,47 @@
+$scale_master_color: #555;
+$scale_minor_color: #777;
+$scale_slave_scale_bg: #f9f9f9;
+$scale_bg: white;
+
+.track {
+  .scale-track {
+    stroke: $scale_master_color; }
+    .scale-track .label-bg {
+      stroke: $scale_bg;
+      fill: $scale_bg;
+  }
+
+  .slave-scale {
+    background-color: $scale_slave_scale_bg;
+  }
+
+  .slave-scale .label-bg {
+    stroke: $scale_slave_scale_bg;
+    fill: $scale_slave_scale_bg;
+  }
+
+  .slave-scale text {
+    stroke: $scale_minor_color;
+    fill: $scale_minor_color;
+  }
+
+  .slave-scale .major-tick-line {
+    stroke-width: 0.5;
+    stroke: $scale_minor_color;
+  }
+
+  .master-scale .major-tick .label-bg {
+    stroke: $scale_bg;
+    fill: $scale_bg;
+  }
+
+  .master-scale .major-tick text {
+    stroke: $scale_master_color;
+    fill: $scale_master_color;
+  }
+
+  .master-scale .minor-tick-line {
+    stroke-width: 0.5;
+    stroke: $scale_master_color;
+  }
+}
