@@ -1,10 +1,17 @@
 import { GraphTrack, BasicTrackViewer } from '../../../../src/index';
-import { scaleTrack } from '../shared/standard-tracks';
+import { ScaleTrack, scaleLegendConfig } from '../../../../src/tracks/scale';
 import { graphData } from '../shared/mock-data';
 
 export const withGraphTrack = () => {
+  const scaleTrack = new ScaleTrack('scale', {
+    label: 'MD',
+    abbr: 'MD',
+    units: 'meters',
+    maxWidth: 45,
+    legendConfig: scaleLegendConfig,
+  });
 
-  const track = new GraphTrack('sample', {
+  const graphTrack = new GraphTrack('sample', {
     scale: 'linear',
     domain: [0, 360],
     data: () => new Promise((resolve) => {
@@ -50,7 +57,7 @@ export const withGraphTrack = () => {
   div.style.width = `${width}px`;
   div.style.height = `${height}px`;
 
-  const trackViewer = new BasicTrackViewer([scaleTrack, track], [100, 3100]);
+  const trackViewer = new BasicTrackViewer([scaleTrack, graphTrack], [100, 3100]);
   requestAnimationFrame(() => trackViewer.init(div));
 
   return div;
