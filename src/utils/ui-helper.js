@@ -9,7 +9,7 @@
 function pickHStackedElement(elements, xpos) {
   for (let i = 0; i < elements.length; i++) {
     const elm = elements[i];
-    if (xpos >= elm.offsetLeft && xpos <= elm.offsetLeft + elm.clientWidth) {
+    if (elm && xpos >= elm.offsetLeft && xpos <= elm.offsetLeft + elm.clientWidth) {
       return elm;
     }
   }
@@ -27,7 +27,7 @@ function pickHStackedElement(elements, xpos) {
 function pickVStackedElement(elements, ypos) {
   for (let i = 0; i < elements.length; i++) {
     const elm = elements[i];
-    if (ypos >= elm.offsetTop && ypos <= elm.offsetTop + elm.clientHeight) {
+    if (elm && ypos >= elm.offsetTop && ypos <= elm.offsetTop + elm.clientHeight) {
       return elm;
     }
   }
