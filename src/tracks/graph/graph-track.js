@@ -42,6 +42,7 @@ export default class GraphTrack extends CanvasTrack {
     this.plot = this.plot.bind(this);
     this.setPlotData = this.setPlotData.bind(this);
     this.prepareData = this.prepareData.bind(this);
+
     this.debounce = debouncer();
   }
 
@@ -82,10 +83,13 @@ export default class GraphTrack extends CanvasTrack {
     this.plot();
   }
 
-  loadData(dataPromise, showLoader = true) {
-    return super.loadData(dataPromise, showLoader)
-      .then(() => this.prepareData());
+  /**
+   * Callback after data loaded, using loadData.
+   */
+  onDataLoaded() {
+    this.prepareData();
   }
+
   /**
    * Set new range to track and plot scales
    */

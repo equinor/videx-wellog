@@ -137,7 +137,7 @@ export default class Track {
    * Initiate loading of data for track. Will set response to the track's
    * data property. If showLoader is set to true, the current track will be
    * hidden, and (if supplied) the loader element will be shown, until data
-   * is resolved.
+   * is resolved. Calls onDataLoaded if implemented by track.
    * @param {Promise} dataPromise async function for retrieving data
    * @param {boolean} [showLoader=true] update loading state while waiting
    * for dataPromise to resolve
@@ -149,7 +149,9 @@ export default class Track {
         this.data = data;
         if (showLoader || this.isLoading) this.isLoading = false;
         if (this.legendUpdate) this.legendUpdate();
-        return data;
+        if (this.onDataLoaded) {
+          this.onDataLoaded(data);
+        }
       },
       error => this.onError(error),
     );
