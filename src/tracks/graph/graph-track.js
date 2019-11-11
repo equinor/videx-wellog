@@ -57,16 +57,9 @@ export default class GraphTrack extends CanvasTrack {
     } = this;
 
     if (options.data) {
-      this.isLoading = true;
-      options.data().then(
-        data => {
-          this.data = data;
-          this.isLoading = false;
-          this.prepareData();
-          if (this.legendUpdate) this.legendUpdate();
-        },
-        error => super.onError(error),
-      );
+      const showLoader = options.showLoader === undefined ? true : options.showLoader;
+      this.loadData(options.data, showLoader)
+        .then(() => this.prepareData());
     }
   }
 

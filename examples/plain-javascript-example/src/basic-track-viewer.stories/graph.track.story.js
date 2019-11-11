@@ -15,7 +15,7 @@ export const withGraphTrack = () => {
     scale: 'linear',
     domain: [0, 360],
     data: () => new Promise((resolve) => {
-      setTimeout(() => resolve(graphData), 100);
+      setTimeout(() => resolve(graphData), 2000);
     }),
     plots: [
       {

@@ -33,7 +33,7 @@ export default class Track {
     this.onRescale = this.onRescale.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
     this.refresh = this.refresh.bind(this);
-
+    this.loadData = this.loadData.bind(this);
     this.transform = { k: 1, y: 0, x: 0 };
   }
 
@@ -133,6 +133,27 @@ export default class Track {
     }
   }
 
+  /**
+   * Initiate loading of data for track. Will set response to the track's
+   * data property. If showLoader is set to true, the current track will be
+   * hidden, and (if supplied) the loader element will be shown, until data
+   * is resolved.
+   * @param {Promise} dataPromise async function for retrieving data
+   * @param {boolean} [showLoader=true] update loading state while waiting
+   * for dataPromise to resolve
+   */
+  loadData(dataPromise, showLoader = true) {
+    if (showLoader) this.isLoading = true;
+    return dataPromise().then(
+      data => {
+        this.data = data;
+        if (showLoader || this.isLoading) this.isLoading = false;
+        if (this.legendUpdate) this.legendUpdate();
+        return data;
+      },
+      error => this.onError(error),
+    );
+  }
 
   /**
    * Allow triggering of update event without parameters
