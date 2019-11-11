@@ -144,16 +144,17 @@ export default class Track {
    */
   loadData(dataPromise, showLoader = true) {
     if (showLoader) this.isLoading = true;
-    return dataPromise().then(
+    const self = this;
+    dataPromise().then(
       data => {
-        this.data = data;
-        if (showLoader || this.isLoading) this.isLoading = false;
-        if (this.legendUpdate) this.legendUpdate();
-        if (this.onDataLoaded) {
-          this.onDataLoaded(data);
+        self.data = data;
+        if (self.isLoading) self.isLoading = false;
+        if (self.legendUpdate) self.legendUpdate();
+        if (self.onDataLoaded) {
+          self.onDataLoaded(data);
         }
       },
-      error => this.onError(error),
+      error => self.onError(error),
     );
   }
 

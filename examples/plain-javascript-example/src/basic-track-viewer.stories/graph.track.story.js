@@ -2,6 +2,10 @@ import { GraphTrack, BasicTrackViewer } from '../../../../src/index';
 import { ScaleTrack, scaleLegendConfig } from '../../../../src/tracks/scale';
 import { graphData } from '../shared/mock-data';
 
+const data = () => new Promise((resolve) => {
+  setTimeout(() => resolve(graphData), 200);
+});
+
 export const withGraphTrack = () => {
   const scaleTrack = new ScaleTrack('scale', {
     label: 'MD',
@@ -14,9 +18,7 @@ export const withGraphTrack = () => {
   const graphTrack = new GraphTrack('sample', {
     scale: 'linear',
     domain: [0, 360],
-    data: () => new Promise((resolve) => {
-      setTimeout(() => resolve(graphData), 200);
-    }),
+    data,
     showLoader: false,
     plots: [
       {
