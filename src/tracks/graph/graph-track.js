@@ -58,8 +58,7 @@ export default class GraphTrack extends CanvasTrack {
 
     if (options.data) {
       const showLoader = options.showLoader === undefined ? true : options.showLoader;
-      this.loadData(options.data, showLoader)
-        .then(() => this.prepareData());
+      this.loadData(options.data, showLoader);
     }
   }
 
@@ -83,6 +82,10 @@ export default class GraphTrack extends CanvasTrack {
     this.plot();
   }
 
+  loadData(dataPromise, showLoader = true) {
+    return super.loadData(dataPromise, showLoader)
+      .then(() => this.prepareData());
+  }
   /**
    * Set new range to track and plot scales
    */
