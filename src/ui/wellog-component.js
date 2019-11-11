@@ -511,6 +511,7 @@ export default class WellogComponent {
       if (d.onUpdate) {
         const elm = this.querySelector('.track-plot');
         window.requestAnimationFrame(() => {
+          if (!d._mounted) return;
           d.onUpdate({
             elm,
             scale: scaleHandler.dataScale,
@@ -638,7 +639,7 @@ export default class WellogComponent {
     // console.log('>> ' + type, ...args);
     this.tracks.forEach(track => {
       const func = track[type] || track.options[type];
-
+      if (!track._mounted) return;
       if (func && typeof (func) === 'function') {
         window.requestAnimationFrame(() => func(...args, track));
       }
