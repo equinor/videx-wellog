@@ -11,7 +11,10 @@ export default class Plot {
   constructor(id, scale, options = {}) {
     this.id = id;
     this.scale = scale;
-    this.options = options;
+    this.options = {
+      defined: v => v !== null,
+      ...options,
+    };
     this.data = [];
     this.offset = options.offset || 0;
 

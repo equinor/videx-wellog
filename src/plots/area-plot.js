@@ -60,7 +60,7 @@ export default class AreaPlot extends Plot {
     ctx.save();
 
     const areaFunction = area()
-      .defined(d => d[1] !== null)
+      .defined(d => options.defined(d[1], d[0]))
       .context(ctx);
 
     if (options.horizontal) {
@@ -83,7 +83,7 @@ export default class AreaPlot extends Plot {
       );
 
       const inverseAreaFunction = area()
-        .defined(d => d[1] !== null)
+        .defined(d => options.defined(d[1], d[0]))
         .context(ctx);
 
       if (options.horizontal) {

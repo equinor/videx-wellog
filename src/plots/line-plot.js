@@ -35,7 +35,9 @@ export default class LinePlot extends Plot {
 
     ctx.save();
 
-    const lineFunction = line().defined(d => d[1] !== null).context(ctx);
+    const lineFunction = line()
+      .defined(d => options.defined(d[1], d[0]))
+      .context(ctx);
 
     if (options.horizontal) {
       lineFunction.y(d => xscale(d[1])).x(d => scale(d[0]));

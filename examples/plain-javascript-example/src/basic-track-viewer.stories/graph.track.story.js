@@ -23,7 +23,7 @@ export const withGraphTrack = () => {
     plots: [
       {
         id: 'HAZI',
-        type: 'line',
+        type: 'dot',
         options: {
           scale: 'linear',
           domain: [0, 360],
@@ -38,17 +38,42 @@ export const withGraphTrack = () => {
           color: 'red',
           scale: 'linear',
           domain: [0, 90],
+          defined: v => v !== undefined,
           data: d => d.DEVI.dataPoints,
         },
       },
       {
         id: 'DLS',
-        type: 'line',
+        type: 'area',
         options: {
+          fillOpacity: 0.5,
           color: 'gray',
           scale: 'linear',
           domain: [0, 6],
+          defined: (x, y) => y > 250,
           data: d => d.DLS.dataPoints,
+        },
+      },
+      {
+        id: 'HAZI|DEVI',
+        type: 'differential',
+        options: {
+          serie1: {
+            scale: 'linear',
+            domain: [0, 360],
+            color: 'red',
+            fill: 'gray',
+          },
+          serie2: {
+            scale: 'linear',
+            domain: [0, 90],
+            color: 'blue',
+            fill: 'yellow',
+          },
+          data: d => [
+            d.HAZI.dataPoints.map(dp => [dp[0] + 1000, dp[1]]),
+            d.DEVI.dataPoints.map(dp => [dp[0] + 1000, dp[1]]),
+          ],
         },
       },
     ],
