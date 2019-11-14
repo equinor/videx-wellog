@@ -37,6 +37,7 @@
     "mocha": "^6.1.4",
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
+    "rimraf": "^3.0.0",
     "rollup": "^1.11.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.1.0",
@@ -50,7 +51,7 @@
   },
   "scripts": {
     "prebuild": "rm -rf dist",
-    "build": "node node_modules/.bin/rollup -c",
+    "build": "rollup -c",
     "dev": "node node_modules/.bin/rollup -c -w",
     "coverage": "NODE_ENV=test npx nyc --reporter=html --reporter=text mocha --require @babel/register",
     "test": "NODE_ENV=test npx mocha --require @babel/register",
