@@ -20,4 +20,4 @@ npm run storybook
 ```
 
 ## Contribute:
-How to Contribude iss described here: https://github.com/equinor/videx-wellog/blob/dev/contributing.md
+How to Contribute is described [here](./contributing.md)
