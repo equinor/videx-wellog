@@ -18,3 +18,6 @@ npm run docs
 cd examples/plain-javascript-example
 npm run storybook
 ```
+
+## Contribute:
+How to Contribude iss described here: https://github.com/equinor/videx-wellog/blob/dev/contributing.md
