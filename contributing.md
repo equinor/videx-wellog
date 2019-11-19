@@ -1,14 +1,5 @@
 # Contributing to Videx Wellog
 
-Guidelines for contributing to the Videx Wellog project will be made available when we are ready to accept pull requests and/or issue reports.
-
-Contact the Videx team for any enquiries or questions you may have at this point.
-
-* **Videx Team Lead**: Maja Irina Wegmann (mweg@equinor.com)
-* **Videx Tech Lead**: Kjerand Pedersen (kjerp@equinor.com)
-
-## Contributing
-
 In general, we follow the "fork-and-pull" Git workflow.
 
 1. Fork the repo on GitHub
@@ -24,3 +15,9 @@ In general, we follow the "fork-and-pull" Git workflow.
 6. Repeat step 3(3) above
 7. Push your work back up to your fork
 8. Submit a Pull request so that we can review your changes
+
+
+Contact the Videx team for any enquiries or questions you may have at this point.
+
+* **Videx Team Lead**: Maja Irina Wegmann (mweg@equinor.com)
+* **Videx Tech Lead**: Kjerand Pedersen (kjerp@equinor.com)
