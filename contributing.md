@@ -15,7 +15,7 @@ In general, we follow the "fork-and-pull" Git workflow.
 2. Clone the project to your own machine
 3. Work on your fork
     1. Make your changes and additions
-        - Most of your changes should be focused on `src/` and `test/` folders and/or `README.md`, if applicable, please provide an example under 'examples/src'.
+        - Most of your changes should be focused on `src/` and `test/` folders and/or `README.md`, if applicable, please provide an example under `examples/src`.
     2. Change or add tests if needed
     3. Run tests and make sure they pass
     4. Add changes to README.md if needed
