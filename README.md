@@ -18,3 +18,6 @@ npm run docs
 cd examples/plain-javascript-example
 npm run storybook
 ```
+
+## Contribute:
+How to Contribute is described [here](./contributing.md)
