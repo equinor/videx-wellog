@@ -145,7 +145,7 @@ function createTicks(scale) {
   if (height > 0) {
     const nTicks = Math.min(
       Math.ceil(height / ticksFactor),
-      Math.floor(Math.abs(max - dmin)) * 2,
+      Math.floor(Math.abs(dmax - dmin)) * 2,
     );
     major.push(...scale.ticks(nTicks));
 
