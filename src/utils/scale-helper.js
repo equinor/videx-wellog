@@ -145,25 +145,27 @@ function createTicks(scale) {
   if (height > 0) {
     const nTicks = Math.min(
       Math.ceil(height / ticksFactor),
-      Math.floor(dmax - dmin) * 2,
+      Math.floor(Math.abs(max - dmin)) * 2,
     );
     major.push(...scale.ticks(nTicks));
 
     const tickHeight = height / major.length;
-    const majorSize = major.length > 1 ? major[1] - major[0] : 0;
+    const majorSize = major.length > 1 ? major[1] - major[0] : (major[0] || 0);
 
     let numMinor = majorSize <= 1 ? majorSize * 10 : Math.min(10, majorSize);
 
-    if (tickHeight < numMinor * minSize) {
-      numMinor = Math.round(tickHeight / minSize / 5) * 5;
+    if (numMinor) {
+      if (tickHeight < numMinor * minSize) {
+        numMinor = Math.round(tickHeight / minSize / 5) * 5;
+      }
+
+      const minorSize = majorSize / numMinor;
+
+      minor.push(...createMinorTicks(major[0] - majorSize, numMinor, minorSize));
+      major.forEach(tick => {
+        minor.push(...createMinorTicks(tick, numMinor, minorSize));
+      });
     }
-
-    const minorSize = majorSize / numMinor;
-
-    minor.push(...createMinorTicks(major[0] - majorSize, numMinor, minorSize));
-    major.forEach(tick => {
-      minor.push(...createMinorTicks(tick, numMinor, minorSize));
-    });
   }
 
   return {
