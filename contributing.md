@@ -19,5 +19,5 @@ In general, we follow the "fork-and-pull" Git workflow.
 
 Contact the Videx team for any enquiries or questions you may have at this point.
 
-* **Videx Team Lead**: Maja Irina Wegmann (mweg@equinor.com)
-* **Videx Tech Lead**: Kjerand Pedersen (kjerp@equinor.com)
+* **Videx team lead**: Maja Irina Wegmann (mweg@equinor.com)
+* **Videx tech contact**: Brynjulf Bent Risbakken (brisb@equinor.com)
