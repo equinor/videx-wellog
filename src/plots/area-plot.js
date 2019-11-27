@@ -8,7 +8,6 @@ export default class AreaPlot extends Plot {
   /**
    * Create instance
    * @param {*} id plot id
-   * @param {d3.scale} scale scale for data serie values
    * @param {{
    *  useMinAsBase:boolean,
    *  color:string,
@@ -18,8 +17,8 @@ export default class AreaPlot extends Plot {
    *  fillOpacity:number,
    * }} options plot options
    */
-  constructor(id, scale, options) {
-    super(id, scale, options);
+  constructor(id, options) {
+    super(id, options);
     this.useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
   }
 
@@ -51,6 +50,8 @@ export default class AreaPlot extends Plot {
       useMinAsBase,
       options,
     } = this;
+
+    if (!xscale || options.hidden) return;
 
     const [dmin, dmax] = xscale.domain();
     const zeroValue = xscale(

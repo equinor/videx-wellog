@@ -4,6 +4,20 @@ import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper, debouncer } from '../../utils/index';
 
 /**
+ * Updates all plots with data by triggering each plot's data accessor function
+ * @param {Plot[]} plots plots to update
+ * @param {object} data track data object
+ */
+function setPlotData(plots, data) {
+  plots.forEach(p => {
+    if (typeof p.options.dataAccessor !== 'function') {
+      throw Error(`Plot '${p.id}' does not have a data accessor configured`);
+    }
+    p.setData(p.options.dataAccessor(data));
+  });
+}
+
+/**
  * An extension to CanvasTrack for rendering plots
  *
  * See ./readme.md in source code for more info
@@ -20,7 +34,7 @@ export default class GraphTrack extends CanvasTrack {
    *  data: function,
    * }} options Track options
    */
-  constructor(id, options) {
+  constructor(id, options = {}) {
     super(id, options);
 
     this.trackScale = createScale(
@@ -40,7 +54,6 @@ export default class GraphTrack extends CanvasTrack {
     }
 
     this.plot = this.plot.bind(this);
-    this.setPlotData = this.setPlotData.bind(this);
     this.prepareData = this.prepareData.bind(this);
 
     this.debounce = debouncer();
@@ -58,8 +71,12 @@ export default class GraphTrack extends CanvasTrack {
     } = this;
 
     if (options.data) {
-      const showLoader = options.showLoader === undefined ? true : options.showLoader;
-      this.loadData(options.data, showLoader);
+      const showLoader = options.showLoader === undefined ? false : options.showLoader;
+      if (showLoader) {
+        this.loadData(options.data, showLoader);
+      } else {
+        this.data = options.data;
+      }
     }
   }
 
@@ -107,43 +124,38 @@ export default class GraphTrack extends CanvasTrack {
   }
 
   /**
-   * Updates all plots with data by triggering each plot's data accessor function
-   * @param {object} data track data object
-   */
-  setPlotData(data) {
-    const { plots } = this;
-
-    plots.forEach(p => {
-      if (typeof p.options.data !== 'function') {
-        throw Error(`Plot '${p.id}' does not have a data accessor configured`);
-      }
-      p.setData(p.options.data(data));
-    });
-  }
-
-  /**
    * Execute configured transform function if applicable on the track's data
    * and update plots with the result
    */
   prepareData() {
     const {
-      setPlotData,
       data,
       scale,
       options,
       plot,
+      plots,
     } = this;
     if (!data) return;
     if (options.transform) {
       // console.log('PREPARE DATA', this.id);
       options.transform(data, scale).then(transformed => {
-        setPlotData(transformed);
+        setPlotData(plots, transformed);
         plot();
       });
     } else {
-      setPlotData(data);
+      setPlotData(plots, data);
       plot();
     }
+  }
+
+  setPlotOption(id, key, value) {
+    const plot = this.plots.find(d => d.id === id);
+    if (plot) {
+      plot.setOption(key, value);
+      this.plot();
+      return this;
+    }
+    throw Error('Plot not found with id ', id);
   }
 
   /**

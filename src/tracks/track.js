@@ -26,6 +26,7 @@ export default class Track {
 
     this._isLoading = false;
     this.elm = null;
+    this._data = null;
     this.loader = options.loader || null;
 
     this.onMount = this.onMount.bind(this);
@@ -102,13 +103,21 @@ export default class Track {
    */
   onRescale(trackEvent) {
     const {
+      domain,
       scale,
       transform,
     } = trackEvent;
 
     if (!this._mounted) return;
 
-    this.scale = scale;
+    if (scale) {
+      this.scale = scale;
+    } else if (domain) {
+      this.scale.domain(domain);
+    } else {
+      throw Error('Event is missing updated scale or domain!');
+    }
+
     this.transform = transform;
 
     if (this.options.onRescale) {
@@ -138,24 +147,33 @@ export default class Track {
    * data property. If showLoader is set to true, the current track will be
    * hidden, and (if supplied) the loader element will be shown, until data
    * is resolved. Calls onDataLoaded if implemented by track.
-   * @param {Promise} dataPromise async function for retrieving data
+   * @param {Promise} data data array, function or async function for retrieving data
    * @param {boolean} [showLoader=true] update loading state while waiting
    * for dataPromise to resolve
    */
-  loadData(dataPromise, showLoader = true) {
+  loadData(data, showLoader = true) {
     if (showLoader) this.isLoading = true;
-    const self = this;
-    dataPromise().then(
-      data => {
-        self.data = data;
-        if (self.isLoading) self.isLoading = false;
-        if (self.legendUpdate) self.legendUpdate();
-        if (self.onDataLoaded) {
-          self.onDataLoaded(data);
-        }
-      },
-      error => self.onError(error),
-    );
+
+    const onSuccess = d => {
+      this._data = d;
+      if (this.isLoading) this.isLoading = false;
+      if (this.legendUpdate) this.legendUpdate();
+      if (this.onDataLoaded) {
+        this.onDataLoaded(d);
+      }
+    };
+
+    const res = data();
+    if (res.then) {
+      res.then(
+        onSuccess,
+        this.onError,
+      );
+    } else if (typeof res === 'object') {
+      onSuccess(res);
+    } else {
+      this.onError('Invalid data');
+    }
   }
 
   /**
@@ -187,5 +205,21 @@ export default class Track {
     }
     select(this.elm).classed('hidden', this._isLoading);
     this.refresh();
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  set data(data) {
+    if (typeof data === 'function') {
+      this.loadData(data, false);
+    } else {
+      this._data = data;
+      if (this.legendUpdate) this.legendUpdate();
+      if (this.onDataLoaded) {
+        this.onDataLoaded(data);
+      }
+    }
   }
 }

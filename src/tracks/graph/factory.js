@@ -7,6 +7,15 @@ import {
   DifferentialPlot,
 } from '../../plots/index';
 
+export function patchPlotOptions(options) {
+  if (!options) return {};
+  if (options && options.data) {
+    options.dataAccessor = options.data;
+    delete options.data;
+  }
+  return options;
+}
+
 /**
  * Creates a d3 scale from config
  * @param {string} type d3 scale type (linear/log)
@@ -31,19 +40,21 @@ export function createScale(type, domain) {
  * @returns {DifferentialPlot}
  */
 function createDifferentialPlot(config, trackScale) {
-  const xscale1 = config.options.serie1.scale ?
-    createScale(config.options.serie1.scale, config.options.serie1.domain) :
-    trackScale;
-  const xscale2 = config.options.serie2.scale ?
-    createScale(config.options.serie2.scale, config.options.serie2.domain) :
-    trackScale;
-  config.options.legendRows = 2;
-  return new DifferentialPlot(
+  const options = patchPlotOptions(config.options);
+  options.legendRows = 2;
+  const p = new DifferentialPlot(
     config.id,
-    xscale1,
-    xscale2,
-    config.options,
+    options,
   );
+
+  if (!options.serie1.scale) {
+    p.scale1 = trackScale;
+  }
+
+  if (!options.serie2.scale) {
+    p.scale2 = trackScale;
+  }
+  return p;
 }
 /**
  * Returns a plot creator function for a specified plot type
@@ -52,16 +63,21 @@ function createDifferentialPlot(config, trackScale) {
  */
 function createPlotType(PlotType) {
   return (config, trackScale) => {
-    const xscale = config.options.scale ?
-      createScale(config.options.scale, config.options.domain) :
-      trackScale;
+    const options = {
+      legendRows: 1,
+      dataAccessor: d => d,
+      ...patchPlotOptions(config.options),
+    };
 
-    config.options.legendRows = 1;
-    return new PlotType(
+    const p = new PlotType(
       config.id,
-      xscale,
-      config.options,
+      options,
     );
+
+    if (!options.scale) {
+      p.scale = trackScale;
+    }
+    return p;
   };
 }
 

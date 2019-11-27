@@ -1,6 +1,7 @@
 import { line, area } from 'd3';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
+import { createScale } from '../tracks/graph/factory';
 
 /**
  * Differential plot
@@ -9,19 +10,30 @@ export default class DifferentialPlot extends Plot {
   /**
    * Create instance
    * @param {*} id plot id
-   * @param {d3.scale} scale1 scale for data serie 1 values
-   * @param {d3.scale} scale2 scale for data serie 2 values
    * @param {{
    *  serie1: {color:string,lineWidth:number,fill:string},
    *  serie2: {color:string,lineWidth:number,fill:string},
    *  fillOpacity:number,
    * }} options plot options
    */
-  constructor(id, scale1, scale2, options) {
-    super(id, null, options);
-    this.scale1 = scale1;
-    this.scale2 = scale2;
+  constructor(id, options) {
+    super(id, options);
+    this.scale1 = null;
+    this.scale2 = null;
     this.setRange = this.setRange.bind(this);
+
+    if (options.serie1.scale) {
+      this.scale1 = createScale(
+        options.serie1.scale,
+        options.serie1.domain || [0, 1],
+      );
+    }
+    if (options.serie2.scale) {
+      this.scale2 = createScale(
+        options.serie2.scale,
+        options.serie2.domain || [0, 1],
+      );
+    }
   }
 
   /**
@@ -32,6 +44,46 @@ export default class DifferentialPlot extends Plot {
     if (this.scale1) this.scale1.range(range);
     if (this.scale2) this.scale2.range(range);
   }
+
+  /**
+   * Update plot options
+   * @param {string} key option key to update
+   * @param {*} value value to set
+   */
+  setOption(key, value) {
+    if (!this.options) {
+      this.options = {};
+    }
+    let ops = this.options;
+    const path = key.split('.');
+
+    if (path.length === 2 && path[0].match(/serie(1|2)/)) {
+      if (!ops[path[0]]) {
+        ops[path[0]] = {};
+      }
+      ops = ops[path[0]];
+
+      if (path[1] === 'domain') {
+        if (path[0] === 'serie2' && this.scale2) {
+          this.scale2.domain(value);
+        } else if (path[0] === 'serie1' && this.scale1) {
+          this.scale1.domain(value);
+        }
+      } else if (path[1] === 'scale') {
+        if (path[0] === 'serie2' && this.scale2) {
+          const range = this.scale2.range();
+          this.scale2 = createScale(value, this.scale2.domain()).range(range);
+        } else if (path[0] === 'serie1' && this.scale1) {
+          const range = this.scale1.range();
+          this.scale1 = createScale(value, this.scale1.domain()).range(range);
+        }
+      }
+      key = path[1];
+    }
+    ops[key] = value;
+    return this;
+  }
+
 
   /**
    * Renders differential plot to canvas context
@@ -49,11 +101,12 @@ export default class DifferentialPlot extends Plot {
         fillOpacity,
         horizontal,
         defined: def,
+        hidden,
       },
     } = this;
 
 
-    if (plotdata.length !== 2) return;
+    if (plotdata.length !== 2 || !xscale1 || !xscale2 || hidden) return;
 
     ctx.save();
 
