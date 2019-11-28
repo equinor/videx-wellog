@@ -19,7 +19,7 @@ export default class BasicTrackViewer {
    * @param {number[]} domain y-scale domain
    */
   constructor(tracks, domain = [0, 1000]) {
-    this.tracks = tracks;
+    this.tracks = tracks || [];
     this.zoom = null;
     this.width = 0;
     this.height = 0;
@@ -149,7 +149,7 @@ export default class BasicTrackViewer {
   rescale() {
     this.tracks.forEach(track => {
       window.requestAnimationFrame(() => track.onRescale({
-        scale: this.scale,
+        domain: this.scale.domain(),
         transform: this.currentTransform(),
       }));
     });

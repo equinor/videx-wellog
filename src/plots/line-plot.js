@@ -33,6 +33,8 @@ export default class LinePlot extends Plot {
       options,
     } = this;
 
+    if (!xscale || options.hidden) return;
+
     ctx.save();
 
     const lineFunction = line()

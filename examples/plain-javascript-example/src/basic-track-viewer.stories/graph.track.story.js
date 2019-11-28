@@ -6,11 +6,47 @@ const data = () => new Promise((resolve) => {
   setTimeout(() => resolve(graphData), 200);
 });
 
-export const withGraphTrack = () => {
+export const withMinimalSetup = () => {
+  const div = document.createElement('div');
+
+  const scaleTrack = new ScaleTrack();
+  const trackViewer = new BasicTrackViewer([scaleTrack]);
+
+  // Using requestAnimationFrame to ensure that the div is attached
+  // to the DOM before calling init
+  requestAnimationFrame(() => {
+    trackViewer.init(div, { width: 100, height: 400 });
+  });
+
+  return div;
+};
+
+export const withMinimalGraphTrackSetup = () => {
+  const div = document.createElement('div');
+
+  const graphTrack = new GraphTrack('id', {
+    scale: 'linear',
+    domain: [0, 360],
+    data: [[0, 0], [100, 360]],
+    plots: [
+      {
+        type: 'line',
+      },
+    ],
+  });
+  const trackViewer = new BasicTrackViewer([graphTrack], [0, 100]);
+
+  // Using requestAnimationFrame to ensure that the div is attached
+  // to the DOM before calling init
+  requestAnimationFrame(() => {
+    trackViewer.init(div, { width: 100, height: 400 });
+  });
+
+  return div;
+};
+
+export const withGraphTrackAndMulitplePlots = () => {
   const scaleTrack = new ScaleTrack('scale', {
-    label: 'MD',
-    abbr: 'MD',
-    units: 'meters',
     maxWidth: 45,
     legendConfig: scaleLegendConfig,
   });
@@ -28,7 +64,7 @@ export const withGraphTrack = () => {
           scale: 'linear',
           domain: [0, 360],
           color: 'blue',
-          data: d => d.HAZI.dataPoints,
+          dataAccessor: d => d.HAZI.dataPoints,
         },
       },
       {
@@ -39,7 +75,7 @@ export const withGraphTrack = () => {
           scale: 'linear',
           domain: [0, 90],
           defined: v => v !== undefined,
-          data: d => d.DEVI.dataPoints,
+          dataAccessor: d => d.DEVI.dataPoints,
         },
       },
       {
@@ -51,7 +87,7 @@ export const withGraphTrack = () => {
           scale: 'linear',
           domain: [0, 6],
           defined: (x, y) => y > 250,
-          data: d => d.DLS.dataPoints,
+          dataAccessor: d => d.DLS.dataPoints,
         },
       },
       {
@@ -70,7 +106,7 @@ export const withGraphTrack = () => {
             color: 'blue',
             fill: 'yellow',
           },
-          data: d => [
+          dataAccessor: d => [
             d.HAZI.dataPoints.map(dp => [dp[0] + 1000, dp[1]]),
             d.DEVI.dataPoints.map(dp => [dp[0] + 1000, dp[1]]),
           ],
@@ -80,13 +116,14 @@ export const withGraphTrack = () => {
   });
 
   const div = document.createElement('div');
-  const width = 250;
-  const height = 400;
-  div.style.width = `${width}px`;
-  div.style.height = `${height}px`;
 
-  const trackViewer = new BasicTrackViewer([scaleTrack, graphTrack], [100, 3100]);
-  requestAnimationFrame(() => trackViewer.init(div));
+  const trackViewer = new BasicTrackViewer([scaleTrack, graphTrack], [100, 2000]);
+
+  // Using requestAnimationFrame to ensure that the div is attached
+  // to the DOM before calling init
+  requestAnimationFrame(() => {
+    trackViewer.init(div, { width: 250, height: 400 });
+  });
 
   return div;
 };

@@ -31,6 +31,8 @@ export default class DotPlot extends Plot {
       options,
     } = this;
 
+    if (!xscale || options.hidden) return;
+
     const r = options.radius || Math.min(5, xscale.range()[1] * 0.04);
 
     ctx.save();
