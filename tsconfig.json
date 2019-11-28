@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "declaration": true,
+    "declarationDir": "./dist"
+  },
+  "exclude": ["test", "node_modules"]
+}

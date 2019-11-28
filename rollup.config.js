@@ -1,16 +1,11 @@
 /* eslint-disable no-console */
-import babel from 'rollup-plugin-babel';
+import typescript from 'rollup-plugin-typescript2';
 import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
+import { terser } from 'rollup-plugin-terser';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
-import { uglify } from 'rollup-plugin-uglify';
 import copy from 'rollup-plugin-copy';
-import { dependencies } from './package.json';
-
-const input = {
-  index: 'src/index.js',
-};
+import pkg from './package.json';
 
 const onwarn = (warning, warn) => {
   if (warning.code === 'CIRCULAR_DEPENDENCY') {
@@ -19,70 +14,64 @@ const onwarn = (warning, warn) => {
   warn(warning);
 };
 
-const external = Object.keys(dependencies);
-
 const exportedStyles = {
   'scale-styles': 'src/tracks/scale/styles.scss',
   'wellog-styles': 'src/ui/wellog-styles.scss',
 };
 
 export default [
-  // CommonJS
   {
-    input,
-    external,
-    output: {
-      dir: 'dist/cjs',
-      format: 'cjs',
-      esModule: false,
-    },
-    plugins: [
-      babel({
-        exclude: ['node_modules/**'],
-      }),
-      resolve(),
-      commonjs(),
-    ],
-    onwarn,
-  },
-  // ES module
-  {
-    input,
-    external,
-    output: {
-      dir: 'dist/esm',
-      format: 'esm',
-    },
-    plugins: [
-      resolve(),
-    ],
-    onwarn,
-  },
-  // browser-friendly UMD build
-  {
-    input: 'src/index.js',
-    external,
-    output: {
-      dir: 'dist/umd',
-      format: 'umd',
-      name: 'videx-wellog',
-      sourcemap: true,
-      esModule: false,
-      globals: {
-        d3: 'd3',
+    input: 'src/index.ts',
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
       },
-    },
+      {
+        file: pkg.module,
+        format: 'esm',
+      },
+    ],
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+    ],
     plugins: [
-      babel({
-        exclude: ['node_modules/**'],
+      typescript({
+        // eslint-disable-next-line global-require
+        typescript: require('typescript'),
       }),
-      resolve(),
-      uglify({
+      terser({
         mangle: false,
       }),
     ],
+    onwarn,
   },
-  // styles
+  {
+    input: 'src/index.ts',
+    output: {
+      name: 'videx-wellog',
+      file: pkg.browser,
+      format: 'umd',
+      globals: {
+        d3: 'd3',
+        'resize-observer-polyfill': 'ResizeObserver',
+      },
+    },
+    plugins: [
+      resolve(),
+      typescript({
+        // eslint-disable-next-line global-require
+        typescript: require('typescript'),
+      }),
+      terser({
+        mangle: false,
+      }),
+    ],
+    external: [
+      ...Object.keys(pkg.dependencies || {}),
+    ],
+    onwarn,
+  },
   {
     input: 'src/styles.scss',
     output: {
