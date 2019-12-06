@@ -16,6 +16,7 @@ const onwarn = (warning, warn) => {
 
 const exportedStyles = {
   'scale-styles': 'src/tracks/scale/styles.scss',
+  'track-group-styles': 'src/ui/track-group-styles.scss',
   'wellog-styles': 'src/ui/wellog-styles.scss',
 };
 
