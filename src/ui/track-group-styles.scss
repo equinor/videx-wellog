@@ -20,6 +20,9 @@ $plot_title_bg: transparent;
     display: flex;
     flex-direction: column;
     .track-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-family: sans-serif;
       font-weight: bold;
       overflow: hidden;
@@ -29,7 +32,6 @@ $plot_title_bg: transparent;
       text-anchor: middle;
       white-space: nowrap;
       border-bottom: 1px solid $plot_border_color;
-      padding: 0 1px 0 1px;
       pointer-events: auto;
       cursor: help;
     }
@@ -66,7 +68,6 @@ $plot_title_bg: transparent;
       transform: rotate(180deg);
       border-bottom: none;
       border-left: 1px solid $plot_border_color;
-      padding: 1px 0 1px 0;
     }
     .track-legend {
       border-bottom: none;

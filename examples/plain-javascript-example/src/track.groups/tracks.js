@@ -12,7 +12,7 @@ import {
 } from '../shared/mock-data';
 
 
-export default [
+export default () => [
   new ScaleTrack(0, {
     maxWidth: 50,
     width: 2,

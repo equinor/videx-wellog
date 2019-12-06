@@ -570,11 +570,16 @@ export default class TrackGroup {
       const rows = legendConfig.getLegendRows(track) || 0;
 
       const height = rows * legendBaseSize * uiScale;
+
+      // Moz bug returns 0 for clientWidth and clientHeight on svg elements,
+      // so using bounding box instead.
+      // https://bugzilla.mozilla.org/show_bug.cgi?id=874811
+      const bbox = elm.getBoundingClientRect();
       const bounds = {
         left: 0,
         height,
         top: legendHeight - height,
-        width: horizontal ? elm.clientHeight : elm.clientWidth,
+        width: horizontal ? bbox.height : bbox.width,
       };
 
       if (legendConfig.onUpdate) {
@@ -693,7 +698,6 @@ export default class TrackGroup {
         styles: {
           [attr.size]: `${titleHeight}px`,
           'font-size': `${fontSize}px`,
-          'line-height': `${titleHeight}px`,
         },
       });
     }
@@ -754,7 +758,6 @@ export default class TrackGroup {
       setStyles(selection.select('.track-title'), {
         [sizeAttr]: `${titleHeight}px`,
         'font-size': `${fontSize}px`,
-        'line-height': `${titleHeight}px`,
       });
     }
 
