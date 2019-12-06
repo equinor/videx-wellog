@@ -40,6 +40,8 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -117,9 +119,14 @@
 					<div class="tsd-signature tsd-kind-icon">abbr<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L35">tracks/interfaces.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L41">tracks/interfaces.ts:41</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Short label to use in title if used with TrackGrouop</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="horizontal" class="tsd-anchor"></a>
@@ -127,9 +134,14 @@
 					<div class="tsd-signature tsd-kind-icon">horizontal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L38">tracks/interfaces.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L53">tracks/interfaces.ts:53</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Orientation of track. Default is false or unset (vertical).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="label" class="tsd-anchor"></a>
@@ -137,9 +149,14 @@
 					<div class="tsd-signature tsd-kind-icon">label<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L34">tracks/interfaces.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L37">tracks/interfaces.ts:37</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Label to use in title if used with TrackGrouop</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="legendconfig" class="tsd-anchor"></a>
@@ -147,19 +164,29 @@
 					<div class="tsd-signature tsd-kind-icon">legend<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="legendconfig.html" class="tsd-signature-type">LegendConfig</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L37">tracks/interfaces.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L49">tracks/interfaces.ts:49</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A config object used to display track legend if used with TrackGroup</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="loader" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> loader</h3>
-					<div class="tsd-signature tsd-kind-icon">loader<span class="tsd-signature-symbol">:</span> <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></div>
+					<div class="tsd-signature tsd-kind-icon">loader<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Element</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L36">tracks/interfaces.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L45">tracks/interfaces.ts:45</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An optional loader element that will be made visible during loading</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="maxwidth" class="tsd-anchor"></a>
@@ -167,9 +194,14 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L40">tracks/interfaces.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L62">tracks/interfaces.ts:62</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Max width of track in pixels</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="width" class="tsd-anchor"></a>
@@ -177,9 +209,15 @@
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L39">tracks/interfaces.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L58">tracks/interfaces.ts:58</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Relative track width when used in a TrackGroup, i.e. a track with width set to
+							3 will be three times wider than tracks set to width 1.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -194,9 +232,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L45">tracks/interfaces.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L93">tracks/interfaces.ts:93</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hook if a track is set in an error state</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -204,6 +247,9 @@
 								</li>
 								<li>
 									<h5>track: <a href="../classes/track.html" class="tsd-signature-type">Track</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>track instance reference</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -220,16 +266,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L41">tracks/interfaces.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L68">tracks/interfaces.ts:68</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hook when track is mounted to the DOM</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <a href="onmountevent.html" class="tsd-signature-type">OnMountEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>event data</p>
+									</div>
 								</li>
 								<li>
 									<h5>track: <a href="../classes/track.html" class="tsd-signature-type">Track</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>track instance reference</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -246,16 +303,28 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L44">tracks/interfaces.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L87">tracks/interfaces.ts:87</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hook when track is being rescaled, for example from user interaction
+									if used with a TrackGroup.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <a href="onrescaleevent.html" class="tsd-signature-type">OnRescaleEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>event data</p>
+									</div>
 								</li>
 								<li>
 									<h5>track: <a href="../classes/track.html" class="tsd-signature-type">Track</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>track instance reference</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -272,16 +341,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L42">tracks/interfaces.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L74">tracks/interfaces.ts:74</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hook when track is unmounted from the DOM</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <a href="onunmountevent.html" class="tsd-signature-type">OnUnmountEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>event data</p>
+									</div>
 								</li>
 								<li>
 									<h5>track: <a href="../classes/track.html" class="tsd-signature-type">Track</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>track instance reference</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -298,16 +378,27 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/tracks/interfaces.ts#L43">tracks/interfaces.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/tracks/interfaces.ts#L80">tracks/interfaces.ts:80</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Hook when track is updated in the DOM model.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>event: <a href="onupdateevent.html" class="tsd-signature-type">OnUpdateEvent</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>event data</p>
+									</div>
 								</li>
 								<li>
 									<h5>track: <a href="../classes/track.html" class="tsd-signature-type">Track</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>track instance reference</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>

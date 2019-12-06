@@ -40,6 +40,8 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -64,6 +66,15 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>The scale interface supports a subset of the scale in d3js.
+							It is defined to support using scaling functions that interpolates or
+						otherwise changes the input values (decorator pattern).</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -86,9 +97,14 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/common/interfaces.ts#L11">common/interfaces.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/common/interfaces.ts#L22">common/interfaces.ts:22</a></li>
 							</ul>
 						</aside>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>scale value from domain to range</p>
+							</div>
+						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
@@ -127,9 +143,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/common/interfaces.ts#L13">common/interfaces.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/common/interfaces.ts#L26">common/interfaces.ts:26</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get scale&#39;s current domain</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></h4>
 						</li>
 					</ul>
@@ -144,9 +165,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/common/interfaces.ts#L15">common/interfaces.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/common/interfaces.ts#L30">common/interfaces.ts:30</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>inverse scale range value to domain value</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -167,9 +193,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/common/interfaces.ts#L14">common/interfaces.ts:14</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/common/interfaces.ts#L28">common/interfaces.ts:28</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get scale&#39;s current range</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../globals.html#range" class="tsd-signature-type">Range</a></h4>
 						</li>
 					</ul>
@@ -184,9 +215,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/common/interfaces.ts#L16">common/interfaces.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/1657cb3/src/common/interfaces.ts#L32">common/interfaces.ts:32</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>get a list of ticks based on scale domain and range, and optionally desired number of ticks</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>

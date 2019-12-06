@@ -5,6 +5,7 @@ import {
 import { setAttrs, setStyles, UIHelper } from '../utils';
 import { Margin, RubberBandUpdateEvent, RubberBandExitEvent, TrackGroupOptions } from './interfaces';
 import TrackGroup from './track-group';
+import { D3Selection } from '../common/interfaces';
 
 export interface WellogOptions extends TrackGroupOptions {
   margin?: Margin,
@@ -86,11 +87,11 @@ export default class WellogComponent extends TrackGroup {
 
   /**
    * Updates the rubber band controller
-   * @param {DOMElement} rbc rubber band container
-   * @param {number} w width
-   * @param {number} h height
+   * @param rbc rubber band container
+   * @param w width
+   * @param h height
    */
-  updateRubberband(rbc, w, h) {
+  updateRubberband(rbc: D3Selection, w: number, h: number) {
     if (w <= 0 || h <= 0) return;
 
     let rb = rbc.select('rect.rubber-band');

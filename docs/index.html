@@ -40,6 +40,8 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -178,6 +180,12 @@
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/differentialplotoptions.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Options</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/differentialplotserielegendinfo.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Serie<wbr>Legend<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/differentialplotserieoptions.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Serie<wbr>Options</a>
+					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/dotplotoptions.html" class="tsd-kind-icon">Dot<wbr>Plot<wbr>Options</a>
 					</li>
@@ -198,6 +206,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/legendinfo.html" class="tsd-kind-icon">Legend<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/legendmap.html" class="tsd-kind-icon">Legend<wbr>Map</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/lineplotoptions.html" class="tsd-kind-icon">Line<wbr>Plot<wbr>Options</a>
@@ -246,6 +257,9 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/scaletrackoptions.html" class="tsd-kind-icon">Scale<wbr>Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/trackevent.html" class="tsd-kind-icon">Track<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/trackgroupoptions.html" class="tsd-kind-icon">Track<wbr>Group<wbr>Options</a>
@@ -307,8 +321,44 @@
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#tuplet" class="tsd-kind-icon">Tuplet</a>
 					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#colormajor" class="tsd-kind-icon">color<wbr>Major</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#colorminor" class="tsd-kind-icon">color<wbr>Minor</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#legendbasesize" class="tsd-kind-icon">legend<wbr>Base<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#minsize" class="tsd-kind-icon">min<wbr>Size</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#scalelegendconfig" class="tsd-kind-icon">scale<wbr>Legend<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#strokemajor" class="tsd-kind-icon">stroke<wbr>Major</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#strokeminor" class="tsd-kind-icon">stroke<wbr>Minor</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#ticksfactor" class="tsd-kind-icon">ticks<wbr>Factor</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#titlebarbasesize" class="tsd-kind-icon">title<wbr>Bar<wbr>Base<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#titlefontsizefactor" class="tsd-kind-icon">title<wbr>Font<wbr>Size<wbr>Factor</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#transitionduration" class="tsd-kind-icon">transition<wbr>Duration</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#uiscalefactor" class="tsd-kind-icon">ui<wbr>Scale<wbr>Factor</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-is-not-exported">
+						<a href="globals.html#wheelpanfactor" class="tsd-kind-icon">wheel<wbr>Pan<wbr>Factor</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#computelabelbounds" class="tsd-kind-icon">compute<wbr>Label<wbr>Bounds</a>
@@ -316,17 +366,29 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#computelabelboundshorizontal" class="tsd-kind-icon">compute<wbr>Label<wbr>Bounds<wbr>Horizontal</a>
 					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#createdifferentialplot" class="tsd-kind-icon">create<wbr>Differential<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#createplottype" class="tsd-kind-icon">create<wbr>Plot<wbr>Type</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#createscale" class="tsd-kind-icon">create<wbr>Scale</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#debouncer" class="tsd-kind-icon">debouncer</a>
 					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#getgraphtracklegendrows" class="tsd-kind-icon">get<wbr>Graph<wbr>Track<wbr>Legend<wbr>Rows</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#hashstring" class="tsd-kind-icon">hash<wbr>String</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#numberformatter" class="tsd-kind-icon">number<wbr>Formatter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#onupdatelegend" class="tsd-kind-icon">on<wbr>Update<wbr>Legend</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#patchplotoptions" class="tsd-kind-icon">patch<wbr>Plot<wbr>Options</a>
@@ -361,11 +423,26 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setattrs" class="tsd-kind-icon">set<wbr>Attrs</a>
 					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#setplotdata" class="tsd-kind-icon">set<wbr>Plot<wbr>Data</a>
+					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setprops" class="tsd-kind-icon">set<wbr>Props</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setstyles" class="tsd-kind-icon">set<wbr>Styles</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#updatelegendrows" class="tsd-kind-icon">update<wbr>Legend<wbr>Rows</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#defaultoptions" class="tsd-kind-icon">default<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#defaults" class="tsd-kind-icon">defaults</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#nointerpolator" class="tsd-kind-icon">no<wbr>Interpolator</a>
 					</li>
 					<li class=" tsd-kind-object-literal">
 						<a href="globals.html#plotfactory" class="tsd-kind-icon">plot<wbr>Factory</a>

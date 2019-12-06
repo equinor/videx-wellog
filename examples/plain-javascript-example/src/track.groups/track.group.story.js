@@ -2,7 +2,7 @@ import {
   TrackGroup, ScaleTrack,
 } from '../../../../src';
 
-export const withTrackGroup = () => {
+export const trackGroup = () => {
   const div = document.createElement('div');
   div.style.width = '100px';
   div.style.height = '500px';

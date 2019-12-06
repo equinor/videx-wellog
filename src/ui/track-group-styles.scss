@@ -54,6 +54,10 @@ $plot_title_bg: transparent;
     position: absolute;
     z-index: 200;
   }
+
+  .hidden {
+    display: none !important;
+  }
 }
 
 .track-group.horizontal {

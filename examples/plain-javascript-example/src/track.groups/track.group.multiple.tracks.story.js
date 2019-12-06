@@ -2,7 +2,7 @@ import {
   TrackGroup, ScaleTrack, GraphTrack,
 } from '../../../../src';
 
-export const withTrackGroupMultipleTracks = () => {
+export const trackGroupMultipleTracks = () => {
   const div = document.createElement('div');
   div.style.width = '500px';
   div.style.height = '500px';

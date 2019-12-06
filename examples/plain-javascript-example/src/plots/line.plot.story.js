@@ -5,7 +5,7 @@ import {
 } from '../../../../src';
 import { ex1 as data } from '../shared/mock-data';
 
-export const withLinePlot = () => {
+export const linePlot = () => {
   const width = 500;
   const height = 500;
 

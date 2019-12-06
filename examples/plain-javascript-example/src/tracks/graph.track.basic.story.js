@@ -3,7 +3,7 @@ import {
   GraphTrack,
 } from '../../../../src';
 
-export const withGraphTrack = () => {
+export const graphTrack = () => {
   const div = document.createElement('div');
   div.style.height = '500px';
   div.style.width = '100px';

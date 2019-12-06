@@ -14,7 +14,7 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 import { LegendTriggerFunction } from '../../utils/legend-helper';
 
 /**
- * Track for visualising y-scale
+ * Track for visualising the domain/reference scale
  */
 export default class ScaleTrack extends SvgTrack {
   xscale: D3Scale;
