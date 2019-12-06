@@ -1,3 +1,5 @@
+![](https://github.com/equinor/videx-wellog/workflows/Node%20CI/badge.svg)
+![](https://img.shields.io/npm/v/@equinor/videx-wellog)
 # Videx Well Log
 **NOTE:** The Videx Wellog components are currently in alpha. Use at own risk!
 
