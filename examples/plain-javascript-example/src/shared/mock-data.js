@@ -1,48 +1,14 @@
-export const graphData = {
-  HAZI: {
-    name: 'HAZI',
-    unit: null,
-    type: 'VALUE',
-    dataPoints: [
-      [142.2, 0],
-      [160, 62.95],
-      [190, 171.63],
-      [220, 188.04],
-      [320, null],
-      [420, 260.04],
-      [520, 270.04],
-      [620, 280.04],
+import { range } from 'd3';
 
-    ],
-  },
-  DEVI: {
-    name: 'DEVI',
-    unit: null,
-    type: 'VALUE',
-    dataPoints: [
-      [142.2, 0],
-      [160, 1.28],
-      [190, 10.38],
-      [220, 40.47],
-      [320, undefined],
-      [420, 60.47],
-      [520, 70.47],
-      [620, 80.47],
-    ],
-  },
-  DLS: {
-    name: 'DLS',
-    unit: null,
-    type: 'VALUE',
-    dataPoints: [
-      [142.2, 0],
-      [160, 0.47],
-      [190, 0.54],
-      [220, 0.15],
-      [320, 1.24],
-      [420, 2.24],
-      [520, 3.53],
-      [620, 4.56],
-    ],
-  },
+export const ex1 = range(0, 2000, 10).map(d => [d, Math.random()]);
+
+export const ex2 = {
+  noise: range(0, 2000).map(d => [d, Math.random() * 90]),
+  noise2: range(0, 2000).map(d => [d, Math.random() * 20])
+};
+
+const sin = range(0, 2000).map(d => [d, Math.sin((d / 2000) * Math.PI * 2 * 20) * 25 + 50]);
+export const ex3 = {
+  sin,
+  noise: sin.map(v => [v[0], v[1] * Math.random() + 35]),
 };

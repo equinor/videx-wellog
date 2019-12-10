@@ -1,0 +1,639 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>InterpolatedScaleHandler | @equinor/videx-wellog</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@equinor/videx-wellog</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../globals.html">Globals</a>
+				</li>
+				<li>
+					<a href="interpolatedscalehandler.html">InterpolatedScaleHandler</a>
+				</li>
+			</ul>
+			<h1>Class InterpolatedScaleHandler</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Scale handler supporting interpolation between domains. A scale interpolator
+							is required to convert between the domains. This is implemented as an object
+							with 2 conversion functions, forward and reverse. It also needs to implement
+							2 more functions, forwardInterpolatedDomain and reverseInterpolatedDomain.
+							These should return the corresponding domain based on the opposite domain,
+						i.e. MD &lt;==&gt; TVD.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="basicscalehandler.html" class="tsd-signature-type">BasicScaleHandler</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">InterpolatedScaleHandler</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/scalehandler.html" class="tsd-signature-type">ScaleHandler</a></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="interpolatedscalehandler.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="interpolatedscalehandler.html#_alternatebase" class="tsd-kind-icon">_alternate<wbr>Base</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="interpolatedscalehandler.html#_basedomain" class="tsd-kind-icon">_base<wbr>Domain</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="interpolatedscalehandler.html#_mode" class="tsd-kind-icon">_mode</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="interpolatedscalehandler.html#interpolator" class="tsd-kind-icon">interpolator</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="interpolatedscalehandler.html#scale" class="tsd-kind-icon">scale</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="interpolatedscalehandler.html#datascale" class="tsd-kind-icon">data<wbr>Scale</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="interpolatedscalehandler.html#mode" class="tsd-kind-icon">mode</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="interpolatedscalehandler.html#basedomain" class="tsd-kind-icon">base<wbr>Domain</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interpolatedscalehandler.html#createinterpolatedscale" class="tsd-kind-icon">create<wbr>Interpolated<wbr>Scale</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="interpolatedscalehandler.html#range" class="tsd-kind-icon">range</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="interpolatedscalehandler.html#rescale" class="tsd-kind-icon">rescale</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interpolatedscalehandler.html#rescaletomode" class="tsd-kind-icon">rescale<wbr>ToMode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="interpolatedscalehandler.html#setmode" class="tsd-kind-icon">set<wbr>Mode</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="interpolatedscalehandler.html#ticks" class="tsd-kind-icon">ticks</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Interpolated<wbr>Scale<wbr>Handler<span class="tsd-signature-symbol">(</span>interpolator<span class="tsd-signature-symbol">?: </span><a href="../interfaces/scaleinterpolator.html" class="tsd-signature-type">ScaleInterpolator</a>, baseDomain<span class="tsd-signature-symbol">?: </span><a href="../globals.html#domain" class="tsd-signature-type">Domain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#constructor">constructor</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L29">scale-handlers/interpolated-scale-handler.ts:29</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> interpolator: <a href="../interfaces/scaleinterpolator.html" class="tsd-signature-type">ScaleInterpolator</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> baseDomain: <a href="../globals.html#domain" class="tsd-signature-type">Domain</a><span class="tsd-signature-symbol"> =&nbsp;[0, 0]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_alternatebase" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _alternate<wbr>Base</h3>
+					<div class="tsd-signature tsd-kind-icon">_alternate<wbr>Base<span class="tsd-signature-symbol">:</span> <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L29">scale-handlers/interpolated-scale-handler.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="_basedomain" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _base<wbr>Domain</h3>
+					<div class="tsd-signature tsd-kind-icon">_base<wbr>Domain<span class="tsd-signature-symbol">:</span> <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#_basedomain">_baseDomain</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/basic-scale-handler.ts#L13">scale-handlers/basic-scale-handler.ts:13</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_mode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _mode</h3>
+					<div class="tsd-signature tsd-kind-icon">_mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L28">scale-handlers/interpolated-scale-handler.ts:28</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="interpolator" class="tsd-anchor"></a>
+					<h3>interpolator</h3>
+					<div class="tsd-signature tsd-kind-icon">interpolator<span class="tsd-signature-symbol">:</span> <a href="../interfaces/scaleinterpolator.html" class="tsd-signature-type">ScaleInterpolator</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L26">scale-handlers/interpolated-scale-handler.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="scale" class="tsd-anchor"></a>
+					<h3>scale</h3>
+					<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <a href="../interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#scale">scale</a></p>
+						<p>Inherited from <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#scale">scale</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/basic-scale-handler.ts#L12">scale-handlers/basic-scale-handler.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+					<a name="datascale" class="tsd-anchor"></a>
+					<h3>data<wbr>Scale</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> dataScale<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/scale.html" class="tsd-signature-type">Scale</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#datascale">dataScale</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L163">scale-handlers/interpolated-scale-handler.ts:163</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Overrides the getter for the scale exposed to the wellog component&#39;s tracks</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/scale.html" class="tsd-signature-type">Scale</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="mode" class="tsd-anchor"></a>
+					<h3>mode</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> mode<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L156">scale-handlers/interpolated-scale-handler.ts:156</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Getter for the current mode</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="basedomain" class="tsd-anchor"></a>
+					<h3>base<wbr>Domain</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">base<wbr>Domain<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#domain" class="tsd-signature-type">Domain</a></li>
+						<li class="tsd-signature tsd-kind-icon">base<wbr>Domain<span class="tsd-signature-symbol">(</span>newDomain<span class="tsd-signature-symbol">: </span><a href="../globals.html#domain" class="tsd-signature-type">Domain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#basedomain">baseDomain</a></p>
+								<p>Overrides <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#basedomain">baseDomain</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L130">scale-handlers/interpolated-scale-handler.ts:130</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>set or get base domain, according to current on mode</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#basedomain">baseDomain</a></p>
+								<p>Overrides <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#basedomain">baseDomain</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L131">scale-handlers/interpolated-scale-handler.ts:131</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>newDomain: <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="createinterpolatedscale" class="tsd-anchor"></a>
+					<h3>create<wbr>Interpolated<wbr>Scale</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Interpolated<wbr>Scale<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/scale.html" class="tsd-signature-type">Scale</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L47">scale-handlers/interpolated-scale-handler.ts:47</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a function, which implements the d3.scale members required by
+										the tracks in the wellog component. The scale function, and its reverse,
+										will handle interpolation/conversion between the domains, using the
+									provided scale interpolator.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/scale.html" class="tsd-signature-type">Scale</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="range" class="tsd-anchor"></a>
+					<h3>range</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">range<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#range" class="tsd-signature-type">Range</a></li>
+						<li class="tsd-signature tsd-kind-icon">range<span class="tsd-signature-symbol">(</span>newRange<span class="tsd-signature-symbol">: </span><a href="../globals.html#range" class="tsd-signature-type">Range</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/scalehandler.html" class="tsd-signature-type">ScaleHandler</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#range">range</a></p>
+								<p>Inherited from <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#range">range</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/basic-scale-handler.ts#L59">scale-handlers/basic-scale-handler.ts:59</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>set or get scale&#39;s range</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../globals.html#range" class="tsd-signature-type">Range</a></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#range">range</a></p>
+								<p>Inherited from <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#range">range</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/basic-scale-handler.ts#L60">scale-handlers/basic-scale-handler.ts:60</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>newRange: <a href="../globals.html#range" class="tsd-signature-type">Range</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/scalehandler.html" class="tsd-signature-type">ScaleHandler</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="rescale" class="tsd-anchor"></a>
+					<h3>rescale</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">rescale<span class="tsd-signature-symbol">(</span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ZoomTransform</span>, axis<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/scalehandler.html">ScaleHandler</a>.<a href="../interfaces/scalehandler.html#rescale">rescale</a></p>
+								<p>Inherited from <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#rescale">rescale</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/basic-scale-handler.ts#L27">scale-handlers/basic-scale-handler.ts:27</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update scale according to transform</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>transform: <span class="tsd-signature-type">ZoomTransform</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> axis: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;y&quot;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="rescaletomode" class="tsd-anchor"></a>
+					<h3>rescale<wbr>ToMode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">rescale<wbr>ToMode<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L86">scale-handlers/interpolated-scale-handler.ts:86</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Rescales the domain of the internal scale according to the selected mode.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="setmode" class="tsd-anchor"></a>
+					<h3>set<wbr>Mode</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Mode<span class="tsd-signature-symbol">(</span>m<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L74">scale-handlers/interpolated-scale-handler.ts:74</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set mode of the scale handler. Mode is used to switch between domains,
+										so that the internal scale will always be according to the domain of the
+										current mode, while the data scale will always conform to the master mode.
+										mode = 0: master mode
+									mode = 1: alternate mode</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>m: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interpolatedscalehandler.html" class="tsd-signature-type">InterpolatedScaleHandler</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="ticks" class="tsd-anchor"></a>
+					<h3>ticks</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">ticks<span class="tsd-signature-symbol">(</span>mode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/scalehandlerticks.html" class="tsd-signature-type">ScaleHandlerTicks</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="basicscalehandler.html">BasicScaleHandler</a>.<a href="basicscalehandler.html#ticks">ticks</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/scale-handlers/interpolated-scale-handler.ts#L106">scale-handlers/interpolated-scale-handler.ts:106</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Return ticks based on scale&#39;s current domain and range</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> mode: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/scalehandlerticks.html" class="tsd-signature-type">ScaleHandlerTicks</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class">
+						<a href="interpolatedscalehandler.html" class="tsd-kind-icon">Interpolated<wbr>Scale<wbr>Handler</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a href="interpolatedscalehandler.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="interpolatedscalehandler.html#_alternatebase" class="tsd-kind-icon">_alternate<wbr>Base</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="interpolatedscalehandler.html#_basedomain" class="tsd-kind-icon">_base<wbr>Domain</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="interpolatedscalehandler.html#_mode" class="tsd-kind-icon">_mode</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="interpolatedscalehandler.html#interpolator" class="tsd-kind-icon">interpolator</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="interpolatedscalehandler.html#scale" class="tsd-kind-icon">scale</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="interpolatedscalehandler.html#datascale" class="tsd-kind-icon">data<wbr>Scale</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="interpolatedscalehandler.html#mode" class="tsd-kind-icon">mode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="interpolatedscalehandler.html#basedomain" class="tsd-kind-icon">base<wbr>Domain</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="interpolatedscalehandler.html#createinterpolatedscale" class="tsd-kind-icon">create<wbr>Interpolated<wbr>Scale</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="interpolatedscalehandler.html#range" class="tsd-kind-icon">range</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="interpolatedscalehandler.html#rescale" class="tsd-kind-icon">rescale</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="interpolatedscalehandler.html#rescaletomode" class="tsd-kind-icon">rescale<wbr>ToMode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="interpolatedscalehandler.html#setmode" class="tsd-kind-icon">set<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="interpolatedscalehandler.html#ticks" class="tsd-kind-icon">ticks</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

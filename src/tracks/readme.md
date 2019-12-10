@@ -1,7 +1,7 @@
 # Tracks
 Tracks are containers that can be added to a wellog component. A Track is resposible to react to lifecycle events provided by its container.
 
-In the context of the wellog component, it is expected that all tracks visualise some data that can be mapped to a common y-scale. The container owning the track instances will handle any zoom/pan events and notify the tracks through its defined lifecycle events, which are:
+In the context of the wellog component, it is expected that all tracks visualise some data that can be mapped to a common domain scale. The container owning the track instances will handle any zoom/pan events and notify the tracks through its defined lifecycle events, which are:
 
 * onMount - when the track's DOM element are added to the document
 * onUnmount - when the track's DOM element are removed from the document

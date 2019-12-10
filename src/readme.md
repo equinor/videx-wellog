@@ -5,8 +5,8 @@ Videx Wellog is a set of components developed by the Videx team in Equinor for v
 The library are composed by multiple components that are designed to work together, as independant components and/or as extension points. All relevant classes are exported.
 
 Full-featured components exists in the `./ui` folder, and are:
-* `BasicTrackViewer` - minimalistic container for working with tracks.
-* `WellogComponent` - full-featured container.
+* `TrackGroup` - container class for displaying tracks and handling user interactions, track titles and legends.
+* `WellogComponent` - extension of track group to add "rubber band" overlay and track loading indicators.
 
 Track components are located in the `./tracks` folder:
 * `Track` - base class (abstract)
@@ -20,4 +20,3 @@ Track components are located in the `./tracks` folder:
   * `AreaPlot` - area graph
   * `DotPlot` - discrete points graph
   * `DifferentialPlot` - differential graph, for correlation of two data series.
-

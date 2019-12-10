@@ -3,7 +3,6 @@
 
 coverage
 dist
-api-docs
 node_modules
 npm-debug.log
 .DS_Store
