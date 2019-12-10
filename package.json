@@ -5,6 +5,9 @@
   "license": "MIT",
   "description": "Visualisation components for wellbore log data",
   "repository": "https://github.com/equinor/videx-wellog",
+  "bugs": {
+    "url": "https://github.com/equinor/videx-wellog/issues"
+  },
   "author": "Kjerand Pedersen",
   "keywords": [
     "wellog",
@@ -15,53 +18,63 @@
     "visualisation",
     "videx"
   ],
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "browser": "dist/umd/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.js",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "@types/chai": "^4.2.5",
+    "@types/d3": "^5.7.2",
+    "@types/mocha": "^5.2.7",
+    "@typescript-eslint/parser": "^2.9.0",
     "autoprefixer": "^9.6.1",
-    "esdoc": "^1.1.0",
-    "esdoc-ecmascript-proposal-plugin": "^1.0.0",
-    "esdoc-standard-plugin": "^1.0.0",
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0",
-    "expect": "^24.8.0",
-    "jsdom": "^15.1.1",
-    "mocha": "^6.1.4",
+    "chai": "^4.2.0",
+    "copyfiles": "^2.1.1",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "jsdom": "^15.2.1",
+    "mocha": "^6.2.2",
     "node-sass": "^4.12.0",
-    "nyc": "^14.1.1",
     "rimraf": "^3.0.0",
-    "rollup": "^1.11.3",
-    "rollup-plugin-babel": "^4.3.2",
+    "rollup": "^1.26.0",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-uglify": "^6.0.3"
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.24.3",
+    "ts-node": "^8.5.2",
+    "typedoc": "^0.15.3",
+    "typedoc-neo-theme": "^1.0.4",
+    "typescript": "^3.6.4"
   },
   "dependencies": {
-    "d3": "^5.9.2"
+    "d3": "^5.9.2",
+    "resize-observer-polyfill": "^1.5.1"
   },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
-    "dev": "node node_modules/.bin/rollup -c -w",
-    "coverage": "NODE_ENV=test npx nyc --reporter=html --reporter=text mocha --require @babel/register",
-    "test": "NODE_ENV=test npx mocha --require @babel/register",
-    "test:watch": "NODE_ENV=test npx mocha --require @babel/register --reporter min --watch",
-    "lint": "npx eslint src --ext js --color --format table",
-    "docs": "./node_modules/.bin/esdoc",
     "prepub": "npm run build",
-    "pub": "npm publish --access=public"
+    "pub": "npm publish --access=public",
+    "test": "mocha",
+    "test:watch": "mocha --reporter min --watch --watch-extensions ts",
+    "predocs": "rimraf docs",
+    "docs": "typedoc --out docs src --module es5",
+    "postdocs": "copyfiles .nojekyll docs",
+    "lint": "npx eslint src --ext ts --color --format table"
   },
   "files": [
     "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js"
   ]
 }

@@ -1,0 +1,6 @@
+{
+  "mode": "file",
+  "excludeNotExported": true,
+  "excludePrivate": true,
+  "readme": "src/readme.md"
+}

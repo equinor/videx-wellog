@@ -1,0 +1,445 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@equinor/videx-wellog</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">@equinor/videx-wellog</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> @equinor/videx-wellog</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#videx-wellog-project" id="videx-wellog-project" style="color: inherit; text-decoration: none;">
+					<h1>Videx Wellog Project</h1>
+				</a>
+				<p>Videx Wellog is a set of components developed by the Videx team in Equinor for viewing subsurface wellbore logs.</p>
+				<p>The library are composed by multiple components that are designed to work together, as independant components and/or as extension points. All relevant classes are exported.</p>
+				<p>Full-featured components exists in the <code>./ui</code> folder, and are:</p>
+				<ul>
+					<li><code>BasicTrackViewer</code> - minimalistic container for working with tracks.</li>
+					<li><code>WellogComponent</code> - full-featured container.</li>
+				</ul>
+				<p>Track components are located in the <code>./tracks</code> folder:</p>
+				<ul>
+					<li><code>Track</code> - base class (abstract)</li>
+					<li><code>CanvasTrack</code> - base class for tracks that renders to a 2d context (HTML5 canvas)</li>
+					<li><code>SvgTrack</code> - base class for tracks that work with SVG (vector graphics)</li>
+					<li><code>HtmlTrack</code> - base class for tracks that work with general HTML elements.</li>
+					<li><code>ScaleTrack</code> - basic track for displaying y-axis ticks</li>
+					<li><code>DualScaleTrack</code> - scale track supporting two seperate domains. For instance to show MD depth and TVD depth. Requires a <code>InterpolatedScaleHandler</code>.</li>
+					<li><code>GraphTrack</code> - supports rendering of multiple deta series. Different graph types are supported, with implementations of the <code>Plot</code> class:<ul>
+							<li><code>LinePlot</code> - linear line graph</li>
+							<li><code>AreaPlot</code> - area graph</li>
+							<li><code>DotPlot</code> - discrete points graph</li>
+							<li><code>DifferentialPlot</code> - differential graph, for correlation of two data series.</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/areaplot.html" class="tsd-kind-icon">Area<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/basicscalehandler.html" class="tsd-kind-icon">Basic<wbr>Scale<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/basictrackviewer.html" class="tsd-kind-icon">Basic<wbr>Track<wbr>Viewer</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/canvastrack.html" class="tsd-kind-icon">Canvas<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/datahelper.html" class="tsd-kind-icon">Data<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/differentialplot.html" class="tsd-kind-icon">Differential<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/dotplot.html" class="tsd-kind-icon">Dot<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/dualscaletrack.html" class="tsd-kind-icon">Dual<wbr>Scale<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/graphtrack.html" class="tsd-kind-icon">Graph<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/gridhelper.html" class="tsd-kind-icon">Grid<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/htmltrack.html" class="tsd-kind-icon">Html<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/interpolatedscalehandler.html" class="tsd-kind-icon">Interpolated<wbr>Scale<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/legendhelper.html" class="tsd-kind-icon">Legend<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/lineplot.html" class="tsd-kind-icon">Line<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/plot.html" class="tsd-kind-icon">Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/scalehelper.html" class="tsd-kind-icon">Scale<wbr>Helper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/scaletrack.html" class="tsd-kind-icon">Scale<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/svgtrack.html" class="tsd-kind-icon">Svg<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/track.html" class="tsd-kind-icon">Track</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/trackgroup.html" class="tsd-kind-icon">Track<wbr>Group</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/uihelper.html" class="tsd-kind-icon">UIHelper</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/wellogcomponent.html" class="tsd-kind-icon">Wellog<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/areaplotoptions.html" class="tsd-kind-icon">Area<wbr>Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/d3scale.html" class="tsd-kind-icon">D3<wbr>Scale</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/differentialplotlegendinfo.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Legend<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/differentialplotoptions.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/dotplotoptions.html" class="tsd-kind-icon">Dot<wbr>Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/dualscaletrackoptions.html" class="tsd-kind-icon">Dual<wbr>Scale<wbr>Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/graphtrackoptions.html" class="tsd-kind-icon">Graph<wbr>Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/labelbounds.html" class="tsd-kind-icon">Label<wbr>Bounds</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/legendbounds.html" class="tsd-kind-icon">Legend<wbr>Bounds</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/legendconfig.html" class="tsd-kind-icon">Legend<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/legendinfo.html" class="tsd-kind-icon">Legend<wbr>Info</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/lineplotoptions.html" class="tsd-kind-icon">Line<wbr>Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/margin.html" class="tsd-kind-icon">Margin</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/onmountevent.html" class="tsd-kind-icon">On<wbr>Mount<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/onrescaleevent.html" class="tsd-kind-icon">On<wbr>Rescale<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/onunmountevent.html" class="tsd-kind-icon">On<wbr>Unmount<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/onupdateevent.html" class="tsd-kind-icon">On<wbr>Update<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/plotconfig.html" class="tsd-kind-icon">Plot<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/plotfactory.html" class="tsd-kind-icon">Plot<wbr>Factory</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/plotoptions.html" class="tsd-kind-icon">Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rubberbandexitevent.html" class="tsd-kind-icon">Rubber<wbr>Band<wbr>Exit<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/rubberbandupdateevent.html" class="tsd-kind-icon">Rubber<wbr>Band<wbr>Update<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/scale.html" class="tsd-kind-icon">Scale</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/scalehandler.html" class="tsd-kind-icon">Scale<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/scalehandlerticks.html" class="tsd-kind-icon">Scale<wbr>Handler<wbr>Ticks</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/scaleinterpolator.html" class="tsd-kind-icon">Scale<wbr>Interpolator</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/scaletrackoptions.html" class="tsd-kind-icon">Scale<wbr>Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/trackgroupoptions.html" class="tsd-kind-icon">Track<wbr>Group<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/trackgroupresizeevent.html" class="tsd-kind-icon">Track<wbr>Group<wbr>Resize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/trackoptions.html" class="tsd-kind-icon">Track<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/transform.html" class="tsd-kind-icon">Transform</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/wellogoptions.html" class="tsd-kind-icon">Wellog<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#d3selection" class="tsd-kind-icon">D3<wbr>Selection</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#dataaccessorfunction" class="tsd-kind-icon">Data<wbr>Accessor<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#debouncefunction" class="tsd-kind-icon">Debounce<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#definedfunction" class="tsd-kind-icon">Defined<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#differentialplotdata" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#domain" class="tsd-kind-icon">Domain</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#legendoninitfunction" class="tsd-kind-icon">Legend<wbr>OnInit<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#legendonupdatefunction" class="tsd-kind-icon">Legend<wbr>OnUpdate<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#legendrowsfunction" class="tsd-kind-icon">Legend<wbr>Rows<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#legendtriggerfunction" class="tsd-kind-icon">Legend<wbr>Trigger<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#plotcreatorfunction" class="tsd-kind-icon">Plot<wbr>Creator<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#plotdata" class="tsd-kind-icon">Plot<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#range" class="tsd-kind-icon">Range</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#triplet" class="tsd-kind-icon">Triplet</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#tuplet" class="tsd-kind-icon">Tuplet</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#scalelegendconfig" class="tsd-kind-icon">scale<wbr>Legend<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#computelabelbounds" class="tsd-kind-icon">compute<wbr>Label<wbr>Bounds</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#computelabelboundshorizontal" class="tsd-kind-icon">compute<wbr>Label<wbr>Bounds<wbr>Horizontal</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createscale" class="tsd-kind-icon">create<wbr>Scale</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#debouncer" class="tsd-kind-icon">debouncer</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#hashstring" class="tsd-kind-icon">hash<wbr>String</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#numberformatter" class="tsd-kind-icon">number<wbr>Formatter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#patchplotoptions" class="tsd-kind-icon">patch<wbr>Plot<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderareaplotlegend" class="tsd-kind-icon">render<wbr>Area<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderbasicplotlegend" class="tsd-kind-icon">render<wbr>Basic<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderdifferentialplotlegend" class="tsd-kind-icon">render<wbr>Differential<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderdotplotlegend" class="tsd-kind-icon">render<wbr>Dot<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderhorizontalticks" class="tsd-kind-icon">render<wbr>Horizontal<wbr>Ticks</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderlineplotlegend" class="tsd-kind-icon">render<wbr>Line<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#rendertextlabels" class="tsd-kind-icon">render<wbr>Text<wbr>Labels</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#renderticks" class="tsd-kind-icon">render<wbr>Ticks</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#round" class="tsd-kind-icon">round</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setattrs" class="tsd-kind-icon">set<wbr>Attrs</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setprops" class="tsd-kind-icon">set<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#setstyles" class="tsd-kind-icon">set<wbr>Styles</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#plotfactory" class="tsd-kind-icon">plot<wbr>Factory</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
