@@ -41,19 +41,19 @@ export interface PlotOptions {
    */
   offset?: number,
   /**
-   * Scale type: 'linear' or 'log'
+   * Scale type: 'linear' or 'log'. Default is 'linear'.
    */
   scale?: string,
   /**
-   * Y axis (range) for plot data
+   * Y axis (range) for plot data. Default is [0, 100].
    */
   domain?: Domain,
   /**
-   * Set condition for what data to plot
+   * Set condition for what data to plot. Default is v => v !== null
    */
   defined?: DefinedFunction,
   /**
-   * Flag to hide/show a plot
+   * Flag to hide/show a plot. Default is false.
    */
   hidden?: boolean,
   /**
