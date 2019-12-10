@@ -18,7 +18,7 @@ export default class DataHelper {
   }
 
   /**
-  * Test if the data is withing the scale's domain
+  * Test if the data is within the scale's domain
   */
   static isWithinBounds(scale: Scale, datapoints: PlotData) : boolean {
     if (!datapoints || datapoints.length < 1) return false;

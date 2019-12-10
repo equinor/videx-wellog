@@ -105,7 +105,7 @@ export default class ScaleHelper {
   /**
    * Internal. Creates minor ticks based around a value, number of steps and step size
    */
-  static createMinorTicks(v: number, steps: number, stepSize: number) : number[] {
+  private static createMinorTicks(v: number, steps: number, stepSize: number) : number[] {
     const res = [];
     for (let i = 1; i < steps; i += 1) {
       const mv = v + (i * stepSize);
