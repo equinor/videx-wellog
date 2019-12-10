@@ -40,6 +40,8 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -64,6 +66,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Available area plot options</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -112,9 +121,14 @@
 					<div class="tsd-signature tsd-kind-icon">color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L36">plots/interfaces.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L118">plots/interfaces.ts:118</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stroke color</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="data" class="tsd-anchor"></a>
@@ -123,9 +137,16 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#data">data</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L19">plots/interfaces.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L67">plots/interfaces.ts:67</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>depricated</dt>
+							<dd><p>use dataAccessor</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="dataaccessor" class="tsd-anchor"></a>
@@ -134,9 +155,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#dataaccessor">dataAccessor</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L20">plots/interfaces.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L71">plots/interfaces.ts:71</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Plot data accessor function when used with GraphTrack</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="defined" class="tsd-anchor"></a>
@@ -145,9 +171,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#defined">defined</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L16">plots/interfaces.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L54">plots/interfaces.ts:54</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set condition for what data to plot. Default is v =&gt; v !== null</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="domain" class="tsd-anchor"></a>
@@ -156,9 +187,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#domain">domain</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L15">plots/interfaces.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L50">plots/interfaces.ts:50</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Y axis (range) for plot data. Default is [0, 100].</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="fill" class="tsd-anchor"></a>
@@ -166,9 +202,14 @@
 					<div class="tsd-signature tsd-kind-icon">fill<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L35">plots/interfaces.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L114">plots/interfaces.ts:114</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Fill color</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="fillopacity" class="tsd-anchor"></a>
@@ -176,9 +217,14 @@
 					<div class="tsd-signature tsd-kind-icon">fill<wbr>Opacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L38">plots/interfaces.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L126">plots/interfaces.ts:126</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Fill opacity</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="hidden" class="tsd-anchor"></a>
@@ -187,9 +233,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#hidden">hidden</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L17">plots/interfaces.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L58">plots/interfaces.ts:58</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Flag to hide/show a plot. Default is false.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="horizontal" class="tsd-anchor"></a>
@@ -198,9 +249,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#horizontal">horizontal</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L18">plots/interfaces.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L62">plots/interfaces.ts:62</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Set plot orientation. Default is true (horizontally).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="inversecolor" class="tsd-anchor"></a>
@@ -208,9 +264,14 @@
 					<div class="tsd-signature tsd-kind-icon">inverse<wbr>Color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L40">plots/interfaces.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L135">plots/interfaces.ts:135</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If set, will also fill the opposite area in the color specified. Not set by default.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="legendrows" class="tsd-anchor"></a>
@@ -219,9 +280,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#legendrows">legendRows</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L21">plots/interfaces.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L75">plots/interfaces.ts:75</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The number of rows in the legend section (if used with TrackGroup) this particular plot requires</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="offset" class="tsd-anchor"></a>
@@ -230,9 +296,19 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#offset">offset</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L13">plots/interfaces.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L42">plots/interfaces.ts:42</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>offset position to draw the plot</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><p>0.5 // renders the plot 50 % off from origin</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="scale" class="tsd-anchor"></a>
@@ -241,9 +317,14 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="plotoptions.html">PlotOptions</a>.<a href="plotoptions.html#scale">scale</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L14">plots/interfaces.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L46">plots/interfaces.ts:46</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Scale type: &#39;linear&#39; or &#39;log&#39;. Default is &#39;linear&#39;.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="useminasbase" class="tsd-anchor"></a>
@@ -251,9 +332,15 @@
 					<div class="tsd-signature tsd-kind-icon">use<wbr>Min<wbr>AsBase<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L39">plots/interfaces.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L131">plots/interfaces.ts:131</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Use the minimum value of the domain as base for the area polygon.
+							Default is true, setting to false will invert the drawing of the polygon.</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="width" class="tsd-anchor"></a>
@@ -261,9 +348,14 @@
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/plots/interfaces.ts#L37">plots/interfaces.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L122">plots/interfaces.ts:122</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stroke width</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>

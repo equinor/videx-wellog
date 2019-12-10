@@ -40,6 +40,8 @@
 							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
 							<input type="checkbox" id="tsd-filter-externals" checked />
 							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
 						</div>
 					</div>
 					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
@@ -98,6 +100,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_initialized" class="tsd-kind-icon">_initialized</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_legendheight" class="tsd-kind-icon">_legend<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_observer" class="tsd-kind-icon">_observer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_scalehandler" class="tsd-kind-icon">_scale<wbr>Handler</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_titlefontsize" class="tsd-kind-icon">_title<wbr>Font<wbr>Size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_titleheight" class="tsd-kind-icon">_title<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_trackheight" class="tsd-kind-icon">_track<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_uiscale" class="tsd-kind-icon">_ui<wbr>Scale</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="trackgroup.html#container" class="tsd-kind-icon">container</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="trackgroup.html#currenttransform" class="tsd-kind-icon">current<wbr>Transform</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="trackgroup.html#debounce" class="tsd-kind-icon">debounce</a></li>
@@ -122,6 +132,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_trackenter" class="tsd-kind-icon">_track<wbr>Enter</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_trackexit" class="tsd-kind-icon">_track<wbr>Exit</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="trackgroup.html#_trackupdate" class="tsd-kind-icon">_track<wbr>Update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="trackgroup.html#addtrack" class="tsd-kind-icon">add<wbr>Track</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="trackgroup.html#adjusttosize" class="tsd-kind-icon">adjust<wbr>ToSize</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="trackgroup.html#adjusttracktitles" class="tsd-kind-icon">adjust<wbr>Track<wbr>Titles</a></li>
@@ -158,7 +171,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L65">ui/track-group.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L65">ui/track-group.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -174,13 +187,93 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_initialized" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _initialized</h3>
+					<div class="tsd-signature tsd-kind-icon">_initialized<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L59">ui/track-group.ts:59</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_legendheight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _legend<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">_legend<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L63">ui/track-group.ts:63</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_observer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _observer</h3>
+					<div class="tsd-signature tsd-kind-icon">_observer<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResizeObserver</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L65">ui/track-group.ts:65</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_scalehandler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scale<wbr>Handler</h3>
+					<div class="tsd-signature tsd-kind-icon">_scale<wbr>Handler<span class="tsd-signature-symbol">:</span> <a href="../interfaces/scalehandler.html" class="tsd-signature-type">ScaleHandler</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L58">ui/track-group.ts:58</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_titlefontsize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _title<wbr>Font<wbr>Size</h3>
+					<div class="tsd-signature tsd-kind-icon">_title<wbr>Font<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L64">ui/track-group.ts:64</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_titleheight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _title<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">_title<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L62">ui/track-group.ts:62</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_trackheight" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _track<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">_track<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L60">ui/track-group.ts:60</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="_uiscale" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _ui<wbr>Scale</h3>
+					<div class="tsd-signature tsd-kind-icon">_ui<wbr>Scale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L61">ui/track-group.ts:61</a></li>
+						</ul>
+					</aside>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="container" class="tsd-anchor"></a>
 					<h3>container</h3>
 					<div class="tsd-signature tsd-kind-icon">container<span class="tsd-signature-symbol">:</span> <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L45">ui/track-group.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L45">ui/track-group.ts:45</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -190,7 +283,7 @@
 					<div class="tsd-signature tsd-kind-icon">current<wbr>Transform<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L56">ui/track-group.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L56">ui/track-group.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -215,7 +308,7 @@
 					<div class="tsd-signature tsd-kind-icon">debounce<span class="tsd-signature-symbol">:</span> <a href="../globals.html#debouncefunction" class="tsd-signature-type">DebounceFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L50">ui/track-group.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L50">ui/track-group.ts:50</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -225,7 +318,7 @@
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L49">ui/track-group.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L49">ui/track-group.ts:49</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -235,7 +328,7 @@
 					<div class="tsd-signature tsd-kind-icon">legend<wbr>Rows<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L55">ui/track-group.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L55">ui/track-group.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -245,14 +338,14 @@
 					<div class="tsd-signature tsd-kind-icon">legends<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L51">ui/track-group.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L51">ui/track-group.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">LegendMap</span></h5>
+								<h5><span class="tsd-signature-symbol">[</span>propName: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/legendmap.html" class="tsd-signature-type">LegendMap</a></h5>
 							</li>
 						</ul>
 					</div>
@@ -263,7 +356,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/trackgroupoptions.html" class="tsd-signature-type">TrackGroupOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L43">ui/track-group.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L43">ui/track-group.ts:43</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -273,7 +366,7 @@
 					<div class="tsd-signature tsd-kind-icon">overlay<span class="tsd-signature-symbol">:</span> <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L46">ui/track-group.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L46">ui/track-group.ts:46</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -283,7 +376,7 @@
 					<div class="tsd-signature tsd-kind-icon">tracks<span class="tsd-signature-symbol">:</span> <a href="track.html" class="tsd-signature-type">Track</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L44">ui/track-group.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L44">ui/track-group.ts:44</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -293,7 +386,7 @@
 					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L48">ui/track-group.ts:48</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L48">ui/track-group.ts:48</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -303,7 +396,7 @@
 					<div class="tsd-signature tsd-kind-icon">zoom<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ZoomBehavior</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Element</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L47">ui/track-group.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L47">ui/track-group.ts:47</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -321,7 +414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L773">ui/track-group.ts:773</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L776">ui/track-group.ts:776</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -334,7 +427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L781">ui/track-group.ts:781</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L784">ui/track-group.ts:784</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -366,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L808">ui/track-group.ts:808</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L811">ui/track-group.ts:811</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -389,7 +482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L792">ui/track-group.ts:792</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L795">ui/track-group.ts:795</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -403,7 +496,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L800">ui/track-group.ts:800</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L803">ui/track-group.ts:803</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -430,6 +523,99 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_trackenter" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _track<wbr>Enter</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_track<wbr>Enter<span class="tsd-signature-symbol">(</span>selection<span class="tsd-signature-symbol">: </span><a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L666">ui/track-group.ts:666</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Add DOM-elements for new tracks</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>selection: <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>enter selection</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_trackexit" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _track<wbr>Exit</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_track<wbr>Exit<span class="tsd-signature-symbol">(</span>selection<span class="tsd-signature-symbol">: </span><a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L647">ui/track-group.ts:647</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Remove DOM-elements belonging to removed tracks</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>selection: <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>exit selection</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="_trackupdate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _track<wbr>Update</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">_track<wbr>Update<span class="tsd-signature-symbol">(</span>selection<span class="tsd-signature-symbol">: </span><a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L741">ui/track-group.ts:741</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update DOM-elements for existing tracks</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>selection: <a href="../globals.html#d3selection" class="tsd-signature-type">D3Selection</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>update selection</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="addtrack" class="tsd-anchor"></a>
 					<h3>add<wbr>Track</h3>
@@ -440,7 +626,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L208">ui/track-group.ts:208</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L208">ui/track-group.ts:208</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,7 +657,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L255">ui/track-group.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L255">ui/track-group.ts:255</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -502,7 +688,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L590">ui/track-group.ts:590</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L595">ui/track-group.ts:595</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -525,7 +711,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L512">ui/track-group.ts:512</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L512">ui/track-group.ts:512</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -547,7 +733,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L118">ui/track-group.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L118">ui/track-group.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -579,7 +765,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L433">ui/track-group.ts:433</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L433">ui/track-group.ts:433</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -616,7 +802,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L127">ui/track-group.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L127">ui/track-group.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -647,7 +833,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L181">ui/track-group.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L181">ui/track-group.ts:181</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -669,7 +855,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L608">ui/track-group.ts:608</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L613">ui/track-group.ts:613</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -691,7 +877,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L474">ui/track-group.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L474">ui/track-group.ts:474</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -729,7 +915,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L230">ui/track-group.ts:230</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L230">ui/track-group.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -760,7 +946,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L356">ui/track-group.ts:356</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L356">ui/track-group.ts:356</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -797,7 +983,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L424">ui/track-group.ts:424</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L424">ui/track-group.ts:424</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -820,7 +1006,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L191">ui/track-group.ts:191</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L191">ui/track-group.ts:191</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -839,7 +1025,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L192">ui/track-group.ts:192</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L192">ui/track-group.ts:192</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -862,7 +1048,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L558">ui/track-group.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L558">ui/track-group.ts:558</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -893,7 +1079,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L535">ui/track-group.ts:535</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L535">ui/track-group.ts:535</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -915,7 +1101,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L392">ui/track-group.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L392">ui/track-group.ts:392</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -937,7 +1123,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L447">ui/track-group.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L447">ui/track-group.ts:447</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -959,7 +1145,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/0259488/src/ui/track-group.ts#L106">ui/track-group.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/track-group.ts#L106">ui/track-group.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -999,6 +1185,30 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="trackgroup.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_initialized" class="tsd-kind-icon">_initialized</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_legendheight" class="tsd-kind-icon">_legend<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_observer" class="tsd-kind-icon">_observer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_scalehandler" class="tsd-kind-icon">_scale<wbr>Handler</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_titlefontsize" class="tsd-kind-icon">_title<wbr>Font<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_titleheight" class="tsd-kind-icon">_title<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_trackheight" class="tsd-kind-icon">_track<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_uiscale" class="tsd-kind-icon">_ui<wbr>Scale</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="trackgroup.html#container" class="tsd-kind-icon">container</a>
@@ -1041,6 +1251,15 @@
 							</li>
 							<li class=" tsd-kind-accessor tsd-parent-kind-class">
 								<a href="trackgroup.html#scalehandler" class="tsd-kind-icon">scale<wbr>Handler</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_trackenter" class="tsd-kind-icon">_track<wbr>Enter</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_trackexit" class="tsd-kind-icon">_track<wbr>Exit</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="trackgroup.html#_trackupdate" class="tsd-kind-icon">_track<wbr>Update</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="trackgroup.html#addtrack" class="tsd-kind-icon">add<wbr>Track</a>

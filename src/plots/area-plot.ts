@@ -13,8 +13,8 @@ export default class AreaPlot extends Plot {
 
   /**
    * Renders area plot to canvas context
-   * @param {CanvasRenderingContext2D} ctx canvas context instance
-   * @param {d3.scale} scale y-scale
+   * @param ctx canvas context instance
+   * @param scale y-scale
    */
   plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
     const {

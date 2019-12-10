@@ -41,7 +41,7 @@ export default function renderDifferentialPlotLegend(
     setAttrs(g.append('rect'), {
       x: left + 2,
       y: shadeY,
-      width: shadeW / 2,
+      width: shadeW,
       height: shadeH,
       fill: options1.fill,
       'fill-opacity': fillOpacity,
@@ -50,7 +50,7 @@ export default function renderDifferentialPlotLegend(
     setAttrs(g.append('rect'), {
       x: centerX,
       y: shadeY,
-      width: shadeW / 2,
+      width: shadeW,
       height: shadeH,
       fill: options2.fill,
       'fill-opacity': fillOpacity,

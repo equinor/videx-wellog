@@ -4,7 +4,7 @@ import {
 } from '../../../../src';
 import createTracks from './tracks';
 
-export const withTrackGroupHorizontal = () => {
+export const trackGroupHorizontal = () => {
   const div = document.createElement('div');
   div.className = 'demo';
 

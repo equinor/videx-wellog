@@ -4,7 +4,7 @@ import {
 } from '../../../../src';
 import { ex3 } from '../shared/mock-data';
 
-export const withGraphTrackMultiplePlots = () => {
+export const graphTrackMultiplePlots = () => {
   const div = document.createElement('div');
   div.style.height = '500px';
   div.style.width = '100px';

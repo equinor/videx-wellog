@@ -68,7 +68,6 @@ export default class BasicScaleHandler implements ScaleHandler {
 
   /**
    * Getter for the scale exposed to the wellog component's tracks
-   * @returns {d3.scale} data scale
    */
   get dataScale() : Scale {
     return this.scale;

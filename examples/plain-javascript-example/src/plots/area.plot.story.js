@@ -5,7 +5,7 @@ import {
 } from '../../../../src';
 import { ex1 as data } from '../shared/mock-data';
 
-export const withAreaPlot = () => {
+export const areaPlot = () => {
   const width = 500;
   const height = 500;
 
@@ -20,7 +20,7 @@ export const withAreaPlot = () => {
   const areaPlot = new AreaPlot(1, {
     scale: 'linear',
     domain: [-1, 1],
-    color: 'blue',
+    color: '#79c',
     width: 2,
   }).setData(data);
 
@@ -30,19 +30,20 @@ export const withAreaPlot = () => {
 
   // change color and fill opacity
   areaPlot.setRange([190, 100])
-    .setOption('color', 'green')
-    .setOption('fillOpacity', 0.4)
+    .setOption('color', 'orange')
+    .setOption('fillOpacity', 0.25)
     .plot(canvas.getContext('2d'), scale);
 
   // max value as base
   areaPlot.setRange([320, 220])
-    .setOption('color', 'orange')
+    .setOption('color', 'gray')
+    .setOption('fillOpacity', 0.7)
     .setOption('useMinAsBase', false)
     .plot(canvas.getContext('2d'), scale);
 
   // inverse color
   areaPlot.setRange([390, 300])
-    .setOption('inverseColor', 'yellow')
+    .setOption('inverseColor', 'red')
     .plot(canvas.getContext('2d'), scale);
 
   return canvas;

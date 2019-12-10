@@ -5,7 +5,7 @@ import {
 } from '../../../../src';
 import { ex3 as data } from '../shared/mock-data';
 
-export const withDifferentialPlot = () => {
+export const differentialPlot = () => {
   const width = 500;
   const height = 500;
 

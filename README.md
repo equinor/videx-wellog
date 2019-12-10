@@ -8,7 +8,7 @@ npm install @equinor/videx-wellog
 ```
 
 ## Docs
-Generate esdoc to `./api-docs`
+Generate type-doc to `./docs`
 ```
 npm run docs 
 ```

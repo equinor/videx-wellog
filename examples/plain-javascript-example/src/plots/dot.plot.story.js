@@ -5,7 +5,7 @@ import {
 } from '../../../../src';
 import { ex1 as data } from '../shared/mock-data';
 
-export const withDotPlot = () => {
+export const dotPlot = () => {
   const width = 500;
   const height = 500;
 

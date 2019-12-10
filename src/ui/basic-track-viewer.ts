@@ -11,6 +11,7 @@ import { setStyles } from '../utils';
  * A minimalistic wellog track container for displaying wellog tracks.
  * May be helpful as a starting point if you want to create your own
  * custom track container.
+ * @deprecated Use TrackGroup instead
  */
 export default class BasicTrackViewer {
   tracks: any;
@@ -23,8 +24,8 @@ export default class BasicTrackViewer {
   currentTransform: () => any;
   /**
    * Create instance
-   * @param {Track[]} tracks tracks to be added
-   * @param {number[]} domain y-scale domain
+   * @param tracks tracks to be added
+   * @param domain y-scale domain
    */
   constructor(tracks, domain = [0, 1000]) {
     this.tracks = tracks || [];
@@ -39,10 +40,8 @@ export default class BasicTrackViewer {
 
   /**
    * Hook up to DOM element and add child elements and event handlers
-   * @param {HTMLElement} elm
-   * @param {{width:number,height:number}} options
    */
-  init(elm, options: any = {}) {
+  init(elm: HTMLElement, options: { width?: number, height?: number } = {}) {
     if (options.width) {
       this.width = options.width;
       elm.style.width = `${options.width}px`;
@@ -90,7 +89,7 @@ export default class BasicTrackViewer {
   }
 
   /**
-   * Update child elements and scale - execute callbacks on addded tracks
+   * Update child elements and scale - execute callbacks on added tracks
    */
   update() {
     const {
