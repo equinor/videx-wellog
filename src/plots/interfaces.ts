@@ -9,7 +9,7 @@ export type PlotData = Tuplet<number>[];
 
 /**
  * Data format used by differential plot
- * @example [[0, 10. 0.5], [10, 21, 0.78], [20, 19, 1.21] ... ]
+ * @example [[0, 10, 0.5], [10, 21, 0.78], [20, 19, 1.21] ... ]
  */
 export type DifferentialPlotData = Triplet<number>[];
 
