@@ -6,13 +6,15 @@ import {
   zoomTransform,
   ZoomBehavior,
   ZoomTransform,
+  mouse,
 } from 'd3';
 import ResizeObserver from 'resize-observer-polyfill';
+import createOverlay from './overlay';
 import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
 import { D3Selection, Domain, D3Scale } from '../common/interfaces';
-import { TrackGroupOptions } from './interfaces';
+import { TrackGroupOptions, Overlay } from './interfaces';
 
 const titleBarBaseSize = 18;
 const legendBaseSize = 25;
@@ -27,7 +29,7 @@ const defaultOptions = {
   showLegend: true,
   autoResize: true,
   horizontal: false,
-  overlay: true,
+  useOverlay: true,
 };
 
 interface LegendMap {
@@ -43,7 +45,7 @@ export default class TrackGroup {
   public options: TrackGroupOptions;
   public tracks: Track[];
   public container: D3Selection;
-  public overlay?: D3Selection;
+  public overlay?: Overlay;
   public zoom: ZoomBehavior<Element, any>;
   public width: number;
   public height: number;
@@ -143,26 +145,27 @@ export default class TrackGroup {
       .classed('track-group', true)
       .classed('horizontal', this.options.horizontal);
 
-    if (this.options.overlay) {
-      const overlay = container.append('svg').classed('overlay', true);
-      overlay.call(this.zoom);
+    if (this.options.useOverlay) {
+      const overlay = createOverlay(this, container);
 
-      const wheelZoomFunc = overlay.on('wheel.zoom').bind(overlay.node());
-      overlay.on('wheel.zoom', () => {
+      overlay.elm.call(this.zoom);
+
+      const wheelZoomFunc = overlay.elm.on('wheel.zoom').bind(overlay.elm.node());
+      overlay.elm.on('wheel.zoom', () => {
         if (event.ctrlKey || event.shiftKey) {
-          const scaleMod = zoomTransform(overlay.node()).k / 3;
+          const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
           const transitionAmount = event.wheelDeltaY / wheelPanFactor / scaleMod;
           if (this.options.horizontal) {
-            this.zoom.translateBy(overlay, transitionAmount, 0);
+            this.zoom.translateBy(overlay.elm, transitionAmount, 0);
           } else {
-            this.zoom.translateBy(overlay, 0, transitionAmount);
+            this.zoom.translateBy(overlay.elm, 0, transitionAmount);
           }
         } else {
           wheelZoomFunc();
         }
         event.preventDefault();
       });
-      this.currentTransform = () => zoomTransform(overlay.node());
+      this.currentTransform = () => zoomTransform(overlay.elm.node());
       this.overlay = overlay;
     } else {
       this.currentTransform = () => zoomTransform(container.node());
@@ -262,8 +265,6 @@ export default class TrackGroup {
         showTitles,
         horizontal,
       },
-      _titleHeight: oldTitleHeight,
-      _legendHeight: oldLegendHeight,
       _trackHeight: oldTrackHeight,
     } = this;
 
@@ -293,7 +294,6 @@ export default class TrackGroup {
     this._legendHeight = showLegend ? this.legendRows * legendBaseSize * this._uiScale : 0;
     this._trackHeight = dim.length - this._titleHeight - this._legendHeight;
 
-
     if (this._trackHeight <= 0 || dim.length <= 0) return;
 
     if (this._trackHeight !== oldTrackHeight) {
@@ -303,37 +303,30 @@ export default class TrackGroup {
     }
 
     // see if tracks need to be updated in any way
-    if (this._titleHeight !== oldTitleHeight || this._legendHeight !== oldLegendHeight) {
-      this.debounce(this.updateTracks);
-    } else if (dim.span !== oldDim.span && showTitles) {
+    if (dim.span !== oldDim.span && showTitles) {
       this.adjustTrackTitles();
     }
 
-    // resize svg overlay
     if (dim.span !== oldDim.span || this._trackHeight !== oldTrackHeight) {
       this.debounce(this.updateTracks);
+      // resize overlay
       if (this.overlay) {
+        const overlaySize = {
+          top: 0,
+          left: 0,
+          width: 0,
+          height: 0,
+        };
         if (horizontal) {
-          setProps(this.overlay, {
-            styles: {
-              left: `${dim.length - this._trackHeight + 1}px`,
-            },
-            attrs: {
-              width: this._trackHeight,
-              height: dim.span,
-            },
-          });
+          overlaySize.left = dim.length - this._trackHeight + 1;
+          overlaySize.width = this._trackHeight;
+          overlaySize.height = dim.span;
         } else {
-          setProps(this.overlay, {
-            styles: {
-              top: `${dim.length - this._trackHeight + 1}px`,
-            },
-            attrs: {
-              width: dim.span,
-              height: this._trackHeight,
-            },
-          });
+          overlaySize.top = dim.length - this._trackHeight + 1;
+          overlaySize.height = this._trackHeight;
+          overlaySize.width = dim.span;
         }
+        this.overlay.elm.dispatch('resize', { detail: overlaySize });
       }
       if (this.options.onResize) {
         this.options.onResize({
@@ -368,8 +361,8 @@ export default class TrackGroup {
       } else {
         transform = zoomIdentity.translate(0, -p).scale(k);
       }
-      const zoomHandler = this.options.overlay
-        ? this.container.select('.overlay')
+      const zoomHandler = this.overlay
+        ? this.overlay.elm
         : this.container;
 
       if (Number.isFinite(duration) && duration > 0) {
@@ -445,6 +438,7 @@ export default class TrackGroup {
    * Event handler for pan/zoom
    */
   protected zoomed() : void {
+    if (!this.overlay || !this.overlay.enabled) return;
     const { transform } = event;
     const { k } = this.currentTransform();
     const panExcess = this.options.panExcess || [0, 0];
@@ -510,7 +504,7 @@ export default class TrackGroup {
    * Recalculates transform based on new container size
    */
   protected adjustZoomTransform() : void {
-    const zoomHandler = this.overlay || this.container;
+    const zoomHandler = this.overlay ? this.overlay.elm : this.container;
     const [d1, d2] = this.scaleHandler.baseDomain();
     if (d1 === d2) return;
 

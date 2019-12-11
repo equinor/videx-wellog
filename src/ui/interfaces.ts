@@ -11,6 +11,41 @@ export interface Margin {
   left: number,
 }
 
+interface OverlayEvent {
+  target: HTMLElement,
+  source: HTMLElement,
+  caller: TrackGroup,
+}
+
+export interface OverlayResizeEvent extends OverlayEvent {
+  width: number,
+  height: number,
+}
+
+export interface OverlayMouseMoveEvent extends OverlayEvent {
+  x: number,
+  y: number,
+}
+
+export interface OverlayOptions {
+  onMouseMove?(event: OverlayMouseMoveEvent): void,
+  onMouseExit?(event: OverlayEvent): void,
+  onResize?(event: OverlayResizeEvent) : void,
+}
+
+export interface OverlayElement {
+  elm: HTMLElement,
+  options: OverlayOptions,
+}
+
+export interface Overlay {
+  add(key: string, options: OverlayOptions) : HTMLElement,
+  remove(key: string) : void,
+  elm: D3Selection,
+  elements: { [propName: string]: OverlayElement },
+  enabled: boolean,
+}
+
 export interface RubberBandUpdateEvent {
   x: number,
   y: number,
@@ -40,7 +75,7 @@ export interface TrackGroupOptions {
   showLegend?: boolean,
   autoResize?: boolean,
   horizontal?: boolean,
-  overlay?: boolean,
+  useOverlay?: boolean,
   onResize?(event: TrackGroupResizeEvent) : void,
   onTrackEnter?(elm: HTMLElement, track: Track) : void,
   onTrackUpdate?(elm: HTMLElement, track: Track) : void,
