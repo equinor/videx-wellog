@@ -17,7 +17,7 @@ export const withWellogComponent = () => {
     trackGroup
       .init(div)
       .setTracks(tracks);
-    
+
     const elm = trackGroup.overlay.add('depth', {
       onMouseMove: event => {
         const {
@@ -30,10 +30,13 @@ export const withWellogComponent = () => {
           ? `MD: ${md.toFixed(1)}`
           : '-';
         target.style.visibility = 'visible';
-        
       },
       onMouseExit: event => {
         event.target.style.visibility = 'hidden';
+      },
+      onRescale: event => {
+        event.target.style.visibility = 'visible';
+        event.target.textContent = `Zoom: x${event.transform.k.toFixed(1)}`;
       }
     });
     elm.style.visibility = 'hidden';

@@ -67,6 +67,23 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
     });
   });
 
+  overlay.elm.on('rescale', () => {
+    if (!overlay.enabled) return;
+
+    const { transform } = event.detail;
+
+    Object.values(overlay.elements).forEach((itm: OverlayElement) => {
+      if (itm.options && itm.options.onRescale) {
+        requestAnimationFrame(() => itm.options.onRescale({
+          target: itm.elm,
+          source,
+          caller,
+          transform,
+        }));
+      }
+    });
+  });
+
   function add(key: string, options: OverlayOptions = {}) : HTMLElement {
     const newElm = overlay.elm.append('div')
       .style('position', 'relative')

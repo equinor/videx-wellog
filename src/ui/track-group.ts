@@ -372,10 +372,14 @@ export default class TrackGroup {
         this.zoom.transform(zoomHandler, transform);
       }
     } else {
+      const transform = this.currentTransform();
       this.notify('onRescale', {
         scale: this.scaleHandler.dataScale,
-        transform: this.currentTransform(),
+        transform,
       });
+      if (this.overlay) {
+        this.overlay.elm.dispatch('rescale', { detail: { transform }});
+      }
     }
   }
 

@@ -3,6 +3,7 @@ import { ScaleHandler } from '../scale-handlers';
 import { Domain, D3Selection } from '../common/interfaces';
 import Track from '../tracks/track';
 import TrackGroup from './track-group';
+import { Transform } from '../tracks/interfaces';
 
 export interface Margin {
   top: number,
@@ -27,10 +28,19 @@ export interface OverlayMouseMoveEvent extends OverlayEvent {
   y: number,
 }
 
+export interface OverlayMouseExitEvent extends OverlayEvent {}
+
+export interface OverlayRescaleEvent extends OverlayEvent {
+  transform?: Transform,
+}
+
+
+
 export interface OverlayOptions {
   onMouseMove?(event: OverlayMouseMoveEvent): void,
-  onMouseExit?(event: OverlayEvent): void,
+  onMouseExit?(event: OverlayMouseExitEvent): void,
   onResize?(event: OverlayResizeEvent) : void,
+  onRescale?(event: OverlayRescaleEvent) : void,
 }
 
 export interface OverlayElement {
