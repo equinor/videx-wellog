@@ -61,7 +61,6 @@ export default class GraphTrack extends CanvasTrack {
 
     this.plot = this.plot.bind(this);
     this.prepareData = this.prepareData.bind(this);
-
     this.debounce = debouncer();
   }
 

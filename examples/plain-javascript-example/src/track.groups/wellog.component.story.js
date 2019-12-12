@@ -51,6 +51,5 @@ export const withWellogComponent = () => {
     elm.style.bottom = '5px';
   });
 
-  setTimeout(() => trackGroup.rescale([900, 960], 5000), 2000);
   return div;
 };

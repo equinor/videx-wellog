@@ -1,5 +1,5 @@
 import Track from './track';
-import { D3Scale } from '../common/interfaces';
+import { D3Scale, Scale, Domain } from '../common/interfaces';
 import { LegendConfig } from '../utils/legend-helper';
 
 export interface Transform {
@@ -9,11 +9,11 @@ export interface Transform {
 }
 
 interface TrackEvent {
-  elm: HTMLElement,
   [propType: string]: any,
 }
 
 export interface OnMountEvent extends TrackEvent {
+  elm: HTMLElement,
   scale: D3Scale,
 }
 
@@ -22,11 +22,13 @@ export interface OnUnmountEvent {
 }
 
 export interface OnUpdateEvent extends TrackEvent {
+  elm: HTMLElement,
   scale?: D3Scale,
 }
 
 export interface OnRescaleEvent extends TrackEvent {
-  scale?: D3Scale,
+  scale?: Scale,
+  domain?: Domain,
   transform?: Transform,
 }
 

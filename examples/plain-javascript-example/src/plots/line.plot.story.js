@@ -17,24 +17,24 @@ export const linePlot = () => {
   const scale = scaleLinear().domain([0, 200]).range([0, width]);
 
   // create instance and set options
-  const linePlot = new LinePlot(1, {
+  const plot = new LinePlot(1, {
     scale: 'linear',
     domain: [-1, 1],
   }).setData(data);
 
   // standard
-  linePlot.setRange([100, 0])
+  plot.setRange([100, 0])
     .plot(canvas.getContext('2d'), scale);
 
   // change color and line style
-  linePlot.setRange([200, 100])
+  plot.setRange([200, 100])
     .setOption('color', 'green')
     .setOption('width', 3)
     .setOption('dash', [4, 4])
     .plot(canvas.getContext('2d'), scale);
 
   // set multiple options
-  linePlot.setRange([300, 200])
+  plot.setRange([300, 200])
     .setOptions({
       dash: null,
       color: 'purple',

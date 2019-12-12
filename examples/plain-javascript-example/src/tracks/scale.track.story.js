@@ -9,12 +9,12 @@ export const scaleTrack = () => {
   div.style.width = '100px';
 
   const scale = scaleLinear().domain([0, 100]).range([0, 500]);
-  const scaleTrack = new ScaleTrack('id');
+  const track = new ScaleTrack('id');
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    scaleTrack.init(div, scale);
+    track.init(div, scale);
   });
 
   return div;

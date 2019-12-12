@@ -1,6 +1,8 @@
-import { mean } from 'd3';
+import { mean, extent } from 'd3';
 import { PlotData, DifferentialPlotData } from '../plots/interfaces';
 import { Scale, Domain, Tuplet } from '../common/interfaces';
+
+export type ReducerFunction = (data: PlotData) => Tuplet<number>[];
 
 /**
  * Various utility functions for transforming and processing
@@ -10,11 +12,21 @@ export default class DataHelper {
   /**
  * Reduce multiple points to the its average values.
  */
-  static reduceSegment(segment: PlotData) : Tuplet<number> {
+  static avg(segment: PlotData) : Tuplet<number>[] {
+    if (segment.length <= 2) return segment;
     const avgV = mean(segment, d => d[1]);
     const avgD = mean(segment, d => d[0]);
 
-    return [avgD, avgV];
+    return [[avgD, avgV]];
+  }
+
+  static minmax(segment: PlotData) : Tuplet<number>[] {
+    if (segment.length <= 2) return segment;
+    const ext = extent(segment, d => d[1]);
+    return [
+      [segment[0][0], ext[0]],
+      [segment[segment.length - 1][0], ext[1]],
+    ];
   }
 
   /**
@@ -73,7 +85,7 @@ export default class DataHelper {
   * Downsample large data series to reduce detail when number of points are
   * greater than the number of pixels to render it to
   */
-  static resample(datapoints: PlotData, ratio: number) : PlotData {
+  static resample(datapoints: PlotData, ratio: number, reducer: ReducerFunction = DataHelper.avg) : PlotData {
     if (ratio <= 2 || datapoints.length < 100) return datapoints;
 
     ratio = Math.floor(ratio);
@@ -82,8 +94,9 @@ export default class DataHelper {
     const first = datapoints[0];
     const last = datapoints[lastIndex];
     let l = 1;
-    const averaged = [];
+    const reduced = [];
     let _safe = 0;
+
     while (l < lastIndex) {
       let r = Math.min(l + ratio, lastIndex);
       const segment = datapoints.slice(l, r);
@@ -103,17 +116,17 @@ export default class DataHelper {
         }
 
         if (segment.length > 0) {
-          averaged.push(DataHelper.reduceSegment(segment));
+          reduced.push(...reducer(segment));
           r += segment.length;
         }
-        averaged.push(undefinedEntry);
+        reduced.push(undefinedEntry);
 
         if (trailingEntry) {
-          averaged.push(trailingEntry);
+          reduced.push(trailingEntry);
           r++;
         }
       } else if (segment.length > 0) {
-        averaged.push(DataHelper.reduceSegment(segment));
+        reduced.push(...reducer(segment));
       }
       l = r;
 
@@ -123,7 +136,49 @@ export default class DataHelper {
         throw Error('Infinite loop terminated!');
       }
     }
-    return [first, ...averaged, last];
+    return [first, ...reduced, last];
+  }
+
+  static resample2(datapoints: PlotData, scale: Scale, reducer: ReducerFunction = DataHelper.minmax) : PlotData {
+    if (datapoints.length < 10) return datapoints;
+    const lastIndex = datapoints.length - 1;
+    const first = datapoints[0];
+    const last = datapoints[lastIndex];
+    const reduced = [];
+    let l = datapoints.findIndex(d => Number.isFinite(d[1]));
+    if (l === -1) {
+      return [first, last];
+    }
+    if (l > 1) {
+      reduced.push(datapoints[l - 1]);
+    }
+    let r = l + 1;
+    let y = scale(datapoints[l][0]);
+    let target = scale.invert(++y);
+    while (r < lastIndex) {
+      const rp = datapoints[r];
+      const isdef = Number.isFinite(rp[1]);
+      if (!isdef || rp[0] >= target) {
+        const segment = r - l > 0 ? datapoints.slice(l, r) : [];
+        // abort if the segment size becomes too small
+        if (segment.length <= 4 && isdef) {
+          return datapoints;
+        }
+        if (segment.length === 1) {
+          reduced.push(segment[0]);
+        } else if (segment.length !== 0) {
+          reduced.push(...reducer(segment));
+        }
+        if (!isdef) {
+          r++;
+        }
+        l = r;
+        target = scale.invert(++y);
+      } else {
+        r++;
+      }
+    }
+    return [first, ...reduced, last];
   }
 
   /**

@@ -34,8 +34,6 @@ export interface OverlayRescaleEvent extends OverlayEvent {
   transform?: Transform,
 }
 
-
-
 export interface OverlayOptions {
   onMouseMove?(event: OverlayMouseMoveEvent): void,
   onMouseExit?(event: OverlayMouseExitEvent): void,
@@ -56,18 +54,6 @@ export interface Overlay {
   enabled: boolean,
 }
 
-export interface RubberBandUpdateEvent {
-  x: number,
-  y: number,
-  source: WellogComponent,
-  getTrackElement: () => HTMLElement,
-  getTrackDatum: () => any,
-}
-
-export interface RubberBandExitEvent {
-  source: WellogComponent,
-}
-
 export interface TrackGroupResizeEvent {
   elm: HTMLElement,
   width: number,
@@ -85,9 +71,21 @@ export interface TrackGroupOptions {
   showLegend?: boolean,
   autoResize?: boolean,
   horizontal?: boolean,
-  useOverlay?: boolean,
+  transitionDuration?: number,
   onResize?(event: TrackGroupResizeEvent) : void,
   onTrackEnter?(elm: HTMLElement, track: Track) : void,
   onTrackUpdate?(elm: HTMLElement, track: Track) : void,
   onTrackExit?() : void,
+}
+
+export interface RubberBandUpdateEvent {
+  x: number,
+  y: number,
+  source: WellogComponent,
+  getTrackElement: () => HTMLElement,
+  getTrackDatum: () => any,
+}
+
+export interface RubberBandExitEvent {
+  source: WellogComponent,
 }

@@ -4,6 +4,8 @@ import {
   graphLegendConfig,
   LegendHelper,
   scaleLegendConfig,
+  DataHelper,
+  ScaleHelper,
 } from '../../../../src';
 import {
   ex1,
@@ -11,6 +13,18 @@ import {
   ex3,
 } from '../shared/mock-data';
 
+const filterData = (data, scale) => Promise.resolve(Object.keys(data).reduce((res, key) => {
+  const points = data[key];
+  const domain = [points[0][0], points[points.length - 1][0]];
+  const height = ScaleHelper.getDomainSpan(
+    scale,
+    domain,
+  );
+  // const resampled = DataHelper.resample2(points, scale);
+  const resampled = DataHelper.resample(points, points.length / height, DataHelper.minmax);
+  res[key] = DataHelper.filterData(resampled, scale.domain());
+  return res;
+}, {}));
 
 export default () => [
   new ScaleTrack(0, {
@@ -52,6 +66,7 @@ export default () => [
     abbr: 'noise',
     data: ex2,
     legendConfig: graphLegendConfig,
+    transform: filterData,
     plots: [{
       id: 'noise',
       type: 'line',

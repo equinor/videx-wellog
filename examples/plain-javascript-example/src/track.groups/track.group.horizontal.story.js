@@ -20,7 +20,8 @@ export const trackGroupHorizontal = () => {
   requestAnimationFrame(() => {
     trackGroup
       .init(div)
-      .setTracks(tracks);
+      .setTracks(tracks)
+      .zoomTo([900, 960], 2500, () => trackGroup.zoomTo([200, 300], 2000));
   });
 
   return div;

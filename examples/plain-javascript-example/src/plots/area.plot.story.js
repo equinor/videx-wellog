@@ -17,7 +17,7 @@ export const areaPlot = () => {
   const scale = scaleLinear().domain([0, 500]).range([0, width]);
 
   // create instance and set options
-  const areaPlot = new AreaPlot(1, {
+  const plot = new AreaPlot(1, {
     scale: 'linear',
     domain: [-1, 1],
     color: '#79c',
@@ -25,24 +25,24 @@ export const areaPlot = () => {
   }).setData(data);
 
   // plot
-  areaPlot.setRange([90, 0])
+  plot.setRange([90, 0])
     .plot(canvas.getContext('2d'), scale);
 
   // change color and fill opacity
-  areaPlot.setRange([190, 100])
+  plot.setRange([190, 100])
     .setOption('color', 'orange')
     .setOption('fillOpacity', 0.25)
     .plot(canvas.getContext('2d'), scale);
 
   // max value as base
-  areaPlot.setRange([320, 220])
+  plot.setRange([320, 220])
     .setOption('color', 'gray')
     .setOption('fillOpacity', 0.7)
     .setOption('useMinAsBase', false)
     .plot(canvas.getContext('2d'), scale);
 
   // inverse color
-  areaPlot.setRange([390, 300])
+  plot.setRange([390, 300])
     .setOption('inverseColor', 'red')
     .plot(canvas.getContext('2d'), scale);
 

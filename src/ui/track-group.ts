@@ -6,22 +6,18 @@ import {
   zoomTransform,
   ZoomBehavior,
   ZoomTransform,
-  mouse,
 } from 'd3';
 import ResizeObserver from 'resize-observer-polyfill';
-import createOverlay from './overlay';
 import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
 import { D3Selection, Domain, D3Scale } from '../common/interfaces';
-import { TrackGroupOptions, Overlay } from './interfaces';
+import { TrackGroupOptions } from './interfaces';
 
 const titleBarBaseSize = 18;
 const legendBaseSize = 25;
 const titleFontSizeFactor = 0.7;
 const uiScaleFactor = 800;
-const wheelPanFactor = 50;
-const transitionDuration = 200;
 
 const defaultOptions = {
   domain: [0, 1000],
@@ -29,7 +25,7 @@ const defaultOptions = {
   showLegend: true,
   autoResize: true,
   horizontal: false,
-  useOverlay: true,
+  transitionDuration: 0,
 };
 
 interface LegendMap {
@@ -45,7 +41,7 @@ export default class TrackGroup {
   public options: TrackGroupOptions;
   public tracks: Track[];
   public container: D3Selection;
-  public overlay?: Overlay;
+
   public zoom: ZoomBehavior<Element, any>;
   public width: number;
   public height: number;
@@ -55,15 +51,15 @@ export default class TrackGroup {
     [propName: number]: LegendMap,
   };
   public legendRows: number;
-  public currentTransform: () => ZoomTransform;
+
+  protected _trackHeight: number;
+  protected _uiScale: number;
+  protected _titleHeight: number;
+  protected _legendHeight: number;
+  protected _titleFontSize: number;
+  protected _initialized: boolean;
 
   private _scaleHandler: ScaleHandler;
-  private _initialized: boolean;
-  private _trackHeight: number;
-  private _uiScale: number;
-  private _titleHeight: number;
-  private _legendHeight: number;
-  private _titleFontSize: number;
   private _observer: ResizeObserver;
 
   constructor(options: TrackGroupOptions = {}) {
@@ -80,13 +76,16 @@ export default class TrackGroup {
     this.debounce = debouncer();
     this.legends = {};
 
+    this._scaleHandler = this.options.scaleHandler || new BasicScaleHandler();
+    this._scaleHandler.baseDomain(this.options.domain);
+
     this.init = this.init.bind(this);
     this.onMount = this.onMount.bind(this);
     this.onUnmount = this.onUnmount.bind(this);
     this.rescale = this.rescale.bind(this);
-    this.adjustZoomTransform = this.adjustZoomTransform.bind(this);
+    this.zoomTo = this.zoomTo.bind(this);
     this.zoomed = this.zoomed.bind(this);
-    this.notify = this.notify.bind(this);
+    this.adjustZoomTransform = this.adjustZoomTransform.bind(this);
     this.addTrack = this.addTrack.bind(this);
     this.setTracks = this.setTracks.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -96,6 +95,7 @@ export default class TrackGroup {
     this.updateLegendRows = this.updateLegendRows.bind(this);
     this.updateLegend = this.updateLegend.bind(this);
     this.processLegendConfig = this.processLegendConfig.bind(this);
+    this.setup = this.setup.bind(this);
     this._trackExit = this._trackExit.bind(this);
     this._trackEnter = this._trackEnter.bind(this);
     this._trackUpdate = this._trackUpdate.bind(this);
@@ -127,54 +127,9 @@ export default class TrackGroup {
    * @param element HTML element to attach itself to
    */
   public onMount(element: HTMLElement) : void {
-    if (this.options.autoResize) {
-      this._observer = new ResizeObserver(() => {
-        this.debounce(() => this.adjustToSize());
-      });
-      requestAnimationFrame(() => this._observer.observe(element));
-    }
-
-    this._scaleHandler = this.options.scaleHandler || new BasicScaleHandler();
-    this._scaleHandler.baseDomain(this.options.domain);
-
-    this.zoom = zoom()
-      .scaleExtent([1, this.options.maxZoom || 256])
-      .on('zoom', this.zoomed);
-
-    const container = select(element)
-      .classed('track-group', true)
-      .classed('horizontal', this.options.horizontal);
-
-    if (this.options.useOverlay) {
-      const overlay = createOverlay(this, container);
-
-      overlay.elm.call(this.zoom);
-
-      const wheelZoomFunc = overlay.elm.on('wheel.zoom').bind(overlay.elm.node());
-      overlay.elm.on('wheel.zoom', () => {
-        if (event.ctrlKey || event.shiftKey) {
-          const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
-          const transitionAmount = event.wheelDeltaY / wheelPanFactor / scaleMod;
-          if (this.options.horizontal) {
-            this.zoom.translateBy(overlay.elm, transitionAmount, 0);
-          } else {
-            this.zoom.translateBy(overlay.elm, 0, transitionAmount);
-          }
-        } else {
-          wheelZoomFunc();
-        }
-        event.preventDefault();
-      });
-      this.currentTransform = () => zoomTransform(overlay.elm.node());
-      this.overlay = overlay;
-    } else {
-      this.currentTransform = () => zoomTransform(container.node());
-    }
-
-    this.container = container;
-
+    this.setup(element);
+    this.zoom = zoom().on('zoom', this.zoomed);
     this.adjustToSize();
-
     this._initialized = true;
   }
 
@@ -255,7 +210,7 @@ export default class TrackGroup {
    * Rescale according to new container size
    * @param force Set to true in order to force update even if size has not changed
    */
-  public adjustToSize(force: boolean = false) {
+  public adjustToSize(force: boolean = false) : void {
     const {
       container,
       width: oldWidth,
@@ -263,18 +218,10 @@ export default class TrackGroup {
       options: {
         showLegend,
         showTitles,
-        horizontal,
       },
+      innerBounds: oldBounds,
       _trackHeight: oldTrackHeight,
     } = this;
-
-    const getDim = () => (
-      this.options.horizontal
-        ? { length: this.width, span: this.height }
-        : { length: this.height, span: this.width }
-    );
-
-    const oldDim = getDim();
 
     const { width, height } = container.node().getBoundingClientRect();
     this.width = width;
@@ -285,16 +232,16 @@ export default class TrackGroup {
       return;
     }
 
-    const dim = getDim();
+    const bounds = this.innerBounds;
 
     // recalculate sizes
     this._uiScale = Math.max(Math.min(1, this.width / uiScaleFactor), 0.7);
     this._titleHeight = showTitles ? titleBarBaseSize * this._uiScale : 0;
     this._titleFontSize = showTitles ? this._titleHeight * titleFontSizeFactor : 0;
     this._legendHeight = showLegend ? this.legendRows * legendBaseSize * this._uiScale : 0;
-    this._trackHeight = dim.length - this._titleHeight - this._legendHeight;
+    this._trackHeight = bounds.length - this._titleHeight - this._legendHeight;
 
-    if (this._trackHeight <= 0 || dim.length <= 0) return;
+    if (this._trackHeight <= 0 || bounds.length <= 0) return;
 
     if (this._trackHeight !== oldTrackHeight) {
       this.scale.range([0, this._trackHeight]);
@@ -303,84 +250,65 @@ export default class TrackGroup {
     }
 
     // see if tracks need to be updated in any way
-    if (dim.span !== oldDim.span && showTitles) {
+    if (bounds.span !== oldBounds.span && showTitles) {
       this.adjustTrackTitles();
     }
 
-    if (dim.span !== oldDim.span || this._trackHeight !== oldTrackHeight) {
+    if (bounds.span !== oldBounds.span || this._trackHeight !== oldTrackHeight) {
       this.debounce(this.updateTracks);
-      // resize overlay
-      if (this.overlay) {
-        const overlaySize = {
-          top: 0,
-          left: 0,
-          width: 0,
-          height: 0,
-        };
-        if (horizontal) {
-          overlaySize.left = dim.length - this._trackHeight + 1;
-          overlaySize.width = this._trackHeight;
-          overlaySize.height = dim.span;
-        } else {
-          overlaySize.top = dim.length - this._trackHeight + 1;
-          overlaySize.height = this._trackHeight;
-          overlaySize.width = dim.span;
-        }
-        this.overlay.elm.dispatch('resize', { detail: overlaySize });
-      }
-      if (this.options.onResize) {
-        this.options.onResize({
-          elm: container.node(),
-          width,
-          height,
-          trackHeight: this._trackHeight,
-          source: this,
-        });
-      }
     }
   }
 
+  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : TrackGroup {
+    const [d1, d2] = domain;
+    if (d1 === d2) return this;
+    const current = zoomTransform(this.zoomHandler.node());
+    const [b1, b2] = this.scaleHandler.baseDomain();
+    const k = Math.abs(b2 - b1) / Math.abs(d2 - d1);
+
+    const cp = this.options.horizontal ? current.x : current.y;
+    const p = ((this.scale(d1) - cp) / current.k) * k;
+
+    let transform;
+    if (this.options.horizontal) {
+      transform = zoomIdentity.translate(-p, 0).scale(k);
+    } else {
+      transform = zoomIdentity.translate(0, -p).scale(k);
+    }
+    const zoomHandler = this.zoomHandler;
+    zoomHandler.interrupt();
+    if (Number.isFinite(duration) && duration > 0) {
+      this.zoom.transform(
+        zoomHandler.transition().duration(duration).on('end', callback),
+        transform,
+      );
+    } else {
+      this.zoom.transform(zoomHandler, transform);
+      if (callback) callback();
+    }
+
+
+    return this;
+  }
 
   /**
    * Notify all clients (tracks) on changes to domain/transform
    * @param domain optional domain to scale to
    * @param duration optional duration of transition effect, 0 = no transition
    */
-  public rescale(domain?: Domain, duration: number = 0) : void {
-    if (domain) {
-      const [d1, d2] = domain;
-      if (d1 === d2) return;
-
-      const [b1, b2] = this.scaleHandler.baseDomain();
-      const k = Math.abs(b2 - b1) / Math.abs(d2 - d1);
-      const p = this.scale(d1) * k;
-
-      let transform;
-      if (this.options.horizontal) {
-        transform = zoomIdentity.translate(-p, 0).scale(k);
-      } else {
-        transform = zoomIdentity.translate(0, -p).scale(k);
-      }
-      const zoomHandler = this.overlay
-        ? this.overlay.elm
-        : this.container;
-
-      if (Number.isFinite(duration) && duration > 0) {
-        zoomHandler.interrupt();
-        this.zoom.transform(zoomHandler.transition().duration(duration), transform);
-      } else {
-        this.zoom.transform(zoomHandler, transform);
-      }
-    } else {
-      const transform = this.currentTransform();
-      this.notify('onRescale', {
-        scale: this.scaleHandler.dataScale,
-        transform,
+  public rescale() : void {
+    const transform = zoomTransform(this.zoomHandler.node());
+    const scale = this.scaleHandler.dataScale;
+    this.tracks.forEach(track => {
+      if (!track.isMounted) return;
+      requestAnimationFrame(() => {
+        track.onRescale({
+          scale,
+          transform,
+          track,
+        });
       });
-      if (this.overlay) {
-        this.overlay.elm.dispatch('rescale', { detail: { transform }});
-      }
-    }
+    });
   }
 
   /**
@@ -423,44 +351,22 @@ export default class TrackGroup {
   }
 
   /**
-   * Triggers event according to type and passes arguments to clients (tracks)
-   * @param type notification type (event type)
-   * @param args arguments to pass
+   * Setup DOM elements, scale and behaviour
+   * @param element Html element to attach to
    */
-  public notify(type:string, ...args: any[]) {
-    // console.log('>> ' + type, ...args);
-    this.tracks.forEach(track => {
-      const func = track[type] || track.options[type];
-      if (!track.isMounted) return;
-      if (func && typeof (func) === 'function') {
-        window.requestAnimationFrame(() => func(...args, track));
-      }
-    });
-  }
-
-  /**
-   * Event handler for pan/zoom
-   */
-  protected zoomed() : void {
-    if (!this.overlay || !this.overlay.enabled) return;
-    const { transform } = event;
-    const { k } = this.currentTransform();
-    const panExcess = this.options.panExcess || [0, 0];
-
-    if (this.options.horizontal) {
-      this.scaleHandler.rescale(transform, 'x');
-      this.zoom.translateExtent([
-        [-Math.abs(panExcess[0] / k), 0],
-        [this._trackHeight + Math.abs(panExcess[1] / k), 0],
-      ]);
-    } else {
-      this.scaleHandler.rescale(transform, 'y');
-      this.zoom.translateExtent([
-        [0, -Math.abs(panExcess[0] / k)],
-        [0, this._trackHeight + Math.abs(panExcess[1] / k)],
-      ]);
+  protected setup(element: HTMLElement) {
+    if (this.options.autoResize) {
+      this._observer = new ResizeObserver(() => {
+        this.debounce(() => this.adjustToSize());
+      });
+      requestAnimationFrame(() => this._observer.observe(element));
     }
-    this.rescale();
+
+    const container = select(element)
+      .classed('track-group', true)
+      .classed('horizontal', this.options.horizontal);
+
+    this.container = container;
   }
 
   /**
@@ -505,25 +411,44 @@ export default class TrackGroup {
   }
 
   /**
+   * Event handler for pan/zoom
+   */
+  protected zoomed() : void {
+    const { transform } = event;
+    if (this.options.horizontal) {
+      this.scaleHandler.rescale(transform, 'x');
+    } else {
+      this.scaleHandler.rescale(transform, 'y');
+    }
+    this.rescale();
+  }
+
+  /**
    * Recalculates transform based on new container size
    */
   protected adjustZoomTransform() : void {
-    const zoomHandler = this.overlay ? this.overlay.elm : this.container;
-    const [d1, d2] = this.scaleHandler.baseDomain();
+    const {
+      zoomHandler,
+      scaleHandler,
+      options: {
+        horizontal,
+      },
+    } = this;
+
+    const [d1, d2] = scaleHandler.baseDomain();
     if (d1 === d2) return;
 
-    const p1 = this.scale(d1);
-    const p2 = this.scale(d2);
+    const p1 = scaleHandler.scale(d1);
+    const p2 = scaleHandler.scale(d2);
 
-    const [r1, r2] = this.scale.range();
+    const [r1, r2] = scaleHandler.scale.range();
     const dist = r2 - r1;
-    let transform;
-    if (this.options.horizontal) {
+    let transform: ZoomTransform;
+    if (horizontal) {
       transform = zoomIdentity.translate(p1, 0).scale((p2 - p1) / dist);
     } else {
       transform = zoomIdentity.translate(0, p1).scale((p2 - p1) / dist);
     }
-
     this.zoom.transform(zoomHandler, transform);
   }
 
@@ -647,7 +572,7 @@ export default class TrackGroup {
 
     selection
       .transition()
-      .duration(transitionDuration)
+      .duration(this.options.transitionDuration)
       .style('flex', '0 0 0%')
       .on('end', () => this.debounce(this.postUpdateTracks))
       .remove();
@@ -727,7 +652,7 @@ export default class TrackGroup {
 
     newtracks
       .transition()
-      .duration(transitionDuration)
+      .duration(this.options.transitionDuration)
       .style('flex', d => `${d.options.width}`)
       .on('end', () => this.debounce(this.postUpdateTracks));
   }
@@ -767,6 +692,22 @@ export default class TrackGroup {
     }
   }
 
+  /**
+   * DOM element that has the zoom behaviour attached
+   */
+  get zoomHandler() {
+    return this.container;
+  }
+
+  /**
+   * Get the track container's dimmensions, relative
+   * to orientation.
+   */
+  get innerBounds() {
+    return this.options.horizontal
+      ? { length: this.width, span: this.height }
+      : { length: this.height, span: this.width };
+  }
   /**
    * Getter for (base) domain
    * @returns {number[]}

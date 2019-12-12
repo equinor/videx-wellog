@@ -9,6 +9,7 @@ import {
   TrackGroupOptions,
 } from './interfaces';
 import TrackGroup from './track-group';
+import LogViewer from './log-viewer';
 
 export interface WellogOptions extends TrackGroupOptions {
   margin?: Margin,
@@ -40,7 +41,7 @@ const defaultOptions : WellogOptions = {
  * A container component for wellog tracks. Extends TrackGroup and
  * adds loaders and rubber band tracing.
  */
-export default class WellogComponent extends TrackGroup {
+export default class WellogComponent extends LogViewer {
   public options: WellogOptions;
   public root: any;
 
@@ -73,7 +74,7 @@ export default class WellogComponent extends TrackGroup {
 
     super.init(main.node());
 
-    if (this.options.useOverlay && this.options.showRubberband) {
+    if (this.options.showRubberband) {
       let size = Math.round(this.options.rubberbandSize);
       if (size % 2 === 0) { // need an odd number of pixels
         size++;

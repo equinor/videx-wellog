@@ -15,7 +15,8 @@ export const trackGroupMultipleTracks = () => {
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    trackGroup.init(div);
+    trackGroup.init(div)
+      .zoomTo([900, 960], 1000);
   });
 
   return div;

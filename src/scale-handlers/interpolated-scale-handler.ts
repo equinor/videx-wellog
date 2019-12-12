@@ -28,7 +28,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   private _mode: number;
   private _alternateBase: Domain;
 
-  constructor(interpolator?: ScaleInterpolator, baseDomain : Domain = [0, 0]) {
+  constructor(interpolator?: ScaleInterpolator, baseDomain : Domain = [0, 100]) {
     super(baseDomain);
 
     this._mode = 0;

@@ -16,7 +16,19 @@ export const trackGroupLegend = () => {
   requestAnimationFrame(() => {
     trackGroup
       .init(div)
-      .setTracks(tracks);
+      .setTracks(tracks)
+      .zoomTo(
+        [900, 960],
+        1000,
+        () => trackGroup.zoomTo(
+          [200, 400],
+          2000,
+          () => trackGroup.zoomTo(
+            [400, 600],
+            1000,
+          ),
+        ),
+      );
   });
 
   return div;

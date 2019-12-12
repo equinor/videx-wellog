@@ -10,7 +10,8 @@ describe('DataHelper', () => {
 
   it('should reduce a segment of data points to its average', () => {
     const segment = datapoints.slice(2, 5);
-    expect(DataHelper.reduceSegment(segment)).to.eql([3, 40 / 3]);
+    expect(DataHelper.avg(segment)).to.eql([[3, 40 / 3]]);
+    expect(DataHelper.minmax(segment)).to.eql([[2, 10], [4, 20]]);
   });
 
   it('should be able to check if a set of points are within a scale domain', () => {
