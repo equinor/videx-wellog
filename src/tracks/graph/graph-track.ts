@@ -77,14 +77,15 @@ export default class GraphTrack extends CanvasTrack {
    */
   onMount(trackEvent: OnMountEvent) : void {
     super.onMount(trackEvent);
-
     const {
       options,
+      loader,
     } = this;
 
     if (options.data) {
-      const showLoader = options.showLoader === undefined ? false : options.showLoader;
-      if (showLoader) {
+      const showLoader = options.showLoader === undefined ? !!loader : options.showLoader;
+
+      if (showLoader && typeof (options.data) === 'function') {
         this.loadData(options.data, showLoader);
       } else {
         this.data = options.data;

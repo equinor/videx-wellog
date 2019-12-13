@@ -1,0 +1,65 @@
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dot-keyframes {
+  0% {
+    opacity: .4;
+    transform: scale(1, 1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2, 1.2);
+  }
+
+  100% {
+    opacity: .4;
+    transform: scale(1, 1);
+  }
+}
+
+.track .loader {
+  flex: 1 1 auto;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.track .loader .loading-dots {
+  animation: dot-keyframes 0.6s infinite ease-in-out;
+  background-color: #eee;
+  border-radius: 10px;
+  display: inline-block;
+  height: 10px;
+  width: 10px;
+  margin: 4px 0;
+}
+
+.track .loader :nth-child(2) {
+  animation-delay: .2s;
+}
+
+.track .loader :nth-child(1) {
+  animation-delay: .4s;
+}
+
+.horizontal {
+  .track .loader {
+    flex-direction: row;
+  }
+
+  .track .loader .loading-dots {
+    margin: 0 4px;
+  }
+
+  .track .loader :nth-child(1) {
+    animation-delay: .2s;
+  }
+
+  .track .loader :nth-child(2) {
+    animation-delay: .4s;
+  }
+}

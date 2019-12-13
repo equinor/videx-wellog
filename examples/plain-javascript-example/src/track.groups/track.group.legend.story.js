@@ -5,7 +5,6 @@ import createTracks from './tracks';
 
 export const trackGroupLegend = () => {
   const div = document.createElement('div');
-  div.className = 'demo';
 
   const trackGroup = new TrackGroup();
 

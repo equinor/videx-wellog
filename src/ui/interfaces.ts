@@ -1,4 +1,3 @@
-import WellogComponent from './wellog-component';
 import { ScaleHandler } from '../scale-handlers';
 import { Domain, D3Selection } from '../common/interfaces';
 import Track from '../tracks/track';
@@ -76,16 +75,4 @@ export interface TrackGroupOptions {
   onTrackEnter?(elm: HTMLElement, track: Track) : void,
   onTrackUpdate?(elm: HTMLElement, track: Track) : void,
   onTrackExit?() : void,
-}
-
-export interface RubberBandUpdateEvent {
-  x: number,
-  y: number,
-  source: WellogComponent,
-  getTrackElement: () => HTMLElement,
-  getTrackDatum: () => any,
-}
-
-export interface RubberBandExitEvent {
-  source: WellogComponent,
 }
