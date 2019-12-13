@@ -105,7 +105,7 @@ export default class TrackGroup {
    * Simple creator function for minimal setup
    * @param showTitles optional flag to show titles or not
    */
-  static basic(showTitles: boolean = true) {
+  static basic(showTitles: boolean = true) : TrackGroup {
     return new TrackGroup({
       showTitles,
       showLegend: false,

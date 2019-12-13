@@ -12,6 +12,17 @@ export default class LogViewer extends TrackGroup {
     super(options);
   }
 
+  /**
+   * Simple creator function for minimal setup
+   * @param showTitles optional flag to show titles or not
+   */
+  static basic(showTitles: boolean = true) : LogViewer {
+    return new LogViewer({
+      showTitles,
+      showLegend: false,
+    });
+  }
+
   public onMount(element: HTMLElement) : void {
     super.setup(element);
 

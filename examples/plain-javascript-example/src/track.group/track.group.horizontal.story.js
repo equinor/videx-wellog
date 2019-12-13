@@ -2,7 +2,7 @@
 import {
   TrackGroup,
 } from '../../../../src';
-import createTracks from './tracks';
+import createTracks from '../shared/tracks';
 
 export const trackGroupHorizontal = () => {
   const div = document.createElement('div');

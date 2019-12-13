@@ -3,7 +3,7 @@ import { select } from 'd3';
 import {
   LogViewer, UIHelper,
 } from '../../../../src';
-import createTracks from './tracks';
+import createTracks from '../shared/tracks';
 
 function addRubberbandOverlay(instance) {
   const rubberBandSize = 9;
@@ -70,7 +70,7 @@ function addReadoutOverlay(instance) {
   elm.style.bottom = '5px';
 }
 
-export const withWellogComponent = () => {
+export const wellogComponent = () => {
   const div = document.createElement('div');
   div.className = 'wellog';
 

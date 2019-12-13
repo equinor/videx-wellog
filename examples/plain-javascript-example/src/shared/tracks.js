@@ -9,7 +9,7 @@ import {
   ex1,
   ex2,
   ex3,
-} from '../shared/mock-data';
+} from './mock-data';
 
 export default (delayLoading = false) => {
   const tracks = [

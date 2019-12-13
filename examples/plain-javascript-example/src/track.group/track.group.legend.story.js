@@ -1,7 +1,7 @@
 import {
   TrackGroup,
 } from '../../../../src';
-import createTracks from './tracks';
+import createTracks from '../shared/tracks';
 
 export const trackGroupLegend = () => {
   const div = document.createElement('div');
