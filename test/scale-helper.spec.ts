@@ -95,11 +95,11 @@ describe('ScaleHelper', () => {
     expect(ScaleHelper.getRangeSpan(scale)).to.eq(245);
 
     // without specified domain
-    expect(ScaleHelper.getDomainSpan(scale)).to.eq(ScaleHelper.getRangeSpan(scale));
+    expect(ScaleHelper.getDomainPixelSpan(scale)).to.eq(ScaleHelper.getRangeSpan(scale));
 
     // with specified domain
-    expect(ScaleHelper.getDomainSpan(scale, [30, 40])).to.be.closeTo(35.50724, EPS);
-    expect(ScaleHelper.getDomainSpan(scale, [-30, 0])).to.be.closeTo(106.5217, EPS);
+    expect(ScaleHelper.getDomainPixelSpan(scale, [30, 40])).to.be.closeTo(35.50724, EPS);
+    expect(ScaleHelper.getDomainPixelSpan(scale, [-30, 0])).to.be.closeTo(106.5217, EPS);
   });
 
   it('should return the scales pixel ratio (domain units per pixels)', () => {

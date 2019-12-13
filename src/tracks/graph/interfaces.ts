@@ -64,4 +64,9 @@ export interface GraphTrackOptions extends TrackOptions {
    * is typically used to downsample data at low zoom levels.
    */
   transform?: (data:any, scale: D3Scale) => Promise<any>,
+  /**
+   * Set to true to always run data transform function. By default (false), transforms will only run
+   * if the domain (zoom level) changes.
+   */
+  alwaysTransform?: boolean,
 }

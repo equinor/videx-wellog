@@ -13,16 +13,19 @@ import {
   ex3,
 } from '../shared/mock-data';
 
-const filterData = (data, scale) => Promise.resolve(Object.keys(data).reduce((res, key) => {
+const downsampleData = (data, scale) => Promise.resolve(Object.keys(data).reduce((res, key) => {
+  const points = data[key];
+  const downsampled = DataHelper.downsample(points, scale);
+  res[key] = downsampled;
+  return res;
+}, {}));
+
+const resampleData = (data, scale) => Promise.resolve(Object.keys(data).reduce((res, key) => {
   const points = data[key];
   const domain = [points[0][0], points[points.length - 1][0]];
-  const height = ScaleHelper.getDomainSpan(
-    scale,
-    domain,
-  );
-  // const resampled = DataHelper.resample2(points, scale);
-  const resampled = DataHelper.resample(points, points.length / height, DataHelper.minmax);
-  res[key] = DataHelper.filterData(resampled, scale.domain());
+  const ratio = points.length / ScaleHelper.getDomainPixelSpan(scale, domain);
+  const resampled = DataHelper.resample(points, ratio, DataHelper.minmax);
+  res[key] = resampled;
   return res;
 }, {}));
 
@@ -66,7 +69,8 @@ export default () => [
     abbr: 'noise',
     data: ex2,
     legendConfig: graphLegendConfig,
-    transform: filterData,
+    transform: downsampleData,
+    filterToScale: true,
     plots: [{
       id: 'noise',
       type: 'line',
@@ -79,13 +83,14 @@ export default () => [
         }),
       },
     }, {
-      id: 'sin',
+      id: 'more_noise',
       type: 'line',
       options: {
         scale: 'linear',
         domain: [0, 40],
         color: 'black',
         offset: 0.5,
+        filterToScale: true,
         dataAccessor: d => d.noise2,
         legendInfo: () => ({
           label: 'Plot2',
@@ -99,6 +104,7 @@ export default () => [
     abbr: 'sin',
     data: ex3,
     legendConfig: graphLegendConfig,
+    transform: downsampleData,
     plots: [{
       id: 'noise',
       type: 'area',
@@ -113,6 +119,7 @@ export default () => [
         width: 0.5,
         fillOpacity: 0.3,
         dataAccessor: d => d.noise,
+        filterToScale: true,
       },
     }, {
       id: 'sin',
@@ -125,6 +132,7 @@ export default () => [
           unit: 'W',
         }),
         dataAccessor: d => d.sin,
+        filterToScale: true,
       },
     }],
   }),

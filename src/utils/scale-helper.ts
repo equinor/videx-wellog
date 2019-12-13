@@ -31,9 +31,18 @@ export default class ScaleHelper {
   }
 
   /**
+   * Get the domain span of a scale
+   */
+  static getDomainSpan(scale: Scale, absoluteValue: boolean = true) : number {
+    const [d1, d2] = scale.domain();
+    const span = d2 - d1;
+    return absoluteValue ? Math.abs(span) : span;
+  }
+
+  /**
    * Get the domain span of a scale in pixels
    */
-  static getDomainSpan(scale: Scale, domain?: Domain) : number {
+  static getDomainPixelSpan(scale: Scale, domain?: Domain) : number {
     const [d1, d2] = domain || scale.domain();
 
     const y1 = scale(d1);
