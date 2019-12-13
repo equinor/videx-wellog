@@ -8,7 +8,7 @@ import createTracks from '../shared/tracks';
 function addRubberbandOverlay(instance) {
   const rubberBandSize = 9;
   const offset = (rubberBandSize - 1) / 2;
-  const rbelm = instance.overlay.add('rubber-band', {
+  const rbelm = instance.overlay.create('rubber-band', {
     onMouseMove: event => {
       const { y } = event;
       event.target.style.top = `${y - (offset + 0.5)}px`;
@@ -37,7 +37,7 @@ function addRubberbandOverlay(instance) {
 }
 
 function addReadoutOverlay(instance) {
-  const elm = instance.overlay.add('depth', {
+  const elm = instance.overlay.create('depth', {
     onMouseMove: event => {
       const {
         target,
@@ -74,7 +74,7 @@ export const wellogComponent = () => {
   const div = document.createElement('div');
   div.className = 'wellog';
 
-  const trackGroup = new LogViewer({
+  const log = new LogViewer({
     onTrackEnter: UIHelper.attachTrackLoader,
   });
 
@@ -83,12 +83,10 @@ export const wellogComponent = () => {
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    trackGroup
-      .init(div)
-      .setTracks(tracks);
+    log.init(div).setTracks(tracks);
 
-    addReadoutOverlay(trackGroup);
-    addRubberbandOverlay(trackGroup);
+    addReadoutOverlay(log);
+    addRubberbandOverlay(log);
   });
 
   return div;

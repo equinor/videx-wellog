@@ -1,12 +1,13 @@
 import { mouse, select, event } from 'd3';
 import { setStyles } from '../utils/d3-utils';
 import { D3Selection } from '../common/interfaces';
-import { Overlay, OverlayElement, OverlayOptions } from './interfaces';
+import { Overlay, OverlayCallbacks } from './interfaces';
 
 export default function createOverlay(caller: any, container: D3Selection) : Overlay {
   const overlay = {
     elm: container.append('div').classed('overlay', true),
     elements: {},
+    listeners: {},
     enabled: true,
   };
 
@@ -16,12 +17,15 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
     if (!overlay.enabled) return;
 
     const [mx, my] = mouse(this);
-    Object.values(overlay.elements).forEach((itm: OverlayElement) => {
-      if (itm.options && itm.options.onMouseMove) {
-        requestAnimationFrame(() => itm.options.onMouseMove({
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+
+      if (ops && ops.onMouseMove) {
+        requestAnimationFrame(() => ops.onMouseMove({
           x: mx,
           y: my,
-          target: itm.elm,
+          target,
           source,
           caller,
         }));
@@ -31,10 +35,12 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
 
   overlay.elm.on('mouseout', () => {
     if (!overlay.enabled) return;
-    Object.values(overlay.elements).forEach((itm: OverlayElement) => {
-      if (itm.options && itm.options.onMouseExit) {
-        requestAnimationFrame(() => itm.options.onMouseExit({
-          target: itm.elm,
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+      if (ops && ops.onMouseExit) {
+        requestAnimationFrame(() => ops.onMouseExit({
+          target,
           source,
           caller,
         }));
@@ -54,10 +60,12 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
 
     if (!overlay.enabled) return;
 
-    Object.values(overlay.elements).forEach((itm: OverlayElement) => {
-      if (itm.options && itm.options.onResize) {
-        requestAnimationFrame(() => itm.options.onResize({
-          target: itm.elm,
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+      if (ops && ops.onResize) {
+        requestAnimationFrame(() => ops.onResize({
+          target,
           source,
           caller,
           width,
@@ -72,10 +80,12 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
 
     const { transform } = event.detail;
 
-    Object.values(overlay.elements).forEach((itm: OverlayElement) => {
-      if (itm.options && itm.options.onRescale) {
-        requestAnimationFrame(() => itm.options.onRescale({
-          target: itm.elm,
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+      if (ops && ops.onRescale) {
+        requestAnimationFrame(() => ops.onRescale({
+          target,
           source,
           caller,
           transform,
@@ -84,29 +94,35 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
     });
   });
 
-  function add(key: string, options: OverlayOptions = {}) : HTMLElement {
+  function create(key: string, callbacks?: OverlayCallbacks) : HTMLElement {
     const newElm = overlay.elm.append('div')
       .style('position', 'relative')
       .style('pointer-events', 'none')
       .node();
-    overlay.elements[key] = {
-      elm: newElm,
-      options,
-    };
+    overlay.elements[key] = newElm;
+    if (callbacks) {
+      overlay.listeners[key] = callbacks;
+    }
     return newElm;
   }
 
+  function register(key: string, callbacks: OverlayCallbacks) : void {
+    overlay.listeners[key] = callbacks;
+  }
+
   function remove(key: string) : void {
-    const entry = overlay.elements[key];
-    if (entry) {
-      select(entry.elm).remove();
+    const el = overlay.elements[key];
+    if (el) {
+      select(el).remove();
       delete overlay.elements[key];
     }
+    delete overlay.listeners[key];
   }
 
   return {
     ...overlay,
-    add,
+    create,
+    register,
     remove,
   };
 }

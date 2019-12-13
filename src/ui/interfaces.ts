@@ -12,7 +12,7 @@ export interface Margin {
 }
 
 interface OverlayEvent {
-  target: HTMLElement,
+  target?: HTMLElement,
   source: HTMLElement,
   caller: TrackGroup,
 }
@@ -33,23 +33,20 @@ export interface OverlayRescaleEvent extends OverlayEvent {
   transform?: Transform,
 }
 
-export interface OverlayOptions {
+export interface OverlayCallbacks {
   onMouseMove?(event: OverlayMouseMoveEvent): void,
   onMouseExit?(event: OverlayMouseExitEvent): void,
   onResize?(event: OverlayResizeEvent) : void,
   onRescale?(event: OverlayRescaleEvent) : void,
 }
 
-export interface OverlayElement {
-  elm: HTMLElement,
-  options: OverlayOptions,
-}
-
 export interface Overlay {
-  add(key: string, options: OverlayOptions) : HTMLElement,
+  create(key: string, callbacks?: OverlayCallbacks) : HTMLElement,
+  register(key: string, callbacks: OverlayCallbacks) : void,
   remove(key: string) : void,
   elm: D3Selection,
-  elements: { [propName: string]: OverlayElement },
+  elements: { [propName: string]: HTMLElement },
+  listeners: { [propName: string]: OverlayCallbacks },
   enabled: boolean,
 }
 
