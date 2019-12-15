@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Transform | @equinor/videx-wellog</title>
+	<title>OverlayResizeEvent | @equinor/videx-wellog</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="transform.html">Transform</a>
+					<a href="overlayresizeevent.html">OverlayResizeEvent</a>
 				</li>
 			</ul>
-			<h1>Interface Transform</h1>
+			<h1>Interface OverlayResizeEvent</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,12 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Transform</span>
+						<a href="overlayevent.html" class="tsd-signature-type">OverlayEvent</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">OverlayResizeEvent</span>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
@@ -81,9 +86,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="transform.html#k" class="tsd-kind-icon">k</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="transform.html#x" class="tsd-kind-icon">x</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="transform.html#y" class="tsd-kind-icon">y</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="overlayresizeevent.html#caller" class="tsd-kind-icon">caller</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="overlayresizeevent.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="overlayresizeevent.html#source" class="tsd-kind-icon">source</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="overlayresizeevent.html#target" class="tsd-kind-icon">target</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="overlayresizeevent.html#width" class="tsd-kind-icon">width</a></li>
 							</ul>
 						</section>
 					</div>
@@ -91,33 +98,56 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="k" class="tsd-anchor"></a>
-					<h3>k</h3>
-					<div class="tsd-signature tsd-kind-icon">k<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="caller" class="tsd-anchor"></a>
+					<h3>caller</h3>
+					<div class="tsd-signature tsd-kind-icon">caller<span class="tsd-signature-symbol">:</span> <a href="../classes/logcontroller.html" class="tsd-signature-type">LogController</a></div>
 					<aside class="tsd-sources">
+						<p>Inherited from <a href="overlayevent.html">OverlayEvent</a>.<a href="overlayevent.html#caller">caller</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/interfaces.ts#L8">tracks/interfaces.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L17">ui/interfaces.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="x" class="tsd-anchor"></a>
-					<h3>x</h3>
-					<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="height" class="tsd-anchor"></a>
+					<h3>height</h3>
+					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/interfaces.ts#L6">tracks/interfaces.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L22">ui/interfaces.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="source" class="tsd-anchor"></a>
+					<h3>source</h3>
+					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="overlayevent.html">OverlayEvent</a>.<a href="overlayevent.html#source">source</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L16">ui/interfaces.ts:16</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="target" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> target</h3>
+					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="overlayevent.html">OverlayEvent</a>.<a href="overlayevent.html#target">target</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L15">ui/interfaces.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="y" class="tsd-anchor"></a>
-					<h3>y</h3>
-					<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="width" class="tsd-anchor"></a>
+					<h3>width</h3>
+					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/interfaces.ts#L7">tracks/interfaces.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L21">ui/interfaces.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -136,16 +166,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="transform.html" class="tsd-kind-icon">Transform</a>
+						<a href="overlayresizeevent.html" class="tsd-kind-icon">Overlay<wbr>Resize<wbr>Event</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="transform.html#k" class="tsd-kind-icon">k</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="overlayresizeevent.html#caller" class="tsd-kind-icon">caller</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="transform.html#x" class="tsd-kind-icon">x</a>
+								<a href="overlayresizeevent.html#height" class="tsd-kind-icon">height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="overlayresizeevent.html#source" class="tsd-kind-icon">source</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="overlayresizeevent.html#target" class="tsd-kind-icon">target</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="transform.html#y" class="tsd-kind-icon">y</a>
+								<a href="overlayresizeevent.html#width" class="tsd-kind-icon">width</a>
 							</li>
 						</ul>
 					</li>

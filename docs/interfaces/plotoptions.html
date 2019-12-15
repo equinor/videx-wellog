@@ -103,6 +103,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#dataaccessor" class="tsd-kind-icon">data<wbr>Accessor</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#defined" class="tsd-kind-icon">defined</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#domain" class="tsd-kind-icon">domain</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#filteroverlapfactor" class="tsd-kind-icon">filter<wbr>Overlap<wbr>Factor</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#filtertoscale" class="tsd-kind-icon">filter<wbr>ToScale</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#hidden" class="tsd-kind-icon">hidden</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#horizontal" class="tsd-kind-icon">horizontal</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="plotoptions.html#legendrows" class="tsd-kind-icon">legend<wbr>Rows</a></li>
@@ -121,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <a href="../globals.html#dataaccessorfunction" class="tsd-signature-type">DataAccessorFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L67">plots/interfaces.ts:67</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L67">plots/interfaces.ts:67</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -138,7 +140,7 @@
 					<div class="tsd-signature tsd-kind-icon">data<wbr>Accessor<span class="tsd-signature-symbol">:</span> <a href="../globals.html#dataaccessorfunction" class="tsd-signature-type">DataAccessorFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L71">plots/interfaces.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L71">plots/interfaces.ts:71</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -153,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">defined<span class="tsd-signature-symbol">:</span> <a href="../globals.html#definedfunction" class="tsd-signature-type">DefinedFunction</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L54">plots/interfaces.ts:54</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L54">plots/interfaces.ts:54</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <a href="../globals.html#domain" class="tsd-signature-type">Domain</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L50">plots/interfaces.ts:50</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L50">plots/interfaces.ts:50</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -178,12 +180,47 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="filteroverlapfactor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> filter<wbr>Overlap<wbr>Factor</h3>
+					<div class="tsd-signature tsd-kind-icon">filter<wbr>Overlap<wbr>Factor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L88">plots/interfaces.ts:88</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Used to control how much overlap or excess is added when filtering data compared to the current domain.
+								Ex. if the current domain is [100, 200], and with an overlap factor of 0.5, data will
+								be filtered using the extended domain [50, 250], leaving an excess of 50 units in both ends. This improves
+							the user experience during panning.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="filtertoscale" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> filter<wbr>ToScale</h3>
+					<div class="tsd-signature tsd-kind-icon">filter<wbr>ToScale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L81">plots/interfaces.ts:81</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Automatically filter data to current scale. This may increase performance for larger datasets,
+								as data outside the current domain is not passed to the plots. Overlap may be controlled by the
+							filterOverlapFactor option. Filtering is off (false) by default.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="hidden" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> hidden</h3>
 					<div class="tsd-signature tsd-kind-icon">hidden<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L58">plots/interfaces.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L58">plots/interfaces.ts:58</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +235,7 @@
 					<div class="tsd-signature tsd-kind-icon">horizontal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L62">plots/interfaces.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L62">plots/interfaces.ts:62</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,12 +250,12 @@
 					<div class="tsd-signature tsd-kind-icon">legend<wbr>Rows<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L75">plots/interfaces.ts:75</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L75">plots/interfaces.ts:75</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The number of rows in the legend section (if used with TrackGroup) this particular plot requires</p>
+							<p>The number of rows in the legend section (if used with LogController) this particular plot requires</p>
 						</div>
 					</div>
 				</section>
@@ -228,7 +265,7 @@
 					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L42">plots/interfaces.ts:42</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L42">plots/interfaces.ts:42</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -248,7 +285,7 @@
 					<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/plots/interfaces.ts#L46">plots/interfaces.ts:46</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L46">plots/interfaces.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -285,6 +322,12 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="plotoptions.html#domain" class="tsd-kind-icon">domain</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="plotoptions.html#filteroverlapfactor" class="tsd-kind-icon">filter<wbr>Overlap<wbr>Factor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="plotoptions.html#filtertoscale" class="tsd-kind-icon">filter<wbr>ToScale</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="plotoptions.html#hidden" class="tsd-kind-icon">hidden</a>

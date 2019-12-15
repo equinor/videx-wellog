@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>RubberBandExitEvent | @equinor/videx-wellog</title>
+	<title>LogControllerResizeEvent | @equinor/videx-wellog</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="rubberbandexitevent.html">RubberBandExitEvent</a>
+					<a href="logcontrollerresizeevent.html">LogControllerResizeEvent</a>
 				</li>
 			</ul>
-			<h1>Interface RubberBandExitEvent</h1>
+			<h1>Interface LogControllerResizeEvent</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +70,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">RubberBandExitEvent</span>
+						<span class="target">LogControllerResizeEvent</span>
 					</li>
 				</ul>
 			</section>
@@ -81,7 +81,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="rubberbandexitevent.html#source" class="tsd-kind-icon">source</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="logcontrollerresizeevent.html#elm" class="tsd-kind-icon">elm</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="logcontrollerresizeevent.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="logcontrollerresizeevent.html#source" class="tsd-kind-icon">source</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="logcontrollerresizeevent.html#trackheight" class="tsd-kind-icon">track<wbr>Height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="logcontrollerresizeevent.html#width" class="tsd-kind-icon">width</a></li>
 							</ul>
 						</section>
 					</div>
@@ -90,12 +94,52 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="source" class="tsd-anchor"></a>
-					<h3>source</h3>
-					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <a href="../classes/wellogcomponent.html" class="tsd-signature-type">WellogComponent</a></div>
+					<a name="elm" class="tsd-anchor"></a>
+					<h3>elm</h3>
+					<div class="tsd-signature tsd-kind-icon">elm<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/772ecc4/src/ui/interfaces.ts#L23">ui/interfaces.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L54">ui/interfaces.ts:54</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="height" class="tsd-anchor"></a>
+					<h3>height</h3>
+					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L56">ui/interfaces.ts:56</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="source" class="tsd-anchor"></a>
+					<h3>source</h3>
+					<div class="tsd-signature tsd-kind-icon">source<span class="tsd-signature-symbol">:</span> <a href="../classes/logcontroller.html" class="tsd-signature-type">LogController</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L58">ui/interfaces.ts:58</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="trackheight" class="tsd-anchor"></a>
+					<h3>track<wbr>Height</h3>
+					<div class="tsd-signature tsd-kind-icon">track<wbr>Height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L57">ui/interfaces.ts:57</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="width" class="tsd-anchor"></a>
+					<h3>width</h3>
+					<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/interfaces.ts#L55">ui/interfaces.ts:55</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -114,10 +158,22 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface">
-						<a href="rubberbandexitevent.html" class="tsd-kind-icon">Rubber<wbr>Band<wbr>Exit<wbr>Event</a>
+						<a href="logcontrollerresizeevent.html" class="tsd-kind-icon">Log<wbr>Controller<wbr>Resize<wbr>Event</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="rubberbandexitevent.html#source" class="tsd-kind-icon">source</a>
+								<a href="logcontrollerresizeevent.html#elm" class="tsd-kind-icon">elm</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="logcontrollerresizeevent.html#height" class="tsd-kind-icon">height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="logcontrollerresizeevent.html#source" class="tsd-kind-icon">source</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="logcontrollerresizeevent.html#trackheight" class="tsd-kind-icon">track<wbr>Height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="logcontrollerresizeevent.html#width" class="tsd-kind-icon">width</a>
 							</li>
 						</ul>
 					</li>

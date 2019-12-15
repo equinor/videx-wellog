@@ -69,10 +69,10 @@
 				</a>
 				<p>Videx Wellog is a set of components developed by the Videx team in Equinor for viewing subsurface wellbore logs.</p>
 				<p>The library are composed by multiple components that are designed to work together, as independant components and/or as extension points. All relevant classes are exported.</p>
-				<p>Full-featured components exists in the <code>./ui</code> folder, and are:</p>
+				<p>Container components are located in the <code>./ui</code> folder, and are:</p>
 				<ul>
-					<li><code>TrackGroup</code> - container class for displaying tracks and handling user interactions, track titles and legends.</li>
-					<li><code>WellogComponent</code> - extension of track group to add &quot;rubber band&quot; overlay and track loading indicators.</li>
+					<li><code>LogController</code> - container class for grouping and controlling tracks with a common scale. It also adds support for track titles and legends.</li>
+					<li><code>LogViewer</code> - extension of <code>LogController</code> to add overlay and user interaction (zoom/pan behaviours).</li>
 				</ul>
 				<p>Track components are located in the <code>./tracks</code> folder:</p>
 				<ul>
@@ -109,9 +109,6 @@
 						<a href="classes/basicscalehandler.html" class="tsd-kind-icon">Basic<wbr>Scale<wbr>Handler</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/basictrackviewer.html" class="tsd-kind-icon">Basic<wbr>Track<wbr>Viewer</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/canvastrack.html" class="tsd-kind-icon">Canvas<wbr>Track</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -145,6 +142,12 @@
 						<a href="classes/lineplot.html" class="tsd-kind-icon">Line<wbr>Plot</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/logcontroller.html" class="tsd-kind-icon">Log<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/logviewer.html" class="tsd-kind-icon">Log<wbr>Viewer</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/plot.html" class="tsd-kind-icon">Plot</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -160,13 +163,7 @@
 						<a href="classes/track.html" class="tsd-kind-icon">Track</a>
 					</li>
 					<li class=" tsd-kind-class">
-						<a href="classes/trackgroup.html" class="tsd-kind-icon">Track<wbr>Group</a>
-					</li>
-					<li class=" tsd-kind-class">
 						<a href="classes/uihelper.html" class="tsd-kind-icon">UIHelper</a>
-					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/wellogcomponent.html" class="tsd-kind-icon">Wellog<wbr>Component</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/areaplotoptions.html" class="tsd-kind-icon">Area<wbr>Plot<wbr>Options</a>
@@ -214,6 +211,12 @@
 						<a href="interfaces/lineplotoptions.html" class="tsd-kind-icon">Line<wbr>Plot<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/logcontrolleroptions.html" class="tsd-kind-icon">Log<wbr>Controller<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/logcontrollerresizeevent.html" class="tsd-kind-icon">Log<wbr>Controller<wbr>Resize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/margin.html" class="tsd-kind-icon">Margin</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -229,6 +232,27 @@
 						<a href="interfaces/onupdateevent.html" class="tsd-kind-icon">On<wbr>Update<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlay.html" class="tsd-kind-icon">Overlay</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlaycallbacks.html" class="tsd-kind-icon">Overlay<wbr>Callbacks</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-not-exported">
+						<a href="interfaces/overlayevent.html" class="tsd-kind-icon">Overlay<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlaymouseexitevent.html" class="tsd-kind-icon">Overlay<wbr>Mouse<wbr>Exit<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlaymousemoveevent.html" class="tsd-kind-icon">Overlay<wbr>Mouse<wbr>Move<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlayrescaleevent.html" class="tsd-kind-icon">Overlay<wbr>Rescale<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/overlayresizeevent.html" class="tsd-kind-icon">Overlay<wbr>Resize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
 						<a href="interfaces/plotconfig.html" class="tsd-kind-icon">Plot<wbr>Config</a>
 					</li>
 					<li class=" tsd-kind-interface">
@@ -236,12 +260,6 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/plotoptions.html" class="tsd-kind-icon">Plot<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/rubberbandexitevent.html" class="tsd-kind-icon">Rubber<wbr>Band<wbr>Exit<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/rubberbandupdateevent.html" class="tsd-kind-icon">Rubber<wbr>Band<wbr>Update<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/scale.html" class="tsd-kind-icon">Scale</a>
@@ -262,19 +280,10 @@
 						<a href="interfaces/trackevent.html" class="tsd-kind-icon">Track<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-interface">
-						<a href="interfaces/trackgroupoptions.html" class="tsd-kind-icon">Track<wbr>Group<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/trackgroupresizeevent.html" class="tsd-kind-icon">Track<wbr>Group<wbr>Resize<wbr>Event</a>
-					</li>
-					<li class=" tsd-kind-interface">
 						<a href="interfaces/trackoptions.html" class="tsd-kind-icon">Track<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/transform.html" class="tsd-kind-icon">Transform</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/wellogoptions.html" class="tsd-kind-icon">Wellog<wbr>Options</a>
 					</li>
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#d3selection" class="tsd-kind-icon">D3<wbr>Selection</a>
@@ -315,6 +324,9 @@
 					<li class=" tsd-kind-type-alias">
 						<a href="globals.html#range" class="tsd-kind-icon">Range</a>
 					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="globals.html#reducerfunction" class="tsd-kind-icon">Reducer<wbr>Function</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#triplet" class="tsd-kind-icon">Triplet</a>
 					</li>
@@ -352,9 +364,6 @@
 						<a href="globals.html#titlefontsizefactor" class="tsd-kind-icon">title<wbr>Font<wbr>Size<wbr>Factor</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
-						<a href="globals.html#transitionduration" class="tsd-kind-icon">transition<wbr>Duration</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-is-not-exported">
 						<a href="globals.html#uiscalefactor" class="tsd-kind-icon">ui<wbr>Scale<wbr>Factor</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-is-not-exported">
@@ -368,6 +377,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#createdifferentialplot" class="tsd-kind-icon">create<wbr>Differential<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#createoverlay" class="tsd-kind-icon">create<wbr>Overlay</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#createplottype" class="tsd-kind-icon">create<wbr>Plot<wbr>Type</a>
