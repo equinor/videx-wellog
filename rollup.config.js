@@ -16,8 +16,8 @@ const onwarn = (warning, warn) => {
 
 const exportedStyles = {
   'scale-styles': 'src/tracks/scale/styles.scss',
-  'track-group-styles': 'src/ui/track-group-styles.scss',
-  'track-loader-styles': 'src/ui/wellog-styles.scss',
+  'log-styles': 'src/ui/log-styles.scss',
+  'loader-styles': 'src/ui/loader-styles.scss',
 };
 
 export default [

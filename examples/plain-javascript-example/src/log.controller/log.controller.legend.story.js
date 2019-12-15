@@ -1,28 +1,28 @@
 import {
-  TrackGroup,
+  LogController,
 } from '../../../../src';
 import createTracks from '../shared/tracks';
 
-export const trackGroupLegend = () => {
+export const logControllerLegend = () => {
   const div = document.createElement('div');
 
-  const trackGroup = new TrackGroup();
+  const logController = new LogController();
 
   const tracks = createTracks();
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    trackGroup
+    logController
       .init(div)
       .setTracks(tracks)
       .zoomTo(
         [900, 960],
         1000,
-        () => trackGroup.zoomTo(
+        () => logController.zoomTo(
           [200, 400],
           2000,
-          () => trackGroup.zoomTo(
+          () => logController.zoomTo(
             [400, 600],
             1000,
           ),

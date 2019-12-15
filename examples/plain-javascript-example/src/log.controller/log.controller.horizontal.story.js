@@ -1,13 +1,13 @@
 
 import {
-  TrackGroup,
+  LogController,
 } from '../../../../src';
 import createTracks from '../shared/tracks';
 
-export const trackGroupHorizontal = () => {
+export const logControllerHorizontal = () => {
   const div = document.createElement('div');
 
-  const trackGroup = new TrackGroup({
+  const logController = new LogController({
     showLegend: true,
     horizontal: true,
   });
@@ -29,13 +29,13 @@ export const trackGroupHorizontal = () => {
     if (i === sequence.length) i = 0;
     const [dom, dur] = sequence[i++];
 
-    return () => trackGroup.zoomTo(dom, dur, createAnimationStep());
+    return () => logController.zoomTo(dom, dur, createAnimationStep());
   };
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    trackGroup
+    logController
       .init(div)
       .setTracks(tracks);
 

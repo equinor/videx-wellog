@@ -1,14 +1,14 @@
 import { zoom, event, zoomTransform } from 'd3';
-import TrackGroup from './track-group';
+import LogController from './log-controller';
 import createOverlay from './overlay';
-import { TrackGroupOptions, Overlay } from './interfaces';
+import { LogControllerOptions, Overlay } from './interfaces';
 
 const wheelPanFactor = 50;
 
-export default class LogViewer extends TrackGroup {
+export default class LogViewer extends LogController {
   public overlay: Overlay;
 
-  constructor(options: TrackGroupOptions = {}) {
+  constructor(options: LogControllerOptions = {}) {
     super(options);
   }
 

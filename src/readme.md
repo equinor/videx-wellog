@@ -4,9 +4,9 @@ Videx Wellog is a set of components developed by the Videx team in Equinor for v
 
 The library are composed by multiple components that are designed to work together, as independant components and/or as extension points. All relevant classes are exported.
 
-Full-featured components exists in the `./ui` folder, and are:
-* `TrackGroup` - container class for displaying tracks and handling user interactions, track titles and legends.
-* `WellogComponent` - extension of track group to add "rubber band" overlay and track loading indicators.
+Container components are located in the `./ui` folder, and are:
+* `LogController` - container class for grouping and controlling tracks with a common scale. It also adds support for track titles and legends.
+* `LogViewer` - extension of `LogController` to add overlay and user interaction (zoom/pan behaviours).
 
 Track components are located in the `./tracks` folder:
 * `Track` - base class (abstract)

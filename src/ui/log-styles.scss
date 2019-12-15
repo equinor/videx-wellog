@@ -3,7 +3,7 @@ $plot_border_color: #333;
 $plot_title_color: #555;
 $plot_title_bg: transparent;
 
-.track-group {
+.log-controller {
   position: relative;
   user-select: none;
   flex: 1 1 0%;
@@ -60,7 +60,7 @@ $plot_title_bg: transparent;
   }
 }
 
-.track-group.horizontal {
+.log-controller.horizontal {
   flex-direction: column;
   .track {
     flex-direction: row;

@@ -70,7 +70,7 @@ export interface PlotOptions {
    */
   dataAccessor?: DataAccessorFunction,
   /**
-   * The number of rows in the legend section (if used with TrackGroup) this particular plot requires
+   * The number of rows in the legend section (if used with LogController) this particular plot requires
    */
   legendRows?: number,
   /**

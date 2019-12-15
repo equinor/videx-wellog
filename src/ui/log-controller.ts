@@ -12,7 +12,7 @@ import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
 import { D3Selection, Domain, D3Scale } from '../common/interfaces';
-import { TrackGroupOptions } from './interfaces';
+import { LogControllerOptions } from './interfaces';
 
 const titleBarBaseSize = 18;
 const legendBaseSize = 25;
@@ -37,8 +37,8 @@ interface LegendMap {
  * A container component for tracks, with track titles, legends,
  * adding/removing tracks, resizing and user interaction.
  */
-export default class TrackGroup {
-  public options: TrackGroupOptions;
+export default class LogController {
+  public options: LogControllerOptions;
   public tracks: Track[];
   public container: D3Selection;
 
@@ -62,7 +62,7 @@ export default class TrackGroup {
   private _scaleHandler: ScaleHandler;
   private _observer: ResizeObserver;
 
-  constructor(options: TrackGroupOptions = {}) {
+  constructor(options: LogControllerOptions = {}) {
     this.options = {
       ...defaultOptions,
       ...options,
@@ -105,8 +105,8 @@ export default class TrackGroup {
    * Simple creator function for minimal setup
    * @param showTitles optional flag to show titles or not
    */
-  static basic(showTitles: boolean = true) : TrackGroup {
-    return new TrackGroup({
+  static basic(showTitles: boolean = true) : LogController {
+    return new LogController({
       showTitles,
       showLegend: false,
     });
@@ -117,7 +117,7 @@ export default class TrackGroup {
    * returns self for chaining.
    * @param element HTML element to attach itself to
    */
-  public init(element: HTMLElement) : TrackGroup {
+  public init(element: HTMLElement) : LogController {
     this.onMount(element);
     return this;
   }
@@ -143,12 +143,12 @@ export default class TrackGroup {
   }
 
   /**
-   * Set the tracks for this group, replacing any existing tracks
+   * Set the tracks for this controller, replacing any existing tracks
    * @param tracks track or tracks to set
    */
-  public setTracks(...track: Track[]) : TrackGroup
-  public setTracks(tracks: Track[]) : TrackGroup
-  public setTracks(...tracks: any[]) : TrackGroup {
+  public setTracks(...track: Track[]) : LogController
+  public setTracks(tracks: Track[]) : LogController
+  public setTracks(...tracks: any[]) : LogController {
     this.tracks = tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
     this.tracks.sort((a, b) => a.order - b.order);
 
@@ -160,10 +160,10 @@ export default class TrackGroup {
   }
 
   /**
-   * Adds a single track to the track group
+   * Adds a single track to the log controller
    * @param track track to be added
    */
-  public addTrack(track: Track) : TrackGroup {
+  public addTrack(track: Track) : LogController {
     this.tracks.push(track);
     this.tracks.sort((a, b) => a.order - b.order);
 
@@ -182,10 +182,10 @@ export default class TrackGroup {
   }
 
   /**
-   * Removes a track from the track group component
+   * Removes a track from the log controller component
    * @param track track to be removed
    */
-  public removeTrack(track: Track) : TrackGroup {
+  public removeTrack(track: Track) : LogController {
     const idx = this.tracks.findIndex(d => d.id === track.id);
     if (idx >= 0) {
       if (this.options.showLegend && this.legends[track.id]) {
@@ -259,7 +259,7 @@ export default class TrackGroup {
     }
   }
 
-  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : TrackGroup {
+  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController {
     const [d1, d2] = domain;
     if (d1 === d2) return this;
     const current = zoomTransform(this.zoomHandler.node());
@@ -314,7 +314,7 @@ export default class TrackGroup {
   /**
    * Update track-elements based on current registered track instances
    */
-  public updateTracks() : TrackGroup {
+  public updateTracks() : LogController {
     const {
       container,
       tracks,
@@ -346,7 +346,7 @@ export default class TrackGroup {
   /**
    * Remove all tracks and update ui
    */
-  public reset() : TrackGroup {
+  public reset() : LogController {
     return this.setTracks([]);
   }
 
@@ -363,7 +363,7 @@ export default class TrackGroup {
     }
 
     const container = select(element)
-      .classed('track-group', true)
+      .classed('log-controller', true)
       .classed('horizontal', this.options.horizontal);
 
     this.container = container;

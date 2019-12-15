@@ -1,7 +1,7 @@
 import { ScaleHandler } from '../scale-handlers';
 import { Domain, D3Selection } from '../common/interfaces';
 import Track from '../tracks/track';
-import TrackGroup from './track-group';
+import LogController from './log-controller';
 import { Transform } from '../tracks/interfaces';
 
 export interface Margin {
@@ -14,7 +14,7 @@ export interface Margin {
 interface OverlayEvent {
   target?: HTMLElement,
   source: HTMLElement,
-  caller: TrackGroup,
+  caller: LogController,
 }
 
 export interface OverlayResizeEvent extends OverlayEvent {
@@ -50,15 +50,15 @@ export interface Overlay {
   enabled: boolean,
 }
 
-export interface TrackGroupResizeEvent {
+export interface LogControllerResizeEvent {
   elm: HTMLElement,
   width: number,
   height: number,
   trackHeight: number,
-  source: TrackGroup,
+  source: LogController,
 }
 
-export interface TrackGroupOptions {
+export interface LogControllerOptions {
   scaleHandler?: ScaleHandler,
   maxZoom?: number,
   panExcess?: number,
@@ -68,7 +68,7 @@ export interface TrackGroupOptions {
   autoResize?: boolean,
   horizontal?: boolean,
   transitionDuration?: number,
-  onResize?(event: TrackGroupResizeEvent) : void,
+  onResize?(event: LogControllerResizeEvent) : void,
   onTrackEnter?(elm: HTMLElement, track: Track) : void,
   onTrackUpdate?(elm: HTMLElement, track: Track) : void,
   onTrackExit?() : void,

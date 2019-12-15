@@ -46,7 +46,7 @@ export interface TrackOptions {
    */
   loader?: Element,
   /**
-   * A config object used to display track legend if used with TrackGroup
+   * A config object used to display track legend if used with LogController
    */
   legendConfig?: LegendConfig;
   /**
@@ -54,7 +54,7 @@ export interface TrackOptions {
    */
   horizontal?: boolean,
   /**
-   * Relative track width when used in a TrackGroup, i.e. a track with width set to
+   * Relative track width when used in a LogController, i.e. a track with width set to
    * 3 will be three times wider than tracks set to width 1.
    */
   width?: number,
@@ -82,7 +82,7 @@ export interface TrackOptions {
   onUpdate?(event: OnUpdateEvent, track: Track) : void,
   /**
    * Hook when track is being rescaled, for example from user interaction
-   * if used with a TrackGroup.
+   * if used with a LogController.
    * @param event event data
    * @param track track instance reference
    */

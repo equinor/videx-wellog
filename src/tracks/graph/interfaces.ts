@@ -50,7 +50,7 @@ export interface GraphTrackOptions extends TrackOptions {
   domain?: Domain,
   /**
    * Determines if the legend should be clickable to toggle plots on/off when used within a
-   * TrackGroup with graphLegendConfig enabled. Default is true.
+   * LogController with graphLegendConfig enabled. Default is true.
    */
   togglePlotFromLegend?: boolean,
   /**

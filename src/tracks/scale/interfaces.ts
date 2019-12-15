@@ -2,7 +2,7 @@ import { TrackOptions } from '../interfaces';
 
 export interface ScaleTrackOptions extends TrackOptions {
   /**
-   * Units to show in legend if used in TrackGroup
+   * Units to show in legend if used in LogController
    */
   units?: string,
 }
