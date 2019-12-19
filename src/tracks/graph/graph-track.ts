@@ -152,13 +152,13 @@ export default class GraphTrack extends CanvasTrack {
       options,
       plot,
       plots,
-      _transformCondition,
+      _transformCondition: previousCondition,
     } = this;
     if (!data) return;
     if (options.transform) {
-      const condition = Math.round(ScaleHelper.getDomainSpan(scale, false) * 10);
-      this._transformCondition = condition;
-      if (options.alwaysTransform || !_transformCondition || _transformCondition !== condition) {
+      const currentCondition = Math.round(ScaleHelper.getDomainSpan(scale, false) * 10);
+      this._transformCondition = currentCondition;
+      if (options.alwaysTransform || !previousCondition || previousCondition !== currentCondition) {
         options.transform(data, scale).then(transformed => {
           this._transformedData = transformed;
           setPlotData(plots, transformed, scale);
