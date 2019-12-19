@@ -1,5 +1,5 @@
 import Track from './track';
-import { D3Scale } from '../common/interfaces';
+import { D3Scale, Scale, Domain } from '../common/interfaces';
 import { LegendConfig } from '../utils/legend-helper';
 
 export interface Transform {
@@ -9,11 +9,11 @@ export interface Transform {
 }
 
 interface TrackEvent {
-  elm: HTMLElement,
   [propType: string]: any,
 }
 
 export interface OnMountEvent extends TrackEvent {
+  elm: HTMLElement,
   scale: D3Scale,
 }
 
@@ -22,11 +22,13 @@ export interface OnUnmountEvent {
 }
 
 export interface OnUpdateEvent extends TrackEvent {
+  elm: HTMLElement,
   scale?: D3Scale,
 }
 
 export interface OnRescaleEvent extends TrackEvent {
-  scale?: D3Scale,
+  scale?: Scale,
+  domain?: Domain,
   transform?: Transform,
 }
 
@@ -44,7 +46,7 @@ export interface TrackOptions {
    */
   loader?: Element,
   /**
-   * A config object used to display track legend if used with TrackGroup
+   * A config object used to display track legend if used with LogController
    */
   legendConfig?: LegendConfig;
   /**
@@ -52,7 +54,7 @@ export interface TrackOptions {
    */
   horizontal?: boolean,
   /**
-   * Relative track width when used in a TrackGroup, i.e. a track with width set to
+   * Relative track width when used in a LogController, i.e. a track with width set to
    * 3 will be three times wider than tracks set to width 1.
    */
   width?: number,
@@ -80,7 +82,7 @@ export interface TrackOptions {
   onUpdate?(event: OnUpdateEvent, track: Track) : void,
   /**
    * Hook when track is being rescaled, for example from user interaction
-   * if used with a TrackGroup.
+   * if used with a LogController.
    * @param event event data
    * @param track track instance reference
    */

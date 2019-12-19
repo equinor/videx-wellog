@@ -12,10 +12,10 @@ export default class BasicScaleHandler implements ScaleHandler {
   public scale: D3Scale;
   protected _baseDomain: Domain;
 
-  constructor(baseDomain : Domain = [0, 0]) {
+  constructor(baseDomain : Domain = [0, 100]) {
     this._baseDomain = baseDomain;
 
-    this.scale = scaleLinear().domain(baseDomain).range([0, 0]);
+    this.scale = scaleLinear().domain(baseDomain).range([0, 100]);
 
     this.rescale = this.rescale.bind(this);
     this.ticks = this.ticks.bind(this);
@@ -24,9 +24,10 @@ export default class BasicScaleHandler implements ScaleHandler {
   /**
    * Update scale according to transform
    */
-  rescale(transform: ZoomTransform, axis = 'y') {
+  rescale(transform: ZoomTransform, axis = 'y') : ScaleHandler {
     const transScale = this.scale.copy().domain(this.baseDomain());
     const range = transScale.range().map(axis === 'x' ? transform.invertX : transform.invertY, transform);
+    if (range[0] === range[1]) return this;
     const domain = range.map(transScale.invert, transScale);
     this.scale.domain(domain);
     return this;

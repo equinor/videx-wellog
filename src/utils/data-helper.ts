@@ -1,6 +1,7 @@
-import { mean } from 'd3';
 import { PlotData, DifferentialPlotData } from '../plots/interfaces';
 import { Scale, Domain, Tuplet } from '../common/interfaces';
+
+export type ReducerFunction = (data: PlotData) => Tuplet<number>[];
 
 /**
  * Various utility functions for transforming and processing
@@ -10,11 +11,36 @@ export default class DataHelper {
   /**
  * Reduce multiple points to the its average values.
  */
-  static reduceSegment(segment: PlotData) : Tuplet<number> {
-    const avgV = mean(segment, d => d[1]);
-    const avgD = mean(segment, d => d[0]);
+  static mean(segment: PlotData) : Tuplet<number>[] {
+    if (segment.length <= 2) return segment;
+    let avgV = 0;
+    let avgD = 0;
+    for (let i = 0; i < segment.length; i++) {
+      avgD += segment[i][0];
+      avgV += segment[i][1];
+    }
+    return [[avgD / segment.length, avgV / segment.length]];
+  }
 
-    return [avgD, avgV];
+  static minmax(segment: PlotData) : Tuplet<number>[] {
+    if (segment.length <= 2) return segment;
+    let min = segment[0][1];
+    let max = -Infinity;
+    let minLast = false;
+
+    for (let i = 0; i < segment.length; i++) {
+      if (segment[i][1] > max) {
+        max = segment[i][1];
+        minLast = false;
+      } else if (segment[i][1] < min) {
+        min = segment[i][1];
+        minLast = true;
+      }
+    }
+    return [
+      [segment[0][0], minLast ? max : min],
+      [segment[segment.length - 1][0], minLast ? min : max],
+    ];
   }
 
   /**
@@ -52,12 +78,12 @@ export default class DataHelper {
   * Cut data points that are outside the current visible domain.
   * An excess will ensure that panning is smooth
   */
-  static filterData(datapoints: PlotData, domain: Domain, excessFactor: number = 0.5) : PlotData {
+  static filterData(datapoints: PlotData, domain: Domain, overlapFactor: number = 0.5) : PlotData {
     const [d0, d1] = domain;
     const span = d1 - d0;
-    const excess = excessFactor * span;
-    const dmin = d0 - excess;
-    const dmax = d1 + excess;
+    const overlap = overlapFactor * span;
+    const dmin = d0 - overlap;
+    const dmax = d1 + overlap;
 
     return datapoints.filter((pt, i) => {
       const within = pt[0] >= dmin && pt[0] <= dmax;
@@ -70,10 +96,44 @@ export default class DataHelper {
   }
 
   /**
-  * Downsample large data series to reduce detail when number of points are
-  * greater than the number of pixels to render it to
+   * Find the first index that has a finite numeric value
+   * @param data data to search
+   * @param start start index to search from
+   */
+  static findNextDefined(data: PlotData, start: number = 0) : number {
+    for (let i = start; i < data.length; i++) {
+      if (Number.isFinite(data[i][1])) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * Find the first index that has NOT a finite numeric value
+   * @param data data to search
+   * @param start start index to search from
+   */
+  static findNextUndefined(data: PlotData, start: number = 0) : number {
+    for (let i = start; i < data.length; i++) {
+      if (!Number.isFinite(data[i][1])) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+  * Resample large data series to reduce detail when number of points are
+  * greater than the number of pixels to render it to. NOTE: you should pass the data through
+  * the DataHelper.trimUndefinedValues before passing it to this function. Also, this function
+  * assumes the datapoints are more or less uniformly spaced. The DataHelper.downsample is
+  * probably safer and yields better results.
+  * @param datapoints data to resample
+  * @param ratio resample ratio
+  * @param reducer function to reduce segments
   */
-  static resample(datapoints: PlotData, ratio: number) : PlotData {
+  static resample(datapoints: PlotData, ratio: number, reducer: ReducerFunction = DataHelper.mean) : PlotData {
     if (ratio <= 2 || datapoints.length < 100) return datapoints;
 
     ratio = Math.floor(ratio);
@@ -82,13 +142,14 @@ export default class DataHelper {
     const first = datapoints[0];
     const last = datapoints[lastIndex];
     let l = 1;
-    const averaged = [];
+    const reduced = [];
     let _safe = 0;
+
     while (l < lastIndex) {
       let r = Math.min(l + ratio, lastIndex);
       const segment = datapoints.slice(l, r);
       // check if segment needs to be split if containing an undefined value
-      const undefinedIdx = segment.findIndex(d => !Number.isFinite(d[1]));
+      const undefinedIdx = DataHelper.findNextUndefined(segment);
 
       if (undefinedIdx > -1) {
         r = l + 1;
@@ -103,17 +164,17 @@ export default class DataHelper {
         }
 
         if (segment.length > 0) {
-          averaged.push(DataHelper.reduceSegment(segment));
+          reduced.push(...reducer(segment));
           r += segment.length;
         }
-        averaged.push(undefinedEntry);
+        reduced.push(undefinedEntry);
 
         if (trailingEntry) {
-          averaged.push(trailingEntry);
+          reduced.push(trailingEntry);
           r++;
         }
       } else if (segment.length > 0) {
-        averaged.push(DataHelper.reduceSegment(segment));
+        reduced.push(...reducer(segment));
       }
       l = r;
 
@@ -123,7 +184,60 @@ export default class DataHelper {
         throw Error('Infinite loop terminated!');
       }
     }
-    return [first, ...averaged, last];
+    return [first, ...reduced, last];
+  }
+
+  /**
+   * Downsamples data by reducing segments that scales to the same approximate range
+   * @param datapoints data to downsample
+   * @param scale scale to control downsampling
+   * @param reducer function to reduce segments
+   */
+  static downsample(datapoints: PlotData, scale: Scale, reducer: ReducerFunction = DataHelper.minmax) : PlotData {
+    if (datapoints.length < 10) return datapoints;
+    const threshold = 4;
+    const lastIndex = datapoints.length - 1;
+    const firstIndex = DataHelper.findNextDefined(datapoints);
+    const first = datapoints[firstIndex];
+    const last = datapoints[lastIndex];
+    const reduced = [];
+    let l = DataHelper.findNextDefined(datapoints, firstIndex + 1);
+    if (l === -1) {
+      return [first, last];
+    }
+    if (l > firstIndex + 1 && Number.isFinite(first[1])) {
+      reduced.push(datapoints[l - 1]);
+    }
+    let r = l + 1;
+    let y = scale(datapoints[l][0]);
+    let target = scale.invert(++y);
+    while (r <= lastIndex) {
+      const rp = datapoints[r];
+      const isdef = Number.isFinite(rp[1]);
+      if (!isdef || rp[0] > target || r === lastIndex) {
+        const segment = r - l > 0 ? datapoints.slice(l, r) : [];
+        // abort if the segment size becomes too small, according to threshold value
+        if (isdef && segment.length <= threshold && datapoints.length - l > threshold) {
+          return datapoints;
+        }
+        if (segment.length === 1) {
+          reduced.push(segment[0]);
+        } else if (segment.length !== 0) {
+          reduced.push(...reducer(segment));
+        }
+        if (!isdef) {
+          reduced.push(rp);
+          l = DataHelper.findNextDefined(datapoints, r + 1);
+        } else {
+          l = r;
+        }
+        r = l + 1;
+        target = scale.invert(++y);
+      } else {
+        r++;
+      }
+    }
+    return [first, ...reduced, last];
   }
 
   /**

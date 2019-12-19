@@ -9,8 +9,12 @@ describe('DataHelper', () => {
   const datapoints : PlotData = [[0, null], [1, null], [2, 10], [3, 20], [4, 10], [5, null], [6, null], [7, 30], [8, 32], [9, 60], [10, 43], [11, 50], [12, 2], [13, 51]];
 
   it('should reduce a segment of data points to its average', () => {
-    const segment = datapoints.slice(2, 5);
-    expect(DataHelper.reduceSegment(segment)).to.eql([3, 40 / 3]);
+    let segment = datapoints.slice(2, 5);
+    expect(DataHelper.mean(segment)).to.eql([[3, 40 / 3]]);
+    expect(DataHelper.minmax(segment)).to.eql([[2, 10], [4, 20]]);
+    segment = datapoints.slice(9, 13);
+    expect(DataHelper.mean(segment)).to.eql([[10.5, 155 / 4]]);
+    expect(DataHelper.minmax(segment)).to.eql([[9, 60], [12, 2]]);
   });
 
   it('should be able to check if a set of points are within a scale domain', () => {
@@ -111,6 +115,11 @@ describe('DataHelper', () => {
       [9899.5, 9899.5],
       [9999, 9999],
     ]);
+  });
+
+  it('should be able to downsample data points to a given scale', () => {
+    const scale = scaleLinear().domain([0, 14]).range([0, 2])
+    expect(DataHelper.downsample(datapoints, scale)).to.eql([[2,10],[3,20],[4,10],[5,null],[7,60],[12,2],[13,51]]);
   });
 
   it('should be able to trim undefined data (no more than one neighbouring null value)', () => {

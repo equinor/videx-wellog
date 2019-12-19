@@ -1,3 +1,6 @@
+import { select } from 'd3';
+import { Track } from '../tracks';
+
 /**
  * Helper methods for wellog specific DOM queries
  */
@@ -32,5 +35,18 @@ export default class UIHelper {
       }
     }
     return null;
+  }
+
+  /**
+   * Create a sample loader element for tracks. Requires track-loader-styles.scss or styles.css.
+   * @param elm Track HTML element
+   * @param track Track instance
+   */
+  static attachTrackLoader(elm: HTMLElement, track: Track) {
+    const loader = select(elm).append('div').classed('loader hidden', true);
+    for (let i = 0; i < 3; i++) {
+      loader.append('div').classed('loading-dots', true);
+    }
+    track.loader = loader.node();
   }
 }
