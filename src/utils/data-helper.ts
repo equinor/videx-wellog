@@ -312,17 +312,21 @@ export default class DataHelper {
    * than discrete.
    */
   static queryContinuousData(queryVal: number, data: PlotData) : number | null {
-    if (queryVal < data[0][0] || queryVal > data[data.length - 1][0]) return null;
-    let idx = data.findIndex(d => queryVal <= d[0]);
-    if (idx > 0) {
-      const qFound = data[idx][0];
-      const qBefore = data[idx - 1][0];
-      if (queryVal - qBefore < qFound - queryVal) {
-        idx -= 1;
+    try {
+      if (queryVal < data[0][0] || queryVal > data[data.length - 1][0]) return null;
+      let idx = data.findIndex(d => queryVal <= d[0]);
+      if (idx > 0) {
+        const qFound = data[idx][0];
+        const qBefore = data[idx - 1][0];
+        if (queryVal - qBefore < qFound - queryVal) {
+          idx -= 1;
+        }
       }
-    }
-    if (idx !== -1) {
-      return data[idx][1];
+      if (idx !== -1) {
+        return data[idx][1];
+      }
+    } catch (err) {
+      console.error(err); // eslint-disable-line no-console
     }
     return null;
   }
@@ -333,19 +337,24 @@ export default class DataHelper {
    * value. The data set is considered to be discrete.
    */
   static queryPointData(queryVal: number, data: PlotData, threshold: number = 0) : number | null {
-    const bestMatch = data
-      .filter(d => queryVal - threshold <= d[0] && d[0] <= queryVal + threshold)
-      .reduce((match, d) => {
-        const rank = Math.abs(queryVal - d[0]);
-        if (match.rank === null || rank < match.rank) {
-          return { data: d, rank };
-        }
-        return match;
-      }, { data: null, rank: null }).data;
+    try {
+      const bestMatch = data
+        .filter(d => queryVal - threshold <= d[0] && d[0] <= queryVal + threshold)
+        .reduce((match, d) => {
+          const rank = Math.abs(queryVal - d[0]);
+          if (match.rank === null || rank < match.rank) {
+            return { data: d, rank };
+          }
+          return match;
+        }, { data: null, rank: null }).data;
 
-    if (bestMatch !== null) {
-      return bestMatch[1];
+      if (bestMatch !== null) {
+        return bestMatch[1];
+      }
+    } catch (err) {
+      console.error(err); // eslint-disable-line no-console
     }
+
     return null;
   }
 
@@ -357,10 +366,15 @@ export default class DataHelper {
    * next (zones).
    */
   static queryZoneData(queryVal:number, data:PlotData) : number|null {
-    const index = data.findIndex((d, i, arr) => (
-      i < arr.length - 1 && d[1] !== null && d[0] <= queryVal && arr[i + 1][0] > queryVal
-    ));
+    try {
+      const index = data.findIndex((d, i, arr) => (
+        i < arr.length - 1 && d[1] !== null && d[0] <= queryVal && arr[i + 1][0] > queryVal
+      ));
 
-    return index > -1 ? data[index][1] : null;
+      return index > -1 ? data[index][1] : null;
+    } catch (err) {
+      console.error(err); // eslint-disable-line no-console
+    }
+    return null;
   }
 }
