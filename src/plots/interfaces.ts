@@ -70,9 +70,22 @@ export interface PlotOptions {
    */
   dataAccessor?: DataAccessorFunction,
   /**
-   * The number of rows in the legend section (if used with TrackGroup) this particular plot requires
+   * The number of rows in the legend section (if used with LogController) this particular plot requires
    */
   legendRows?: number,
+  /**
+   * Automatically filter data to current scale. This may increase performance for larger datasets,
+   * as data outside the current domain is not passed to the plots. Overlap may be controlled by the
+   * filterOverlapFactor option. Filtering is off (false) by default.
+   */
+  filterToScale?: boolean,
+  /**
+   * Used to control how much overlap or excess is added when filtering data compared to the current domain.
+   * Ex. if the current domain is [100, 200], and with an overlap factor of 0.5, data will
+   * be filtered using the extended domain [50, 250], leaving an excess of 50 units in both ends. This improves
+   * the user experience during panning.
+   */
+  filterOverlapFactor?: number,
 }
 
 /**

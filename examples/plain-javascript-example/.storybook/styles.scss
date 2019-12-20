@@ -1,12 +1,25 @@
-.demo {
-  height: 500px;
-  width: 800px;
-  border: 1px solid gray;
-  border-radius: 6px;
+@import '../../../src/styles.scss';
+
+html {
+  height: 100%;
+  body {
+    height: 96%;
+    #root {
+      height: 100%;
+      .log-controller {
+        height: 100%;
+      }
+    }
+  }
 }
 
-.demo.horizontal {
-  width: auto;
+.wellog {
+  .track {
+    .track-title {
+      background-color: #ccc;
+      font-weight: normal;
+      color: black;
+      font-family: inherit;
+    }
+  }
 }
-
-

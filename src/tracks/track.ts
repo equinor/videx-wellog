@@ -115,7 +115,7 @@ export default abstract class Track {
     if (!this._mounted) return;
 
     if (scale) {
-      this.scale = scale;
+      this.scale.domain(scale.domain());
     } else if (domain) {
       this.scale.domain(domain);
     } else {

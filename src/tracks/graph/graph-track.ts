@@ -1,9 +1,9 @@
 
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
-import { GridHelper, ScaleHelper, debouncer, DebounceFunction } from '../../utils';
+import { GridHelper, ScaleHelper, debouncer, DebounceFunction, DataHelper } from '../../utils';
 import { Plot } from '../../plots';
-import { D3Scale } from '../../common/interfaces';
+import { D3Scale, Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 import { ScaleHandlerTicks } from '../../scale-handlers';
@@ -18,12 +18,17 @@ const defaultOptions = {
 /**
  * Updates all plots with data by triggering each plot's data accessor function
  */
-function setPlotData(plots: Plot[], data: any) : void {
+function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
   plots.forEach(p => {
     if (typeof p.options.dataAccessor !== 'function') {
       throw Error(`Plot '${p.id}' does not have a data accessor configured`);
     }
-    p.setData(p.options.dataAccessor(data));
+    let plotData = p.options.dataAccessor(data);
+    if (p.options.filterToScale) {
+      const filterOverlapFactor = p.options.filterOverlapFactor || 0.5;
+      plotData = DataHelper.filterData(plotData, scale.domain(), filterOverlapFactor);
+    }
+    p.setData(plotData);
   });
 }
 
@@ -37,6 +42,9 @@ export default class GraphTrack extends CanvasTrack {
   options: GraphTrackOptions;
   plots: Plot[];
   debounce: DebounceFunction;
+
+  private _transformedData?: any;
+  private _transformCondition?: number = null;
 
   constructor(id: string|number, options: GraphTrackOptions = {}) {
     super(id, {
@@ -61,7 +69,6 @@ export default class GraphTrack extends CanvasTrack {
 
     this.plot = this.plot.bind(this);
     this.prepareData = this.prepareData.bind(this);
-
     this.debounce = debouncer();
   }
 
@@ -70,14 +77,15 @@ export default class GraphTrack extends CanvasTrack {
    */
   onMount(trackEvent: OnMountEvent) : void {
     super.onMount(trackEvent);
-
     const {
       options,
+      loader,
     } = this;
 
     if (options.data) {
-      const showLoader = options.showLoader === undefined ? false : options.showLoader;
-      if (showLoader) {
+      const showLoader = options.showLoader === undefined ? !!loader : options.showLoader;
+
+      if (showLoader && typeof (options.data) === 'function') {
         this.loadData(options.data, showLoader);
       } else {
         this.data = options.data;
@@ -107,6 +115,7 @@ export default class GraphTrack extends CanvasTrack {
    * Callback after data loaded, using loadData.
    */
   onDataLoaded() : void {
+    this._transformCondition = null;
     this.prepareData();
   }
 
@@ -143,16 +152,23 @@ export default class GraphTrack extends CanvasTrack {
       options,
       plot,
       plots,
+      _transformCondition: previousCondition,
     } = this;
     if (!data) return;
     if (options.transform) {
-      // console.log('PREPARE DATA', this.id);
-      options.transform(data, scale).then(transformed => {
-        setPlotData(plots, transformed);
-        plot();
-      });
+      const currentCondition = Math.round(ScaleHelper.getDomainSpan(scale, false) * 10);
+      this._transformCondition = currentCondition;
+      if (options.alwaysTransform || !previousCondition || previousCondition !== currentCondition) {
+        options.transform(data, scale).then(transformed => {
+          this._transformedData = transformed;
+          setPlotData(plots, transformed, scale);
+          plot();
+        });
+      }
+      setPlotData(plots, this._transformedData || this._data, scale);
+      plot();
     } else {
-      setPlotData(plots, data);
+      setPlotData(plots, data, scale);
       plot();
     }
   }

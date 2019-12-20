@@ -50,7 +50,7 @@ export interface GraphTrackOptions extends TrackOptions {
   domain?: Domain,
   /**
    * Determines if the legend should be clickable to toggle plots on/off when used within a
-   * TrackGroup with graphLegendConfig enabled. Default is true.
+   * LogController with graphLegendConfig enabled. Default is true.
    */
   togglePlotFromLegend?: boolean,
   /**
@@ -64,4 +64,9 @@ export interface GraphTrackOptions extends TrackOptions {
    * is typically used to downsample data at low zoom levels.
    */
   transform?: (data:any, scale: D3Scale) => Promise<any>,
+  /**
+   * Set to true to always run data transform function. By default (false), transforms will only run
+   * if the domain (zoom level) changes.
+   */
+  alwaysTransform?: boolean,
 }
