@@ -1,6 +1,6 @@
 import { scaleLinear, ZoomTransform } from 'd3';
 import ScaleHelper from '../utils/scale-helper';
-import { Scale, D3Scale, Range, Domain } from '../common/interfaces';
+import { Scale, Range, Domain } from '../common/interfaces';
 import { ScaleHandlerTicks, ScaleHandler } from './interfaces';
 
 /**
@@ -9,7 +9,7 @@ import { ScaleHandlerTicks, ScaleHandler } from './interfaces';
  * scaling behaviour, such as mapping data between domains.
  */
 export default class BasicScaleHandler implements ScaleHandler {
-  public scale: D3Scale;
+  public scale: Scale;
   protected _baseDomain: Domain;
 
   constructor(baseDomain : Domain = [0, 100]) {

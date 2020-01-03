@@ -3,7 +3,7 @@ import SvgTrack from '../svg-track';
 import { renderTicks, computeLabelBounds, LabelBounds, renderHorizontalTicks, computeLabelBoundsHorizontal } from './common';
 import ScaleHelper from '../../utils/scale-helper';
 import { DualScaleTrackOptions } from './interfaces';
-import { D3Scale, D3Selection, Domain } from '../../common/interfaces';
+import { Scale, D3Selection, Domain } from '../../common/interfaces';
 import { InterpolatedScaleHandler } from '../../scale-handlers';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 
@@ -17,7 +17,7 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
  * scale-handler's setMode-function.
  */
 export default class DualScaleTrack extends SvgTrack {
-  xscale : D3Scale;
+  xscale : Scale;
   viewMode : number;
   scaleHandler: InterpolatedScaleHandler;
   ticks: number[];

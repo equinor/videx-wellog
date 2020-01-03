@@ -1,6 +1,6 @@
 import { select } from 'd3';
 import { TrackOptions, Transform, OnMountEvent, OnUnmountEvent, OnUpdateEvent, OnRescaleEvent } from './interfaces';
-import { D3Selection, D3Scale } from '../common/interfaces';
+import { D3Selection, Scale } from '../common/interfaces';
 import { LegendTriggerFunction } from '../utils/legend-helper';
 /**
  * Default options
@@ -20,7 +20,7 @@ export default abstract class Track {
   public elm: HTMLElement;
   public loader: D3Selection;
   public transform: Transform;
-  public scale: D3Scale;
+  public scale: Scale;
   public error: Error | string;
   public order: number;
   public legendUpdate?: LegendTriggerFunction;
@@ -56,7 +56,7 @@ export default abstract class Track {
   /**
    * Calls OnMount and OnUpdate. Useful if track is stand-alone
    */
-  init(elm: HTMLElement, scale: D3Scale) : void {
+  init(elm: HTMLElement, scale: Scale) : void {
     this.onMount({ elm, scale });
     this.onUpdate({ elm, scale });
   }
@@ -115,7 +115,7 @@ export default abstract class Track {
     if (!this._mounted) return;
 
     if (scale) {
-      this.scale.domain(scale.domain());
+      this.scale = scale;
     } else if (domain) {
       this.scale.domain(domain);
     } else {

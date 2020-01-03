@@ -9,7 +9,7 @@ import {
 } from './common';
 import ScaleHelper from '../../utils/scale-helper';
 import { ScaleTrackOptions } from './interfaces';
-import { D3Scale, D3Selection } from '../../common/interfaces';
+import { Scale, D3Selection } from '../../common/interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 import { LegendTriggerFunction } from '../../utils/legend-helper';
 
@@ -17,7 +17,7 @@ import { LegendTriggerFunction } from '../../utils/legend-helper';
  * Track for visualising the domain/reference scale
  */
 export default class ScaleTrack extends SvgTrack {
-  xscale: D3Scale;
+  xscale: Scale;
   ticks: number[];
   labelBounds: LabelBounds;
   options: ScaleTrackOptions;
