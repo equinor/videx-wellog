@@ -5,6 +5,16 @@ import { createScale } from '../tracks/graph/factory';
 import { PlotData, DifferentialPlotOptions } from './interfaces';
 import { Scale, Triplet, Range } from '../common/interfaces';
 
+function findExtent(data, scale1, scale2) {
+  return data.reduce((ext, d) => {
+    const a = scale1(d[1]);
+    const b = scale2(d[2]);
+    ext[0] = Math.min(a, b, ext[0]);
+    ext[1] = Math.max(a, b, ext[1]);
+    return ext;
+  }, [+Infinity, -Infinity]);
+}
+
 /**
  * Differential plot
  */
@@ -121,13 +131,15 @@ export default class DifferentialPlot extends Plot {
 
     if (plotdata.length !== 2 || !xscale1 || !xscale2 || hidden) return;
 
-    ctx.save();
+    const merged = DataHelper.mergeDataSeries(plotdata[0] || [], plotdata[1] || []);
+    const [min, max] = findExtent(merged, xscale1, xscale2);
 
     // render correlation areas
-    const merged = DataHelper.mergeDataSeries(plotdata[0] || [], plotdata[1] || []);
+    ctx.save();
     ctx.globalAlpha = fillOpacity || 0.5;
 
     const areaFunction1 = area<Triplet<number>>().context(ctx);
+    const areaFunction2 = area<Triplet<number>>().context(ctx);
 
     if (horizontal) {
       areaFunction1
@@ -135,50 +147,67 @@ export default class DifferentialPlot extends Plot {
           d => def(d[1], d[0])
             && def(d[2], d[0])
         )
+        .y0(max)
         .y1(d => xscale1(d[1]))
-        .y0(d => Math.max(xscale1(d[1]), xscale2(d[2])))
         .x(d => scale(d[0]));
+
+      areaFunction2
+        .defined(
+          (d:number[]) => def(d[1], d[0])
+            && def(d[2], d[0])
+        )
+        .y0(min)
+        .y1((d:number[]) => xscale2(d[2]))
+        .x((d:number[]) => scale(d[0]));
     } else {
       areaFunction1
         .defined(
           d => def(d[1], d[0])
             && def(d[2], def[1])
         )
+        .x0(max)
         .x1(d => xscale1(d[1]))
-        .x0(d => Math.min(xscale1(d[1]), xscale2(d[2])))
         .y(d => scale(d[0]));
-    }
-    ctx.beginPath();
-    areaFunction1(merged);
-    ctx.fillStyle = serie1.fill;
-    ctx.fill();
 
-    const areaFunction2 = area<Triplet<number>>().context(ctx);
-
-    if (horizontal) {
-      areaFunction2
-        .defined(
-          (d:number[]) => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
-        .y1((d:number[]) => xscale1(d[1]))
-        .y0((d:number[]) => Math.min(xscale1(d[1]), xscale2(d[2])))
-        .x((d:number[]) => scale(d[0]));
-    } else {
       areaFunction2
         .defined(
           (d:number[]) => def(d[1], d[0])
           && def(d[2], d[0])
         )
-        .x1((d:number[]) => xscale1(d[1]))
-        .x0((d:number[]) => Math.max(xscale2(d[2]), xscale1(d[1])))
+        .x0(min)
+        .x1((d:number[]) => xscale2(d[2]))
         .y((d:number[]) => scale(d[0]));
     }
+
+    ctx.save();
+    ctx.beginPath();
+    areaFunction2(merged);
+    ctx.clip();
+
+    ctx.beginPath();
+    areaFunction1(merged);
+    ctx.fillStyle = serie1.fill;
+    ctx.fill();
+    ctx.restore();
+
+    if (horizontal) {
+      areaFunction1.y0(min);
+      areaFunction2.y0(max);
+    } else {
+      areaFunction1.x0(min);
+      areaFunction2.x0(max);
+    }
+
+    ctx.save();
+    ctx.beginPath();
+    areaFunction1(merged);
+    ctx.clip();
 
     ctx.beginPath();
     areaFunction2(merged);
     ctx.fillStyle = serie2.fill;
     ctx.fill();
+    ctx.restore();
 
     // render line series
 
