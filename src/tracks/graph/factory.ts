@@ -56,10 +56,11 @@ function createDifferentialPlot(config: PlotConfig, trackScale: Scale) : Differe
 /**
  * Returns a plot creator function for a specified plot type
  */
-function createPlotType(PlotType: { new(id: string|number, options: PlotOptions): Plot }) : PlotCreatorFunction {
+export function createPlotType(PlotType: { new(id: string|number, options: PlotOptions): Plot }) : PlotCreatorFunction {
   return (config, trackScale) => {
     const options = {
       legendRows: 1,
+      filterToScale: true,
       dataAccessor: d => d,
       ...patchPlotOptions(config.options),
     };
