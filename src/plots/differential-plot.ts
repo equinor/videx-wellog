@@ -3,14 +3,14 @@ import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';
 import { PlotData, DifferentialPlotOptions } from './interfaces';
-import { D3Scale, Triplet, Range } from '../common/interfaces';
+import { Scale, Triplet, Range } from '../common/interfaces';
 
 /**
  * Differential plot
  */
 export default class DifferentialPlot extends Plot {
-  scale1: D3Scale;
-  scale2: D3Scale;
+  scale1: Scale;
+  scale2: Scale;
   options: DifferentialPlotOptions;
   data: [PlotData, PlotData];
 
@@ -104,7 +104,7 @@ export default class DifferentialPlot extends Plot {
   /**
    * Renders differential plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
     const {
       scale1: xscale1,
       scale2: xscale2,

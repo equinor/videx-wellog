@@ -1,8 +1,8 @@
 import { ZoomTransform } from 'd3';
-import { Domain, Range, D3Scale, Scale } from '../common/interfaces';
+import { Domain, Range, Scale } from '../common/interfaces';
 
 export interface ScaleHandler {
-  scale: D3Scale,
+  scale: Scale,
   dataScale: Scale,
   baseDomain(): Domain,
   baseDomain(newDomain: Domain) : ScaleHandler,

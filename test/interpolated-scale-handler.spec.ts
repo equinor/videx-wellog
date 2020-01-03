@@ -122,4 +122,24 @@ describe('InterpolatedScaleHandler', () => {
     expect(handler._alternateBase).to.be.eql([0, 300]);
     expect(handler.scale(150)).to.eq(50);
   });
+
+  it('should be able to copy an interpolated scale', () => {
+    handler.setMode(1);
+    const { dataScale } = handler;
+    const copy = dataScale.copy();
+    expect(dataScale).to.eq(dataScale);
+    expect(dataScale).not.to.eq(copy);
+    expect(dataScale(10)).to.eq(copy(10));
+    handler.setMode(0);
+  });
+
+  it('should not be able to change domain/range of interpolated scale', () => {
+    handler.setMode(1);
+    const { dataScale } = handler;
+    expect(dataScale.domain()).to.eql([-10, 100]);
+    expect(dataScale.range()).to.eql([0, 100]);
+    expect(() => dataScale.domain([0, 50])).to.throw();
+    expect(() => dataScale.range([0, 50])).to.throw();
+    handler.setMode(0);
+  });
 });

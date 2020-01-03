@@ -1,6 +1,6 @@
 import { line } from 'd3';
 import Plot from './plot';
-import { D3Scale } from '../common/interfaces';
+import { Scale } from '../common/interfaces';
 import { PlotData, LinePlotOptions } from './interfaces';
 
 /**
@@ -8,13 +8,13 @@ import { PlotData, LinePlotOptions } from './interfaces';
  */
 export default class LinePlot extends Plot {
   options: LinePlotOptions;
-  scale: D3Scale;
+  scale: Scale;
   data: PlotData;
 
   /**
    * Renders line plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
     const {
       scale: xscale,
       data: plotdata,

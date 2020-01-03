@@ -1,14 +1,14 @@
 import { area } from 'd3';
 import Plot from './plot';
 import { PlotData, AreaPlotOptions } from './interfaces';
-import { D3Scale } from '../common/interfaces';
+import { Scale } from '../common/interfaces';
 
 /**
  * Area plot
  */
 export default class AreaPlot extends Plot {
   options: AreaPlotOptions;
-  scale: D3Scale;
+  scale: Scale;
   data: PlotData;
 
   /**
@@ -16,7 +16,7 @@ export default class AreaPlot extends Plot {
    * @param ctx canvas context instance
    * @param scale y-scale
    */
-  plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
     const {
       scale: xscale,
       data: plotdata,

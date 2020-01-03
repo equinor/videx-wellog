@@ -1,7 +1,7 @@
 import { scaleLinear } from 'd3';
 import BasicScaleHandler from './basic-scale-handler';
 import ScaleHelper from '../utils/scale-helper';
-import { Scale, Domain } from '../common/interfaces';
+import { Scale, Domain, Range } from '../common/interfaces';
 import { ScaleHandlerTicks, ScaleInterpolator } from './interfaces';
 
 /**
@@ -56,11 +56,26 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
       return _t.scale(iv);
     };
 
-    iscale.invert = v => interpolator.forward(_t.scale.invert(v));
+    iscale.invert = (v:number) => interpolator.forward(_t.scale.invert(v));
 
-    iscale.domain = () => domain;
-    iscale.range = () => _t.scale.range();
+    function d() : Domain;
+    function d(newDomain: Domain) : Scale;
+    function d(newDomain?: Domain) : Scale | Domain {
+      if (newDomain) throw Error('Scale is read-only and may not be altered!');
+      return domain;
+    }
+
+    function r() : Range;
+    function r(newRange: Range) : Scale;
+    function r(newRange?: Range) : Scale | Range {
+      if (newRange) throw Error('Scale is read-only and may not be altered!');
+      return _t.scale.range();
+    }
+
+    iscale.domain = d;
+    iscale.range = r;
     iscale.ticks = scaleLinear().domain(domain).range(iscale.range().slice()).ticks;
+    iscale.copy = () => this.createInterpolatedScale();
     return iscale;
   }
 
