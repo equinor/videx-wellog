@@ -35,17 +35,25 @@ export default class LogViewer extends LogController {
     overlay.elm.call(this.zoom);
 
     const wheelZoomFunc = overlay.elm.on('wheel.zoom').bind(overlay.elm.node());
+    const dblClickZoomFunc = overlay.elm.on('dblclick.zoom').bind(overlay.elm.node());
+    overlay.elm.on('dblclick.zoom', () => {
+      if (this.overlay.enabled) {
+        dblClickZoomFunc();
+      }
+    });
     overlay.elm.on('wheel.zoom', () => {
-      if (event.ctrlKey || event.shiftKey) {
-        const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
-        const transitionAmount = event.wheelDeltaY / wheelPanFactor / scaleMod;
-        if (this.options.horizontal) {
-          this.zoom.translateBy(overlay.elm, transitionAmount, 0);
+      if (this.overlay.enabled) {
+        if (event.ctrlKey || event.shiftKey) {
+          const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
+          const transitionAmount = event.wheelDeltaY / wheelPanFactor / scaleMod;
+          if (this.options.horizontal) {
+            this.zoom.translateBy(overlay.elm, transitionAmount, 0);
+          } else {
+            this.zoom.translateBy(overlay.elm, 0, transitionAmount);
+          }
         } else {
-          this.zoom.translateBy(overlay.elm, 0, transitionAmount);
+          wheelZoomFunc();
         }
-      } else {
-        wheelZoomFunc();
       }
       event.preventDefault();
     });
@@ -113,7 +121,13 @@ export default class LogViewer extends LogController {
    * Event handler for pan/zoom
    */
   protected zoomed() : void {
-    const { transform } = event;
+    const { transform, sourceEvent } = event;
+
+    // abort if event was triggered by user interaction when overlay is disabled
+    if (!this.overlay.enabled && sourceEvent !== null) {
+      return;
+    }
+
     const { k } = transform;
     const panExcess = this.options.panExcess || [0, 0];
 
