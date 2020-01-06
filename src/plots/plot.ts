@@ -1,6 +1,7 @@
 import { createScale } from '../tracks/graph/factory';
 import { Range, Scale } from '../common/interfaces';
 import { PlotData, PlotOptions } from './interfaces';
+import { DataHelper } from '../utils';
 
 
 /**
@@ -42,9 +43,16 @@ export default abstract class Plot {
   /**
    * Sets the plot data
    */
-  setData(data : PlotData | any) : Plot {
-    // console.log(this.id, data)
-    this.data = data;
+  setData(data : any, scale?: Scale) : Plot {
+    let plotData = data;
+    if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
+      plotData = this.options.dataAccessor(data);
+    }
+    if (this.options.filterToScale && scale) {
+      const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
+      plotData = DataHelper.filterData(plotData, scale.domain(), filterOverlapFactor);
+    }
+    this.data = plotData;
     return this;
   }
 

@@ -64,6 +64,19 @@ export default class DifferentialPlot extends Plot {
     }
   }
 
+  setData(data : any, scale?: Scale) : DifferentialPlot {
+    let diffplotData = data;
+    if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
+      diffplotData = this.options.dataAccessor(data);
+    }
+    if (this.options.filterToScale && scale) {
+      const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
+      diffplotData = diffplotData.map((d: PlotData) => DataHelper.filterData(d, scale.domain(), filterOverlapFactor));
+    }
+    this.data = diffplotData;
+    return this;
+  }
+
   /**
    * Override of base to support multiple scales
    */
@@ -132,6 +145,7 @@ export default class DifferentialPlot extends Plot {
     if (plotdata.length !== 2 || !xscale1 || !xscale2 || hidden) return;
 
     const merged = DataHelper.mergeDataSeries(plotdata[0] || [], plotdata[1] || []);
+
     const [min, max] = findExtent(merged, xscale1, xscale2);
 
     // render correlation areas
@@ -165,7 +179,7 @@ export default class DifferentialPlot extends Plot {
           d => def(d[1], d[0])
             && def(d[2], def[1])
         )
-        .x0(max)
+        .x0(min)
         .x1(d => xscale1(d[1]))
         .y(d => scale(d[0]));
 
@@ -174,7 +188,7 @@ export default class DifferentialPlot extends Plot {
           (d:number[]) => def(d[1], d[0])
           && def(d[2], d[0])
         )
-        .x0(min)
+        .x0(max)
         .x1((d:number[]) => xscale2(d[2]))
         .y((d:number[]) => scale(d[0]));
     }
@@ -194,8 +208,8 @@ export default class DifferentialPlot extends Plot {
       areaFunction1.y0(min);
       areaFunction2.y0(max);
     } else {
-      areaFunction1.x0(min);
-      areaFunction2.x0(max);
+      areaFunction1.x0(max);
+      areaFunction2.x0(min);
     }
 
     ctx.save();
