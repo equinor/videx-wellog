@@ -11,7 +11,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
-import { D3Selection, Domain, D3Scale } from '../common/interfaces';
+import { D3Selection, Domain, Scale } from '../common/interfaces';
 import { LogControllerOptions } from './interfaces';
 
 const titleBarBaseSize = 18;
@@ -747,7 +747,7 @@ export default class LogController {
   /**
    * Getter for the component's internal scale
    */
-  get scale() : D3Scale {
+  get scale() : Scale {
     return this.scaleHandler.scale;
   }
 }

@@ -1,14 +1,14 @@
 import { area } from 'd3';
 import Plot from './plot';
 import { PlotData, AreaPlotOptions } from './interfaces';
-import { D3Scale } from '../common/interfaces';
+import { Scale } from '../common/interfaces';
 
 /**
  * Area plot
  */
 export default class AreaPlot extends Plot {
   options: AreaPlotOptions;
-  scale: D3Scale;
+  scale: Scale;
   data: PlotData;
 
   /**
@@ -16,7 +16,7 @@ export default class AreaPlot extends Plot {
    * @param ctx canvas context instance
    * @param scale y-scale
    */
-  plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
     const {
       scale: xscale,
       data: plotdata,
@@ -27,10 +27,14 @@ export default class AreaPlot extends Plot {
 
     const useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
 
-    const [dmin, dmax] = xscale.domain();
-    const zeroValue = xscale(
-      useMinAsBase ? Math.min(dmin, dmax) : Math.max(dmin, dmax),
-    );
+    const [d0, d1] = xscale.domain();
+    const dmin = Math.min(d0, d1);
+    const dmax = Math.max(d0, d1);
+
+    const rmin = xscale(dmin);
+    const rmax = xscale(dmax);
+
+    const zeroValue = useMinAsBase ? rmin : rmax;
 
     ctx.save();
 
@@ -53,9 +57,7 @@ export default class AreaPlot extends Plot {
     ctx.globalAlpha = options.fillOpacity || 1;
 
     if (options.inverseColor) {
-      const inverseValue = xscale(
-        useMinAsBase ? Math.max(dmin, dmax) : Math.min(dmin, dmax),
-      );
+      const inverseValue = useMinAsBase ? rmax : rmin;
 
       const inverseAreaFunction = area()
         .defined(d => options.defined(d[1], d[0]))
@@ -63,12 +65,12 @@ export default class AreaPlot extends Plot {
 
       if (options.horizontal) {
         inverseAreaFunction
-          .y1(d => Math.max(0, xscale(d[1])))
+          .y1(d => xscale(d[1]))
           .y0(inverseValue)
           .x(d => scale(d[0]));
       } else {
         inverseAreaFunction
-          .x1(d => Math.max(0, xscale(d[1])))
+          .x1(d => xscale(d[1]))
           .x0(inverseValue)
           .y(d => scale(d[0]));
       }

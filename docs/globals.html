@@ -97,7 +97,6 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface"><a href="interfaces/areaplotoptions.html" class="tsd-kind-icon">Area<wbr>Plot<wbr>Options</a></li>
-								<li class="tsd-kind-interface"><a href="interfaces/d3scale.html" class="tsd-kind-icon">D3<wbr>Scale</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/differentialplotlegendinfo.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Legend<wbr>Info</a></li>
 								<li class="tsd-kind-interface"><a href="interfaces/differentialplotoptions.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-is-not-exported"><a href="interfaces/differentialplotserielegendinfo.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Serie<wbr>Legend<wbr>Info</a></li>
@@ -183,9 +182,10 @@
 								<li class="tsd-kind-function"><a href="globals.html#computelabelboundshorizontal" class="tsd-kind-icon">compute<wbr>Label<wbr>Bounds<wbr>Horizontal</a></li>
 								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#createdifferentialplot" class="tsd-kind-icon">create<wbr>Differential<wbr>Plot</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#createoverlay" class="tsd-kind-icon">create<wbr>Overlay</a></li>
-								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#createplottype" class="tsd-kind-icon">create<wbr>Plot<wbr>Type</a></li>
+								<li class="tsd-kind-function"><a href="globals.html#createplottype" class="tsd-kind-icon">create<wbr>Plot<wbr>Type</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#createscale" class="tsd-kind-icon">create<wbr>Scale</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#debouncer" class="tsd-kind-icon">debouncer</a></li>
+								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#findextent" class="tsd-kind-icon">find<wbr>Extent</a></li>
 								<li class="tsd-kind-function tsd-is-not-exported"><a href="globals.html#getgraphtracklegendrows" class="tsd-kind-icon">get<wbr>Graph<wbr>Track<wbr>Legend<wbr>Rows</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#hashstring" class="tsd-kind-icon">hash<wbr>String</a></li>
 								<li class="tsd-kind-function"><a href="globals.html#numberformatter" class="tsd-kind-icon">number<wbr>Formatter</a></li>
@@ -227,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">D3<wbr>Selection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/common/interfaces.ts#L15">common/interfaces.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/common/interfaces.ts#L15">common/interfaces.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -242,7 +242,7 @@
 					<div class="tsd-signature tsd-kind-icon">Data<wbr>Accessor<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L32">plots/interfaces.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/interfaces.ts#L32">plots/interfaces.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -289,7 +289,7 @@
 					<div class="tsd-signature tsd-kind-icon">Debounce<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/utils.ts#L1">utils/utils.ts:1</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/utils.ts#L1">utils/utils.ts:1</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -323,7 +323,7 @@
 					<div class="tsd-signature tsd-kind-icon">Defined<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L22">plots/interfaces.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/interfaces.ts#L22">plots/interfaces.ts:22</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -369,7 +369,7 @@
 					<div class="tsd-signature tsd-kind-icon">Differential<wbr>Plot<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="globals.html#triplet" class="tsd-signature-type">Triplet</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L14">plots/interfaces.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/interfaces.ts#L14">plots/interfaces.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -389,7 +389,7 @@
 					<div class="tsd-signature tsd-kind-icon">Domain<span class="tsd-signature-symbol">:</span> <a href="globals.html#tuplet" class="tsd-signature-type">Tuplet</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/common/interfaces.ts#L8">common/interfaces.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/common/interfaces.ts#L8">common/interfaces.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -404,7 +404,7 @@
 					<div class="tsd-signature tsd-kind-icon">Legend<wbr>OnInit<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/legend-helper.ts#L9">utils/legend-helper.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/legend-helper.ts#L9">utils/legend-helper.ts:9</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -441,7 +441,7 @@
 					<div class="tsd-signature tsd-kind-icon">Legend<wbr>OnUpdate<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/legend-helper.ts#L11">utils/legend-helper.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/legend-helper.ts#L11">utils/legend-helper.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -478,7 +478,7 @@
 					<div class="tsd-signature tsd-kind-icon">Legend<wbr>Rows<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/legend-helper.ts#L5">utils/legend-helper.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/legend-helper.ts#L5">utils/legend-helper.ts:5</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -509,7 +509,7 @@
 					<div class="tsd-signature tsd-kind-icon">Legend<wbr>Trigger<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/legend-helper.ts#L7">utils/legend-helper.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/legend-helper.ts#L7">utils/legend-helper.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -534,7 +534,7 @@
 					<div class="tsd-signature tsd-kind-icon">Plot<wbr>Creator<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/interfaces.ts#L6">tracks/graph/interfaces.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/interfaces.ts#L6">tracks/graph/interfaces.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -542,7 +542,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -552,7 +552,7 @@
 												<h5>config: <a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a></h5>
 											</li>
 											<li>
-												<h5>trackScale: <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h5>
+												<h5>trackScale: <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <a href="classes/plot.html" class="tsd-signature-type">Plot</a></h4>
@@ -568,7 +568,7 @@
 					<div class="tsd-signature tsd-kind-icon">Plot<wbr>Data<span class="tsd-signature-symbol">:</span> <a href="globals.html#tuplet" class="tsd-signature-type">Tuplet</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/interfaces.ts#L8">plots/interfaces.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/interfaces.ts#L8">plots/interfaces.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -588,7 +588,7 @@
 					<div class="tsd-signature tsd-kind-icon">Range<span class="tsd-signature-symbol">:</span> <a href="globals.html#tuplet" class="tsd-signature-type">Tuplet</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/common/interfaces.ts#L11">common/interfaces.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/common/interfaces.ts#L11">common/interfaces.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -603,7 +603,7 @@
 					<div class="tsd-signature tsd-kind-icon">Reducer<wbr>Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/data-helper.ts#L4">utils/data-helper.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/data-helper.ts#L4">utils/data-helper.ts:4</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -634,7 +634,7 @@
 					<div class="tsd-signature tsd-kind-icon">Triplet&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/common/interfaces.ts#L5">common/interfaces.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/common/interfaces.ts#L5">common/interfaces.ts:5</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -655,7 +655,7 @@
 					<div class="tsd-signature tsd-kind-icon">Tuplet&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/common/interfaces.ts#L2">common/interfaces.ts:2</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/common/interfaces.ts#L2">common/interfaces.ts:2</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -679,7 +679,7 @@
 					<div class="tsd-signature tsd-kind-icon">color<wbr>Major<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"#ccc"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;#ccc&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/grid-helper.ts#L5">utils/grid-helper.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/grid-helper.ts#L5">utils/grid-helper.ts:5</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -694,7 +694,7 @@
 					<div class="tsd-signature tsd-kind-icon">color<wbr>Minor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">"#ddd"</span><span class="tsd-signature-symbol"> =&nbsp;&quot;#ddd&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/grid-helper.ts#L7">utils/grid-helper.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/grid-helper.ts#L7">utils/grid-helper.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -709,7 +709,7 @@
 					<div class="tsd-signature tsd-kind-icon">legend<wbr>Base<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">25</span><span class="tsd-signature-symbol"> =&nbsp;25</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L18">ui/log-controller.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L18">ui/log-controller.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -719,7 +719,7 @@
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">10</span><span class="tsd-signature-symbol"> =&nbsp;10</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/scale-helper.ts#L5">utils/scale-helper.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/scale-helper.ts#L5">utils/scale-helper.ts:5</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -729,7 +729,7 @@
 					<div class="tsd-signature tsd-kind-icon">scale<wbr>Legend<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="interfaces/legendconfig.html" class="tsd-signature-type">LegendConfig</a><span class="tsd-signature-symbol"> =&nbsp;({elementType: &#x27;svg&#x27;,getLegendRows: () &#x3D;&gt; 2,onInit: (elm, track, updateTrigger) &#x3D;&gt; {track.legendUpdate &#x3D; updateTrigger;const lg &#x3D; select(elm);lg.selectAll(&#x27;g.scale-legend&#x27;).remove();const g &#x3D; lg.append(&#x27;g&#x27;).attr(&#x27;class&#x27;, &#x27;scale-legend&#x27;);g.append(&#x27;text&#x27;).classed(&#x27;scale-title&#x27;, true).attr(&#x27;font-weight&#x27;, &#x27;600&#x27;).style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;);g.append(&#x27;text&#x27;).attr(&#x27;class&#x27;, &#x27;scale-range&#x27;).style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;);g.append(&#x27;text&#x27;).attr(&#x27;class&#x27;, &#x27;scale-units&#x27;).style(&#x27;text-anchor&#x27;, &#x27;middle&#x27;);},onUpdate: onUpdateLegend,})</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/scale/common.ts#L263">tracks/scale/common.ts:263</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/scale/common.ts#L263">tracks/scale/common.ts:263</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -744,7 +744,7 @@
 					<div class="tsd-signature tsd-kind-icon">stroke<wbr>Major<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">2</span><span class="tsd-signature-symbol"> =&nbsp;2</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/grid-helper.ts#L9">utils/grid-helper.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/grid-helper.ts#L9">utils/grid-helper.ts:9</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -759,7 +759,7 @@
 					<div class="tsd-signature tsd-kind-icon">stroke<wbr>Minor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">1</span><span class="tsd-signature-symbol"> =&nbsp;1</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/grid-helper.ts#L11">utils/grid-helper.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/grid-helper.ts#L11">utils/grid-helper.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -774,7 +774,7 @@
 					<div class="tsd-signature tsd-kind-icon">ticks<wbr>Factor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">60</span><span class="tsd-signature-symbol"> =&nbsp;60</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/scale-helper.ts#L4">utils/scale-helper.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/scale-helper.ts#L4">utils/scale-helper.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -784,7 +784,7 @@
 					<div class="tsd-signature tsd-kind-icon">title<wbr>Bar<wbr>Base<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">18</span><span class="tsd-signature-symbol"> =&nbsp;18</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L17">ui/log-controller.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L17">ui/log-controller.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -794,7 +794,7 @@
 					<div class="tsd-signature tsd-kind-icon">title<wbr>Font<wbr>Size<wbr>Factor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">0.7</span><span class="tsd-signature-symbol"> =&nbsp;0.7</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L19">ui/log-controller.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L19">ui/log-controller.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -804,7 +804,7 @@
 					<div class="tsd-signature tsd-kind-icon">ui<wbr>Scale<wbr>Factor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">800</span><span class="tsd-signature-symbol"> =&nbsp;800</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L20">ui/log-controller.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L20">ui/log-controller.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -814,7 +814,7 @@
 					<div class="tsd-signature tsd-kind-icon">wheel<wbr>Pan<wbr>Factor<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">50</span><span class="tsd-signature-symbol"> =&nbsp;50</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-viewer.ts#L6">ui/log-viewer.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-viewer.ts#L6">ui/log-viewer.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -831,7 +831,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/scale/common.ts#L142">tracks/scale/common.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/scale/common.ts#L142">tracks/scale/common.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -859,7 +859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/scale/common.ts#L183">tracks/scale/common.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/scale/common.ts#L183">tracks/scale/common.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -881,13 +881,13 @@
 					<a name="createdifferentialplot" class="tsd-anchor"></a>
 					<h3>create<wbr>Differential<wbr>Plot</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Differential<wbr>Plot<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/differentialplot.html" class="tsd-signature-type">DifferentialPlot</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Differential<wbr>Plot<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/differentialplot.html" class="tsd-signature-type">DifferentialPlot</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L38">tracks/graph/factory.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L38">tracks/graph/factory.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -901,7 +901,7 @@
 									<h5>config: <a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a></h5>
 								</li>
 								<li>
-									<h5>trackScale: <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h5>
+									<h5>trackScale: <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="classes/differentialplot.html" class="tsd-signature-type">DifferentialPlot</a></h4>
@@ -918,7 +918,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/overlay.ts#L6">ui/overlay.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/overlay.ts#L6">ui/overlay.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -934,17 +934,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+				<section class="tsd-panel tsd-member tsd-kind-function">
 					<a name="createplottype" class="tsd-anchor"></a>
 					<h3>create<wbr>Plot<wbr>Type</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+					<ul class="tsd-signatures tsd-kind-function">
 						<li class="tsd-signature tsd-kind-icon">create<wbr>Plot<wbr>Type<span class="tsd-signature-symbol">(</span>PlotType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="globals.html#plotcreatorfunction" class="tsd-signature-type">PlotCreatorFunction</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L59">tracks/graph/factory.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L59">tracks/graph/factory.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -966,7 +966,7 @@
 												<li class="tsd-description">
 													<aside class="tsd-sources">
 														<ul>
-															<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L59">tracks/graph/factory.ts:59</a></li>
+															<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L59">tracks/graph/factory.ts:59</a></li>
 														</ul>
 													</aside>
 													<h4 class="tsd-parameters-title">Parameters</h4>
@@ -992,13 +992,13 @@
 					<a name="createscale" class="tsd-anchor"></a>
 					<h3>create<wbr>Scale</h3>
 					<ul class="tsd-signatures tsd-kind-function">
-						<li class="tsd-signature tsd-kind-icon">create<wbr>Scale<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, domain<span class="tsd-signature-symbol">: </span><a href="globals.html#domain" class="tsd-signature-type">Domain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></li>
+						<li class="tsd-signature tsd-kind-icon">create<wbr>Scale<span class="tsd-signature-symbol">(</span>type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, domain<span class="tsd-signature-symbol">: </span><a href="globals.html#domain" class="tsd-signature-type">Domain</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L25">tracks/graph/factory.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L25">tracks/graph/factory.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1015,7 +1015,7 @@
 									<h5>domain: <a href="globals.html#domain" class="tsd-signature-type">Domain</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -1029,7 +1029,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/utils.ts#L41">utils/utils.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/utils.ts#L41">utils/utils.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1049,6 +1049,35 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
+					<a name="findextent" class="tsd-anchor"></a>
+					<h3>find<wbr>Extent</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>Extent<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, scale1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, scale2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/differential-plot.ts#L8">plots/differential-plot.ts:8</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>scale1: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>scale2: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-not-exported">
 					<a name="getgraphtracklegendrows" class="tsd-anchor"></a>
 					<h3>get<wbr>Graph<wbr>Track<wbr>Legend<wbr>Rows</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-not-exported">
@@ -1058,7 +1087,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-legend.ts#L16">tracks/graph/graph-legend.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-legend.ts#L16">tracks/graph/graph-legend.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1086,7 +1115,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/utils.ts#L23">utils/utils.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/utils.ts#L23">utils/utils.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1114,7 +1143,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/utils.ts#L15">utils/utils.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/utils.ts#L15">utils/utils.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1146,7 +1175,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-legend.ts#L80">tracks/graph/graph-legend.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-legend.ts#L80">tracks/graph/graph-legend.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1180,7 +1209,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L13">tracks/graph/factory.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L13">tracks/graph/factory.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1203,7 +1232,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/area-plot-legend.ts#L11">plots/legend/area-plot-legend.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/area-plot-legend.ts#L11">plots/legend/area-plot-legend.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1240,7 +1269,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/common.ts#L112">plots/legend/common.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/common.ts#L112">plots/legend/common.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1286,7 +1315,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/differential-plot-legend.ts#L11">plots/legend/differential-plot-legend.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/differential-plot-legend.ts#L11">plots/legend/differential-plot-legend.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1323,7 +1352,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/dot-plot-legend.ts#L11">plots/legend/dot-plot-legend.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/dot-plot-legend.ts#L11">plots/legend/dot-plot-legend.ts:11</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1360,7 +1389,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/scale/common.ts#L85">tracks/scale/common.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/scale/common.ts#L85">tracks/scale/common.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1397,7 +1426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/line-plot-legend.ts#L10">plots/legend/line-plot-legend.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/line-plot-legend.ts#L10">plots/legend/line-plot-legend.ts:10</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1434,7 +1463,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/plots/legend/common.ts#L8">plots/legend/common.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/plots/legend/common.ts#L8">plots/legend/common.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1480,7 +1509,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/scale/common.ts#L19">tracks/scale/common.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/scale/common.ts#L19">tracks/scale/common.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1517,7 +1546,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/utils.ts#L6">utils/utils.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/utils.ts#L6">utils/utils.ts:6</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1548,7 +1577,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/d3-utils.ts#L6">utils/d3-utils.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/d3-utils.ts#L6">utils/d3-utils.ts:6</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1580,7 +1609,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L21">tracks/graph/graph-track.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L20">tracks/graph/graph-track.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1614,7 +1643,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/d3-utils.ts#L46">utils/d3-utils.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/d3-utils.ts#L46">utils/d3-utils.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1654,7 +1683,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/utils/d3-utils.ts#L26">utils/d3-utils.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/utils/d3-utils.ts#L26">utils/d3-utils.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1686,7 +1715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-legend.ts#L23">tracks/graph/graph-legend.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-legend.ts#L23">tracks/graph/graph-legend.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1719,8 +1748,8 @@
 					<div class="tsd-signature tsd-kind-icon">default<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L11">tracks/graph/graph-track.ts:11</a></li>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L22">ui/log-controller.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L10">tracks/graph/graph-track.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L22">ui/log-controller.ts:22</a></li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -1729,7 +1758,7 @@
 						<div class="tsd-signature tsd-kind-icon">auto<wbr>Resize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L26">ui/log-controller.ts:26</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L26">ui/log-controller.ts:26</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1739,8 +1768,8 @@
 						<div class="tsd-signature tsd-kind-icon">domain<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[0, 1000]</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L13">tracks/graph/graph-track.ts:13</a></li>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L23">ui/log-controller.ts:23</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L12">tracks/graph/graph-track.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L23">ui/log-controller.ts:23</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1750,7 +1779,7 @@
 						<div class="tsd-signature tsd-kind-icon">horizontal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L27">ui/log-controller.ts:27</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L27">ui/log-controller.ts:27</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1760,7 +1789,7 @@
 						<div class="tsd-signature tsd-kind-icon">plot<wbr>Factory<span class="tsd-signature-symbol">:</span> <a href="interfaces/plotfactory.html" class="tsd-signature-type">PlotFactory</a><span class="tsd-signature-symbol"> =&nbsp;defaultPlotFactory</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L15">tracks/graph/graph-track.ts:15</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L14">tracks/graph/graph-track.ts:14</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1770,7 +1799,7 @@
 						<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> =&nbsp;&quot;linear&quot;</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L12">tracks/graph/graph-track.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L11">tracks/graph/graph-track.ts:11</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1780,7 +1809,7 @@
 						<div class="tsd-signature tsd-kind-icon">show<wbr>Legend<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L25">ui/log-controller.ts:25</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L25">ui/log-controller.ts:25</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1790,7 +1819,7 @@
 						<div class="tsd-signature tsd-kind-icon">show<wbr>Titles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L24">ui/log-controller.ts:24</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L24">ui/log-controller.ts:24</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1800,7 +1829,7 @@
 						<div class="tsd-signature tsd-kind-icon">toggle<wbr>Plot<wbr>From<wbr>Legend<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/graph-track.ts#L14">tracks/graph/graph-track.ts:14</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/graph-track.ts#L13">tracks/graph/graph-track.ts:13</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1810,7 +1839,7 @@
 						<div class="tsd-signature tsd-kind-icon">transition<wbr>Duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/ui/log-controller.ts#L28">ui/log-controller.ts:28</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/ui/log-controller.ts#L28">ui/log-controller.ts:28</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1821,7 +1850,7 @@
 					<div class="tsd-signature tsd-kind-icon">defaults<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/track.ts#L8">tracks/track.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/track.ts#L8">tracks/track.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1835,7 +1864,7 @@
 						<div class="tsd-signature tsd-kind-icon">horizontal<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/track.ts#L11">tracks/track.ts:11</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/track.ts#L11">tracks/track.ts:11</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1845,7 +1874,7 @@
 						<div class="tsd-signature tsd-kind-icon">max<wbr>Width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> =&nbsp;null</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/track.ts#L10">tracks/track.ts:10</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/track.ts#L10">tracks/track.ts:10</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1855,7 +1884,7 @@
 						<div class="tsd-signature tsd-kind-icon">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;3</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/track.ts#L9">tracks/track.ts:9</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/track.ts#L9">tracks/track.ts:9</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -1866,7 +1895,7 @@
 					<div class="tsd-signature tsd-kind-icon">no<wbr>Interpolator<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/scale-handlers/interpolated-scale-handler.ts#L10">scale-handlers/interpolated-scale-handler.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/scale-handlers/interpolated-scale-handler.ts#L10">scale-handlers/interpolated-scale-handler.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1884,7 +1913,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/scale-handlers/interpolated-scale-handler.ts#L11">scale-handlers/interpolated-scale-handler.ts:11</a></li>
+										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/scale-handlers/interpolated-scale-handler.ts#L11">scale-handlers/interpolated-scale-handler.ts:11</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1907,7 +1936,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/scale-handlers/interpolated-scale-handler.ts#L13">scale-handlers/interpolated-scale-handler.ts:13</a></li>
+										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/scale-handlers/interpolated-scale-handler.ts#L13">scale-handlers/interpolated-scale-handler.ts:13</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1933,7 +1962,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/scale-handlers/interpolated-scale-handler.ts#L12">scale-handlers/interpolated-scale-handler.ts:12</a></li>
+										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/scale-handlers/interpolated-scale-handler.ts#L12">scale-handlers/interpolated-scale-handler.ts:12</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1956,7 +1985,7 @@
 							<li class="tsd-description">
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/scale-handlers/interpolated-scale-handler.ts#L14">scale-handlers/interpolated-scale-handler.ts:14</a></li>
+										<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/scale-handlers/interpolated-scale-handler.ts#L14">scale-handlers/interpolated-scale-handler.ts:14</a></li>
 									</ul>
 								</aside>
 								<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1979,7 +2008,7 @@
 					<div class="tsd-signature tsd-kind-icon">plot<wbr>Factory<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L84">tracks/graph/factory.ts:84</a></li>
+							<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L85">tracks/graph/factory.ts:85</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1995,7 +2024,7 @@
 						<div class="tsd-signature tsd-kind-icon">area<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;createPlotType(AreaPlot)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L86">tracks/graph/factory.ts:86</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L87">tracks/graph/factory.ts:87</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-type-declaration">
@@ -2003,7 +2032,7 @@
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-siganture">
 									<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
@@ -2013,7 +2042,7 @@
 													<h5>config: <a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a></h5>
 												</li>
 												<li>
-													<h5>trackScale: <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h5>
+													<h5>trackScale: <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h5>
 												</li>
 											</ul>
 											<h4 class="tsd-returns-title">Returns <a href="classes/plot.html" class="tsd-signature-type">Plot</a></h4>
@@ -2029,7 +2058,7 @@
 						<div class="tsd-signature tsd-kind-icon">differential<span class="tsd-signature-symbol">:</span> <a href="globals.html#createdifferentialplot" class="tsd-signature-type">createDifferentialPlot</a><span class="tsd-signature-symbol"> =&nbsp;createDifferentialPlot</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L88">tracks/graph/factory.ts:88</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L89">tracks/graph/factory.ts:89</a></li>
 							</ul>
 						</aside>
 					</section>
@@ -2039,7 +2068,7 @@
 						<div class="tsd-signature tsd-kind-icon">dot<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;createPlotType(DotPlot)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L87">tracks/graph/factory.ts:87</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L88">tracks/graph/factory.ts:88</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-type-declaration">
@@ -2047,7 +2076,7 @@
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-siganture">
 									<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
@@ -2057,7 +2086,7 @@
 													<h5>config: <a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a></h5>
 												</li>
 												<li>
-													<h5>trackScale: <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h5>
+													<h5>trackScale: <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h5>
 												</li>
 											</ul>
 											<h4 class="tsd-returns-title">Returns <a href="classes/plot.html" class="tsd-signature-type">Plot</a></h4>
@@ -2073,7 +2102,7 @@
 						<div class="tsd-signature tsd-kind-icon">line<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;createPlotType(LinePlot)</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/807a1f4/src/tracks/graph/factory.ts#L85">tracks/graph/factory.ts:85</a></li>
+								<li>Defined in <a href="https://github.com/equinor/videx-wellog/blob/87f08a4/src/tracks/graph/factory.ts#L86">tracks/graph/factory.ts:86</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-type-declaration">
@@ -2081,7 +2110,7 @@
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-siganture">
 									<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-variable tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">: </span><a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a>, trackScale<span class="tsd-signature-symbol">: </span><a href="interfaces/scale.html" class="tsd-signature-type">Scale</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="classes/plot.html" class="tsd-signature-type">Plot</a></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
@@ -2091,7 +2120,7 @@
 													<h5>config: <a href="interfaces/plotconfig.html" class="tsd-signature-type">PlotConfig</a></h5>
 												</li>
 												<li>
-													<h5>trackScale: <a href="interfaces/d3scale.html" class="tsd-signature-type">D3Scale</a></h5>
+													<h5>trackScale: <a href="interfaces/scale.html" class="tsd-signature-type">Scale</a></h5>
 												</li>
 											</ul>
 											<h4 class="tsd-returns-title">Returns <a href="classes/plot.html" class="tsd-signature-type">Plot</a></h4>
@@ -2179,9 +2208,6 @@
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/areaplotoptions.html" class="tsd-kind-icon">Area<wbr>Plot<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="interfaces/d3scale.html" class="tsd-kind-icon">D3<wbr>Scale</a>
 					</li>
 					<li class=" tsd-kind-interface">
 						<a href="interfaces/differentialplotlegendinfo.html" class="tsd-kind-icon">Differential<wbr>Plot<wbr>Legend<wbr>Info</a>
@@ -2393,7 +2419,7 @@
 					<li class=" tsd-kind-function">
 						<a href="globals.html#createoverlay" class="tsd-kind-icon">create<wbr>Overlay</a>
 					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
+					<li class=" tsd-kind-function">
 						<a href="globals.html#createplottype" class="tsd-kind-icon">create<wbr>Plot<wbr>Type</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -2401,6 +2427,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#debouncer" class="tsd-kind-icon">debouncer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#findextent" class="tsd-kind-icon">find<wbr>Extent</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#getgraphtracklegendrows" class="tsd-kind-icon">get<wbr>Graph<wbr>Track<wbr>Legend<wbr>Rows</a>

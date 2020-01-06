@@ -6,7 +6,7 @@ import {
   DifferentialPlot,
   Plot,
 } from '../../plots';
-import { D3Scale, Domain } from '../../common/interfaces';
+import { Scale, Domain } from '../../common/interfaces';
 import { PlotOptions, DifferentialPlotOptions } from '../../plots/interfaces';
 import { PlotConfig, PlotFactory, PlotCreatorFunction } from './interfaces';
 
@@ -22,7 +22,7 @@ export function patchPlotOptions(options: PlotOptions) {
 /**
  * Creates a d3 scale from config
  */
-export function createScale(type: string, domain: Domain) : D3Scale {
+export function createScale(type: string, domain: Domain) : Scale {
   if (type === 'linear') {
     return scaleLinear().domain(domain);
   }
@@ -35,7 +35,7 @@ export function createScale(type: string, domain: Domain) : D3Scale {
 /**
  * Creates an instance of a differential plot based on config
  */
-function createDifferentialPlot(config: PlotConfig, trackScale: D3Scale) : DifferentialPlot {
+function createDifferentialPlot(config: PlotConfig, trackScale: Scale) : DifferentialPlot {
   const options = patchPlotOptions(config.options) as DifferentialPlotOptions;
   options.legendRows = 2;
   const p = new DifferentialPlot(
@@ -56,10 +56,11 @@ function createDifferentialPlot(config: PlotConfig, trackScale: D3Scale) : Diffe
 /**
  * Returns a plot creator function for a specified plot type
  */
-function createPlotType(PlotType: { new(id: string|number, options: PlotOptions): Plot }) : PlotCreatorFunction {
+export function createPlotType(PlotType: { new(id: string|number, options: PlotOptions): Plot }) : PlotCreatorFunction {
   return (config, trackScale) => {
     const options = {
       legendRows: 1,
+      filterToScale: true,
       dataAccessor: d => d,
       ...patchPlotOptions(config.options),
     };

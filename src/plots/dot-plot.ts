@@ -1,5 +1,5 @@
 import Plot from './plot';
-import { D3Scale } from '../common/interfaces';
+import { Scale } from '../common/interfaces';
 import { PlotData, DotPlotOptions } from './interfaces';
 import { ScaleHelper } from '../utils';
 
@@ -8,13 +8,13 @@ import { ScaleHelper } from '../utils';
  */
 export default class DotPlot extends Plot {
   options: DotPlotOptions;
-  scale: D3Scale;
+  scale: Scale;
   data: PlotData;
 
   /**
    * Renders dot plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: D3Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
     const {
       scale: xscale,
       data: plotdata,

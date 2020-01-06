@@ -1,9 +1,8 @@
-
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper, debouncer, DebounceFunction, DataHelper } from '../../utils';
 import { Plot } from '../../plots';
-import { D3Scale, Scale } from '../../common/interfaces';
+import { Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 import { ScaleHandlerTicks } from '../../scale-handlers';
@@ -19,17 +18,7 @@ const defaultOptions = {
  * Updates all plots with data by triggering each plot's data accessor function
  */
 function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
-  plots.forEach(p => {
-    if (typeof p.options.dataAccessor !== 'function') {
-      throw Error(`Plot '${p.id}' does not have a data accessor configured`);
-    }
-    let plotData = p.options.dataAccessor(data);
-    if (p.options.filterToScale) {
-      const filterOverlapFactor = p.options.filterOverlapFactor || 0.5;
-      plotData = DataHelper.filterData(plotData, scale.domain(), filterOverlapFactor);
-    }
-    p.setData(plotData);
-  });
+  plots.forEach(p => p.setData(data, scale));
 }
 
 /**
@@ -38,7 +27,7 @@ function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
  * See ./readme.md in source code for more info
  */
 export default class GraphTrack extends CanvasTrack {
-  trackScale: D3Scale;
+  trackScale: Scale;
   options: GraphTrackOptions;
   plots: Plot[];
   debounce: DebounceFunction;
@@ -197,6 +186,7 @@ export default class GraphTrack extends CanvasTrack {
       plots,
       options: {
         horizontal,
+        scale: scaleType,
       },
     } = this;
 
@@ -209,7 +199,7 @@ export default class GraphTrack extends CanvasTrack {
     let yticks: ScaleHandlerTicks;
 
     if (horizontal) {
-      yticks = vscale.base
+      yticks = scaleType === 'log'
         ? ScaleHelper.createLogTicks(vscale)
         : ScaleHelper.createLinearTicks(vscale);
 
@@ -217,7 +207,7 @@ export default class GraphTrack extends CanvasTrack {
 
       GridHelper.drawGrid(ctx, dscale, xticks, vscale, yticks);
     } else {
-      xticks = vscale.base
+      xticks = scaleType === 'log'
         ? ScaleHelper.createLogTicks(vscale)
         : ScaleHelper.createLinearTicks(vscale);
 

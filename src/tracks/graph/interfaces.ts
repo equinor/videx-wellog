@@ -1,9 +1,9 @@
 import { TrackOptions } from '../interfaces';
 import { PlotOptions } from '../../plots/interfaces';
-import { D3Scale, Domain } from '../../common/interfaces';
+import { Scale, Domain } from '../../common/interfaces';
 import { Plot } from '../../plots';
 
-export type PlotCreatorFunction = (config: PlotConfig, trackScale: D3Scale) => Plot;
+export type PlotCreatorFunction = (config: PlotConfig, trackScale: Scale) => Plot;
 
 /**
  * Config object used to define a plot in the graph track options
@@ -63,7 +63,7 @@ export interface GraphTrackOptions extends TrackOptions {
    * An optional function to transform the track data before being passed to the plots. This
    * is typically used to downsample data at low zoom levels.
    */
-  transform?: (data:any, scale: D3Scale) => Promise<any>,
+  transform?: (data:any, scale: Scale) => Promise<any>,
   /**
    * Set to true to always run data transform function. By default (false), transforms will only run
    * if the domain (zoom level) changes.

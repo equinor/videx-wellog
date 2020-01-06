@@ -53,12 +53,12 @@ export default (delayLoading = false) => {
       abbr: 'noise',
       data: ex2,
       legendConfig: graphLegendConfig,
-      filterToScale: true,
       plots: [{
         id: 'noise',
         type: 'line',
         options: {
           color: 'blue',
+          filterToScale: false,
           dataAccessor: d => d.noise,
           legendInfo: () => ({
             label: 'Plot1',
