@@ -27,10 +27,8 @@ export default class AreaPlot extends Plot {
 
     const useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
 
-    const [dmin, dmax] = xscale.domain();
-    const zeroValue = xscale(
-      useMinAsBase ? Math.min(dmin, dmax) : Math.max(dmin, dmax),
-    );
+    const [rmin, rmax] = xscale.range();
+    const zeroValue = useMinAsBase ? rmin : rmax;
 
     ctx.save();
 
@@ -53,9 +51,7 @@ export default class AreaPlot extends Plot {
     ctx.globalAlpha = options.fillOpacity || 1;
 
     if (options.inverseColor) {
-      const inverseValue = xscale(
-        useMinAsBase ? Math.max(dmin, dmax) : Math.min(dmin, dmax),
-      );
+      const inverseValue = useMinAsBase ? rmax : rmin;
 
       const inverseAreaFunction = area()
         .defined(d => options.defined(d[1], d[0]))
@@ -63,12 +59,12 @@ export default class AreaPlot extends Plot {
 
       if (options.horizontal) {
         inverseAreaFunction
-          .y1(d => Math.max(0, xscale(d[1])))
+          .y1(d => xscale(d[1]))
           .y0(inverseValue)
           .x(d => scale(d[0]));
       } else {
         inverseAreaFunction
-          .x1(d => Math.max(0, xscale(d[1])))
+          .x1(d => xscale(d[1]))
           .x0(inverseValue)
           .y(d => scale(d[0]));
       }

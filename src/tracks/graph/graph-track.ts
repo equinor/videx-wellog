@@ -18,17 +18,7 @@ const defaultOptions = {
  * Updates all plots with data by triggering each plot's data accessor function
  */
 function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
-  plots.forEach(p => {
-    if (typeof p.options.dataAccessor !== 'function') {
-      throw Error(`Plot '${p.id}' does not have a data accessor configured`);
-    }
-    let plotData = p.options.dataAccessor(data);
-    if (p.options.filterToScale) {
-      const filterOverlapFactor = p.options.filterOverlapFactor || 0.5;
-      plotData = DataHelper.filterData(plotData, scale.domain(), filterOverlapFactor);
-    }
-    p.setData(plotData);
-  });
+  plots.forEach(p => p.setData(data, scale));
 }
 
 /**
