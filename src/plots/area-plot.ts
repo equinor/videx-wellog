@@ -27,7 +27,13 @@ export default class AreaPlot extends Plot {
 
     const useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
 
-    const [rmin, rmax] = xscale.range();
+    const [d0, d1] = xscale.domain();
+    const dmin = Math.min(d0, d1);
+    const dmax = Math.max(d0, d1);
+
+    const rmin = xscale(dmin);
+    const rmax = xscale(dmax);
+
     const zeroValue = useMinAsBase ? rmin : rmax;
 
     ctx.save();
