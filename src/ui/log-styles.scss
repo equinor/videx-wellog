@@ -48,6 +48,15 @@ $plot_title_bg: transparent;
   .track:last-child {
     border-right: none;
   }
+  .track .error {
+    background: repeating-linear-gradient(
+      -45deg,
+      #f99,
+      #f99 10px,
+      #fff 10px,
+      #fff 20px
+    );
+  }
   .overlay {
     pointer-events: auto;
     min-height: 0;

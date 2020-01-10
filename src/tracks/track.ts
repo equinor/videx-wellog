@@ -51,6 +51,7 @@ export default abstract class Track {
     this.onUpdate = this.onUpdate.bind(this);
     this.refresh = this.refresh.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.onError = this.onError.bind(this);
   }
 
   /**
