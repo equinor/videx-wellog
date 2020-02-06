@@ -36,8 +36,12 @@ export function createScale(type: string, domain: Domain) : Scale {
  * Creates an instance of a differential plot based on config
  */
 function createDifferentialPlot(config: PlotConfig, trackScale: Scale) : DifferentialPlot {
-  const options = patchPlotOptions(config.options) as DifferentialPlotOptions;
-  options.legendRows = 2;
+  const options: DifferentialPlotOptions = {
+    legendRows: 2,
+    filterToScale: true,
+    ...patchPlotOptions(config.options),
+  };
+
   const p = new DifferentialPlot(
     config.id,
     options,

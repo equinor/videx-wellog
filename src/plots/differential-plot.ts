@@ -2,18 +2,9 @@ import { line, area } from 'd3';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';
-import { PlotData, DifferentialPlotOptions } from './interfaces';
+import { PlotData, DifferentialPlotOptions, DifferentialPlotData } from './interfaces';
 import { Scale, Triplet, Range } from '../common/interfaces';
 
-function findExtent(data, scale1, scale2) {
-  return data.reduce((ext, d) => {
-    const a = scale1(d[1]);
-    const b = scale2(d[2]);
-    ext[0] = Math.min(a, b, ext[0]);
-    ext[1] = Math.max(a, b, ext[1]);
-    return ext;
-  }, [+Infinity, -Infinity]);
-}
 
 /**
  * Differential plot
@@ -23,7 +14,7 @@ export default class DifferentialPlot extends Plot {
   scale2: Scale;
   options: DifferentialPlotOptions;
   data: [PlotData, PlotData];
-
+  extent: [number, number];
   constructor(id : string | number, options : DifferentialPlotOptions = {}) {
     const opts: DifferentialPlotOptions = {
       serie1: {
@@ -144,14 +135,28 @@ export default class DifferentialPlot extends Plot {
 
     if (plotdata.length !== 2 || !xscale1 || !xscale2 || hidden) return;
 
-    const merged = DataHelper.mergeDataSeries(plotdata[0] || [], plotdata[1] || []);
+    const l = Math.max(plotdata[0].length, plotdata[1].length);
+    const scaleddata = [[], []];
+    let min = +Infinity;
+    let max = -Infinity;
+    for (let i = 0; i < l; i++) {
+      const a = plotdata[0][i];
+      const b = plotdata[1][i];
+      if (a) {
+        scaleddata[0][i] = def(a[1], a[0]) ? [scale(a[0]), xscale1(a[1])] : [scale(a[0]), a[1]];
+        if (scaleddata[0][i][1] < min) min = scaleddata[0][i][1];
+        if (scaleddata[0][i][1] > max) max = scaleddata[0][i][1];
+      }
+      if (b) {
+        scaleddata[1][i] = def(b[1], b[0]) ? [scale(b[0]), xscale2(b[1])] : [scale(b[0]), b[1]];
+        if (scaleddata[1][i][1] < min) min = scaleddata[1][i][1];
+        if (scaleddata[1][i][1] > max) max = scaleddata[1][i][1];
+      }
+    }
 
-    const [min, max] = findExtent(merged, xscale1, xscale2);
+    const merged = DataHelper.mergeDataSeries(scaleddata[0] || [], scaleddata[1] || []);
 
     // render correlation areas
-    ctx.save();
-    ctx.globalAlpha = fillOpacity || 0.5;
-
     const areaFunction1 = area<Triplet<number>>().context(ctx);
     const areaFunction2 = area<Triplet<number>>().context(ctx);
 
@@ -162,38 +167,39 @@ export default class DifferentialPlot extends Plot {
             && def(d[2], d[0])
         )
         .y0(max)
-        .y1(d => xscale1(d[1]))
-        .x(d => scale(d[0]));
+        .y1(d => d[1])
+        .x(d => d[0]);
 
       areaFunction2
         .defined(
-          (d:number[]) => def(d[1], d[0])
+          d => def(d[1], d[0])
             && def(d[2], d[0])
         )
         .y0(min)
-        .y1((d:number[]) => xscale2(d[2]))
-        .x((d:number[]) => scale(d[0]));
+        .y1(d => d[2])
+        .x(d => d[0]);
     } else {
       areaFunction1
         .defined(
           d => def(d[1], d[0])
-            && def(d[2], def[1])
+            && def(d[2], d[0])
         )
         .x0(min)
-        .x1(d => xscale1(d[1]))
-        .y(d => scale(d[0]));
+        .x1(d => d[1])
+        .y(d => d[0]);
 
       areaFunction2
         .defined(
-          (d:number[]) => def(d[1], d[0])
-          && def(d[2], d[0])
+          d => def(d[1], d[0])
+            && def(d[2], d[0])
         )
         .x0(max)
-        .x1((d:number[]) => xscale2(d[2]))
-        .y((d:number[]) => scale(d[0]));
+        .x1(d => d[2])
+        .y(d => d[0]);
     }
 
     ctx.save();
+    ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
     areaFunction2(merged);
     ctx.clip();
@@ -213,6 +219,7 @@ export default class DifferentialPlot extends Plot {
     }
 
     ctx.save();
+    ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
     areaFunction1(merged);
     ctx.clip();
@@ -224,21 +231,20 @@ export default class DifferentialPlot extends Plot {
     ctx.restore();
 
     // render line series
-
-    ctx.globalAlpha = 1;
-
     const lineFunction1 = line()
       .defined(d => def(d[1], d[0]))
       .context(ctx);
 
     if (horizontal) {
-      lineFunction1.y(d => xscale1(d[1])).x(d => scale(d[0]));
+      lineFunction1.y(d => d[1]).x(d => d[0]);
     } else {
-      lineFunction1.x(d => xscale1(d[1])).y(d => scale(d[0]));
+      lineFunction1.x(d => d[1]).y(d => d[0]);
     }
 
+    ctx.save();
+    ctx.globalAlpha = 1;
     ctx.beginPath();
-    lineFunction1(plotdata[0]);
+    lineFunction1(scaleddata[0]);
     ctx.lineWidth = serie1.lineWidth || 1;
     ctx.strokeStyle = serie1.color || 'red';
     ctx.stroke();
@@ -248,13 +254,13 @@ export default class DifferentialPlot extends Plot {
       .context(ctx);
 
     if (horizontal) {
-      lineFunction2.y(d => xscale2(d[1])).x(d => scale(d[0]));
+      lineFunction2.y(d => d[1]).x(d => d[0]);
     } else {
-      lineFunction2.x(d => xscale2(d[1])).y(d => scale(d[0]));
+      lineFunction2.x(d => d[1]).y(d => d[0]);
     }
 
     ctx.beginPath();
-    lineFunction2(plotdata[1]);
+    lineFunction2(scaleddata[1]);
     ctx.lineWidth = serie2.lineWidth || 1;
     ctx.strokeStyle = serie2.color || 'blue';
     ctx.stroke();
