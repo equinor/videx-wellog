@@ -1,5 +1,6 @@
 import { PlotData, DifferentialPlotData } from '../plots/interfaces';
 import { Scale, Domain, Tuplet } from '../common/interfaces';
+import { ScaleHelper } from '.';
 
 export type ReducerFunction = (data: PlotData) => Tuplet<number>[];
 
@@ -195,31 +196,19 @@ export default class DataHelper {
    */
   static downsample(datapoints: PlotData, scale: Scale, reducer: ReducerFunction = DataHelper.minmax) : PlotData {
     if (datapoints.length < 10) return datapoints;
-    const threshold = 4;
+    const ratio = ScaleHelper.getDomainRatio(scale);
     const lastIndex = datapoints.length - 1;
     const firstIndex = DataHelper.findNextDefined(datapoints);
     const first = datapoints[firstIndex];
     const last = datapoints[lastIndex];
     const reduced = [];
-    let l = DataHelper.findNextDefined(datapoints, firstIndex + 1);
-    if (l === -1) {
-      return [first, last];
-    }
-    if (l > firstIndex + 1 && Number.isFinite(first[1])) {
-      reduced.push(datapoints[l - 1]);
-    }
+    let l = firstIndex + 1;
     let r = l + 1;
-    let y = scale(datapoints[l][0]);
-    let target = scale.invert(++y);
     while (r <= lastIndex) {
       const rp = datapoints[r];
       const isdef = Number.isFinite(rp[1]);
-      if (!isdef || rp[0] > target || r === lastIndex) {
+      if (!isdef || rp[0] - datapoints[l][0] > ratio || r === lastIndex) {
         const segment = r - l > 0 ? datapoints.slice(l, r) : [];
-        // abort if the segment size becomes too small, according to threshold value
-        if (isdef && segment.length <= threshold && datapoints.length - l > threshold) {
-          return datapoints;
-        }
         if (segment.length === 1) {
           reduced.push(segment[0]);
         } else if (segment.length !== 0) {
@@ -232,7 +221,6 @@ export default class DataHelper {
           l = r;
         }
         r = l + 1;
-        target = scale.invert(++y);
       } else {
         r++;
       }
@@ -270,16 +258,26 @@ export default class DataHelper {
         md = arr1[i][0];
         let rv = 0;
         let rn = 0;
+        while (arr2[j][0] > md && i < arr1.length) {
+          if (j > 0) {
+            j--;
+          } else {
+            res[n++] = [md, arr1[i][1], null];
+            md = arr1[++i][0];
+          }
+        }
         while (j < arr2.length && arr2[j][0] <= md) {
           if (arr2[j][1] === null) {
-            res[n++] = [arr2[j++][0], arr1[i][1], null];
+            res[n++] = [arr2[j++][0], arr1[i][1], arr2[j][1]];
             break;
           }
           rv += arr2[j][1];
           rn++;
           j++;
         }
-        res[n++] = [md, arr1[i][1], rn > 0 ? rv / rn : null];
+        if (rn > 0) {
+          res[n++] = [md, arr1[i][1], rv / rn];
+        }
         i++;
       }
 

@@ -215,7 +215,7 @@ export default class GraphTrack extends CanvasTrack {
 
       GridHelper.drawGrid(ctx, vscale, xticks, dscale, yticks);
     }
-    plots.forEach(plot => plot.plot(ctx, dscale));
     ctx.restore();
+    plots.forEach(plot => plot.plot(ctx, dscale));
   }
 }
