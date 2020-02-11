@@ -1,6 +1,6 @@
 import { PlotData, DifferentialPlotData } from '../plots/interfaces';
 import { Scale, Domain, Tuplet } from '../common/interfaces';
-import { ScaleHelper } from '.';
+import ScaleHelper from './scale-helper';
 
 export type ReducerFunction = (data: PlotData) => Tuplet<number>[];
 
@@ -219,6 +219,9 @@ export default class DataHelper {
           l = DataHelper.findNextDefined(datapoints, r + 1);
         } else {
           l = r;
+        }
+        if (l === -1) {
+          break;
         }
         r = l + 1;
       } else {
