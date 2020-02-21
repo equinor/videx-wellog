@@ -83,6 +83,7 @@ export default class LogController {
     this.onMount = this.onMount.bind(this);
     this.onUnmount = this.onUnmount.bind(this);
     this.rescale = this.rescale.bind(this);
+    this.refresh = this.refresh.bind(this);
     this.zoomTo = this.zoomTo.bind(this);
     this.zoomed = this.zoomed.bind(this);
     this.adjustZoomTransform = this.adjustZoomTransform.bind(this);
@@ -255,7 +256,7 @@ export default class LogController {
     }
 
     if (bounds.span !== oldBounds.span || this._trackHeight !== oldTrackHeight) {
-      this.debounce(this.updateTracks);
+      this.updateTracks();
     }
   }
 
@@ -309,6 +310,14 @@ export default class LogController {
         });
       });
     });
+  }
+
+  /**
+   * Force a redraw
+   */
+  public refresh() : void {
+    this.updateTracks();
+    this.rescale();
   }
 
   /**
