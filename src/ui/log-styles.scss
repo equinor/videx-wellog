@@ -43,6 +43,9 @@ $plot_title_bg: transparent;
     .track-container {
       flex: 1 1 auto;
       overflow: hidden;
+      canvas,svg {
+        overflow: hidden;
+      }
     }
   }
   .track:last-child {
