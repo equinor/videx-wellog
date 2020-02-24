@@ -245,12 +245,12 @@ export default class DataHelper {
       let j = 0;
 
       // fill in top if series are not starting at the same depth
-      while (md > arr1[0][0]) {
+      while (md > arr1[0][0] && j < arr2.length) {
         md = arr2[j][0];
         res[n++] = [md, null, arr2[j][1]];
         j++;
       }
-      while (md > arr2[0][0]) {
+      while (md > arr2[0][0] && i < arr1.length) {
         md = arr1[i][0];
         res[n++] = [md, arr1[i][1], null];
         i++;
@@ -271,7 +271,7 @@ export default class DataHelper {
         }
         while (j < arr2.length && arr2[j][0] <= md) {
           if (arr2[j][1] === null) {
-            res[n++] = [arr2[j++][0], arr1[i][1], arr2[j][1]];
+            res[n++] = [arr2[j][0], arr1[i][1], arr2[j][1]];
             break;
           }
           rv += arr2[j][1];
