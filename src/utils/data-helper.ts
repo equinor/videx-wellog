@@ -272,6 +272,7 @@ export default class DataHelper {
         while (j < arr2.length && arr2[j][0] <= md) {
           if (arr2[j][1] === null) {
             res[n++] = [arr2[j][0], arr1[i][1], arr2[j][1]];
+            j++;
             break;
           }
           rv += arr2[j][1];
