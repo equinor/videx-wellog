@@ -583,8 +583,11 @@ export default class LogController {
       .transition()
       .duration(this.options.transitionDuration)
       .style('flex', '0 0 0%')
-      .on('end', () => this.debounce(this.postUpdateTracks))
-      .remove();
+      .end()
+      .finally(() => {
+        selection.remove();
+        this.debounce(this.postUpdateTracks);
+      });
 
     if (this.options.onTrackExit) {
       this.options.onTrackExit();
@@ -663,7 +666,8 @@ export default class LogController {
       .transition()
       .duration(this.options.transitionDuration)
       .style('flex', d => `${d.options.width}`)
-      .on('end', () => this.debounce(this.postUpdateTracks));
+      .end()
+      .finally(() => this.debounce(this.postUpdateTracks));
   }
 
   /**
