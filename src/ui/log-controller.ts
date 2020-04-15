@@ -584,6 +584,7 @@ export default class LogController {
       .duration(this.options.transitionDuration)
       .style('flex', '0 0 0%')
       .end()
+      .catch(() => ({})) // happens on interrupt
       .finally(() => {
         selection.remove();
         this.debounce(this.postUpdateTracks);
@@ -667,6 +668,7 @@ export default class LogController {
       .duration(this.options.transitionDuration)
       .style('flex', d => `${d.options.width}`)
       .end()
+      .catch(() => ({})) // happens on interrupt
       .finally(() => this.debounce(this.postUpdateTracks));
   }
 
