@@ -553,19 +553,16 @@ export default class LogController {
       }
     } = this;
 
-    container.selectAll('.track').each(function updateTrack(d) {
+    container.selectAll('.track').each(d => {
       if (d.onUpdate) {
-        const elm = this.querySelector('.track-container');
-        window.requestAnimationFrame(() => {
-          if (!d.isMounted) return;
-          d.onUpdate({
-            elm,
-            scale: scaleHandler.dataScale,
-          });
-          if (d.options.legendConfig && showLegend) {
-            updateLegend(d.id);
-          }
+        if (!d.isMounted || d.elm.clientWidth === 0) return;
+        d.onUpdate({
+          elm: d.elm,
+          scale: scaleHandler.dataScale,
         });
+        if (d.options.legendConfig && showLegend) {
+          updateLegend(d.id);
+        }
       }
     });
 
