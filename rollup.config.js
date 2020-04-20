@@ -84,7 +84,7 @@ export default [
         plugins: [
           autoprefixer,
         ],
-        extract: true,
+        extract: false,
         extensions: ['.scss', '.css'],
       }),
       copy({
