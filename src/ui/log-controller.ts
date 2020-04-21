@@ -62,6 +62,8 @@ export default class LogController {
   private _scaleHandler: ScaleHandler;
   private _observer: ResizeObserver;
 
+  private _deferredUpdate: any = null;
+
   constructor(options: LogControllerOptions = {}) {
     this.options = {
       ...defaultOptions,
@@ -256,7 +258,7 @@ export default class LogController {
     }
 
     if (bounds.span !== oldBounds.span || this._trackHeight !== oldTrackHeight) {
-      this.updateTracks();
+      this.debounce(this.updateTracks);
     }
   }
 
@@ -334,8 +336,6 @@ export default class LogController {
     } = this;
 
     const selection = container.selectAll('.track').data(tracks, t => t.id);
-
-    selection.interrupt();
 
     const exit = selection.exit();
     const enter = selection.enter();
@@ -553,20 +553,34 @@ export default class LogController {
       }
     } = this;
 
-    container.selectAll('.track').each(d => {
-      if (d.onUpdate) {
-        if (!d.isMounted || d.elm.clientWidth === 0) return;
-        d.onUpdate({
-          elm: d.elm,
-          scale: scaleHandler.dataScale,
-        });
-        if (d.options.legendConfig && showLegend) {
-          updateLegend(d.id);
-        }
-      }
-    });
+    if (container.node().clientWidth === 0) return;
 
-    if (showTitles) this.adjustTrackTitles();
+    if (this.tracks && this.tracks.some(d => d.elm.clientWidth > 0)) {
+      this.tracks.forEach(track => {
+        const elm = track.elm;
+        if (track.onUpdate) {
+          if (!track.isMounted) return;
+          track.onUpdate({
+            elm,
+            scale: scaleHandler.dataScale,
+          });
+          if (track.options.legendConfig && showLegend) {
+            updateLegend(track.id);
+          }
+        }
+      });
+      if (showTitles) this.adjustTrackTitles();
+    } else {
+      // if all track elements have a zero width, then this function call
+      // needs to be posponed.
+      if (this._deferredUpdate) {
+        clearTimeout(this._deferredUpdate);
+      }
+      this._deferredUpdate = setTimeout(() => {
+        this._deferredUpdate = null;
+        this.postUpdateTracks();
+      }, 200);
+    }
   }
 
   /**
@@ -577,6 +591,7 @@ export default class LogController {
     selection.each((d) => d.onUnmount && d.onUnmount());
 
     selection
+      .interrupt()
       .transition()
       .duration(this.options.transitionDuration)
       .style('flex', '0 0 0%')
@@ -661,6 +676,7 @@ export default class LogController {
     });
 
     newtracks
+      .interrupt()
       .transition()
       .duration(this.options.transitionDuration)
       .style('flex', d => `${d.options.width}`)
@@ -687,7 +703,7 @@ export default class LogController {
 
     const sizeAttr = horizontal ? 'width' : 'height';
 
-    selection.style('flex', d => `${d.options.width}`);
+    selection.interrupt().style('flex', d => `${d.options.width}`);
 
     if (showTitles) {
       setStyles(selection.select('.track-title'), {
