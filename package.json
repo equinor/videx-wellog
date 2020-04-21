@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@equinor/videx-wellog",
-  "version": "0.2.12-alpha",
+  "version": "0.2.13-alpha",
   "license": "MIT",
   "description": "Visualisation components for wellbore log data",
   "repository": "https://github.com/equinor/videx-wellog",
@@ -52,7 +52,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "d3": "^5.15.1",
+    "d3": "^5.16.0",
     "resize-observer-polyfill": "^1.5.1"
   },
   "scripts": {
