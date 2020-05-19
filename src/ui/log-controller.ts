@@ -555,7 +555,7 @@ export default class LogController {
 
     if (container.node().clientWidth === 0) return;
 
-    if (this.tracks && this.tracks.some(d => d.elm.clientWidth > 0)) {
+    if (this.tracks && this.tracks.some(d => d?.elm?.clientWidth > 0)) {
       this.tracks.forEach(track => {
         const elm = track.elm;
         if (track.onUpdate) {
