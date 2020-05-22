@@ -16,7 +16,7 @@
     "@storybook/preset-typescript": "^1.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "react-docgen-typescript-loader": "^3.6.0",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
