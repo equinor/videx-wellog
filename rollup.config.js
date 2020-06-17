@@ -76,7 +76,7 @@ export default [
   {
     input: 'src/styles.scss',
     output: {
-      file: 'dist/styles/styles.css',
+      file: 'dist/styles/styles.js',
       format: 'es',
     },
     plugins: [
@@ -84,7 +84,7 @@ export default [
         plugins: [
           autoprefixer,
         ],
-        extract: false,
+        extract: true,
         extensions: ['.scss', '.css'],
       }),
       copy({
