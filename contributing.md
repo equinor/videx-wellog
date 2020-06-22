@@ -15,9 +15,3 @@ In general, we follow the "fork-and-pull" Git workflow.
 6. Repeat step 3(3) above
 7. Push your work back up to your fork
 8. Submit a Pull request so that we can review your changes
-
-
-Contact the Videx team for any enquiries or questions you may have at this point.
-
-* **Videx team lead**: Maja Irina Wegmann (mweg@equinor.com)
-* **Videx tech contact**: Brynjulf Bent Risbakken (brisb@equinor.com)
