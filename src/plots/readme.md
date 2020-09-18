@@ -9,6 +9,9 @@ Base class for all plot types. All plots requires an id and a scale for its data
 ## Line Plot
 Plots data as a linear line graph.
 
+## Line-step Plot
+Plots data as a linear stepladder graph.
+
 ## Area Plot
 Plots data as an area graph.
 

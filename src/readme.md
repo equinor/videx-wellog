@@ -17,6 +17,7 @@ Track components are located in the `./tracks` folder:
 * `DualScaleTrack` - scale track supporting two seperate domains. For instance to show MD depth and TVD depth. Requires a `InterpolatedScaleHandler`.
 * `GraphTrack` - supports rendering of multiple deta series. Different graph types are supported, with implementations of the `Plot` class:
   * `LinePlot` - linear line graph
+  * `LineStepPlot` - linear stepladder graph
   * `AreaPlot` - area graph
   * `DotPlot` - discrete points graph
   * `DifferentialPlot` - differential graph, for correlation of two data series.
