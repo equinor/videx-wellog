@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@equinor/videx-wellog</title>
+	<title>@equinor/videx-wellog - v0.3.0</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@equinor/videx-wellog</a>
+					<a href="index.html" class="title">@equinor/videx-wellog - v0.3.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> @equinor/videx-wellog</h1>
+			<h1> @equinor/videx-wellog - v0.3.0</h1>
 		</div>
 	</div>
 </header>
@@ -84,6 +84,7 @@
 					<li><code>DualScaleTrack</code> - scale track supporting two seperate domains. For instance to show MD depth and TVD depth. Requires a <code>InterpolatedScaleHandler</code>.</li>
 					<li><code>GraphTrack</code> - supports rendering of multiple deta series. Different graph types are supported, with implementations of the <code>Plot</code> class:<ul>
 							<li><code>LinePlot</code> - linear line graph</li>
+							<li><code>LineStepPlot</code> - linear stepladder graph</li>
 							<li><code>AreaPlot</code> - area graph</li>
 							<li><code>DotPlot</code> - discrete points graph</li>
 							<li><code>DifferentialPlot</code> - differential graph, for correlation of two data series.</li>
@@ -142,6 +143,9 @@
 						<a href="classes/lineplot.html" class="tsd-kind-icon">Line<wbr>Plot</a>
 					</li>
 					<li class=" tsd-kind-class">
+						<a href="classes/linestepplot.html" class="tsd-kind-icon">Line<wbr>Step<wbr>Plot</a>
+					</li>
+					<li class=" tsd-kind-class">
 						<a href="classes/logcontroller.html" class="tsd-kind-icon">Log<wbr>Controller</a>
 					</li>
 					<li class=" tsd-kind-class">
@@ -155,6 +159,9 @@
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/scaletrack.html" class="tsd-kind-icon">Scale<wbr>Track</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/stepcustom.html" class="tsd-kind-icon">Step<wbr>Custom</a>
 					</li>
 					<li class=" tsd-kind-class">
 						<a href="classes/svgtrack.html" class="tsd-kind-icon">Svg<wbr>Track</a>
@@ -388,9 +395,6 @@
 						<a href="globals.html#debouncer" class="tsd-kind-icon">debouncer</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
-						<a href="globals.html#findextent" class="tsd-kind-icon">find<wbr>Extent</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#getgraphtracklegendrows" class="tsd-kind-icon">get<wbr>Graph<wbr>Track<wbr>Legend<wbr>Rows</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -424,6 +428,9 @@
 						<a href="globals.html#renderlineplotlegend" class="tsd-kind-icon">render<wbr>Line<wbr>Plot<wbr>Legend</a>
 					</li>
 					<li class=" tsd-kind-function">
+						<a href="globals.html#renderlinestepplotlegend" class="tsd-kind-icon">render<wbr>Line<wbr>Step<wbr>Plot<wbr>Legend</a>
+					</li>
+					<li class=" tsd-kind-function">
 						<a href="globals.html#rendertextlabels" class="tsd-kind-icon">render<wbr>Text<wbr>Labels</a>
 					</li>
 					<li class=" tsd-kind-function">
@@ -443,6 +450,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="globals.html#setstyles" class="tsd-kind-icon">set<wbr>Styles</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#stepcustom" class="tsd-kind-icon">step<wbr>Custom</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-not-exported">
 						<a href="globals.html#updatelegendrows" class="tsd-kind-icon">update<wbr>Legend<wbr>Rows</a>
