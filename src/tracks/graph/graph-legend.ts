@@ -4,9 +4,16 @@ import {
   renderAreaPlotLegend,
   renderDifferentialPlotLegend,
   renderDotPlotLegend,
+  renderLineStepPlotLegend,
 } from '../../plots/legend';
 import LegendHelper, { LegendBounds } from '../../utils/legend-helper';
-import { LinePlot, AreaPlot, DotPlot, DifferentialPlot } from '../../plots';
+import {
+  LinePlot,
+  AreaPlot,
+  DotPlot,
+  DifferentialPlot,
+  LineStepPlot,
+} from '../../plots';
 import GraphTrack from './graph-track';
 import { D3Selection } from '../../common/interfaces';
 
@@ -70,6 +77,8 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
       renderDotPlotLegend(g, rowBounds, legendInfo, plot);
     } else if (plot instanceof DifferentialPlot) {
       renderDifferentialPlotLegend(g, rowBounds, legendInfo, plot);
+    } else if (plot instanceof LineStepPlot) {
+      renderLineStepPlotLegend(g, rowBounds, legendInfo, plot);
     }
   });
 }

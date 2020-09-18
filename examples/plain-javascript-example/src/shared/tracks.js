@@ -67,7 +67,7 @@ export default (delayLoading = false) => {
         },
       }, {
         id: 'more_noise',
-        type: 'line',
+        type: 'linestep',
         options: {
           scale: 'linear',
           domain: [0, 40],

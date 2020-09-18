@@ -4,6 +4,7 @@ import {
   AreaPlot,
   DotPlot,
   DifferentialPlot,
+  LineStepPlot,
   Plot,
 } from '../../plots';
 import { Scale, Domain } from '../../common/interfaces';
@@ -91,4 +92,5 @@ export const plotFactory: PlotFactory = {
   area: createPlotType(AreaPlot),
   dot: createPlotType(DotPlot),
   differential: createDifferentialPlot,
+  linestep: createPlotType(LineStepPlot),
 };
