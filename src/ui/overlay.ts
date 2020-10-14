@@ -13,6 +13,25 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
 
   const source = overlay.elm.node();
 
+  overlay.elm.on('click', function overlayTrack() {
+    if (!overlay.enabled) return;
+    const [mx, my] = mouse(this);
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+
+      if (ops && ops.onClick) {
+        requestAnimationFrame(() => ops.onClick({
+          x: mx,
+          y: my,
+          target,
+          source,
+          caller,
+        }));
+      }
+    });
+  });
+
   overlay.elm.on('mousemove', function overlayTrack() {
     if (!overlay.enabled) return;
 
