@@ -38,6 +38,18 @@ function addRubberbandOverlay(instance) {
 
 function addReadoutOverlay(instance) {
   const elm = instance.overlay.create('depth', {
+    onClick: event => {
+      const {
+        target,
+        caller,
+        y,
+      } = event;
+      const md = caller.scale.invert(y);
+      target.textContent = Number.isFinite(md)
+        ? `Pinned MD: ${md.toFixed(1)}`
+        : '-';
+      target.style.visibility = 'visible';
+    },
     onMouseMove: event => {
       const {
         target,
@@ -70,6 +82,34 @@ function addReadoutOverlay(instance) {
   elm.style.bottom = '5px';
 }
 
+function addPinnedValueOverlay(instance) {
+  const rubberBandSize = 9;
+  const offset = (rubberBandSize - 1) / 2;
+  const rbelm = instance.overlay.create('pinned', {
+    onClick: event => {
+      const { y } = event;
+      event.target.style.top = `${y - (offset + 0.5)}px`;
+      event.target.style.visibility = 'visible';
+    },
+    onMouseExit: event => {
+      event.target.style.visibility = 'hidden';
+    }
+  });
+
+  const rb = select(rbelm).classed('pinned', true)
+    .style('height', `${rubberBandSize}px`)
+    .style('background-color', 'rgba(0,0,0,0.1)')
+    .style('position', 'absolute')
+    .style('width', '100%')
+    .style('visibility', 'hidden');
+
+  rb.append('div')
+    .style('height', '1px')
+    .style('background-color', 'rgba(0,255,0,0.7)')
+    .style('position', 'relative')
+    .style('top', `${offset}px`);
+}
+
 export const wellogComponent = () => {
   const div = document.createElement('div');
   div.className = 'wellog';
@@ -87,6 +127,7 @@ export const wellogComponent = () => {
 
     addReadoutOverlay(log);
     addRubberbandOverlay(log);
+    addPinnedValueOverlay(log);
   });
 
   return div;
