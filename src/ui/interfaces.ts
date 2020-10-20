@@ -27,6 +27,11 @@ export interface OverlayMouseMoveEvent extends OverlayEvent {
   y: number,
 }
 
+export interface OverlayClickEvent extends OverlayEvent {
+  x: number,
+  y: number,
+}
+
 export interface OverlayMouseExitEvent extends OverlayEvent {}
 
 export interface OverlayRescaleEvent extends OverlayEvent {
@@ -36,6 +41,7 @@ export interface OverlayRescaleEvent extends OverlayEvent {
 export interface OverlayCallbacks {
   onMouseMove?(event: OverlayMouseMoveEvent): void,
   onMouseExit?(event: OverlayMouseExitEvent): void,
+  onClick?(event: OverlayClickEvent): void,
   onResize?(event: OverlayResizeEvent) : void,
   onRescale?(event: OverlayRescaleEvent) : void,
 }
