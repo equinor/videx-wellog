@@ -14,12 +14,6 @@ const defaultOptions = {
   plotFactory: defaultPlotFactory,
 };
 
-/**
- * Updates all plots with data by triggering each plot's data accessor function
- */
-function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
-  plots.forEach(p => p.setData(data, scale));
-}
 
 /**
  * An extension to CanvasTrack for rendering plots
@@ -87,7 +81,7 @@ export default class GraphTrack extends CanvasTrack {
    */
   onRescale(trackEvent: OnRescaleEvent) : void {
     super.onRescale(trackEvent);
-    this.debounce(this.prepareData);
+    this.prepareData();
     this.plot();
   }
 
@@ -103,9 +97,11 @@ export default class GraphTrack extends CanvasTrack {
   /**
    * Callback after data loaded, using loadData.
    */
-  onDataLoaded() : void {
+  onDataLoaded(data) : void {
     this._transformCondition = null;
+    this._transformedData = null;
     this.prepareData();
+    this.plot();
   }
 
   /**
@@ -132,34 +128,54 @@ export default class GraphTrack extends CanvasTrack {
 
   /**
    * Execute configured transform function if applicable on the track's data
-   * and update plots with the result
    */
   prepareData() : void {
+    const {
+      data,
+      options,
+      plots,
+      _transformCondition: previousCondition,
+    } = this;
+
+    this.setPlotData(this._transformedData || data);
+
+    if (options.transform) {
+      const currentCondition = this.getCurrentCondition();
+      if (options.alwaysTransform || !previousCondition || previousCondition !== currentCondition) {
+        if (!this._transformedData) {
+          this.updateTransform(currentCondition);
+        } else {
+          this.scheduleUpdateTransform(currentCondition);
+        }
+      }
+    }
+  }
+
+  getCurrentCondition(): number {
+    return Math.round(ScaleHelper.getDomainSpan(this.scale, false) * 10);
+  }
+
+  scheduleUpdateTransform(condition: number) : void {
+    this.debounce(() => this.updateTransform(condition));
+  }
+
+  updateTransform(condition: number) : void {
     const {
       data,
       scale,
       options,
       plot,
-      plots,
       _transformCondition: previousCondition,
     } = this;
-    if (!data) return;
-    if (options.transform) {
-      const currentCondition = Math.round(ScaleHelper.getDomainSpan(scale, false) * 10);
-      this._transformCondition = currentCondition;
-      if (options.alwaysTransform || !previousCondition || previousCondition !== currentCondition) {
-        options.transform(data, scale).then(transformed => {
-          this._transformedData = transformed;
-          setPlotData(plots, transformed, scale);
-          plot();
-        });
+
+    this._transformCondition = condition;
+    options.transform(data, scale).then(transformedData => {
+      if (this._transformCondition === condition) {
+        this._transformedData = transformedData;
+        this.setPlotData(transformedData);
+        plot();
       }
-      setPlotData(plots, this._transformedData || this._data, scale);
-      plot();
-    } else {
-      setPlotData(plots, data, scale);
-      plot();
-    }
+    });
   }
 
   /**
@@ -217,5 +233,12 @@ export default class GraphTrack extends CanvasTrack {
     }
     ctx.restore();
     plots.forEach(plot => plot.plot(ctx, dscale));
+  }
+
+  /**
+   * Updates all plots with data by triggering each plot's data accessor function
+   */
+  setPlotData(data: any) : void {
+    this.plots.forEach(p => p.setData(data, this.scale));
   }
 }

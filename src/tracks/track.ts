@@ -181,6 +181,11 @@ export default abstract class Track {
     }
   }
 
+  clearData() {
+    this._data = null;
+    this.onDataLoaded(null);
+  }
+
   /**
    * Allow triggering of update event without parameters
    */

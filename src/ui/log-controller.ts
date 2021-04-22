@@ -157,7 +157,7 @@ export default class LogController {
 
     if (this.options.showLegend) this.updateLegendRows();
     if (this._initialized) {
-      this.debounce(this.updateTracks);
+      this.updateTracks();
     }
     return this;
   }
@@ -179,7 +179,7 @@ export default class LogController {
     }
 
     if (this._initialized) {
-      this.debounce(this.updateTracks);
+      this.updateTracks();
     }
     return this;
   }
@@ -203,7 +203,7 @@ export default class LogController {
         this.updateLegendRows();
       }
       if (this._initialized) {
-        this.debounce(this.updateTracks);
+        this.updateTracks();
       }
     }
     return this;
@@ -258,7 +258,7 @@ export default class LogController {
     }
 
     if (bounds.span !== oldBounds.span || this._trackHeight !== oldTrackHeight) {
-      this.debounce(this.updateTracks);
+      this.updateTracks();
     }
   }
 
@@ -303,12 +303,13 @@ export default class LogController {
     const transform = zoomTransform(this.zoomHandler.node());
     const scale = this.scaleHandler.dataScale;
     this.tracks.forEach(track => {
-      if (!track.isMounted) return;
+      if (!track.isMounted) {
+        return;
+      }
       requestAnimationFrame(() => {
         track.onRescale({
           scale,
           transform,
-          track,
         });
       });
     });
@@ -346,7 +347,7 @@ export default class LogController {
     selection.call(trackUpdate);
 
     if (exit.empty() && enter.empty()) {
-      debounce(this.postUpdateTracks);
+      this.postUpdateTracks();
     }
 
     return this;
@@ -489,7 +490,7 @@ export default class LogController {
    */
   protected updateLegend(id:(string|number)) : void {
     if (!this.options.showLegend) return;
-    if (this.legends[id]) {
+    if (this.legends && this.legends[id]) {
       const {
         legends,
         _uiScale: uiScale,
@@ -599,7 +600,7 @@ export default class LogController {
       .catch(() => ({})) // happens on interrupt
       .finally(() => {
         selection.remove();
-        this.debounce(this.postUpdateTracks);
+        this.postUpdateTracks();
       });
 
     if (this.options.onTrackExit) {
@@ -682,7 +683,7 @@ export default class LogController {
       .style('flex', d => `${d.options.width}`)
       .end()
       .catch(() => ({})) // happens on interrupt
-      .finally(() => this.debounce(this.postUpdateTracks));
+      .finally(() => this.postUpdateTracks());
   }
 
   /**

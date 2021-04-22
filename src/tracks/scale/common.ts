@@ -217,6 +217,8 @@ export function computeLabelBoundsHorizontal(yscale: Scale) : LabelBounds {
 function onUpdateLegend(elm: D3Selection, bounds: LegendBounds, track: ScaleTrack | DualScaleTrack) : void {
   const lg = select(elm);
 
+  if (!track.extent) return;
+
   const { horizontal, label, abbr } = track.options;
   const [min, max] = track.extent;
   const span = Math.round((max - min) * 2) / 2;
