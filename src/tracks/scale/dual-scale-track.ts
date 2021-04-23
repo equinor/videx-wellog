@@ -40,6 +40,17 @@ export default class DualScaleTrack extends SvgTrack {
     this.createRuler = this.createRuler.bind(this);
   }
 
+  clearData() {
+    this.scaleHandler = null;
+  }
+
+  /**
+   * Allow triggering of update event without parameters
+   */
+  refresh() : void {
+    this.onUpdate({ elm: this.elm, scale: this.scale });
+  }
+
   /**
    * Override of onMount from base class
    */
@@ -121,7 +132,7 @@ export default class DualScaleTrack extends SvgTrack {
 
     const [, max] = xscale.domain();
 
-    const ticks = scaleHandler.ticks(viewMode).major;
+    const ticks = scaleHandler?.ticks(viewMode).major || [];
 
     let data = [];
 
@@ -192,15 +203,15 @@ export default class DualScaleTrack extends SvgTrack {
       scaleHandler,
     } = this;
 
-    if (scaleHandler.mode === viewMode) {
-      return scaleHandler.scale.domain();
+    if (scaleHandler?.mode === viewMode) {
+      return scaleHandler?.scale?.domain();
     }
     if (viewMode === 1) {
-      return scaleHandler.interpolator.reverseInterpolatedDomain(
+      return scaleHandler?.interpolator?.reverseInterpolatedDomain(
         scaleHandler.scale.domain(),
       );
     }
-    return scaleHandler.interpolator.forwardInterpolatedDomain(
+    return scaleHandler?.interpolator?.forwardInterpolatedDomain(
       scaleHandler.scale.domain(),
     );
   }

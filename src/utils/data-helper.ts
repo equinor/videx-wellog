@@ -65,7 +65,7 @@ export default class DataHelper {
   */
   static trimUndefinedValues(datapoints: PlotData) : PlotData {
     let prev = 0;
-    return datapoints.filter(pt => {
+    return datapoints?.filter(pt => {
       let include = true;
       if (pt[1] === null && prev === null) {
         include = false;
@@ -86,7 +86,7 @@ export default class DataHelper {
     const dmin = d0 - overlap;
     const dmax = d1 + overlap;
 
-    return datapoints.filter((pt, i) => {
+    return datapoints?.filter((pt, i) => {
       const within = pt[0] >= dmin && pt[0] <= dmax;
       if (within) return true;
 
@@ -202,6 +202,7 @@ export default class DataHelper {
     const first = datapoints[firstIndex];
     const last = datapoints[lastIndex];
     const reduced = [];
+    reduced.push(first);
     let l = firstIndex + 1;
     let r = l + 1;
     while (r <= lastIndex) {
@@ -228,7 +229,8 @@ export default class DataHelper {
         r++;
       }
     }
-    return [first, ...reduced, last];
+    reduced.push(last);
+    return reduced;
   }
 
   /**

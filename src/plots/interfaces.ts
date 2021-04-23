@@ -61,7 +61,7 @@ export interface PlotOptions {
    */
   horizontal?: boolean;
   /**
-   * @depricated
+   * @deprecated
    * use dataAccessor
    */
   data?: DataAccessorFunction,
