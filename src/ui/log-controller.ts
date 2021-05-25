@@ -357,6 +357,7 @@ export default class LogController {
    * Remove all tracks and update ui
    */
   public reset() : LogController {
+    this.container.selectAll('.track').remove();
     return this.setTracks([]);
   }
 
