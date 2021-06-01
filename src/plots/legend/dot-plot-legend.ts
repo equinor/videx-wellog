@@ -22,8 +22,6 @@ export default function renderDotPlotLegend(
   const { scale, options } = plot;
   const { label, unit } = legendInfo;
 
-  g.selectAll('*').remove();
-
   setProps(g.append('circle'), {
     attrs: {
       cx: cx1,

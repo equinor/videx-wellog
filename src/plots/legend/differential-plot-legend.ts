@@ -35,8 +35,6 @@ export default function renderDifferentialPlotLegend(
     serie2: legend2,
   } = legendInfo;
 
-  g.selectAll('*').remove();
-
   if (legend1 && legend1.show) {
     setAttrs(g.append('rect'), {
       x: left + 2,

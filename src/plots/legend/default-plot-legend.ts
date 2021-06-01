@@ -2,16 +2,16 @@ import { renderBasicPlotLegend } from './common';
 import { D3Selection } from '../../common/interfaces';
 import { LegendInfo } from './interfaces';
 import { LegendBounds } from '../../utils/legend-helper';
-import LineStepPlot from '../line-step-plot';
+import { Plot } from '..';
 
 /**
- * Renders LineStep Plot legend to a SVG group element according to bounds.
+ * Renders Default Plot legend to a SVG group element according to bounds.
  */
-export default function renderLineStepPlotLegend(
+export default function renderDefaultPlotLegend(
   g: D3Selection,
   bounds: LegendBounds,
   legendInfo: LegendInfo,
-  plot: LineStepPlot,
+  plot: Plot,
 ) : void {
   renderBasicPlotLegend(
     g,
