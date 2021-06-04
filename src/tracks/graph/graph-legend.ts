@@ -5,6 +5,7 @@ import {
   renderDifferentialPlotLegend,
   renderDotPlotLegend,
   renderLineStepPlotLegend,
+  renderDefaultPlotLegend,
 } from '../../plots/legend';
 import LegendHelper, { LegendBounds } from '../../utils/legend-helper';
 import {
@@ -38,6 +39,7 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
 
   selection.each(function updateLegendRow(plot) {
     const g = select(this);
+    g.selectAll('*').remove();
     const left = plot.offset * width;
     if (track.options.togglePlotFromLegend) {
       g.style('cursor', 'pointer');
@@ -69,7 +71,9 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
       ? plot.options.legendInfo(track.data)
       : {};
 
-    if (plot instanceof LinePlot) {
+    if (plot.options.renderLegend) {
+      plot.options.renderLegend(g, rowBounds, legendInfo, plot);
+    } else if (plot instanceof LinePlot) {
       renderLinePlotLegend(g, rowBounds, legendInfo, plot);
     } else if (plot instanceof AreaPlot) {
       renderAreaPlotLegend(g, rowBounds, legendInfo, plot);
@@ -79,6 +83,8 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
       renderDifferentialPlotLegend(g, rowBounds, legendInfo, plot);
     } else if (plot instanceof LineStepPlot) {
       renderLineStepPlotLegend(g, rowBounds, legendInfo, plot);
+    } else {
+      renderDefaultPlotLegend(g, rowBounds, legendInfo, plot);
     }
   });
 }

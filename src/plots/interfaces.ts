@@ -49,6 +49,10 @@ export interface PlotOptions {
    */
   domain?: Domain,
   /**
+   * Stroke color
+   */
+  color?: string,
+  /**
    * Set condition for what data to plot. Default is v => v !== null
    */
   defined?: DefinedFunction,

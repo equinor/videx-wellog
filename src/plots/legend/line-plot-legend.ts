@@ -13,7 +13,6 @@ export default function renderLinePlotLegend(
   legendInfo: LegendInfo,
   plot: LinePlot,
 ) : void {
-  g.selectAll('*').remove();
   renderBasicPlotLegend(
     g,
     bounds,

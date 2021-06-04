@@ -18,8 +18,6 @@ export default function renderAreaPlotLegend(g: D3Selection, bounds: LegendBound
   const centerX = left + width / 2;
   const useMinAsBase = plot.options.useMinAsBase === undefined ? true : plot.options.useMinAsBase;
 
-  g.selectAll('*').remove();
-
   if (plot.options.inverseColor) {
     const shadeW = Math.max(0, width - 2);
 
