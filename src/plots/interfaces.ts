@@ -193,4 +193,7 @@ export interface DifferentialPlotOptions extends PlotOptions {
    * Fill opacity for both series
    */
   fillOpacity?: number,
+
+  forceDataUpdateOnToggle?: boolean,
+
 }

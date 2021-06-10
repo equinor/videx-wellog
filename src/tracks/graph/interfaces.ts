@@ -69,4 +69,6 @@ export interface GraphTrackOptions extends TrackOptions {
    * if the domain (zoom level) changes.
    */
   alwaysTransform?: boolean,
+
+  forceDataUpdateOnToggle?: boolean,
 }
