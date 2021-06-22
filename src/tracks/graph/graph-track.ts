@@ -11,6 +11,7 @@ const defaultOptions = {
   scale: 'linear',
   domain: [0, 100],
   togglePlotFromLegend: true,
+  forceDataUpdateOnToggle: false,
   plotFactory: defaultPlotFactory,
 };
 
@@ -150,7 +151,6 @@ export default class GraphTrack extends CanvasTrack {
       }
     }
   }
-
   getCurrentCondition(): number {
     return Math.round(ScaleHelper.getDomainSpan(this.scale, false) * 10);
   }

@@ -21,22 +21,19 @@ import { D3Selection } from '../../common/interfaces';
 /**
  * Function for calculating the number of legend rows required by the track
  */
-function getGraphTrackLegendRows(track: GraphTrack) : number {
+function getGraphTrackLegendRows(track: GraphTrack): number {
   return track.plots.reduce((rows, p) => rows + p.options.legendRows || 0, 0);
 }
 
 /**
  * Updates the selection of legend rows of a graph track
  */
-function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: GraphTrack) : void {
+function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: GraphTrack): void {
   const { horizontal } = track.options;
-
   let posY = bounds.top;
   const width = bounds.width;
-
   const legendRows = getGraphTrackLegendRows(track);
   const legendRowHeight = bounds.height / legendRows;
-
   selection.each(function updateLegendRow(plot) {
     const g = select(this);
     g.selectAll('*').remove();
@@ -45,9 +42,18 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
       g.style('cursor', 'pointer');
       g.append('title').text('Toggle plot on/off');
       g.on('click', () => {
+        // makes sure to toggle correctly
         const nextState = !(plot.options.hidden || false);
         g.attr('opacity', nextState ? 0.25 : 1);
         plot.setOption('hidden', nextState);
+
+
+        // checks toggle option in track-config on plot
+        // only in PLT
+        if (plot.options.forceDataUpdateOnToggle) {
+          track.prepareData();
+        }
+
         track.plot();
       });
     }
@@ -92,7 +98,7 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
 /**
  * Updates the legend section of a graph track
  */
-function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: GraphTrack) : void {
+function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: GraphTrack): void {
   const lg = select(elm);
 
   const g = lg.select('.svg-legend');
