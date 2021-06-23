@@ -75,8 +75,8 @@ export function renderTextLabels(
     });
   }
 
-  const minText = min > 1000 ? `${Math.round(min / 1000)}k` : `${min}`;
-  const maxText = max > 1000 ? `${Math.round(max / 1000)}k` : `${max}`;
+  const minText = (Math.abs(min) > 1000 && min % 1000 === 0) ? `${Math.round(min / 1000)}k` : `${min}`;
+  const maxText = (Math.abs(max) > 1000 && max % 1000 === 0) ? `${Math.round(max / 1000)}k` : `${max}`;
   // domain
   const minDomain = g.append('text').text(minText);
   setProps(minDomain, {
