@@ -90,9 +90,10 @@ export default class DataHelper {
       const within = pt[0] >= dmin && pt[0] <= dmax;
       if (within) return true;
 
-      const prevLessThanMax = (i - 1 >= 0 && datapoints[i - 1][0] < dmax);
-      const nextGreaterThanMin = (i + 1 < datapoints.length && datapoints[i + 1][0] > dmin);
-      return (prevLessThanMax && nextGreaterThanMin);
+      const crossingMin = pt[0] < dmin && i + 1 < datapoints.length && datapoints[i + 1][0] > dmin;
+      const crossingMax = pt[0] > dmax && i - 1 >= 0 && datapoints[i - 1][0] < dmax;
+
+      return crossingMin || crossingMax;
     });
   }
 
