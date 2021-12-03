@@ -44,6 +44,20 @@ describe('DataHelper', () => {
     ]);
   });
 
+  it('should not filter out boundary values within the domain', () => {
+    expect(DataHelper.filterData([[3, 20], [4, 10]], [3.1, 3.9], 0)).to.eql([
+      [3, 20], [4, 10],
+    ]);
+
+    expect(DataHelper.filterData([[3, 20], [4, 10]], [3, 3.9], 0)).to.eql([
+      [3, 20], [4, 10],
+    ]);
+
+    expect(DataHelper.filterData([[3, 20], [4, 10]], [3.1, 4], 0)).to.eql([
+      [3, 20], [4, 10],
+    ]);
+  });
+
   it('should be able to resample data points to a given ratio', () => {
     const data : PlotData = range(0, 10000, 1).map(d => [d, d]);
     expect(DataHelper.resample(data, 1)).to.eql(data);
