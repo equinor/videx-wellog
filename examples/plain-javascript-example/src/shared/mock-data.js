@@ -13,3 +13,31 @@ export const ex3 = {
   sin,
   noise: sin.map(v => [v[0], v[1] * Math.random() + 35]),
 };
+
+export const ex4 = async () => {
+  const formationLength = 10;
+
+  const arr = [];
+  let currentFrom = Math.random() * 100;
+  for (let index = 1; index <= formationLength; index++) {
+    const newTo = currentFrom + Math.random() * 100;
+
+    const name = `Formation ${index}`;
+    const r = Math.random() * 255;
+    const g = Math.random() * 255;
+    const b = Math.random() * 255;
+    const area = {
+      name,
+      to: newTo,
+      from: currentFrom,
+      color: {
+        r,
+        g,
+        b,
+      }
+    };
+    arr.push(area);
+    currentFrom = newTo;
+  }
+  return arr;
+};
