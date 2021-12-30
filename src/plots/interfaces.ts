@@ -47,7 +47,7 @@ export interface PlotOptions {
   /**
    * Y axis (range) for plot data. Default is [0, 100].
    */
-  domain?: Domain,
+  domain?: Domain | Function,
   /**
    * Stroke color
    */
@@ -163,7 +163,7 @@ interface DifferentialPlotSerieOptions {
   /**
    * Y axis (range) for plot data
    */
-  domain?: Domain,
+  domain?: Domain | Function,
   /**
    * Stroke color
    */

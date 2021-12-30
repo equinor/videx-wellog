@@ -18,7 +18,7 @@ export default function renderLinePlotLegend(
     bounds,
     legendInfo.label,
     legendInfo.unit,
-    plot.scale.domain(),
+    plot.scale?.domain() || [0, 1],
     plot.options.color,
   );
 }

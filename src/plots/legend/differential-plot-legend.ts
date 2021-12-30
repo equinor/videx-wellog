@@ -27,8 +27,8 @@ export default function renderDifferentialPlotLegend(
 
 
   const hasTwoLegends = (legendRows === 2 && legend2 != null);
-  const d1 = plot.scale1.domain();
-  const d2 = plot.scale2.domain();
+  const d1 = plot.scale1?.domain() || [0, 1];
+  const d2 = plot.scale2?.domain() || [0, 1];
   const fillOpacity = Math.min(plot.options.fillOpacity + 0.25, 1);
   const centerX = left + width / 2;
   const y1 = top;
