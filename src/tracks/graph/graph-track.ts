@@ -102,6 +102,7 @@ export default class GraphTrack extends CanvasTrack {
     this._transformCondition = null;
     this._transformedData = null;
     this.prepareData();
+    this.updateDynamicScales();
     this.plot();
   }
 
@@ -134,7 +135,6 @@ export default class GraphTrack extends CanvasTrack {
     const {
       data,
       options,
-      plots,
       _transformCondition: previousCondition,
     } = this;
 
@@ -151,6 +151,14 @@ export default class GraphTrack extends CanvasTrack {
       }
     }
   }
+
+  updateDynamicScales(): void {
+    const { plots, data } = this;
+    plots.forEach(plot => {
+      plot.updateDynamicScale(data, this.options);
+    });
+  }
+
   getCurrentCondition(): number {
     return Math.round(ScaleHelper.getDomainSpan(this.scale, false) * 10);
   }

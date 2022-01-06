@@ -21,9 +21,7 @@ export default abstract class Plot {
       ...options,
     };
     this.data = [];
-    this.scale = options.scale
-      ? createScale(options.scale, options.domain || [0, 1])
-      : null;
+    this.scale = options.scale && typeof options.domain !== 'function' ? createScale(options.scale, options.domain || [0, 1]) : null;
     this.setRange = this.setRange.bind(this);
     this.setData = this.setData.bind(this);
   }
@@ -84,6 +82,14 @@ export default abstract class Plot {
       this.setOption(o[0], o[1]);
     });
     return this;
+  }
+
+  updateDynamicScale(data, graphOptions): void {
+    const { options } = this;
+    if (typeof options.domain === 'function') {
+      const domain = options.domain(data);
+      this.scale = createScale(options.scale || graphOptions.scale, domain);
+    }
   }
 
   /**
