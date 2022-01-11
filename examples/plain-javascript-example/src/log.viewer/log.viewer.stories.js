@@ -6,4 +6,6 @@ export * from './log.viewer.dual.scale.track.story';
 export * from './log.viewer.legend.story';
 export * from './log.viewer.horizontal.story';
 export * from './log.viewer.stacked.track.story';
+export * from './log.viewer.cement.track.story';
+export * from './log.viewer.flag.track.story';
 export * from './wellog.component.story';
