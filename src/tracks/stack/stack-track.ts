@@ -115,6 +115,7 @@ export class StackedTrack extends SvgTrack {
       scale: yscale,
       xscale,
       data,
+      options
     } = this;
 
     if (!g) return;
@@ -132,6 +133,7 @@ export class StackedTrack extends SvgTrack {
           yFrom: yscale(d.from),
           yTo: yscale(d.to),
           color: `rgb(${d.color.r},${d.color.g},${d.color.b})`,
+          opacity: d.color.a != null ? d.color.a : 1,
         }));
       const selection = g.selectAll('g.area').data(areaData, (d: TransformedAreaData) => d.name);
 
@@ -150,27 +152,9 @@ export class StackedTrack extends SvgTrack {
           width: xscale(1),
           height: to - from,
           fill: d.color,
+          'fill-opacity': d.opacity,
         });
       });
-
-      setAttrs(selection.select('line.line-top'), {
-        x1: xscale(0.25),
-        x2: xscale(0.75),
-      });
-
-      setAttrs(selection.select('line.line-middle'), (d: TransformedAreaData) => ({
-        x1: xscale(0.5),
-        x2: xscale(0.5),
-        y1: 0,
-        y2: d.yTo - d.yFrom,
-      }));
-
-      setAttrs(selection.select('line.line-bottom'), (d: TransformedAreaData) => ({
-        x1: xscale(0.25),
-        x2: xscale(0.75),
-        y1: d.yTo - d.yFrom,
-        y2: d.yTo - d.yFrom,
-      }));
 
       const newAreas = selection.enter().append('g')
         .classed('area', true)
@@ -192,49 +176,74 @@ export class StackedTrack extends SvgTrack {
           width: xscale(1),
           height: to - from,
           fill: d.color,
+          'fill-opacity': d.opacity,
         });
       });
 
-      const l1 = newAreas.append('line');
-      setAttrs(l1, {
-        x1: xscale(0.25),
-        x2: xscale(0.75),
-        y1: 0,
-        y2: 0,
-        stroke: 'black',
-        class: 'line-top',
-      });
+      if (options.showLines !== false) {
+        setAttrs(selection.select('line.line-top'), {
+          x1: xscale(0.25),
+          x2: xscale(0.75),
+        });
 
-      const l2 = newAreas.append('line');
-      setAttrs(l2, (d: TransformedAreaData) => ({
-        x1: xscale(0.5),
-        x2: xscale(0.5),
-        y1: 0,
-        y2: d.yTo - d.yFrom,
-        stroke: 'black',
-        class: 'line-middle',
-      }));
+        setAttrs(selection.select('line.line-middle'), (d: TransformedAreaData) => ({
+          x1: xscale(0.5),
+          x2: xscale(0.5),
+          y1: 0,
+          y2: d.yTo - d.yFrom,
+        }));
 
-      const l3 = newAreas.append('line');
-      setAttrs(l3, (d: TransformedAreaData) => ({
-        x1: xscale(0.25),
-        x2: xscale(0.75),
-        y1: d.yTo - d.yFrom,
-        y2: d.yTo - d.yFrom,
-        stroke: 'black',
-        class: 'line-bottom',
-      }));
+        setAttrs(selection.select('line.line-bottom'), (d: TransformedAreaData) => ({
+          x1: xscale(0.25),
+          x2: xscale(0.75),
+          y1: d.yTo - d.yFrom,
+          y2: d.yTo - d.yFrom,
+        }));
+
+
+        const l1 = newAreas.append('line');
+        setAttrs(l1, {
+          x1: xscale(0.25),
+          x2: xscale(0.75),
+          y1: 0,
+          y2: 0,
+          stroke: 'black',
+          class: 'line-top',
+        });
+
+        const l2 = newAreas.append('line');
+        setAttrs(l2, (d: TransformedAreaData) => ({
+          x1: xscale(0.5),
+          x2: xscale(0.5),
+          y1: 0,
+          y2: d.yTo - d.yFrom,
+          stroke: 'black',
+          class: 'line-middle',
+        }));
+
+        const l3 = newAreas.append('line');
+        setAttrs(l3, (d: TransformedAreaData) => ({
+          x1: xscale(0.25),
+          x2: xscale(0.75),
+          y1: d.yTo - d.yFrom,
+          y2: d.yTo - d.yFrom,
+          stroke: 'black',
+          class: 'line-bottom',
+        }));
+      }
 
       selection.exit().remove();
 
-      g.selectAll('g.area').each((d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
-        const fg = select(nodes[i]);
-        const offsets = [
-          d.yFrom < 0 ? Math.abs(d.yFrom) : 0,
-          d.yTo > yMax ? d.yTo - yMax : 0,
-        ];
-        plotLabel(fg, d, xscale, offsets);
-      });
+      if (options.showLabels !== false) {
+        g.selectAll('g.area').each((d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
+          const fg = select(nodes[i]);
+          const offsets = [
+            d.yFrom < 0 ? Math.abs(d.yFrom) : 0,
+            d.yTo > yMax ? d.yTo - yMax : 0,
+          ];
+          plotLabel(fg, d, xscale, offsets);
+        });
+      }
     }
   }
 }

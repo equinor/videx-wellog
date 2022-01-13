@@ -7,6 +7,9 @@ interface StackedTrackOptions extends TrackOptions {
   * can pick the data it needs from this value.
   */
  data?: Promise<any> | Function | any,
+
+ showLabels?: boolean,
+ showLines?: boolean,
 }
 
 interface TransformedAreaData {
@@ -25,8 +28,12 @@ interface TransformedAreaData {
   /**
    * Fill color for area
    */
-  color: string,
-}
+   color: string,
+  /**
+   * Opacity for area
+   */
+     opacity?: number,
+  }
 
 interface AreaData {
   /**
@@ -48,6 +55,7 @@ interface AreaData {
     r: number,
     g: number,
     b: number,
+    a?: number,
   },
 }
 
