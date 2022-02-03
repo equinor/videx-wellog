@@ -162,10 +162,10 @@ export default abstract class Track {
     const onSuccess = d => {
       this._data = d;
       if (this.isLoading) this.isLoading = false;
-      if (this.legendUpdate) this.legendUpdate();
       if (this.onDataLoaded) {
         this.onDataLoaded(d);
       }
+      if (this.legendUpdate) this.legendUpdate();
     };
 
     const res = data();

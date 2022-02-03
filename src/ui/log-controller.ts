@@ -181,6 +181,7 @@ export default class LogController {
     if (this._initialized) {
       this.updateTracks();
     }
+
     return this;
   }
 

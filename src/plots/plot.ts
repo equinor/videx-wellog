@@ -12,6 +12,7 @@ export default abstract class Plot {
   options: PlotOptions;
   data: PlotData | any;
   scale: Scale;
+  range: Range;
 
   constructor(id: string|number, options: PlotOptions = {}) {
     this.id = id;
@@ -35,6 +36,7 @@ export default abstract class Plot {
    */
   setRange(range: Range) : Plot {
     if (this.scale) this.scale.range(range);
+    this.range = range;
     return this;
   }
 
@@ -85,10 +87,14 @@ export default abstract class Plot {
   }
 
   updateDynamicScale(data, graphOptions): void {
-    const { options } = this;
+    const { options, range } = this;
     if (typeof options.domain === 'function') {
       const domain = options.domain(data);
       this.scale = createScale(options.scale || graphOptions.scale, domain);
+    }
+
+    if (range) {
+      this.scale.range(range);
     }
   }
 
