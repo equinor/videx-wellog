@@ -36,61 +36,71 @@ export default class AreaPlot extends Plot {
 
     const zeroValue = useMinAsBase ? rmin : rmax;
 
-    ctx.save();
+    let index = 0;
+    const splitted = plotdata.reduce((acc, v) => {
+      if (acc.length > 0 && v[1] === null) {
+        acc[++index] = [];
+      } else {
+        acc[index].push(v);
+      }
+      return acc;
+    }, [[]]);
 
-    const areaFunction = area()
-      .defined(d => options.defined(d[1], d[0]))
-      .context(ctx);
+    splitted.forEach(data => {
+      ctx.save();
 
-    if (options.horizontal) {
-      areaFunction
-        .y1(d => xscale(d[1]))
-        .y0(zeroValue)
-        .x(d => scale(d[0]));
-    } else {
-      areaFunction
-        .x1(d => xscale(d[1]))
-        .x0(zeroValue)
-        .y(d => scale(d[0]));
-    }
-
-    ctx.globalAlpha = options.fillOpacity || 1;
-
-    if (options.inverseColor) {
-      const inverseValue = useMinAsBase ? rmax : rmin;
-
-      const inverseAreaFunction = area()
-        .defined(d => options.defined(d[1], d[0]))
+      const areaFunction = area()
         .context(ctx);
 
       if (options.horizontal) {
-        inverseAreaFunction
+        areaFunction
           .y1(d => xscale(d[1]))
-          .y0(inverseValue)
+          .y0(zeroValue)
           .x(d => scale(d[0]));
       } else {
-        inverseAreaFunction
+        areaFunction
           .x1(d => xscale(d[1]))
-          .x0(inverseValue)
+          .x0(zeroValue)
           .y(d => scale(d[0]));
       }
+
+      ctx.globalAlpha = options.fillOpacity || 1;
+
+      if (options.inverseColor) {
+        const inverseValue = useMinAsBase ? rmax : rmin;
+
+        const inverseAreaFunction = area()
+          .context(ctx);
+
+        if (options.horizontal) {
+          inverseAreaFunction
+            .y1(d => xscale(d[1]))
+            .y0(inverseValue)
+            .x(d => scale(d[0]));
+        } else {
+          inverseAreaFunction
+            .x1(d => xscale(d[1]))
+            .x0(inverseValue)
+            .y(d => scale(d[0]));
+        }
+        ctx.beginPath();
+        inverseAreaFunction(data);
+        ctx.fillStyle = options.inverseColor;
+        ctx.fill();
+      }
+
       ctx.beginPath();
-      inverseAreaFunction(plotdata);
-      ctx.fillStyle = options.inverseColor;
+      areaFunction(data);
+      ctx.lineWidth = options.width;
+
+      ctx.fillStyle = options.fill || options.color;
       ctx.fill();
-    }
 
-    ctx.beginPath();
-    areaFunction(plotdata);
-    ctx.lineWidth = options.width;
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = options.color;
+      ctx.stroke();
 
-    ctx.fillStyle = options.fill || options.color;
-    ctx.fill();
-
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = options.color;
-    ctx.stroke();
-
-    ctx.restore();
+      ctx.restore();
+    });
   }
 }
