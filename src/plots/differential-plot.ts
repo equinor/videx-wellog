@@ -12,6 +12,7 @@ import { Scale, Triplet, Range } from '../common/interfaces';
 export default class DifferentialPlot extends Plot {
   scale1: Scale;
   scale2: Scale;
+  range: Range;
   options: DifferentialPlotOptions;
   data: [PlotData, PlotData];
   extent: [number, number];
@@ -74,6 +75,7 @@ export default class DifferentialPlot extends Plot {
   setRange(range: Range) : DifferentialPlot {
     if (this.scale1) this.scale1.range(range);
     if (this.scale2) this.scale2.range(range);
+    this.range = range;
     return this;
   }
 
@@ -115,15 +117,16 @@ export default class DifferentialPlot extends Plot {
   }
 
   updateDynamicScale(data, graphOptions): void {
-    const { options } = this;
+    const { options, range } = this;
+
     if (typeof options.domain === 'function') {
       const domain = options.domain(data);
-      this.scale = createScale(
+      const scale = createScale(
         options.scale || graphOptions.scale,
         domain,
       );
-      this.scale1 = this.scale;
-      this.scale2 = this.scale;
+      this.scale1 = scale;
+      this.scale2 = scale;
     }
     if (typeof options.serie1.domain === 'function') {
       const domain = options.serie1.domain(data);
@@ -138,6 +141,11 @@ export default class DifferentialPlot extends Plot {
         options.scale || graphOptions.scale,
         domain,
       );
+    }
+
+    if (range) {
+      this.scale1.range(range);
+      this.scale2.range(range);
     }
   }
 
