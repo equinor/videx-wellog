@@ -10,6 +10,7 @@ import { Scale, Triplet, Range } from '../common/interfaces';
  * Differential plot
  */
 export default class DifferentialPlot extends Plot {
+  scale: Scale;
   scale1: Scale;
   scale2: Scale;
   range: Range;
@@ -34,6 +35,8 @@ export default class DifferentialPlot extends Plot {
     this.scale2 = null;
     this.setRange = this.setRange.bind(this);
 
+    const { serie1, serie2 } = options;
+
     if (options.scale && options.domain && typeof options.domain !== 'function') {
       this.scale = createScale(
         options.scale,
@@ -42,16 +45,16 @@ export default class DifferentialPlot extends Plot {
       this.scale1 = this.scale;
       this.scale2 = this.scale;
     }
-    if (options.serie1 && options.serie1.scale && typeof options.serie1.domain !== 'function') {
+    if (serie1?.scale && typeof serie1.domain !== 'function') {
       this.scale1 = createScale(
-        options.serie1.scale,
-        <number[]>options.serie1.domain || [0, 1],
+        serie1.scale,
+        <number[]>serie1.domain || [0, 1],
       );
     }
-    if (options.serie2 && options.serie2.scale && typeof options.serie2.domain !== 'function') {
+    if (serie2?.scale && typeof serie2.domain !== 'function') {
       this.scale2 = createScale(
-        options.serie2.scale,
-        <number[]>options.serie2.domain || [0, 1],
+        serie2.scale,
+        <number[]>serie2.domain || [0, 1],
       );
     }
   }
@@ -121,12 +124,12 @@ export default class DifferentialPlot extends Plot {
 
     if (typeof options.domain === 'function') {
       const domain = options.domain(data);
-      const scale = createScale(
+      this.scale = createScale(
         options.scale || graphOptions.scale,
         domain,
       );
-      this.scale1 = scale;
-      this.scale2 = scale;
+      this.scale1 = this.scale;
+      this.scale2 = this.scale;
     }
     if (typeof options.serie1.domain === 'function') {
       const domain = options.serie1.domain(data);
