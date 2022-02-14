@@ -1,4 +1,3 @@
-
 import { Tuplet, Triplet, Domain } from '../common/interfaces';
 
 /**
@@ -29,7 +28,7 @@ export type DefinedFunction = (y?:number, x?:number) => boolean;
  * @example data => data //default
  * @example data => data.dataSeries[1].dataPoints
  */
-export type DataAccessorFunction = (data: any) => (PlotData|[PlotData, PlotData]|any);
+export type DataAccessorFunction = (data: any, plotOptions?: Map<string | number, PlotOptions>) => (PlotData|[PlotData, PlotData]|any);
 
 /**
  * Base interface for plot options

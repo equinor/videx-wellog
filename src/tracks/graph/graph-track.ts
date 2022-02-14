@@ -1,7 +1,7 @@
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper, debouncer, DebounceFunction, DataHelper } from '../../utils';
-import { Plot } from '../../plots';
+import { Plot, PlotOptions } from '../../plots';
 import { Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
@@ -243,10 +243,14 @@ export default class GraphTrack extends CanvasTrack {
     plots.forEach(plot => plot.plot(ctx, dscale));
   }
 
-  /**
-   * Updates all plots with data by triggering each plot's data accessor function
-   */
+  /** Updates all plots with data by triggering each plot's data accessor function. */
   setPlotData(data: any) : void {
-    this.plots.forEach(p => p.setData(data, this.scale));
+    // Create a map of plot IDs to plot options
+    const plotOptions: Map<string | number, PlotOptions> = new Map();
+    this.plots.forEach(plot => {
+      plotOptions.set(plot.id, plot.options);
+    });
+
+    this.plots.forEach(p => p.setData(data, this.scale, plotOptions));
   }
 }
