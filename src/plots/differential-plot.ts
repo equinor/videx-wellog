@@ -2,7 +2,7 @@ import { line, area } from 'd3';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';
-import { PlotData, DifferentialPlotOptions, DifferentialPlotData } from './interfaces';
+import { PlotData, DifferentialPlotOptions, PlotOptions } from './interfaces';
 import { Scale, Triplet, Range } from '../common/interfaces';
 
 
@@ -59,10 +59,10 @@ export default class DifferentialPlot extends Plot {
     }
   }
 
-  setData(data : any, scale?: Scale) : DifferentialPlot {
+  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PlotOptions>) : DifferentialPlot {
     let diffplotData = data;
     if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
-      diffplotData = this.options.dataAccessor(data);
+      diffplotData = this.options.dataAccessor(data, plotOptions);
     }
     if (this.options.filterToScale && scale) {
       const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;

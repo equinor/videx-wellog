@@ -42,11 +42,14 @@ export default abstract class Plot {
 
   /**
    * Sets the plot data
+   * @param data Data for all plots on track
+   * @param scale
+   * @param plots Plots on track
    */
-  setData(data : any, scale?: Scale) : Plot {
+  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PlotOptions>) : Plot {
     let plotData = data;
     if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
-      plotData = this.options.dataAccessor(data);
+      plotData = this.options.dataAccessor(data, plotOptions);
     }
     if (this.options.filterToScale && scale) {
       const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
