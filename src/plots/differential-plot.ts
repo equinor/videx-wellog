@@ -1,10 +1,9 @@
-import { line, area } from 'd3';
+import { line, area } from 'd3-shape';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';
 import { PlotData, DifferentialPlotOptions, PlotOptions } from './interfaces';
 import { Scale, Triplet, Range } from '../common/interfaces';
-
 
 /**
  * Differential plot
@@ -199,37 +198,25 @@ export default class DifferentialPlot extends Plot {
 
     if (horizontal) {
       areaFunction1
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
         .y0(max)
         .y1(d => d[1])
         .x(d => d[0]);
 
       areaFunction2
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
         .y0(min)
         .y1(d => d[2])
         .x(d => d[0]);
     } else {
       areaFunction1
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
         .x0(min)
         .x1(d => d[1])
         .y(d => d[0]);
 
       areaFunction2
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
         .x0(max)
         .x1(d => d[2])
         .y(d => d[0]);

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { zoomIdentity } from 'd3';
+import { zoomIdentity } from 'd3-zoom';
 import InterpolatedScaleHandler from '../src/scale-handlers/interpolated-scale-handler';
 
 const EPS = 0.0001;

@@ -1,4 +1,4 @@
-import { select } from 'd3';
+import { select } from 'd3-selection';
 import { D3Selection } from '../common/interfaces';
 import { Track } from '../tracks';
 
@@ -8,14 +8,14 @@ export type LegendTriggerFunction = () => void;
 
 export type LegendOnInitFunction = (elm: Element, track: Track, updateTrigger: LegendTriggerFunction) => void;
 
-export type LegendOnUpdateFunction = (elm: Element, bounds: LegendBounds, track: Track) => void;
-
 export interface LegendBounds {
   top: number,
   left: number,
   height: number,
   width: number,
 }
+
+export type LegendOnUpdateFunction = (elm: Element, bounds: LegendBounds, track: Track) => void;
 
 export interface LegendConfig {
   elementType: string,

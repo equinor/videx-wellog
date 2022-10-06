@@ -1,4 +1,5 @@
-import { select, scaleLinear, ScaleLinear, Selection } from 'd3';
+import { scaleLinear, ScaleLinear } from 'd3-scale';
+import { select, Selection } from 'd3-selection';
 import SvgTrack from '../svg-track';
 import { setAttrs, setProps } from '../../utils';
 import { StackedTrackOptions, AreaData, TransformedAreaData } from './interfaces';
@@ -115,7 +116,7 @@ export class StackedTrack extends SvgTrack {
       scale: yscale,
       xscale,
       data,
-      options
+      options,
     } = this;
 
     if (!g) return;
@@ -199,7 +200,6 @@ export class StackedTrack extends SvgTrack {
           y1: d.yTo - d.yFrom,
           y2: d.yTo - d.yFrom,
         }));
-
 
         const l1 = newAreas.append('line');
         setAttrs(l1, {

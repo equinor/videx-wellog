@@ -1,10 +1,18 @@
 {
-  "include": ["./src/**/*"],
-  "exclude": ["test", "dist", "node_modules"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "target": "es5",
-    "outDir": "./dist",
+    "module": "esnext",
+    "target": "es2016",
     "declaration": true,
-    "allowJs": false,
+    "declarationDir": "./dist",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "lib": ["es5", "DOM", "ES2019.array"],
+    "skipLibCheck": true
   }
 }

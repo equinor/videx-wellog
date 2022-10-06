@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { scaleLinear, scaleLog } from 'd3';
+import { scaleLinear, scaleLog } from 'd3-scale';
 import ScaleHelper from '../src/utils/scale-helper';
 
 const EPS = 0.0001;
@@ -44,11 +44,11 @@ describe('ScaleHelper', () => {
       major: [1, 10, 100, 1000],
       minor: [
         0.2,
-        0.1 * 3,
+        0.3,
         0.4,
         0.5,
-        0.1 * 6,
-        0.1 * 7,
+        0.6,
+        0.7,
         0.8,
         0.9,
         2,

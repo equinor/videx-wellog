@@ -1,5 +1,6 @@
 import { expect } from 'chai';
-import { scaleLinear, range } from 'd3';
+import { range } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
 import DataHelper from '../src/utils/data-helper';
 import { PlotData } from '../src/plots/interfaces';
 

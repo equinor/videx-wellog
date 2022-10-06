@@ -1,4 +1,4 @@
-import { range } from 'd3';
+import { range } from 'd3-array';
 
 const domain = [0, 1500];
 export const ex1 = range(domain[0], domain[1], 10).map(d => [d, Math.random()]);

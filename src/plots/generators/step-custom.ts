@@ -1,4 +1,3 @@
-
 /**
  * Custom stepladder curve generator for d3-line
  */

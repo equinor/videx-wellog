@@ -43,7 +43,7 @@ export function setStyles(selection: D3Selection, styles: object) : D3Selection 
  * Wrapper for setAttrs and setStyles, setting both attributes and styles
  * on each element in seletion.
  */
-export function setProps(selection: D3Selection, props:{ attrs?: object, styles?: object}) : D3Selection {
+export function setProps(selection: D3Selection, props: { attrs?: object, styles?: object }) : D3Selection {
   if (props.attrs) {
     setAttrs(selection, props.attrs);
   }

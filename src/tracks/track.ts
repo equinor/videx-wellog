@@ -1,4 +1,4 @@
-import { select } from 'd3';
+import { select } from 'd3-selection';
 import { TrackOptions, Transform, OnMountEvent, OnUnmountEvent, OnUpdateEvent, OnRescaleEvent } from './interfaces';
 import { D3Selection, Scale } from '../common/interfaces';
 import { LegendTriggerFunction } from '../utils/legend-helper';
@@ -24,7 +24,6 @@ export default abstract class Track {
   public error: Error | string;
   public order: number;
   public legendUpdate?: LegendTriggerFunction;
-
 
   protected _data: any;
   protected _isLoading: boolean;
@@ -146,6 +145,7 @@ export default abstract class Track {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onDataLoaded(data?: any) {
     if (this.isLoading) this.isLoading = false;
   }
@@ -156,7 +156,7 @@ export default abstract class Track {
    * hidden, and (if supplied) the loader element will be shown, until data
    * is resolved. Calls onDataLoaded if implemented by track.
    */
-  loadData(data: (Promise<any>|Function|any), showLoader: boolean = true) : void {
+  loadData(data: (Promise<any> | Function | any), showLoader: boolean = true) : void {
     if (showLoader) this.isLoading = true;
 
     const onSuccess = d => {
@@ -209,15 +209,15 @@ export default abstract class Track {
     this.refresh();
   }
 
-  get data() : any {
-    return this._data;
-  }
-
   get isMounted() {
     return this._mounted;
   }
 
-  set data(data: Promise<any>|Function|any) {
+  get data() : any {
+    return this._data;
+  }
+
+  set data(data: Promise<any> | Function | any) {
     if (typeof data === 'function') {
       this.loadData(data, false);
     } else {

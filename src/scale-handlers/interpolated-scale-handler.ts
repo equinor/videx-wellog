@@ -1,4 +1,5 @@
-import { scaleLinear } from 'd3';
+// eslint-disable no-redeclare
+import { scaleLinear } from 'd3-scale';
 import BasicScaleHandler from './basic-scale-handler';
 import ScaleHelper from '../utils/scale-helper';
 import { Scale, Domain, Range } from '../common/interfaces';

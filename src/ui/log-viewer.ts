@@ -1,4 +1,4 @@
-import { zoom, event, zoomTransform } from 'd3';
+import { zoom, zoomTransform } from 'd3-zoom';
 import LogController from './log-controller';
 import createOverlay from './overlay';
 import { LogControllerOptions, Overlay } from './interfaces';
@@ -36,12 +36,12 @@ export default class LogViewer extends LogController {
 
     const wheelZoomFunc = overlay.elm.on('wheel.zoom').bind(overlay.elm.node());
     const dblClickZoomFunc = overlay.elm.on('dblclick.zoom').bind(overlay.elm.node());
-    overlay.elm.on('dblclick.zoom', () => {
+    overlay.elm.on('dblclick.zoom', event => {
       if (this.overlay.enabled) {
-        dblClickZoomFunc();
+        dblClickZoomFunc(event);
       }
     });
-    overlay.elm.on('wheel.zoom', () => {
+    overlay.elm.on('wheel.zoom', event => {
       if (this.overlay.enabled) {
         if (event.ctrlKey || event.shiftKey) {
           const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
@@ -52,7 +52,7 @@ export default class LogViewer extends LogController {
             this.zoom.translateBy(overlay.elm, 0, transitionAmount);
           }
         } else {
-          wheelZoomFunc();
+          wheelZoomFunc(event);
         }
       }
       event.preventDefault();
@@ -120,7 +120,7 @@ export default class LogViewer extends LogController {
   /**
    * Event handler for pan/zoom
    */
-  protected zoomed() : void {
+  protected zoomed(event) : void {
     const { transform, sourceEvent } = event;
 
     // abort if event was triggered by user interaction when overlay is disabled

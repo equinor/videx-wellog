@@ -10,7 +10,6 @@ export type Domain = Tuplet<number> | number[];
 /** Range to scale a domain value to. Represented as a number array on the form [from, to] */
 export type Range = Tuplet<number> | number[];
 
-
 /** Interface to abstract d3 selection */
 export type D3Selection = any;
 

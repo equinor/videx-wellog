@@ -33,7 +33,6 @@ export function hashString(str: string) : number {
   return hash;
 }
 
-
 /**
  * Creates a debounce function that can be used to easily
  * throttle function calls

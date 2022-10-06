@@ -1,4 +1,4 @@
-import { select } from 'd3';
+import { select } from 'd3-selection';
 import {
   renderLinePlotLegend,
   renderAreaPlotLegend,
@@ -47,7 +47,6 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
         g.attr('opacity', nextState ? 0.25 : 1);
         plot.setOption('hidden', nextState);
 
-
         // checks toggle option in track-config on plot
         // only in PLT
         if (plot.options.forceDataUpdateOnToggle) {
@@ -69,7 +68,6 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
     } else {
       g.attr('transform', `translate(0,${posY})`);
     }
-
 
     posY += rowBounds.height;
 

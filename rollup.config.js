@@ -5,6 +5,7 @@ import { terser } from 'rollup-plugin-terser';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
+
 import pkg from './package.json';
 
 const onwarn = (warning, warn) => {
@@ -33,17 +34,11 @@ export default [
         format: 'esm',
       },
     ],
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
-    ],
+    external: [...Object.keys(pkg.dependencies || {})],
     plugins: [
-      typescript({
-        // eslint-disable-next-line global-require
-        typescript: require('typescript'),
-      }),
-      terser({
-        mangle: false,
-      }),
+      typescript({ tsconfig: './tsconfig.json' }),
+      resolve({ modulesOnly: true }),
+      terser({ mangle: false }),
     ],
     onwarn,
   },
@@ -53,23 +48,11 @@ export default [
       name: 'videx-wellog',
       file: pkg.browser,
       format: 'umd',
-      globals: {
-        d3: 'd3',
-        'resize-observer-polyfill': 'ResizeObserver',
-      },
     },
     plugins: [
-      resolve(),
-      typescript({
-        // eslint-disable-next-line global-require
-        typescript: require('typescript'),
-      }),
-      terser({
-        mangle: false,
-      }),
-    ],
-    external: [
-      ...Object.keys(pkg.dependencies || {}),
+      typescript({ tsconfig: './tsconfig.json' }),
+      resolve({ modulesOnly: true }),
+      terser({ mangle: false }),
     ],
     onwarn,
   },

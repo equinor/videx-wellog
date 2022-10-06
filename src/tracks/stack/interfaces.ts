@@ -6,10 +6,10 @@ interface StackedTrackOptions extends TrackOptions {
   * returning data. The plots will need to have a data accessor function defined, that
   * can pick the data it needs from this value.
   */
- data?: Promise<any> | Function | any,
+  data?: Promise<any> | Function | any,
 
- showLabels?: boolean,
- showLines?: boolean,
+  showLabels?: boolean,
+  showLines?: boolean,
 }
 
 interface TransformedAreaData {
@@ -28,12 +28,12 @@ interface TransformedAreaData {
   /**
    * Fill color for area
    */
-   color: string,
+  color: string,
   /**
    * Opacity for area
    */
-     opacity?: number,
-  }
+  opacity?: number,
+}
 
 interface AreaData {
   /**

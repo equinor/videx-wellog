@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 import SvgTrack from '../svg-track';
 import {
   renderTicks,
@@ -23,7 +23,7 @@ export default class ScaleTrack extends SvgTrack {
   options: ScaleTrackOptions;
   legendUpdate?: LegendTriggerFunction;
 
-  constructor(id: string|number, options: ScaleTrackOptions) {
+  constructor(id: string | number, options: ScaleTrackOptions) {
     super(id, options);
     this.xscale = scaleLinear().domain([0, 10]);
     this.ticks = [];
