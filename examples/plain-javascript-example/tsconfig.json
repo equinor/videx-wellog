@@ -1,0 +1,10 @@
+{
+  "include": ["./src/**/*"],
+  "exclude": ["test", "dist", "node_modules"],
+  "compilerOptions": {
+    "target": "es5",
+    "outDir": "./dist",
+    "declaration": true,
+    "allowJs": false,
+  }
+}
