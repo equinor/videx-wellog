@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { zoomIdentity } from 'd3';
+import { zoomIdentity } from 'd3-zoom';
 import BasicScaleHandler from '../src/scale-handlers/basic-scale-handler';
 import ScaleHelper from '../src/utils/scale-helper';
 

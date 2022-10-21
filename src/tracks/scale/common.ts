@@ -1,4 +1,4 @@
-import { select } from 'd3';
+import { select } from 'd3-selection';
 import { setAttrs } from '../../utils';
 import { D3Selection, Scale } from '../../common/interfaces';
 import { LegendBounds, LegendConfig } from '../../utils/legend-helper';
@@ -118,7 +118,7 @@ export function renderHorizontalTicks(selection: D3Selection, x: Scale, lb: Labe
     y: lb.offsetY + lb.size / 2,
     class: 'label-bg',
     width: lb.length,
-    height: lb.size
+    height: lb.size,
   });
 
   const tickText = newTicks.append('text').text(d => d.v)
@@ -134,7 +134,6 @@ export function renderHorizontalTicks(selection: D3Selection, x: Scale, lb: Labe
 
   selection.exit().remove();
 }
-
 
 /**
  * Computes the label bounds at a given scale

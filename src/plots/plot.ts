@@ -3,18 +3,17 @@ import { Range, Scale } from '../common/interfaces';
 import { PlotData, PlotOptions } from './interfaces';
 import { DataHelper } from '../utils';
 
-
 /**
  * Abstract base class for plots
  */
 export default abstract class Plot {
-  id: string|number;
+  id: string | number;
   options: PlotOptions;
   data: PlotData | any;
   scale: Scale;
   range: Range;
 
-  constructor(id: string|number, options: PlotOptions = {}) {
+  constructor(id: string | number, options: PlotOptions = {}) {
     this.id = id;
     this.options = {
       defined: v => v !== null,
@@ -104,6 +103,5 @@ export default abstract class Plot {
   /**
    * Plot function should be overridden
    */
-  // eslint-disable-next-line class-methods-use-this
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {}
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {} // eslint-disable-line class-methods-use-this, @typescript-eslint/no-unused-vars
 }

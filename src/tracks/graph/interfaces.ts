@@ -3,16 +3,16 @@ import { PlotOptions } from '../../plots/interfaces';
 import { Scale, Domain } from '../../common/interfaces';
 import { Plot } from '../../plots';
 
-export type PlotCreatorFunction = (config: PlotConfig, trackScale: Scale) => Plot;
-
 /**
  * Config object used to define a plot in the graph track options
  */
 export interface PlotConfig {
-  id: string|number,
+  id: string | number,
   type: string,
   options: PlotOptions,
 }
+
+export type PlotCreatorFunction = (config: PlotConfig, trackScale: Scale) => Plot;
 
 /**
  * Factory object for creating an instance of a plot given a type

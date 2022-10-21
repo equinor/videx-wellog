@@ -370,7 +370,7 @@ export default class DataHelper {
    * an item is the end of the previous item and the start of the
    * next (zones).
    */
-  static queryZoneData(queryVal:number, data:PlotData) : number|null {
+  static queryZoneData(queryVal:number, data:PlotData) : number | null {
     try {
       const index = data.findIndex((d, i, arr) => (
         i < arr.length - 1 && d[1] !== null && d[0] <= queryVal && arr[i + 1][0] > queryVal

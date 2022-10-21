@@ -1,6 +1,6 @@
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
-import { GridHelper, ScaleHelper, debouncer, DebounceFunction, DataHelper } from '../../utils';
+import { GridHelper, ScaleHelper, debouncer, DebounceFunction } from '../../utils';
 import { Plot, PlotOptions } from '../../plots';
 import { Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
@@ -14,7 +14,6 @@ const defaultOptions = {
   forceDataUpdateOnToggle: false,
   plotFactory: defaultPlotFactory,
 };
-
 
 /**
  * An extension to CanvasTrack for rendering plots
@@ -30,7 +29,7 @@ export default class GraphTrack extends CanvasTrack {
   private _transformedData?: any;
   private _transformCondition?: number = null;
 
-  constructor(id: string|number, options: GraphTrackOptions = {}) {
+  constructor(id: string | number, options: GraphTrackOptions = {}) {
     super(id, {
       ...defaultOptions,
       ...options,
@@ -98,7 +97,7 @@ export default class GraphTrack extends CanvasTrack {
   /**
    * Callback after data loaded, using loadData.
    */
-  onDataLoaded(data) : void {
+  onDataLoaded(data) : void { // eslint-disable-line @typescript-eslint/no-unused-vars
     this._transformCondition = null;
     this._transformedData = null;
     this.prepareData();
@@ -173,7 +172,6 @@ export default class GraphTrack extends CanvasTrack {
       scale,
       options,
       plot,
-      _transformCondition: previousCondition,
     } = this;
 
     this._transformCondition = condition;

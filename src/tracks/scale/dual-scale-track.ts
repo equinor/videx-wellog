@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3';
+import { scaleLinear } from 'd3-scale';
 import SvgTrack from '../svg-track';
 import { renderTicks, computeLabelBounds, LabelBounds, renderHorizontalTicks, computeLabelBoundsHorizontal } from './common';
 import ScaleHelper from '../../utils/scale-helper';
@@ -24,7 +24,7 @@ export default class DualScaleTrack extends SvgTrack {
   labelBounds: LabelBounds;
   options: DualScaleTrackOptions;
 
-  constructor(id: string|number, options: DualScaleTrackOptions = {}) {
+  constructor(id: string | number, options: DualScaleTrackOptions = {}) {
     const opts: DualScaleTrackOptions = {
       mode: 0,
       ...options,

@@ -1,13 +1,11 @@
+import { select } from 'd3-selection';
 import {
-  select,
-  event,
   zoom,
   zoomIdentity,
   zoomTransform,
   ZoomBehavior,
   ZoomTransform,
-} from 'd3';
-import ResizeObserver from 'resize-observer-polyfill';
+} from 'd3-zoom';
 import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
@@ -149,8 +147,8 @@ export default class LogController {
    * Set the tracks for this controller, replacing any existing tracks
    * @param tracks track or tracks to set
    */
-  public setTracks(...track: Track[]) : LogController
-  public setTracks(tracks: Track[]) : LogController
+  public setTracks(...track: Track[]) : LogController // eslint-disable-line @typescript-eslint/semi
+  public setTracks(tracks: Track[]) : LogController // eslint-disable-line @typescript-eslint/semi
   public setTracks(...tracks: any[]) : LogController {
     this.tracks = tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
     this.tracks.sort((a, b) => a.order - b.order);
@@ -263,7 +261,7 @@ export default class LogController {
     }
   }
 
-  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController {
+  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController { // eslint-disable-line default-param-last
     const [d1, d2] = domain;
     if (d1 === d2) return this;
     const current = zoomTransform(this.zoomHandler.node());
@@ -290,7 +288,6 @@ export default class LogController {
       this.zoom.transform(zoomHandler, transform);
       if (callback) callback();
     }
-
 
     return this;
   }
@@ -331,7 +328,6 @@ export default class LogController {
     const {
       container,
       tracks,
-      debounce,
       _trackEnter: trackEnter,
       _trackUpdate: trackUpdate,
       _trackExit: trackExit,
@@ -425,7 +421,7 @@ export default class LogController {
   /**
    * Event handler for pan/zoom
    */
-  protected zoomed() : void {
+  protected zoomed(event) : void {
     const { transform } = event;
     if (this.options.horizontal) {
       this.scaleHandler.rescale(transform, 'x');
@@ -490,7 +486,7 @@ export default class LogController {
    * Updates the legend for a specific track
    * @param id Track id
    */
-  protected updateLegend(id:(string|number)) : void {
+  protected updateLegend(id:(string | number)) : void {
     if (!this.options.showLegend) return;
     if (this.legends && this.legends[id]) {
       const {
@@ -553,7 +549,7 @@ export default class LogController {
       options: {
         showLegend,
         showTitles,
-      }
+      },
     } = this;
 
     if (container.node().clientWidth === 0) return;
@@ -625,7 +621,7 @@ export default class LogController {
         showTitles,
         showLegend,
         horizontal,
-      }
+      },
     } = this;
 
     const attr = horizontal
@@ -701,7 +697,7 @@ export default class LogController {
         showTitles,
         showLegend,
         horizontal,
-      }
+      },
     } = this;
 
     const sizeAttr = horizontal ? 'width' : 'height';

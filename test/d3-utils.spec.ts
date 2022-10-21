@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { JSDOM } from 'jsdom';
-import { select } from 'd3';
+import { select } from 'd3-selection';
 import { setAttrs, setStyles, setProps } from '../src/utils';
 
 

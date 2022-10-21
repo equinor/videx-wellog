@@ -25,7 +25,6 @@ export default function renderDifferentialPlotLegend(
     serie2: legend2,
   } = legendInfo;
 
-
   const hasTwoLegends = (legendRows === 2 && legend2 != null);
   const d1 = plot.scale1?.domain() || [0, 1];
   const d2 = plot.scale2?.domain() || [0, 1];
