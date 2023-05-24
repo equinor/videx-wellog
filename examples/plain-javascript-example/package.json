@@ -14,7 +14,7 @@
     "@storybook/addon-storysource": "^5.3.21",
     "@storybook/html": "^5.3.21",
     "@storybook/preset-typescript": "^1.1.0",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.3.0",
     "css-loader": "^3.2.0",
     "node-sass": "^7.0.3",
     "react-docgen-typescript-loader": "^3.7.2",
