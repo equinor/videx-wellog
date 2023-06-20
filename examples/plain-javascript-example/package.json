@@ -12,7 +12,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@storybook/addon-storysource": "^5.3.21",
-    "@storybook/html": "^5.3.21",
+    "@storybook/html": "^6.2.0",
     "@storybook/preset-typescript": "^1.1.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
@@ -20,7 +20,7 @@
     "react-docgen-typescript-loader": "^3.7.2",
     "sass-loader": "^10.3.1",
     "style-loader": "^1.0.0",
-    "ts-loader": "^6.2.1"
+    "ts-loader": "^8.0.14"
   },
   "dependencies": {
     "d3-array": "^3.2.0",
