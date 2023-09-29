@@ -178,6 +178,7 @@ describe('DataHelper', () => {
 
   it('should be able to merge two dataseries into one correlated serie', () => {
     const serie1 = DataHelper.trimUndefinedValues(datapoints);
+    
     const serie2 : PlotData = serie1.slice(3, 10).map(d => [d[0], -d[1]]);
 
     let actual = DataHelper.mergeDataSeries(
@@ -223,5 +224,19 @@ describe('DataHelper', () => {
     ];
 
     expect(actual).to.eql(expected);
+  });
+
+  it('should return an empty array if the second array\'s highest point starts after the lowest point of the other array', () => {
+    const serie1 = DataHelper.trimUndefinedValues(datapoints);
+    const serie2 : PlotData = serie1.map(d => [d[0]+20, -d[1]]);
+
+    let actual = DataHelper.mergeDataSeries(
+      serie1,
+      serie2,
+    );
+
+    let expected = [];
+    expect(actual).to.eql(expected);
+
   });
 });

@@ -247,18 +247,10 @@ export default class DataHelper {
       let i = 0;
       let j = 0;
 
-      // fill in top if series are not starting at the same depth
-      while (md > arr1[0][0] && j < arr2.length) {
-        md = arr2[j][0];
-        res[n++] = [md, null, arr2[j][1]];
-        j++;
-      }
-      while (md > arr2[0][0] && i < arr1.length) {
-        md = arr1[i][0];
-        res[n++] = [md, arr1[i][1], null];
-        i++;
-      }
-
+      // return empty array if no overlap in md between the two arrays
+      if (arr1[0][0] < arr2[0][0] && arr1[arr1.length-1][0] < arr2[0][0]) return [];
+      if (arr2[0][0] < arr1[0][0] && arr2[arr2.length-1][0] < arr1[0][0]) return [];
+        
       // correlate values using arr1 as master, averaging arr2
       while (i < arr1.length && j < arr2.length) {
         md = arr1[i][0];
@@ -282,7 +274,7 @@ export default class DataHelper {
           rn++;
           j++;
         }
-        if (rn > 0) {
+        if (rn > 0) {                   
           res[n++] = [md, arr1[i][1], rv / rn];
         }
         i++;
