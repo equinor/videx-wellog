@@ -1,0 +1,124 @@
+{
+  "Photos": [
+    {
+      "depthRange": "50.00-100.00",
+      "resolution": null,
+      "lighting": "White",
+      "section": 0,
+      "url": "https://via.placeholder.com/150/0000FF/808080"
+    },
+    {
+      "depthRange": "100.00-150.00",
+      "resolution": null,
+      "lighting": "White",
+      "section": 1,
+      "url": "https://via.placeholder.com/150/FF0000/FFFFFF"
+    },
+    {
+      "depthRange": "150.00-200.00",
+      "resolution": null,
+      "lighting": "White",
+      "section": 2,
+      "url": "https://via.placeholder.com/150/0000FF/808080"
+    },
+    {
+      "depthRange": "200.00-250.00",
+      "resolution": null,
+      "lighting": "White",
+      "section": 3,
+      "url": "https://via.placeholder.com/150/FF0000/FFFFFF"
+    },
+    {
+      "depthRange": "250.00-300.45",
+      "resolution": null,
+      "lighting": "White",
+      "section": 4,
+      "url": "https://via.placeholder.com/150/0000FF/808080"
+    },
+    {
+      "depthRange": "300.00-350.00",
+      "resolution": null,
+      "lighting": "UV",
+      "section": 0,
+      "url": "https://via.placeholder.com/150/FF0000/FFFFFF"
+    },
+    {
+      "depthRange": "350.00-400.00",
+      "resolution": null,
+      "lighting": "UV",
+      "section": 1,
+      "url": "https://via.placeholder.com/150/0000FF/808080"
+    },
+    {
+      "depthRange": "400.00-450.00",
+      "resolution": null,
+      "lighting": "UV",
+      "section": 2,
+      "url": "https://via.placeholder.com/150/FF0000/FFFFFF"
+    },
+    {
+      "depthRange": "450.00-500.00",
+      "resolution": null,
+      "lighting": "UV",
+      "section": 3,
+      "url": "https://via.placeholder.com/150/0000FF/808080"
+    },
+    {
+      "depthRange": "500.00-550.45",
+      "resolution": null,
+      "lighting": "UV",
+      "section": 4,
+      "url": "https://via.placeholder.com/150/FF0000/FFFFFF"
+    }
+  ],
+  "Plugs": [
+    {
+        "coreDepth": 500.4,
+        "plugId": "1",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": "NaN",
+        "klV": "NaN",
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+    },
+    {
+        "coreDepth": 700.6,
+        "plugId": "2",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": 0,
+        "klV": "NaN",
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+    },
+    {
+        "coreDepth": 16.8,
+        "plugId": "3",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": "NaN",
+        "klV": 0,
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+    }
+]
+}
