@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import { TrackOptions, Transform, OnMountEvent, OnUnmountEvent, OnUpdateEvent, OnRescaleEvent } from './interfaces';
 import { D3Selection, Scale } from '../common/interfaces';
 import { LegendTriggerFunction } from '../utils/legend-helper';

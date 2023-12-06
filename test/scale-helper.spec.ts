@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { scaleLinear, scaleLog } from 'd3-scale';
+import { scaleLinear, scaleLog } from 'd3';
 import ScaleHelper from '../src/utils/scale-helper';
 
 const EPS = 0.0001;

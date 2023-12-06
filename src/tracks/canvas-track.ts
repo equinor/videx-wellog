@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import Track from './track';
 import { setProps } from '../utils';
 import { OnMountEvent, OnUpdateEvent } from './interfaces';

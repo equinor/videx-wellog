@@ -1,5 +1,5 @@
 
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import {
   LogViewer, UIHelper,
 } from '../../../../src';

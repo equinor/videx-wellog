@@ -1,4 +1,4 @@
-import { scaleLinear, scaleLog } from 'd3-scale';
+import { scaleLinear, scaleLog } from 'd3';
 import {
   LinePlot,
   AreaPlot,

@@ -1,4 +1,4 @@
-import { line, area } from 'd3-shape';
+import { line, area } from 'd3';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';

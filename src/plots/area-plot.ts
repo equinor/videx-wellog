@@ -1,4 +1,4 @@
-import { area } from 'd3-shape';
+import { area } from 'd3';
 import Plot from './plot';
 import { PlotData, AreaPlotOptions } from './interfaces';
 import { Scale } from '../common/interfaces';

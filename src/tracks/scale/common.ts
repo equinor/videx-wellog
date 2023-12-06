@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import { setAttrs } from '../../utils';
 import { D3Selection, Scale } from '../../common/interfaces';
 import { LegendBounds, LegendConfig } from '../../utils/legend-helper';

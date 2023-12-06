@@ -1,11 +1,11 @@
-import { select } from 'd3-selection';
 import {
+  select,
   zoom,
   zoomIdentity,
   zoomTransform,
   ZoomBehavior,
   ZoomTransform,
-} from 'd3-zoom';
+} from 'd3';
 import { setProps, setStyles, debouncer, DebounceFunction } from '../utils';
 import { ScaleHandler, BasicScaleHandler } from '../scale-handlers';
 import { Track } from '../tracks';
@@ -457,6 +457,7 @@ export default class LogController {
     } else {
       transform = zoomIdentity.translate(0, p1).scale((p2 - p1) / dist);
     }
+    console.log({ zoomHandler, transform });
     this.zoom.transform(zoomHandler, transform);
   }
 

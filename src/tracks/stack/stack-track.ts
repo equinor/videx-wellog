@@ -1,5 +1,9 @@
-import { scaleLinear, ScaleLinear } from 'd3-scale';
-import { select, Selection } from 'd3-selection';
+import {
+  scaleLinear,
+  ScaleLinear,
+  select,
+  Selection,
+} from 'd3';
 import SvgTrack from '../svg-track';
 import { setAttrs, setProps } from '../../utils';
 import { StackedTrackOptions, AreaData, TransformedAreaData } from './interfaces';

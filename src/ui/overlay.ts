@@ -1,4 +1,4 @@
-import { select, pointer } from 'd3-selection';
+import { select, pointer } from 'd3';
 import { setStyles } from '../utils/d3-utils';
 import { D3Selection } from '../common/interfaces';
 import { Overlay, OverlayCallbacks } from './interfaces';

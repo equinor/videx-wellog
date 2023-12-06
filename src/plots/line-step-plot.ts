@@ -1,4 +1,4 @@
-import { line } from 'd3-shape';
+import { line } from 'd3';
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
 import { PlotData, LinePlotOptions } from './interfaces';

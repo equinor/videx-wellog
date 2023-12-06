@@ -1,5 +1,4 @@
-import { scaleLinear } from 'd3-scale';
-import { ZoomTransform } from 'd3-zoom';
+import { scaleLinear, ZoomTransform } from 'd3';
 import ScaleHelper from '../utils/scale-helper';
 import { Scale, Range, Domain } from '../common/interfaces';
 import { ScaleHandlerTicks, ScaleHandler } from './interfaces';

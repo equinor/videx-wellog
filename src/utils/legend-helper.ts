@@ -1,4 +1,4 @@
-import { select } from 'd3-selection';
+import { select } from 'd3';
 import { D3Selection } from '../common/interfaces';
 import { Track } from '../tracks';
 

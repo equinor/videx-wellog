@@ -1,6 +1,5 @@
 import { expect } from 'chai';
-import { range } from 'd3-array';
-import { scaleLinear } from 'd3-scale';
+import { range, scaleLinear } from 'd3';
 import DataHelper from '../src/utils/data-helper';
 import { PlotData } from '../src/plots/interfaces';
 
@@ -178,7 +177,7 @@ describe('DataHelper', () => {
 
   it('should be able to merge two dataseries into one correlated serie', () => {
     const serie1 = DataHelper.trimUndefinedValues(datapoints);
-    
+
     const serie2 : PlotData = serie1.slice(3, 10).map(d => [d[0], -d[1]]);
 
     let actual = DataHelper.mergeDataSeries(

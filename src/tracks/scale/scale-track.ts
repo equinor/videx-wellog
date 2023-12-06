@@ -1,4 +1,4 @@
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear } from 'd3';
 import SvgTrack from '../svg-track';
 import {
   renderTicks,

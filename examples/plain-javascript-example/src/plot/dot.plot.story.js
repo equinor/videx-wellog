@@ -1,5 +1,4 @@
-
-import { scaleLinear } from 'd3-scale';
+import { scaleLinear } from 'd3';
 import {
   DotPlot,
 } from '../../../../src';

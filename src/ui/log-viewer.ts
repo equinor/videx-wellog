@@ -1,4 +1,4 @@
-import { zoom, zoomTransform } from 'd3-zoom';
+import { zoom, zoomTransform } from 'd3';
 import LogController from './log-controller';
 import createOverlay from './overlay';
 import { LogControllerOptions, Overlay } from './interfaces';
