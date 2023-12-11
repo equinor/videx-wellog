@@ -2,6 +2,28 @@ import { setProps, setAttrs } from '../../utils';
 import { D3Selection } from '../../common/interfaces';
 import { LegendBounds } from '../../utils/legend-helper';
 
+// TODO: Allow large font for more than just domains?
+interface LegendOptions {
+  addLabelBg?: boolean;
+  largeFontEnabled?: boolean;
+}
+
+/** Helper function to setup a white front background using bounding box of given text. */
+const setupDomainBackground = (bg, text) => {
+  const bbox = text.node().getBBox();
+  setProps(bg, {
+    styles: {
+      fill: 'white',
+    },
+    attrs: {
+      x: bbox.x - 2,
+      y: bbox.y - 2,
+      width: bbox.width + 4,
+      height: bbox.height + 4,
+    },
+  });
+};
+
 /**
  * Renders label, min/max values for domain and unit
  */
@@ -12,17 +34,23 @@ export function renderTextLabels(
   unit: string,
   domain: number[],
   color: string,
-  addLabelBg: boolean = false,
+  { addLabelBg, largeFontEnabled }: LegendOptions = {},
 ) : void {
   const { height: h, width: w, top, left } = bounds;
   const lineY = top + (h * 0.5);
   const textSize = h * 0.35;
-  const subTextSize = textSize * 0.85;
-  const subY = lineY + subTextSize;
   const centerX = left + w / 2;
   const [min, max] = domain;
 
-  // label
+  const isLargeFont = (largeFontEnabled && w > 90);
+
+  const unitTextSixe = textSize * 0.85;
+  const unitY = lineY + unitTextSixe;
+
+  const domainTextSize = isLargeFont ? (textSize * 1.1) : unitTextSixe;
+  const subY = isLargeFont ? (lineY + (domainTextSize / 2) - (h * 0.05)) : (lineY + domainTextSize);
+
+  // #region Label
   const labelX = centerX;
   const labelY = top + textSize;
   const labelTransform = `translate(${labelX},${labelY})`;
@@ -56,11 +84,12 @@ export function renderTextLabels(
       height: (h * 0.5) - 2,
     });
   }
+  // #endregion
 
-  // unit
+  // #region Unit
   if (unit) {
     const unitX = centerX;
-    const unitTransform = `translate(${unitX},${subY})`;
+    const unitTransform = `translate(${unitX},${unitY})`;
     const unitText = g.append('text').text(unit);
     setProps(unitText, {
       styles: {
@@ -69,15 +98,23 @@ export function renderTextLabels(
       },
       attrs: {
         class: 'legend-unit',
-        'font-size': `${subTextSize}px`,
+        'font-size': `${unitTextSixe}px`,
         transform: unitTransform,
       },
     });
   }
+  // #endregion
+
+  // #region Domain
+  let minBg, maxBg;
+  if (isLargeFont) {
+    minBg = g.append('rect');
+    maxBg = g.append('rect');
+  }
 
   const minText = (Math.abs(min) > 1000 && min % 1000 === 0) ? `${Math.round(min / 1000)}k` : `${min}`;
   const maxText = (Math.abs(max) > 1000 && max % 1000 === 0) ? `${Math.round(max / 1000)}k` : `${max}`;
-  // domain
+
   const minDomain = g.append('text').text(minText);
   setProps(minDomain, {
     styles: {
@@ -86,11 +123,12 @@ export function renderTextLabels(
     },
     attrs: {
       class: 'legend-domain',
-      'font-size': `${subTextSize}px`,
+      'font-size': `${domainTextSize}px`,
       x: left + 2,
       y: subY,
     },
   });
+
   const maxDomain = g.append('text').text(maxText);
   setProps(maxDomain, {
     styles: {
@@ -99,11 +137,18 @@ export function renderTextLabels(
     },
     attrs: {
       class: 'legend-domain',
-      'font-size': `${subTextSize}px`,
+      'font-size': `${domainTextSize}px`,
       x: left + w - 2,
       y: subY,
     },
   });
+
+  // Setup font backgrounds after
+  if (isLargeFont) {
+    setupDomainBackground(minBg, minDomain);
+    setupDomainBackground(maxBg, maxDomain);
+  }
+  // #endregion
 }
 
 /**
@@ -116,13 +161,25 @@ export function renderBasicPlotLegend(
   unit: string,
   domain: number[],
   color: string,
-  addLabelBg: boolean = false,
+  legendOptions: LegendOptions = {},
 ) : void {
   const x1 = bounds.left + 2;
   const x2 = Math.max(x1, bounds.left + bounds.width - 2);
 
   const lineY = bounds.top + (bounds.height * 0.5);
   const lineWidth = bounds.height * 0.1;
+
+  /** Hidden rect behind line to expand clickable graphic. */
+  const background = g.append('rect');
+  setProps(background, {
+    attrs: {
+      width: Math.max(0, bounds.width - 4),
+      height: bounds.height - 4,
+      x: 2,
+      y: 2,
+      visibility: 'hidden',
+    },
+  });
 
   const line = g.append('line');
   setProps(line, {
@@ -146,6 +203,6 @@ export function renderBasicPlotLegend(
     unit,
     domain,
     color,
-    addLabelBg,
+    legendOptions,
   );
 }
