@@ -62,6 +62,6 @@ export default function renderAreaPlotLegend(g: D3Selection, bounds: LegendBound
     legendInfo.unit,
     plot.scale.domain(),
     plot.options.color,
-    true,
+    { addLabelBg: true },
   );
 }

@@ -66,7 +66,7 @@ export default function renderDifferentialPlotLegend(
       legend1.unit,
       d1,
       options1.color,
-      true,
+      { addLabelBg: true },
     );
   }
 
@@ -82,6 +82,7 @@ export default function renderDifferentialPlotLegend(
       legend2.unit,
       d2,
       options2.color,
+      { largeFontEnabled: true },
     );
   }
 }
