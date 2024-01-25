@@ -108,6 +108,15 @@ export interface LinePlotOptions extends PlotOptions {
    * @example [4, 4] // 4 pixels stroked, 4 pixels skipped
    */
   dash?: number[],
+  /**
+   * If enabled, will wrap logs outside of domain and display as dashed.
+   */
+  allowWrapping?: boolean,
+  /**
+   * Dash array used for wrapped plot (Default: [2, 3])
+   * @example [2, 3] // Draw 2, skip 3 pixels
+   */
+  dashWrapped?: number[],
 }
 
 /**

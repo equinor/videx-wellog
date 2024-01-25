@@ -1,4 +1,4 @@
-import { line } from 'd3-shape';
+import { Line, line } from 'd3-shape';
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
 import { PlotData, LinePlotOptions } from './interfaces';
@@ -49,6 +49,74 @@ export default class LinePlot extends Plot {
       ctx.stroke();
     }
 
+    // Plot wrapping segments
+    if (options.allowWrapping) {
+      this.plotWrapped(ctx, lineFunction);
+    }
+
     ctx.restore();
+  }
+
+  /**
+   * Renders segments outside of domain.
+   */
+  plotWrapped(ctx: CanvasRenderingContext2D, lineFunction: Line<[number, number]>) {
+    const {
+      scale: xscale,
+      data: plotdata,
+      options,
+    } = this;
+
+    const isLogarithmic = (options.scale === 'log');
+
+    // Return if plot has no points, or is horizontal
+    // TODO: Add support for horizontal plots?
+    if (!plotdata || plotdata.length === 0 || options.horizontal) {
+      return;
+    }
+
+    ctx.setLineDash(options.dashWrapped || [2, 3]);
+
+    /** Helper function for plotting segment with given displacement. */
+    const plotSegment = (segment: PlotData, disp: number) => {
+      ctx.beginPath();
+      lineFunction(segment.map(
+        ([y, x]) => (isLogarithmic ? [y, 10 ** (Math.log10(x) + disp)] : [y, x + disp]),
+      ));
+      ctx.stroke();
+    };
+
+    const [min, max] = isLogarithmic ? xscale.domain().map(Math.log10) : xscale.domain();
+    const range = (max - min);
+
+    let prev = plotdata[0];
+    let segment: PlotData = [];
+
+    // Distance to displace the segment in order to wrap
+    let segmentDisp: number;
+
+    for (let i = 1; i < plotdata.length; i++) {
+      const cur = plotdata[i];
+      const curX = isLogarithmic ? Math.log10(cur[1]) : cur[1];
+      if (curX > max || curX < min) {
+        segmentDisp = (curX > max) ? -range : range;
+        if (segment.length === 0) {
+          segment.push(prev);
+        }
+        segment.push(cur);
+      } else if (segment.length > 0) {
+        segment.push(cur);
+        plotSegment(segment, segmentDisp);
+        segment = [];
+      }
+      prev = cur;
+    }
+
+    // If the data ends with point outside of range
+    if (segment.length > 0) {
+      plotSegment(segment, segmentDisp);
+    }
+
+    ctx.setLineDash([]);
   }
 }
