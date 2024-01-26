@@ -1,6 +1,7 @@
+/* eslint-disable no-continue */
 import { Line, line } from 'd3-shape';
 import Plot from './plot';
-import { Scale } from '../common/interfaces';
+import { Scale, Tuplet } from '../common/interfaces';
 import { PlotData, LinePlotOptions } from './interfaces';
 
 /**
@@ -71,7 +72,7 @@ export default class LinePlot extends Plot {
 
     // Return if plot has no points, or is horizontal
     // TODO: Add support for horizontal plots?
-    if (!plotdata || plotdata.length === 0 || options.horizontal) {
+    if (!plotdata?.length || options.horizontal) {
       return;
     }
 
@@ -89,18 +90,25 @@ export default class LinePlot extends Plot {
     const [min, max] = isLogarithmic ? xscale.domain().map(Math.log10) : xscale.domain();
     const range = (max - min);
 
-    let prev = plotdata[0];
+    let prev: Tuplet<number>;
     let segment: PlotData = [];
 
     // Distance to displace the segment in order to wrap
     let segmentDisp: number;
 
-    for (let i = 1; i < plotdata.length; i++) {
+    for (let i = 0; i < plotdata.length; i++) {
       const cur = plotdata[i];
+
+      // If point is not valid, clear prev and skip
+      if (cur[1] === null || cur[1] === undefined) {
+        prev = null;
+        continue;
+      }
+
       const curX = isLogarithmic ? Math.log10(cur[1]) : cur[1];
       if (curX > max || curX < min) {
         segmentDisp = (curX > max) ? -range : range;
-        if (segment.length === 0) {
+        if (segment.length === 0 && prev) {
           segment.push(prev);
         }
         segment.push(cur);
