@@ -58,8 +58,7 @@ function plotLabel(g: Selection<HTMLElement, unknown, null, undefined>, d: Trans
 /**
  * Track for visualising area data. Most commonly called formation track
  */
-export class StackedTrack extends SvgTrack {
-  options: StackedTrackOptions;
+export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   xscale: ScaleLinear<number, number>;
 
   /**

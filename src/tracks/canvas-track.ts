@@ -1,14 +1,14 @@
 import { select } from 'd3-selection';
 import Track from './track';
 import { setProps } from '../utils';
-import { OnMountEvent, OnUpdateEvent } from './interfaces';
+import { TrackOptions, OnMountEvent, OnUpdateEvent } from './interfaces';
 
 /**
  * Base track for tracks that renders to a canvas context
  */
-export default class CanvasTrack extends Track {
+export default class CanvasTrack<TrackOptions> extends Track<TrackOptions> {
   ctx: CanvasRenderingContext2D;
-  elm: HTMLElement;
+
   /**
    * Override to add canvas element for plotting track data
    */

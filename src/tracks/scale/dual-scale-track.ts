@@ -16,13 +16,12 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
  * to change its behaviour (switch between domains), using the
  * scale-handler's setMode-function.
  */
-export default class DualScaleTrack extends SvgTrack {
+export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   xscale : Scale;
   viewMode : number;
   scaleHandler: InterpolatedScaleHandler;
   ticks: number[];
   labelBounds: LabelBounds;
-  options: DualScaleTrackOptions;
 
   constructor(id: string | number, options: DualScaleTrackOptions = {}) {
     const opts: DualScaleTrackOptions = {

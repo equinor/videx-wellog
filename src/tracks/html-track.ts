@@ -2,14 +2,14 @@ import { select } from 'd3-selection';
 import Track from './track';
 import { setStyles } from '../utils';
 import { D3Selection } from '../common/interfaces';
-import { OnMountEvent, OnUpdateEvent } from './interfaces';
+import { TrackOptions, OnMountEvent, OnUpdateEvent } from './interfaces';
 
 /**
  * Base track for tracks that renders HTML content
  */
-export default class HtmlTrack extends Track {
+export default class HtmlTrack extends Track<TrackOptions> {
   container: D3Selection;
-  elm: HTMLElement;
+
   /**
    * Override to add HMTL container for plotting track data
    */
