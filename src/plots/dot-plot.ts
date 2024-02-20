@@ -6,10 +6,7 @@ import { ScaleHelper } from '../utils';
 /**
  * Dot plot
  */
-export default class DotPlot extends Plot {
-  options: DotPlotOptions;
-  scale: Scale;
-  data: PlotData;
+export default class DotPlot extends Plot<DotPlotOptions> {
 
   /**
    * Renders dot plot to canvas context
