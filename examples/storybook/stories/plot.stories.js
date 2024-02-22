@@ -6,7 +6,6 @@ import {
   LinePlot,
   LineStepPlot
 } from '../../../src';
-import { Scale } from '../../../src/common/interfaces';
 import { ex1, ex3 } from './shared/mock-data';
 
 export default { 
@@ -22,7 +21,7 @@ export const areaPlot = () => {
     canvas.height = height;
   
     // domain axis scale
-    const scale = scaleLinear().domain([0, 500]).range([0, width]) as Scale;
+    const scale = scaleLinear().domain([0, 500]).range([0, width]);
   
     // create instance and set options
     const plot = new AreaPlot(1, {
@@ -67,7 +66,7 @@ export const differentialPlot = () => {
     canvas.height = height;
   
     // domain axis scale
-    const scale = scaleLinear().domain([0, 150]).range([0, width]) as Scale;;
+    const scale = scaleLinear().domain([0, 150]).range([0, width]);
   
     // create instance and set options
     const diffPlot = new DifferentialPlot(1, {
@@ -114,7 +113,7 @@ export const dotPlot = () => {
     canvas.height = height;
   
     // domain axis scale
-    const scale = scaleLinear().domain([0, 200]).range([0, width]) as Scale;;
+    const scale = scaleLinear().domain([0, 200]).range([0, width]);
   
     // create instance and set options
     const plot = new DotPlot(1, {
@@ -150,7 +149,7 @@ export const linePlot = () => {
     canvas.height = height;
   
     // domain axis scale
-    const scale = scaleLinear().domain([0, 200]).range([0, width]) as Scale;;
+    const scale = scaleLinear().domain([0, 200]).range([0, width]);
   
     // create instance and set options
     const plot = new LinePlot(1, {
@@ -193,7 +192,7 @@ export const linePlot = () => {
     canvas.height = height;
   
     // domain axis scale
-    const scale = scaleLinear().domain([0, 200]).range([0, width]) as Scale;;
+    const scale = scaleLinear().domain([0, 200]).range([0, width]);
   
     // create instance and set options
     const plot = new LineStepPlot(1, {

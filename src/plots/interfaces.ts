@@ -21,14 +21,14 @@ export type DifferentialPlotData = Triplet<number>[];
 export type DefinedFunction = (y?:number, x?:number) => boolean;
 
 /**
- * When used in combination with a Track, it is the track's responsibillity to fetch
+ * When used in combination with a Track, it is the track's responsibility to fetch
  * and pass down data to the plots. This is configured by providing a data accessor
  * callback function, where the track's data are made available as the input argument
  * and the returned value will be used by the plot.
  * @example data => data //default
  * @example data => data.dataSeries[1].dataPoints
  */
-export type DataAccessorFunction = (data: any, PlotOptions?: Map<string | number, PlotOptions>) => (PlotData | [PlotData, PlotData] | any); // eslint-disable-line no-use-before-define
+export type DataAccessorFunction = (data: any, plotOptions?: Map<string | number, PlotOptions>) => (PlotData | [PlotData, PlotData] | any); // eslint-disable-line no-use-before-define
 
 /**
  * Base interface for plot options

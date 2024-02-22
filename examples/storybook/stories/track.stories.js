@@ -1,5 +1,4 @@
 import { scaleLinear } from 'd3-scale';
-import { Scale } from '../../../src/common/interfaces';
 
 import {
   GraphTrack,
@@ -18,7 +17,7 @@ export const graphTrack = () => {
   div.style.height = '500px';
   div.style.width = '100px';
 
-  const scale = scaleLinear().domain([0, 10]).range([0, 500]) as Scale;
+  const scale = scaleLinear().domain([0, 10]).range([0, 500]);
 
   const track = new GraphTrack('id');
 
@@ -36,7 +35,7 @@ export const graphTrackMultiplePlots = () => {
   div.style.height = '500px';
   div.style.width = '100px';
 
-  const scale = scaleLinear().domain([0, 100]).range([0, 500]) as Scale;
+  const scale = scaleLinear().domain([0, 100]).range([0, 500]);
 
   const track = new GraphTrack('id', {
     data: ex3,
@@ -73,7 +72,7 @@ export const graphTrackSinglePlot = () => {
   div.style.height = '500px';
   div.style.width = '100px';
 
-  const scale = scaleLinear().domain([0, 100]).range([0, 500]) as Scale;
+  const scale = scaleLinear().domain([0, 100]).range([0, 500]);
 
   const track = new GraphTrack('id',  {
     scale: 'linear',
@@ -101,7 +100,7 @@ export const dualScaleTrack = () => {
   div.style.height = '500px';
   div.style.width = '100px';
 
-  const scale = scaleLinear().domain([0, 100]).range([0, 500]) as Scale;
+  const scale = scaleLinear().domain([0, 100]).range([0, 500]);
 
   const forward = v => v / 2;
   const reverse = v => v * 2;
@@ -130,7 +129,7 @@ export const scaleTrack = () => {
   div.style.height = '500px';
   div.style.width = '100px';
 
-  const scale = scaleLinear().domain([0, 100]).range([0, 500]) as Scale;
+  const scale = scaleLinear().domain([0, 100]).range([0, 500]);
   const track = new ScaleTrack('id');
 
   // Using requestAnimationFrame to ensure that the div is attached
@@ -148,11 +147,10 @@ export const stackedTrack = () => {
   div.style.width = '100px';
   div.style.background = 'lightgrey';
 
-  const scale = scaleLinear().domain([0, 1000]).range([0, 1000]) as Scale;
+  const scale = scaleLinear().domain([0, 1000]).range([0, 1000]);
 
   const track = new StackedTrack('id', {
-    data: ex4,
-    horizontalLabels: true,
+    data: ex4
   });
 
   // Using requestAnimationFrame to ensure that the div is attached
