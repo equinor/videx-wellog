@@ -1,0 +1,35 @@
+{
+  "name": "plain-javascript-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.16",
+    "@storybook/addon-interactions": "^7.6.16",
+    "@storybook/addon-links": "^7.6.16",
+    "@storybook/addon-styling-webpack": "^0.0.6",
+    "@storybook/blocks": "^7.6.16",
+    "@storybook/html": "^7.6.16",
+    "@storybook/html-webpack5": "^7.6.16",
+    "@storybook/test": "^7.6.16",
+    "css-loader": "^6.10.0",
+    "postcss-loader": "^8.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sass-loader": "^14.1.1",
+    "storybook": "^7.6.16",
+    "style-loader": "^3.3.4"
+  },
+  "dependencies": {
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0"
+  }
+}

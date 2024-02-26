@@ -7,10 +7,7 @@ import { PlotData, LinePlotOptions } from './interfaces';
 /**
  * Line plot
  */
-export default class LinePlot extends Plot {
-  options: LinePlotOptions;
-  scale: Scale;
-  data: PlotData;
+export default class LinePlot extends Plot<LinePlotOptions> {
 
   /**
    * Renders line plot to canvas context

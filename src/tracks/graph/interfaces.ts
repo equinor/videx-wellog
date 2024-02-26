@@ -1,5 +1,5 @@
 import { TrackOptions } from '../interfaces';
-import { PlotOptions } from '../../plots/interfaces';
+import { AnyPlotOptions } from '../../plots/interfaces';
 import { Scale, Domain } from '../../common/interfaces';
 import { Plot } from '../../plots';
 
@@ -9,7 +9,7 @@ import { Plot } from '../../plots';
 export interface PlotConfig {
   id: string | number,
   type: string,
-  options: PlotOptions,
+  options?: AnyPlotOptions,
 }
 
 export type PlotCreatorFunction = (config: PlotConfig, trackScale: Scale) => Plot;

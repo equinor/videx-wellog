@@ -6,10 +6,7 @@ import { Scale } from '../common/interfaces';
 /**
  * Area plot
  */
-export default class AreaPlot extends Plot {
-  options: AreaPlotOptions;
-  scale: Scale;
-  data: PlotData;
+export default class AreaPlot extends Plot<AreaPlotOptions> {
 
   /**
    * Renders area plot to canvas context

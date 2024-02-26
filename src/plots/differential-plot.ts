@@ -8,12 +8,9 @@ import { Scale, Triplet, Range } from '../common/interfaces';
 /**
  * Differential plot
  */
-export default class DifferentialPlot extends Plot {
-  scale: Scale;
+export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   scale1: Scale;
   scale2: Scale;
-  range: Range;
-  options: DifferentialPlotOptions;
   data: [PlotData, PlotData];
   extent: [number, number];
   constructor(id : string | number, options : DifferentialPlotOptions = {}) {

@@ -16,14 +16,13 @@ import { LegendTriggerFunction } from '../../utils/legend-helper';
 /**
  * Track for visualising the domain/reference scale
  */
-export default class ScaleTrack extends SvgTrack {
+export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
   xscale: Scale;
   ticks: number[];
   labelBounds: LabelBounds;
-  options: ScaleTrackOptions;
   legendUpdate?: LegendTriggerFunction;
 
-  constructor(id: string | number, options: ScaleTrackOptions) {
+  constructor(id: string | number, options?: ScaleTrackOptions) {
     super(id, options);
     this.xscale = scaleLinear().domain([0, 10]);
     this.ticks = [];

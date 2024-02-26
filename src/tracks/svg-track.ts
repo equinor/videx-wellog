@@ -2,14 +2,13 @@ import { select } from 'd3-selection';
 import Track from './track';
 import { setStyles } from '../utils';
 import { D3Selection } from '../common/interfaces';
-import { OnMountEvent, OnUpdateEvent } from './interfaces';
+import { OnMountEvent, OnUpdateEvent, TrackOptions } from './interfaces';
 
 /**
  * Base track for tracks that renders SVG content
  */
-export default abstract class SvgTrack extends Track {
+export default abstract class SvgTrack<TrackOptions> extends Track<TrackOptions> {
   protected plotGroup: D3Selection;
-  public elm: HTMLElement;
 
   /**
    * Override to add SVG container for plotting track data

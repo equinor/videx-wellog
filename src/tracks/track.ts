@@ -14,8 +14,8 @@ const defaults = {
 /**
  * Abstract base class for wellog tracks
  */
-export default abstract class Track {
-  public options: TrackOptions;
+export default abstract class Track<TRACK_OPTIONS extends TrackOptions = TrackOptions> {
+  public options: TRACK_OPTIONS;
   public id: string | number;
   public elm: HTMLElement;
   public loader: D3Selection;
@@ -29,7 +29,7 @@ export default abstract class Track {
   protected _isLoading: boolean;
   protected _mounted: boolean;
 
-  constructor(id: string | number, options: TrackOptions = {}) {
+  constructor(id: string | number, options: TRACK_OPTIONS = {} as TRACK_OPTIONS) {
     this.options = {
       ...defaults,
       ...options,

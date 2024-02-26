@@ -21,7 +21,7 @@ export type DifferentialPlotData = Triplet<number>[];
 export type DefinedFunction = (y?:number, x?:number) => boolean;
 
 /**
- * When used in combination with a Track, it is the track's responsibillity to fetch
+ * When used in combination with a Track, it is the track's responsibility to fetch
  * and pass down data to the plots. This is configured by providing a data accessor
  * callback function, where the track's data are made available as the input argument
  * and the returned value will be used by the plot.
@@ -205,3 +205,5 @@ export interface DifferentialPlotOptions extends PlotOptions {
   forceDataUpdateOnToggle?: boolean,
 
 }
+
+export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions ;

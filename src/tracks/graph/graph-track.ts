@@ -1,7 +1,8 @@
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
 import { GridHelper, ScaleHelper, debouncer, DebounceFunction } from '../../utils';
-import { Plot, PlotOptions } from '../../plots';
+import { Plot } from '../../plots';
+import { PlotOptions } from '../../plots/interfaces';
 import { Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
@@ -20,9 +21,8 @@ const defaultOptions = {
  *
  * See ./readme.md in source code for more info
  */
-export default class GraphTrack extends CanvasTrack {
+export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   trackScale: Scale;
-  options: GraphTrackOptions;
   plots: Plot[];
   debounce: DebounceFunction;
 

@@ -1,15 +1,12 @@
 import { line } from 'd3-shape';
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
-import { PlotData, LinePlotOptions } from './interfaces';
+import { LinePlotOptions } from './interfaces';
 import stepCustom from './generators/step-custom';
 /**
  * Line-step plot
  */
-export default class LineStepPlot extends Plot {
-  options: LinePlotOptions;
-  scale: Scale;
-  data: PlotData;
+export default class LineStepPlot extends Plot<LinePlotOptions> {
 
   /**
    * Renders line-step plot to canvas context

@@ -6,14 +6,14 @@ import { DataHelper } from '../utils';
 /**
  * Abstract base class for plots
  */
-export default abstract class Plot {
+export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOptions> {
   id: string | number;
-  options: PlotOptions;
+  options: PLOT_OPTIONS;
   data: PlotData | any;
   scale: Scale;
   range: Range;
 
-  constructor(id: string | number, options: PlotOptions = {}) {
+  constructor(id: string | number, options: PLOT_OPTIONS = {} as PLOT_OPTIONS) {
     this.id = id;
     this.options = {
       defined: v => v !== null,
@@ -45,7 +45,7 @@ export default abstract class Plot {
    * @param scale
    * @param plots Plots on track
    */
-  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PlotOptions>) : Plot {
+  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PLOT_OPTIONS>) : Plot {
     let plotData = data;
     if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
       plotData = this.options.dataAccessor(data, plotOptions);
@@ -63,7 +63,7 @@ export default abstract class Plot {
    */
   setOption(key: string, value: any) : Plot {
     if (!this.options) {
-      this.options = {};
+      this.options = {} as PLOT_OPTIONS;
     }
     this.options[key] = value;
     if (key === 'domain' && this.scale) {

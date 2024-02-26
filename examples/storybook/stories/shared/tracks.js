@@ -1,6 +1,7 @@
 import {
   ScaleTrack,
   GraphTrack,
+  StackedTrack,
   graphLegendConfig,
   LegendHelper,
   scaleLegendConfig,
@@ -9,6 +10,7 @@ import {
   ex1,
   ex2,
   ex3,
+  ex4,
 } from './mock-data';
 
 export default (delayLoading = false) => {
@@ -115,6 +117,7 @@ export default (delayLoading = false) => {
         },
       }],
     }),
+    new StackedTrack(5, {label:"Formation", horizontalLabels: true, data: ex4}),
   ];
 
   if (delayLoading) {
