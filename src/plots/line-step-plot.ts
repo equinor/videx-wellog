@@ -7,7 +7,6 @@ import stepCustom from './generators/step-custom';
  * Line-step plot
  */
 export default class LineStepPlot extends Plot<LinePlotOptions> {
-
   /**
    * Renders line-step plot to canvas context
    */

@@ -206,4 +206,4 @@ export interface DifferentialPlotOptions extends PlotOptions {
 
 }
 
-export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions ;
+export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions;

@@ -1,13 +1,12 @@
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
-import { PlotData, DotPlotOptions } from './interfaces';
+import { DotPlotOptions } from './interfaces';
 import { ScaleHelper } from '../utils';
 
 /**
  * Dot plot
  */
 export default class DotPlot extends Plot<DotPlotOptions> {
-
   /**
    * Renders dot plot to canvas context
    */
