@@ -104,7 +104,7 @@ const defaultOptions = {
 };
 
 /**
- * Track for visualiing area data. Most commonly called formation track
+ * Track for visualizing area data. Most commonly called formation track
  */
 export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   xscale: ScaleLinear<number, number>;
@@ -130,7 +130,27 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
       this.isLoading = true;
       options.data().then(
         (data: AreaData) => {
-          this.data = data;
+          // Merge duplicated data
+          const mergeData = [];
+          data
+             .sort((a: AreaData, b: AreaData) => a.from - b.from) // Sort the data by 'from' property
+             .forEach((d: AreaData) => { // Merge consecutive data
+              const lastIndex = mergeData.length - 1;
+              if (
+                lastIndex >= 0 && 
+                mergeData[lastIndex].name === d.name && 
+                mergeData[lastIndex].color === d.color && 
+                mergeData[lastIndex].to === d.from
+              ) {
+                // Merge similar area with previous entry
+                mergeData[lastIndex].to = d.to;
+              } else {
+                // Add as new entry
+                mergeData.push(d);
+              }
+            });
+
+          this.data = mergeData;
           this.isLoading = false;
           this.plot();
         },
@@ -179,16 +199,30 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     const [min, max] = yscale.domain();
 
-    const areaData = data
-    .filter((d: AreaData) => d.to > min && d.from < max)
-    .map((d: AreaData) => ({
-      name: d.name,
-      yFrom: yscale(d.from),
-      yTo: yscale(d.to),
-      color: `rgb(${d.color.r},${d.color.g},${d.color.b})`,
-      opacity: d.color.a != null ? d.color.a : 1,
-    }));
-
+    const areaData: TransformedAreaData[] = [];
+    data
+      .filter((d: AreaData) => d.to > min && d.from < max)
+      .forEach((d: AreaData) => {
+        const transformedData: TransformedAreaData = {
+          name: d.name,
+          yFrom: yscale(d.from),
+          yTo: yscale(d.to),
+          color: `rgb(${d.color.r},${d.color.g},${d.color.b})`,
+          opacity: d.color.a != null ? d.color.a : 1,
+        };
+        const lastIndex = areaData.length - 1;
+        if (
+          lastIndex >= 0 && 
+          (transformedData.yTo - areaData[lastIndex].yFrom) < 0.5
+        ) {
+          // do not make area smaller than 0.5px
+          areaData[lastIndex].yTo = transformedData.yTo;
+        } else {
+          // Add as new entry
+          areaData.push(transformedData);
+        }
+      });
+      
     const selection = g.selectAll('g.area').data(areaData, (d: TransformedAreaData) => d.name);
 
     const horizontalTransform = (d: TransformedAreaData) => `translate(${d.yFrom}, 0)`;

@@ -14,28 +14,31 @@ export const ex3 = {
   noise: sin.map(v => [v[0], v[1] * Math.random() + 35]),
 };
 
-// Random Formation track (position, color and formation id.)
+// Random Formation track (position and formation id.)
 export const ex4 = async (formationLength=10) => {
   const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
+  const colors = [
+    {r:0,g:200,b:200}, 
+    {r:2,g:200,b:2}, 
+    {r:53,g:53,b:240}, 
+    {r:224,g:254,b:84}, 
+    {r:175,g:15,b:115}, 
+    {r:116,g:116,b:116}
+  ];
 
   const arr = [];
   let currentFrom = Math.random() * 1000 / formationLength;
   for (let index = 1; index <= formationLength; index++) {
     const newTo = currentFrom + Math.random() * 1500 / formationLength;
 
-    const name = `${names[Math.floor(Math.random() * names.length)]}`;
-    const r = Math.random() * 255;
-    const g = Math.random() * 255;
-    const b = Math.random() * 255;
+    const formation = Math.floor(Math.random() * names.length);
+    const name = `${names[formation]}`;
+    const c = colors[formation];
     const area = {
       name,
       to: newTo,
       from: currentFrom,
-      color: {
-        r,
-        g,
-        b,
-      }
+      color: c
     };
     arr.push(area);
     currentFrom = newTo;
