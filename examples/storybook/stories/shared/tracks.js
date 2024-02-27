@@ -117,7 +117,7 @@ export default (delayLoading = false) => {
         },
       }],
     }),
-    new StackedTrack(5, {label:"Formation", horizontalLabels: true, data: ex4}),
+    new StackedTrack(5, {label:"Formation", data: ex4}),
   ];
 
   if (delayLoading) {
