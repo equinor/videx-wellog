@@ -7,7 +7,7 @@ import { OnMountEvent, OnUpdateEvent, TrackOptions } from './interfaces';
 /**
  * Base track for tracks that renders SVG content
  */
-export default abstract class SvgTrack<TrackOptions> extends Track<TrackOptions> {
+export default abstract class SvgTrack<TOptions extends TrackOptions> extends Track<TOptions> {
   protected plotGroup: D3Selection;
 
   /**

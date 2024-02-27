@@ -6,7 +6,7 @@ import { TrackOptions, OnMountEvent, OnUpdateEvent } from './interfaces';
 /**
  * Base track for tracks that renders to a canvas context
  */
-export default class CanvasTrack<TrackOptions> extends Track<TrackOptions> {
+export default class CanvasTrack<TOptions extends TrackOptions> extends Track<TOptions> {
   ctx: CanvasRenderingContext2D;
 
   /**

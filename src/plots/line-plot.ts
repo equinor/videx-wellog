@@ -8,7 +8,6 @@ import { PlotData, LinePlotOptions } from './interfaces';
  * Line plot
  */
 export default class LinePlot extends Plot<LinePlotOptions> {
-
   /**
    * Renders line plot to canvas context
    */

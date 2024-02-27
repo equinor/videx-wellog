@@ -1,13 +1,12 @@
 import { area } from 'd3-shape';
 import Plot from './plot';
-import { PlotData, AreaPlotOptions } from './interfaces';
+import { AreaPlotOptions } from './interfaces';
 import { Scale } from '../common/interfaces';
 
 /**
  * Area plot
  */
 export default class AreaPlot extends Plot<AreaPlotOptions> {
-
   /**
    * Renders area plot to canvas context
    * @param ctx canvas context instance
