@@ -24,10 +24,11 @@ function plotLabel(
   // label
   let height = d.yTo - d.yFrom - offsets[0] - offsets[1];
   let width = trackWidth;
-  if(horizontal) {
+  if (horizontal) {
     // swap width and height
     [width, height] = [height, width];
   }
+  g.select('g.label').remove();
 
   const fontSize = 18;
   if ((fontSize + 2) > height || (fontSize + 2) > width) {
@@ -57,9 +58,6 @@ function plotLabel(
   labelY += dy;
 
   const labelTransform = `translate(${labelX},${labelY})rotate(${angle})`;
-
-  g.select('g.label').remove();
-
   const labelGroup = g.append('g')
     .attr('class', 'label')
     .attr('transform', labelTransform);
@@ -88,12 +86,11 @@ function plotLabel(
   if (rot_label_width > width || rot_label_height > height) {
     labelGroup.remove();
   } else {
-    const bbox = label.node().getBBox();
     setAttrs(labelBg, {
-      x: bbox.x-1,
-      y: bbox.y-1,
-      width: bbox.width+2,
-      height: bbox.height+2,
+      x: label_bbox.x - 1,
+      y: label_bbox.y - 1,
+      width: label_bbox.width + 2,
+      height: label_bbox.height + 2,
       fill: d.color,
     });
   }
@@ -133,16 +130,19 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
       options.data().then(
         (data: AreaData) => {
           // Merge duplicated data
-          const mergeData = [];
+          const mergeData: AreaData [] = [];
           data
              .sort((a: AreaData, b: AreaData) => a.from - b.from) // Sort the data by 'from' property
              .forEach((d: AreaData) => { // Merge consecutive data
               const lastIndex = mergeData.length - 1;
               if (
-                lastIndex >= 0 && 
-                mergeData[lastIndex].name === d.name && 
-                mergeData[lastIndex].color === d.color && 
-                mergeData[lastIndex].to === d.from
+                lastIndex >= 0
+                && mergeData[lastIndex].name === d.name
+                && mergeData[lastIndex].color.r === d.color.r
+                && mergeData[lastIndex].color.g === d.color.g 
+                && mergeData[lastIndex].color.b === d.color.b
+                && mergeData[lastIndex].color.a === d.color.a
+                && mergeData[lastIndex].to === d.from
               ) {
                 // Merge similar area with previous entry
                 mergeData[lastIndex].to = d.to;
@@ -167,7 +167,11 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
    */
   onUpdate(event: OnUpdateEvent) {
     super.onUpdate(event);
-    this.xscale.range([0, this.elm.clientWidth]);
+    if( this.options.horizontal) {
+      this.xscale.range([0, this.elm.clientHeight]);
+    } else {
+      this.xscale.range([0, this.elm.clientWidth]);
+    }
     this.plot();
   }
 
@@ -235,9 +239,9 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     const horizontalRectGeom = (d: TransformedAreaData) => ({
       x: 0,
-      y: 0,
+      y: xscale(0),
       width: Math.max(0, d.yTo - d.yFrom),
-      height: "100%",
+      height: xscale(1),
       fill: d.color,
       'fill-opacity': d.opacity,
     });
@@ -265,21 +269,23 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
         stroke: 'black',
       };
 
+      const sc25 = xscale(0.25);
+      const sc50 = xscale(0.50);
+      const sc75 = xscale(0.75);
       const horizontalLineData = [
-        { className: 'line-top', x1: () => 0, x2: () => 0, y1: () => '25%', y2: () => '75%' },
-        { className: 'line-bottom', x1: (d) => d.yTo - d.yFrom, x2: (d) => d.yTo - d.yFrom, y1: () => '25%', y2: () => '75%' },
-        { className: 'line-middle', x1: () => 0, x2: (d) => d.yTo - d.yFrom, y1: () => '50%', y2: () => '50%' },
+        { className: 'line-top', x1: () => 0, x2: () => 0, y1: () => sc25, y2: () => sc75 },
+        { className: 'line-bottom', x1: (d) => d.yTo - d.yFrom, x2: (d) => d.yTo - d.yFrom, y1: () => sc25, y2: () => sc75 },
+        { className: 'line-middle', x1: () => 0, x2: (d) => d.yTo - d.yFrom, y1: () => sc50, y2: () => sc50 },
       ];
       const verticalLineData = [
-        { className: 'line-top', x1: () => xscale(0.25), x2: () => xscale(0.75), y1: () => 0, y2: () => 0 },
-        { className: 'line-bottom', x1: () => xscale(0.25), x2: () => xscale(0.75), y1: (d) => d.yTo - d.yFrom, y2: (d) => d.yTo - d.yFrom },
-        { className: 'line-middle', x1: () => xscale(0.50), x2: () => xscale(0.50), y1: () => 0, y2: (d) => d.yTo - d.yFrom },
+        { className: 'line-top', x1: () => sc25, x2: () => sc75, y1: () => 0, y2: () => 0 },
+        { className: 'line-bottom', x1: () => sc25, x2: () => sc75, y1: (d) => d.yTo - d.yFrom, y2: (d) => d.yTo - d.yFrom },
+        { className: 'line-middle', x1: () => sc50, x2: () => sc50, y1: () => 0, y2: (d) => d.yTo - d.yFrom },
       ];
       const lineData = options.horizontal ? horizontalLineData : verticalLineData;
 
       lineData.forEach((l: { className: any; x1: any; y1: any; x2: any; y2: any; }) => {
         const { className, x1, y1, x2, y2 } = l;
-        selection.select(`line.${className}`);
         setAttrs(
           selection.select(`line.${className}`),
           (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d) })
@@ -294,12 +300,12 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     if (options.showLabels !== false) {
       const [, yMax] = yscale.range();
-      const trackWidth = options.horizontal ? g.node().getBoundingClientRect().height: xscale(1) - xscale(0);
+      const trackWidth = xscale(1) - xscale(0);
       g.selectAll('g.area').each((d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
         const fg = select(nodes[i]);
         const offsets = [
-          d.yFrom < 0 ? Math.abs(d.yFrom) : 0,
-          d.yTo > yMax ? d.yTo - yMax : 0,
+          Math.max(0, -d.yFrom),
+          Math.max(0, d.yTo - yMax),
         ];
         plotLabel(fg, d, trackWidth, offsets, options.horizontal, options.labelRotation);
       });
