@@ -9,22 +9,24 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
  * Render label for an area
  * @param {SVGGElement} g
  * @param {object} d data record
+ * @param {number} trackWidth width of the track.
  * @param {number[]} offsets label offsets
- * @param {number} angle label angle regarding to the main track axis
+ * @param {number} angle label angle regarding to the main track axis.
  */
 function plotLabel(
   g: Selection<HTMLElement, unknown, null, undefined>,
   d: TransformedAreaData,
+  trackWidth: number,
   offsets: number[],
   horizontal: boolean,
   angle: number
 ) {
   // label
   let height = d.yTo - d.yFrom - offsets[0] - offsets[1];
-  let width = g.node().getBoundingClientRect().width;
+  let width = trackWidth;
   if(horizontal) {
-    height = g.node().getBoundingClientRect().height;
-    width = d.yTo - d.yFrom - offsets[0] - offsets[1];
+    // swap width and height
+    [width, height] = [height, width];
   }
 
   const fontSize = 18;
@@ -232,18 +234,18 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
     selection.attr('transform', transform);
 
     const horizontalRectGeom = (d: TransformedAreaData) => ({
-      x:0,
-      y: xscale(0),
-      height: "100%",
+      x: 0,
+      y: 0,
       width: Math.max(0, d.yTo - d.yFrom),
+      height: "100%",
       fill: d.color,
       'fill-opacity': d.opacity,
     });
     const verticalRectGeom = (d: TransformedAreaData) => ({
       x: xscale(0),
       y: 0,
-      height: Math.max(0, d.yTo - d.yFrom),
       width: xscale(1),
+      height: Math.max(0, d.yTo - d.yFrom),
       fill: d.color,
       'fill-opacity': d.opacity,
     });
@@ -292,13 +294,14 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     if (options.showLabels !== false) {
       const [, yMax] = yscale.range();
+      const trackWidth = options.horizontal ? g.node().getBoundingClientRect().height: xscale(1) - xscale(0);
       g.selectAll('g.area').each((d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
         const fg = select(nodes[i]);
         const offsets = [
           d.yFrom < 0 ? Math.abs(d.yFrom) : 0,
           d.yTo > yMax ? d.yTo - yMax : 0,
         ];
-        plotLabel(fg, d, offsets, options.horizontal, options.labelRotation);
+        plotLabel(fg, d, trackWidth, offsets, options.horizontal, options.labelRotation);
       });
     }
     selection.exit().remove();
