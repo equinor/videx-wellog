@@ -168,11 +168,13 @@ export const ex7 = async (useShortName=false) => {
     { standardName: "Anhydrite", shortName: "AH", color: [220, 220, 220] },
     { standardName: "Breccia", shortName: "BC", color: [160, 82, 45] }
   ];
+
+  // unsorted and with consecutive facies on purpose
   const depthSequence = [
     { id: 5, from: 0, to: 25 },
     { id: 0, from: 25, to: 55 },
     { id: 6, from: 55, to: 100 },
-    { id: 5, from: 100, to: 140 },
+    { id: 15, from: 100, to: 140 },
     { id: 1, from: 140, to: 180 },
     { id: 8, from: 180, to: 220 },
     { id: 10, from: 220, to: 270 },
@@ -181,9 +183,9 @@ export const ex7 = async (useShortName=false) => {
     { id: 7, from: 380, to: 440 },
     { id: 4, from: 440, to: 480 },
     { id: 12, from: 480, to: 530 },
-    { id: 5, from: 530, to: 570 },
+    { id: 5, from: 600, to: 640 },
     { id: 5, from: 570, to: 600 },
-    { id: 15, from: 600, to: 640 },
+    { id: 5, from: 530, to: 570 },
     { id: 18, from: 640, to: 675 },
     { id: 19, from: 675, to: 710 },
     { id: 16, from: 710, to: 745 },

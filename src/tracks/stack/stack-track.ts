@@ -125,34 +125,29 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     this.xscale = scaleLinear().domain([0, 1]);
 
-    if (options.data) {
+    if (options.data ) {
       this.isLoading = true;
       options.data().then(
-        (data: AreaData) => {
-          // Merge duplicated data
-          const mergeData: AreaData [] = [];
-          data
-             .sort((a: AreaData, b: AreaData) => a.from - b.from) // Sort the data by 'from' property
-             .forEach((d: AreaData) => { // Merge consecutive data
-              const lastIndex = mergeData.length - 1;
-              if (
-                lastIndex >= 0
-                && mergeData[lastIndex].name === d.name
-                && mergeData[lastIndex].color.r === d.color.r
-                && mergeData[lastIndex].color.g === d.color.g 
-                && mergeData[lastIndex].color.b === d.color.b
-                && mergeData[lastIndex].color.a === d.color.a
-                && mergeData[lastIndex].to === d.from
-              ) {
-                // Merge similar area with previous entry
-                mergeData[lastIndex].to = d.to;
-              } else {
-                // Add as new entry
-                mergeData.push(d);
-              }
-            });
-
-          this.data = mergeData;
+        (data: AreaData[]) => {
+          // Sort the data by 'from' property
+          data.sort((a: AreaData, b: AreaData) => a.from - b.from); 
+          // Merge consecutive areas
+          for (let index = 1; index < data.length; index++) {
+            const currentArea = data[index];
+            const previousArea = data[index - 1];
+            if (previousArea.name === currentArea.name
+              && previousArea.color.r === currentArea.color.r
+              && previousArea.color.g === currentArea.color.g
+              && previousArea.color.b === currentArea.color.b
+              && previousArea.color.a === currentArea.color.a
+              && previousArea.to === currentArea.from) {
+              // Merge similar area with previous entry
+              previousArea.to = currentArea.to;
+              data.splice(index, 1); // Remove the current element after merging
+              index--; // Adjust the index after removing an element
+            }
+          }
+          this.data = data;
           this.isLoading = false;
           this.plot();
         },
