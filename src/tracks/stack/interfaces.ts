@@ -22,9 +22,9 @@ interface StackedTrackOptions extends TrackOptions {
 
   /**
    * @brief Rotation angle for the labels.
-   * 
+   *
    * The angle is computed clockwise from the track central line.
-   * (i.e. The vertical line if the track is vertical and 
+   * (i.e. The vertical line if the track is vertical and
    * the horizontal line if the track is horizontal.)
    */
   labelRotation?: number,

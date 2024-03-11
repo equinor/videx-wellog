@@ -19,7 +19,7 @@ function plotLabel(
   trackWidth: number,
   offsets: number[],
   horizontal: boolean,
-  angle: number
+  angle: number,
 ) {
   // label
   let height = d.yTo - d.yFrom - offsets[0] - offsets[1];
@@ -52,7 +52,7 @@ function plotLabel(
   // we compute our own label offset so that it will rotate from the text middle
   // instead of the text baseline.
   const rad_angle = angle * Math.PI / 180;
-  const dx = Math.sin(rad_angle) * (fontSize + 1) / 3; 
+  const dx = Math.sin(rad_angle) * (fontSize + 1) / 3;
   const dy = Math.cos(rad_angle) * (fontSize + 1) / 3;
   labelX -= dx;
   labelY += dy;
@@ -109,7 +109,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   xscale: ScaleLinear<number, number>;
 
   constructor(id: string | number, options) {
-    super(id, {...defaultOptions, ...options});
+    super(id, { ...defaultOptions, ...options });
   }
 
   /**
@@ -125,12 +125,12 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     this.xscale = scaleLinear().domain([0, 1]);
 
-    if (options.data ) {
+    if (options.data) {
       this.isLoading = true;
       options.data().then(
         (data: AreaData[]) => {
           // Sort the data by 'from' property
-          data.sort((a: AreaData, b: AreaData) => a.from - b.from); 
+          data.sort((a: AreaData, b: AreaData) => a.from - b.from);
           // Merge consecutive areas
           for (let index = 1; index < data.length; index++) {
             const currentArea = data[index];
@@ -162,7 +162,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
    */
   onUpdate(event: OnUpdateEvent) {
     super.onUpdate(event);
-    if( this.options.horizontal) {
+    if (this.options.horizontal) {
       this.xscale.range([0, this.elm.clientHeight]);
     } else {
       this.xscale.range([0, this.elm.clientWidth]);
@@ -213,8 +213,8 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
         };
         const lastIndex = areaData.length - 1;
         if (
-          lastIndex >= 0 && 
-          (transformedData.yTo - areaData[lastIndex].yFrom) < 0.5
+          lastIndex >= 0
+          && (transformedData.yTo - areaData[lastIndex].yFrom) < 0.5
         ) {
           // do not make area smaller than 0.5px
           areaData[lastIndex].yTo = transformedData.yTo;
@@ -223,7 +223,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
           areaData.push(transformedData);
         }
       });
-      
+
     const selection = g.selectAll('g.area').data(areaData, (d: TransformedAreaData) => d.name);
 
     const horizontalTransform = (d: TransformedAreaData) => `translate(${d.yFrom}, 0)`;
@@ -283,12 +283,12 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
         const { className, x1, y1, x2, y2 } = l;
         setAttrs(
           selection.select(`line.${className}`),
-          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d) })
+          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d) }),
         );
         const line = newAreas.append('line');
         setAttrs(
           line,
-          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d), class: `${className}`, ...lineAttrs})
+          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d), class: `${className}`, ...lineAttrs }),
         );
       });
     }
