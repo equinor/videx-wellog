@@ -8,7 +8,7 @@ import {
   InterpolatedScaleHandler
 } from '../../../src';
 
-import { ex3, ex4 } from './shared/mock-data';
+import { ex3, ex4, ex4_large, ex4_fix, ex7, ex7_shortName } from './shared/mock-data';
 
 export default { title: 'Track types' };
 
@@ -141,23 +141,70 @@ export const scaleTrack = () => {
   return div;
 };
 
-export const stackedTrack = () => {
-  const div = document.createElement('div');
-  div.style.height = '500px';
-  div.style.width = '100px';
-  div.style.background = 'lightgrey';
+export const stackedTrack = {
+  render: (args) => {
+    const div = document.createElement('div');
+    div.style.height = '700px';
+    div.style.width = '150px';
+    div.style.background = 'lightgrey';
+    if(args.horizontal){
+      div.style.width = '700px';
+      div.style.height = '150px';
+    }
 
-  const scale = scaleLinear().domain([0, 1000]).range([0, 1000]);
+    const scale = scaleLinear().domain([0, 1000]).range([0, 700]);
 
-  const track = new StackedTrack('id', {
-    data: ex4
-  });
+    const datasets = {
+      'formation (random small)': ex4,
+      'formation (random large)': ex4_large,
+      'formation (fix)': ex4_fix,
+      'facies (standardName)': ex7,
+      'facies (shortName)': ex7_shortName
+  };
+  const selectedDataSet = args.dataSet;
+  const data = datasets[selectedDataSet];
 
-  // Using requestAnimationFrame to ensure that the div is attached
-  // to the DOM before calling init
-  requestAnimationFrame(() => {
-    track.init(div, scale);
-  });
+    const track = new StackedTrack('id', {
+      data: data,
+      horizontal: args.horizontal,
+      showLines: args.showLines,
+      showLabels: args.showLabels,
+      labelRotation: args.labelRotation,
+    });
 
-  return div;
+    // Using requestAnimationFrame to ensure that the div is attached
+    // to the DOM before calling init
+    requestAnimationFrame(() => {
+      track.init(div, scale);
+    });
+
+    return div;
+  },
+  argTypes: {
+    dataSet:{
+      control: 'radio', 
+      options: [
+        'formation (random small)',
+        'formation (random large)',
+        'formation (fix)',
+        'facies (standardName)',
+        'facies (shortName)'
+      ],
+    },
+    labelRotation: {
+      control: {
+        type: 'number',
+        min: -180,
+        max: 180,
+        step: 10,
+      },
+    },
+  },
+  args:{
+    dataSet: 'formation (fix)',
+    horizontal: false,
+    showLines: true,
+    showLabels: true,
+    labelRotation: 0,
+  },
 };

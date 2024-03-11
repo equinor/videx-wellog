@@ -10,7 +10,7 @@ import {
   ex1,
   ex2,
   ex3,
-  ex4,
+  ex4_large,
 } from './mock-data';
 
 export default (delayLoading = false) => {
@@ -117,7 +117,7 @@ export default (delayLoading = false) => {
         },
       }],
     }),
-    new StackedTrack(5, {label:"Formation", horizontalLabels: true, data: ex4}),
+    new StackedTrack(5, {label:"Formation", showLines: false, labelRotation: -90, data: ex4_large}),
   ];
 
   if (delayLoading) {

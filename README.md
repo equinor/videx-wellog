@@ -18,7 +18,7 @@ npm run docs
 
 ```
 # from root:
-cd examples/plain-javascript-example
+cd examples/storybook
 npm run storybook
 ```
 
