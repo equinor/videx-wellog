@@ -1,4 +1,5 @@
 import {
+  CorePhotosTrack,
   ScaleTrack,
   GraphTrack,
   StackedTrack,
@@ -132,4 +133,29 @@ export default (delayLoading = false) => {
   }
 
   return tracks;
+};
+
+export const createCorePhotoTracks = (core_photo_data) => {
+  const photos = core_photo_data.Photos;
+  const images = photos.map((photo) => {
+    const range = photo.depthRange.split('-');
+
+    return {
+      from: parseInt(range[0], 10),
+      to: parseInt(range[1], 10),
+      url: photo.url,
+      index: photo.section,
+      lighting: photo.lighting,
+    };
+  });
+  const scaleTrack = new ScaleTrack("MD", {
+    maxWidth: 50,
+    width: 2,
+    legendConfig: scaleLegendConfig,
+  });
+  const corePhotosTrack = new CorePhotosTrack("Core Photos", {
+    data: () => new Promise(resolve => resolve({ images, plugs: core_photo_data.Plugs })),
+  });
+
+  return [scaleTrack,corePhotosTrack];
 };

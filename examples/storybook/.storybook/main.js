@@ -10,6 +10,7 @@ const config = {
     "@storybook/addon-interactions",
     "@storybook/addon-styling-webpack",
   ],
+  staticDirs: ['../stories/shared'],
   framework: {
     name: "@storybook/html-webpack5",
     options: {

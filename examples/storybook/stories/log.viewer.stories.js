@@ -7,7 +7,7 @@ import {
     InterpolatedScaleHandler,
 } from '../../../src';
 
-import createTracks from './shared/tracks';
+import createTracks, {createCorePhotoTracks} from './shared/tracks';
 import { ex4, ex5, ex6 } from './shared/mock-data';
   
 export default { title: 'Log Viewer' };
@@ -201,6 +201,29 @@ export const logViewerLegend = () => {
   const viewer = new LogViewer();
 
   const tracks = createTracks();
+
+  // Using requestAnimationFrame to ensure that the div is attached
+  // to the DOM before calling init
+  requestAnimationFrame(() => {
+    viewer
+      .init(div)
+      .setTracks(tracks);
+  });
+
+  return div;
+};
+
+
+import core_data from './shared/core-photos-data.json';
+
+export const logViewerCorePhotos = () => {
+  const div = document.createElement('div');
+  div.style.height = '95vh';
+  div.style.width = '200px';
+
+  const viewer = new LogViewer({domain:[5845, 5890],  showTitles: true, showLegend: false});
+
+  const tracks = createCorePhotoTracks(core_data);
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init

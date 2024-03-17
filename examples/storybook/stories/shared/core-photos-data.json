@@ -1,0 +1,131 @@
+{
+    "Photos": [
+      {
+        "depthRange": "5846.00-5849.00",
+        "url": "photos/FORGE 16A 32-78_5846-5849blended.jpg"
+      },
+      {
+        "depthRange": "5849.00-5851.00",
+        "url": "photos/FORGE 16A 32-78_5849-5851blended.jpg"
+      },
+      {
+        "depthRange": "5851.00-5854.00",
+        "url": "photos/FORGE 16A 32-78_5851-5854blended.jpg"
+      },
+      {
+        "depthRange": "5854.00-5854.80",
+        "url": "photos/FORGE 16A 32-78_5854-5854.8blended.jpg"
+      },
+      {
+        "depthRange": "5858.00-5861.00",
+        "url": "photos/FORGE 16A 32-78_5858-5861blended.jpg"
+      },
+      {
+        "depthRange": "5861.00-5864.00",
+        "url": "photos/FORGE 16A 32-78_5861-5864blended.jpg"
+      },
+      {
+        "depthRange": "5864.00-5867.00",
+        "url": "photos/FORGE 16A 32-78_5864-5867blended.jpg"
+      },
+      {
+        "depthRange": "5867.00-5870.00",
+        "url": "photos/FORGE 16A 32-78_5867-5870blended.jpg"
+      },
+      {
+        "depthRange": "5870.00-5873.00",
+        "url": "photos/FORGE 16A 32-78_5870-5873blended.jpg"
+      },
+      {
+        "depthRange": "5873.00-5876.00",
+        "url": "photos/FORGE 16A 32-78_5873-5876blended.jpg"
+      },
+      {
+        "depthRange": "5876.00-5879.00",
+        "url": "photos/FORGE 16A 32-78_5876-5879blended.jpg"
+      },
+      {
+        "depthRange": "5879.00-5882.00",
+        "url": "photos/FORGE 16A 32-78_5879-82blended.jpg"
+      },
+      {
+        "depthRange": "5882.00-5884.85",
+        "url": "photos/FORGE 16A 32-78_5882-84.85blended.jpg"
+      },
+      {
+        "depthRange": "5884.85-5887.75",
+        "url": "photos/FORGE 16A 32-78_5884.85-87.75blended.jpg"
+      },
+      {
+        "depthRange": "5887.75-5889.5",
+        "url": "photos/FORGE 16A 32-78_5887.75-5889.5blended.jpg"
+      }
+    ],
+    "Plugs": [
+      {
+        "coreDepth": 5862,
+        "plugId": "1",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": "NaN",
+        "klV": "NaN",
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+      },
+      {
+        "coreDepth": 5865,
+        "plugId": "2",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": 0,
+        "klV": "NaN",
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+      },
+      {
+        "coreDepth": 5875,
+        "plugId": "3",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": "NaN",
+        "klV": 0,
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+      },
+      {
+        "coreDepth": 5878,
+        "plugId": "4",
+        "grDens": 0,
+        "kaH": 0,
+        "kaV": 0,
+        "klH": "NaN",
+        "klV": 0,
+        "por": 0,
+        "porV": 0,
+        "porOb": 0,
+        "soDs": 0,
+        "soDsCorr": 0,
+        "swDs": 0,
+        "swDsCorr": 0
+      }
+  ]
+  }
+  
