@@ -117,6 +117,10 @@ export interface LinePlotOptions extends PlotOptions {
    * @example [2, 3] // Draw 2, skip 3 pixels
    */
   dashWrapped?: number[],
+  /**
+   * If enabled, points surrounded by non-defined values will be displayed as a dot
+   */
+  showIsolatedPoints?: boolean,
 }
 
 /**

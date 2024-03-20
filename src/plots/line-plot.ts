@@ -51,6 +51,32 @@ export default class LinePlot extends Plot<LinePlotOptions> {
       this.plotWrapped(ctx, lineFunction);
     }
 
+    if (options.showIsolatedPoints) {
+      const arcL = Math.PI * 2;
+
+      ctx.fillStyle = options.color;
+
+      plotdata
+        .filter((t, i) => {
+          if (!options.defined(t[1], t[0])) return false;
+
+          const prev = plotdata[i - 1]?.[1];
+          const next = plotdata[i + 1]?.[1];
+
+          if (i === 0) return !options.defined(next);
+          if (i === plotdata.length - 1) return !options.defined(prev);
+          return !options.defined(prev) && !options.defined(next);
+        })
+        .forEach(d => {
+          ctx.beginPath();
+
+          if (options.horizontal) ctx.arc(scale(d[0]), xscale(d[1]), 1, 0, arcL);
+          else ctx.arc(xscale(d[1]), scale(d[0]), 1, 0, arcL);
+
+          ctx.fill();
+        });
+    }
+
     ctx.restore();
   }
 
