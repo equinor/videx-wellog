@@ -25,6 +25,7 @@ export default abstract class SvgTrack<TOptions extends TrackOptions> extends Tr
     super.onUpdate(trackEvent);
 
     const boundingClient = this.elm.getBoundingClientRect();
+
     setStyles(this.plotGroup, {
       height: `${this.elm.clientHeight}px`,
       width: `${boundingClient.width}px`,
