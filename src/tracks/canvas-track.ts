@@ -28,15 +28,17 @@ export default class CanvasTrack<TOptions extends TrackOptions> extends Track<TO
       elm,
     } = this;
 
+    const boundingClient = elm.getBoundingClientRect();
+
     if (ctx) {
       const canvas = select(ctx.canvas);
       const props = {
         styles: {
-          width: `${elm.clientWidth}px`,
+          width: `${boundingClient.width}px`,
           height: `${elm.clientHeight}px`,
         },
         attrs: {
-          width: elm.clientWidth,
+          width: boundingClient.width,
           height: elm.clientHeight,
         },
       };
