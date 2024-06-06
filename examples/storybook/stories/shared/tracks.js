@@ -5,13 +5,22 @@ import {
   graphLegendConfig,
   LegendHelper,
   scaleLegendConfig,
+  distributionLegendConfig,
+  DistributionTrack,
 } from '../../../../src';
 import {
   ex1,
   ex2,
   ex3,
   ex4_large,
+  exampleDistributionData,
 } from './mock-data';
+
+const distributionComponents = {
+  'carbonate': { color: 'red' },
+  'sand': { color: 'green' },
+  'shale': { color: 'blue' },
+};
 
 export default (delayLoading = false) => {
   const tracks = [
@@ -117,7 +126,20 @@ export default (delayLoading = false) => {
         },
       }],
     }),
-    new StackedTrack(5, {label:"Formation", showLines: false, labelRotation: -90, data: ex4_large}),
+    new StackedTrack(5, {
+      label:"Formation",
+      showLines: false,
+      labelRotation: -90,
+      data: ex4_large,
+    }),
+    new DistributionTrack(6, {
+      label: 'Distribution',
+      abbr: 'Dst',
+      data: exampleDistributionData,
+      legendConfig: distributionLegendConfig(distributionComponents),
+      components: distributionComponents,
+      discreteHeight: 5,
+    }),
   ];
 
   if (delayLoading) {

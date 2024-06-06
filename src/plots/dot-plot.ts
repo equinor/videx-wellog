@@ -25,7 +25,7 @@ export default class DotPlot extends Plot<DotPlotOptions> {
 
     ctx.fillStyle = options.color;
     const arcL = Math.PI * 2;
-    plotdata.forEach(d => {
+    plotdata?.forEach(d => {
       if (!options.defined(d[1], d[0])) return;
 
       ctx.beginPath();

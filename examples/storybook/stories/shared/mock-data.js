@@ -18,11 +18,11 @@ export const ex3 = {
 export const ex4 = async (formationLength=10) => {
   const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
   const colors = [
-    {r:0,g:200,b:200}, 
-    {r:2,g:200,b:2}, 
-    {r:53,g:53,b:240}, 
-    {r:224,g:254,b:84}, 
-    {r:175,g:15,b:115}, 
+    {r:0,g:200,b:200},
+    {r:2,g:200,b:2},
+    {r:53,g:53,b:240},
+    {r:224,g:254,b:84},
+    {r:175,g:15,b:115},
     {r:116,g:116,b:116}
   ];
 
@@ -58,21 +58,21 @@ export const ex4_xlarge = async () => {
 export const ex4_fix = async () => {
   const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
   const colors = [
-    {r:0,g:200,b:200}, 
-    {r:2,g:200,b:2}, 
-    {r:53,g:53,b:240}, 
-    {r:224,g:254,b:84}, 
-    {r:175,g:15,b:115}, 
+    {r:0,g:200,b:200},
+    {r:2,g:200,b:2},
+    {r:53,g:53,b:240},
+    {r:224,g:254,b:84},
+    {r:175,g:15,b:115},
     {r:116,g:116,b:116}
   ];
   const facies = [
-    {id:1,from:10,to:40}, 
-    {id:2,from:40,to:90}, 
-    {id:3,from:90,to:240}, 
+    {id:1,from:10,to:40},
+    {id:2,from:40,to:90},
+    {id:3,from:90,to:240},
     {id:4,from:240,to:340},
-    {id:5,from:340,to:600}, 
-    {id:0,from:600,to:670}, 
-    {id:2,from:670,to:720}, 
+    {id:5,from:340,to:600},
+    {id:0,from:600,to:670},
+    {id:2,from:670,to:720},
     {id:5,from:720,to:930}
   ];
   const arr = [];
@@ -224,4 +224,32 @@ export const ex7 = async (useShortName=false) => {
 // Facies Track using short Name
 export const ex7_shortName = async() => {
   return ex7(true);
+};
+
+export const exampleDistributionData = () => {
+  const components = ['carbonate', 'shale', 'sand'];
+  const data = [];
+
+  for (let depth = 200; depth <= 1000; depth += 10) {
+    let remainingValue = 100;
+
+    const composition = components.map((key, index) => {
+      // For the last component, assign full remaining value
+      if (index === components.length - 1) {
+        return { key, value: remainingValue };
+      }
+
+      const value = parseFloat((Math.random() * remainingValue).toFixed(2));
+      remainingValue -= value;
+
+      return { key, value };
+    });
+
+    data.push({
+      depth,
+      composition,
+    });
+  }
+
+  return data;
 };

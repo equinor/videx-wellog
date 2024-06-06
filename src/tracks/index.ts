@@ -6,3 +6,4 @@ export { default as HtmlTrack } from './html-track';
 export * from './graph';
 export * from './scale';
 export * from './stack';
+export * from './distribution';
