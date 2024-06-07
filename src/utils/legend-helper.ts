@@ -49,13 +49,12 @@ export default class LegendHelper {
    * Renders a simple rotated text label that is scaled to fit bounds
    */
   static renderBasicVerticalSvgLabel(g: D3Selection, bounds: LegendBounds, label: string, abbr: string, horizontal: boolean = false) : void {
-    const { width: w, height: h, left, top } = bounds;
+    const { width, height, left = 0, top = 0 } = bounds;
 
-    const y = (top || 0) + h * 0.9;
-    const textSize = Math.min(12, Math.min(w, 40) / 3);
-    const x = horizontal
-      ? (left || 0) + Math.max(0, (w / 2) + (textSize / 3))
-      : (left || 0) + Math.max(0, (w / 2) - (textSize / 3));
+    const y = top + height * 0.9;
+    const x = left + Math.max(0, (width / 2));
+
+    const textSize = Math.min(12, Math.min(width, 40) / 3);
 
     const transform = horizontal
       ? `translate(${y},${x})`
@@ -64,11 +63,12 @@ export default class LegendHelper {
     const lbl = g.append('text')
       .attr('transform', transform)
       .attr('font-size', `${textSize}px`)
+      .attr('dominant-baseline', 'middle')
       .style('text-anchor', 'end');
     lbl.text(label);
 
     const bbox = lbl.node().getBBox();
-    if (bbox.width > h * 0.8) {
+    if (bbox.width > height * 0.8) {
       lbl.text(abbr || label);
     }
   }
@@ -78,7 +78,7 @@ export default class LegendHelper {
    * a rotated label legend.
    */
   static basicVerticalLabel(label: string, abbr: string) : LegendConfig {
-    function onLegendUpdate(elm, bounds, track) {
+    const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
       const g = select(elm);
       g.selectAll('*').remove();
       LegendHelper.renderBasicVerticalSvgLabel(
@@ -88,7 +88,7 @@ export default class LegendHelper {
         abbr || track.options.abbr,
         track.options.horizontal,
       );
-    }
+    };
     return LegendHelper.basicLegendSvgConfig(() => 3, onLegendUpdate);
   }
 }

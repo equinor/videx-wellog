@@ -66,7 +66,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
     } = this;
 
     if (options.data) {
-      const showLoader = options.showLoader === undefined ? !!loader : options.showLoader;
+      const showLoader = options.showLoader ?? Boolean(loader);
 
       if (showLoader && typeof (options.data) === 'function') {
         this.loadData(options.data, showLoader);
