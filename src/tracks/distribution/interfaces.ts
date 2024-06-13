@@ -15,7 +15,10 @@ export interface DistributionTrackOptions extends TrackOptions {
   horizontal?: boolean,
 
   /** The height to use for discrete values. */
-  discreteHeight: number,
+  discreteHeight?: number,
+
+  /** Specifies whether the graph should interpolate between the points. */
+  interpolate?: boolean,
 
   /** List of distribution components. */
   components?: DistributionComponents,

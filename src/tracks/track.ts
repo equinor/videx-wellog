@@ -5,7 +5,7 @@ import { LegendTriggerFunction } from '../utils/legend-helper';
 /**
  * Default options
  */
-const defaults = {
+const defaults: TrackOptions = {
   width: 3,
   maxWidth: null,
   horizontal: false,

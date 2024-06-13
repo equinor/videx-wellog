@@ -227,7 +227,7 @@ export const ex7_shortName = async() => {
 };
 
 export const exampleDistributionData = () => {
-  const components = ['carbonate', 'shale', 'sand'];
+  const components = ['carbonate', 'sand', 'shale'];
   const data = [];
 
   for (let depth = 200; depth <= 1000; depth += 10) {
