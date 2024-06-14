@@ -1,18 +1,45 @@
-import { scaleLinear, ScaleLinear } from 'd3-scale';
-import { select } from 'd3-selection';
-import SvgTrack from '../svg-track';
+import { ScaleLinear, scaleLinear } from 'd3-scale';
+import CanvasTrack from '../canvas-track';
 import {
-  CompositionEntry,
   DistributionData,
   DistributionTrackOptions,
 } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
-import { setAttrs } from '../../utils';
+
+interface DistributionPolygon {
+  /** Color of the element. */
+  color: string;
+  /** Points array to store depths and values. */
+  points: { depth: number, value: number }[];
+}
+
+const defaultOptions: DistributionTrackOptions = {
+  discreteHeight: 10,
+  interpolate: false,
+};
+
+/** Helper function for drawing filled rectangle vertically or horizontally. */
+const fillRect = (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, horizontal: boolean) => {
+  ctx.fillRect(
+    horizontal ? y : x,
+    horizontal ? x : y,
+    horizontal ? height : width,
+    horizontal ? width : height,
+  );
+};
 
 /** Track for visualising distribution of data. */
-export class DistributionTrack extends SvgTrack<DistributionTrackOptions> {
+export class DistributionTrack extends CanvasTrack<DistributionTrackOptions> {
   xscale: ScaleLinear<number, number>;
-  discreteHeight: number;
+
+  constructor(id: string | number, options: DistributionTrackOptions = {}) {
+    super(id, {
+      ...defaultOptions,
+      ...options,
+    });
+
+    this.xscale = scaleLinear().domain([0, 1]);
+  }
 
   /** Override of onMount from base class. */
   onMount(event: OnMountEvent) {
@@ -22,9 +49,6 @@ export class DistributionTrack extends SvgTrack<DistributionTrackOptions> {
       options,
       loader,
     } = this;
-
-    this.xscale = scaleLinear().domain([0, 1]);
-    this.discreteHeight = options.discreteHeight || 10;
 
     if (options.data) {
       const showLoader = options.showLoader ?? Boolean(loader);
@@ -54,23 +78,40 @@ export class DistributionTrack extends SvgTrack<DistributionTrackOptions> {
     this.plot();
   }
 
-  plot() {
+  private plot() {
     const {
-      plotGroup: g,
+      ctx,
+      data,
+      options,
+    } = this;
+
+    if (!ctx) return;
+
+    // Clear canvas
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    // Return early if 'data' is undefined or empty
+    if (!data?.length) return;
+
+    if (options.interpolate) {
+      this.plotInterpolated();
+    } else {
+      this.plotDiscrete();
+    }
+  }
+
+  private plotDiscrete() {
+    const {
+      ctx,
       scale: yscale,
       xscale,
       data,
       options,
-      discreteHeight,
     } = this;
 
-    if (!g) return;
-
-    // Clear visuals if 'data' is undefined or empty
-    if (!data?.length) {
-      g.selectAll('g.area').remove();
-      return;
-    }
+    const {
+      discreteHeight,
+    } = options;
 
     // Get the current visible domain
     const [min, max] = yscale.domain();
@@ -79,69 +120,124 @@ export class DistributionTrack extends SvgTrack<DistributionTrackOptions> {
     const visibleData = data.filter((d: DistributionData) => d.depth + discreteHeight >= min && d.depth - discreteHeight <= max);
 
     // Transform depth
-    const transformedData: DistributionData = visibleData.map((d: DistributionData) => ({
+    const transformedData: DistributionData[] = visibleData.map((d: DistributionData) => ({
       depth: yscale(d.depth),
       composition: d.composition,
     }));
 
-    const selection = g.selectAll('g.area').data(transformedData, (d: DistributionData) => d.depth);
-
-    const horizontalTransform = (d: DistributionData) => `translate(${d.depth - discreteHeight / 2}, 0)`;
-    const verticalTransform = (d: DistributionData) => `translate(0, ${d.depth - discreteHeight / 2})`;
-    const transform = options.horizontal ? horizontalTransform : verticalTransform;
-
-    selection.attr('transform', transform);
-
-    const getRectGeom = (x0: number, x1: number, color: string) => (options.horizontal
-      // Horizontal Rectangle
-      ? {
-        x: 0,
-        y: xscale(x0),
-        width: discreteHeight,
-        height: xscale(x1),
-        fill: color,
-      }
-      // Vertical Rectangle
-      : {
-        x: xscale(x0),
-        y: 0,
-        width: xscale(x1),
-        height: discreteHeight,
-        fill: color,
-      }
-    );
-
-    const updateGroup = (group: any, composition: CompositionEntry[]) => {
+    transformedData.forEach(d => {
       let cumulativeWidth = 0;
-
-      composition.forEach(({ key, value }) => {
-        const width = (value / 100);
-        const color = options.components[key]?.color;
-        const rectGeom = getRectGeom(cumulativeWidth, cumulativeWidth + width, color || 'black');
+      d.composition.forEach(({ key, value }) => {
+        const width = xscale(value / 100); // Scale the width using xscale
+        const color = options.components[key]?.color || 'black';
+        ctx.fillStyle = color;
+        fillRect(
+          ctx,
+          cumulativeWidth,
+          d.depth - discreteHeight / 2,
+          width,
+          discreteHeight,
+          options.horizontal,
+        );
         cumulativeWidth += width;
-        group.append('rect').call(setAttrs, rectGeom);
       });
+    });
+  }
+
+  private plotInterpolated() {
+    const {
+      ctx,
+      scale: yscale,
+      xscale,
+      data,
+      options,
+    } = this;
+
+    // Get the current visible domain
+    const [min, max] = yscale.domain();
+
+    // Filter data based on the visible domain and adjacent points
+    const visibleData = data.filter((d: DistributionData, i: number) => {
+      const prevDepth = data[i - 1]?.depth || -Infinity;
+      const nextDepth = data[i + 1]?.depth || Infinity;
+      return (d.depth >= min && d.depth <= max) || nextDepth > min || prevDepth < max;
+    });
+
+    // Initiate distribution polygons
+    const polygonData: { [key: string]: DistributionPolygon } = {};
+    Object.entries(options.components).forEach(([key, component]) => {
+      polygonData[key] = {
+        color: component.color,
+        points: [],
+      };
+    });
+
+    // Populate depths and values for each component
+    visibleData.forEach((d: DistributionData) => {
+      const depth = yscale(d.depth);
+      let cumulativeWidth = 0;
+      Object.keys(polygonData).forEach(key => {
+        const comp = d.composition.find(c => c.key === key);
+        if (comp) {
+          cumulativeWidth += xscale(comp.value / 100);
+        }
+        polygonData[key].points.push({
+          depth,
+          value: cumulativeWidth,
+        });
+      });
+    });
+
+    const createPolygon = (points: { depth: number, value: number }[]): [number, number][] => {
+      const polygonPoints: [number, number][] = [];
+
+      const addPoint = (x: number, y: number) => polygonPoints.push(options.horizontal ? [y, x] : [x, y]);
+
+      // Add first point
+      const firstPoint = points[0];
+      addPoint(0, firstPoint.depth);
+
+      // Add the points of the polygon
+      points.forEach(({ depth, value }) => addPoint(value, depth));
+
+      // Add last point
+      const lastPoint = points[points.length - 1];
+      addPoint(0, lastPoint.depth);
+
+      return polygonPoints;
     };
 
-    // Update existing areas
-    // eslint-disable-next-line func-names
-    selection.each(function (d: DistributionData) {
-      const group = select(this);
-      group.selectAll('rect').remove(); // Clear previous rects
-      updateGroup(group, d.composition);
+    // Create and draw polygons
+    // Drawn in reverse order to make sure the wider polygons are in the back.
+    Object.values(polygonData).reverse().forEach((polygon, i) => {
+      // Draw simple rect for background polygon
+      if (i === 0) {
+        const firstPoint = polygon.points[0];
+        const lastPoint = polygon.points[polygon.points.length - 1];
+        ctx.fillStyle = polygon.color;
+        fillRect(
+          ctx,
+          0,
+          firstPoint.depth,
+          xscale(1),
+          lastPoint.depth - firstPoint.depth,
+          options.horizontal,
+        );
+        return;
+      }
+
+      const polygonPoints = createPolygon(polygon.points);
+      ctx.fillStyle = polygon.color;
+      ctx.beginPath();
+      polygonPoints.forEach(([x, y], index) => {
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
+      ctx.closePath();
+      ctx.fill();
     });
-
-    // Create new areas
-    const newAreas = selection.enter().append('g')
-      .classed('area', true)
-      .attr('transform', transform);
-
-    // eslint-disable-next-line func-names
-    newAreas.each(function (d: DistributionData) {
-      const group = select(this);
-      updateGroup(group, d.composition);
-    });
-
-    selection.exit().remove();
   }
 }
