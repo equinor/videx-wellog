@@ -17,9 +17,9 @@ import {
 } from './mock-data';
 
 const distributionComponents = {
-  'carbonate': { color: 'LightSalmon' },
-  'sand': { color: 'Moccasin' },
-  'shale': { color: 'LightGray' },
+  'carbonate': { color: 'FireBrick' },
+  'sand': { color: 'BurlyWood' },
+  'shale': { color: 'LightSlateGray' },
 };
 
 export default (delayLoading = false) => {
@@ -136,7 +136,7 @@ export default (delayLoading = false) => {
       label: 'Distribution',
       abbr: 'Dst',
       data: exampleDistributionData,
-      legendConfig: distributionLegendConfig(distributionComponents),
+      legendConfig: distributionLegendConfig,
       components: distributionComponents,
       interpolate: true,
     }),

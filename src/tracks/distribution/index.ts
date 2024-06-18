@@ -1,2 +1,2 @@
 export { DistributionTrack } from './distribution-track';
-export { distributionLegendConfig } from './distribution-legend';
+export { default as distributionLegendConfig } from './distribution-legend';

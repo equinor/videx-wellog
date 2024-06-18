@@ -1,92 +1,96 @@
 import { select } from 'd3-selection';
-import { clamp, lerp } from '@equinor/videx-math';
 import LegendHelper, {
   LegendBounds,
-  LegendConfig,
-  LegendOnUpdateFunction,
 } from '../../utils/legend-helper';
 import { D3Selection } from '../../common/interfaces';
-import { DistributionComponents } from './interfaces';
+import { DistributionTrackOptions } from './interfaces';
+import { DistributionTrack } from './distribution-track';
 
-const Padding = 20;
-const LabelPadding = 10;
+const MarginScale = 0.04;
+const PaddingScale = 0.06;
 
-function renderDistributionLabels(g: D3Selection, bounds: LegendBounds, data: DistributionComponents, horizontal: boolean = false) : void {
+// Helper function for creating rect
+const applyRectDimensions = (node: D3Selection, { x, y, width, height }, isHorizontal: boolean) => (
+  isHorizontal
+    ? node.attr('x', y).attr('y', x).attr('width', height).attr('height', width)
+    : node.attr('x', x).attr('y', y).attr('width', width).attr('height', height)
+);
+
+function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, options: DistributionTrackOptions) : void {
   const { width, height, left = 0, top = 0 } = bounds;
+  const { horizontal = false } = options;
 
   // Get components in distribution, return if missing
-  const components = data && Object.entries(data);
-  if (!components) return;
+  const components = Object.entries(options.components ?? {});
+  if (components.length === 0) return;
 
-  const textSize = Math.min(12, width / 3);
-  const squareSize = textSize * 0.75;
+  const margin = Math.min(width, height) * MarginScale;
+  const padding = Math.min(width, height) * PaddingScale;
 
-  // Find width-span and height to draw labels along. These are relative to track orientation, not screen orientation.
-  const wMin = left + Padding;
-  const wMax = width - Padding;
-  const h = top + height - squareSize;
+  const componentStride = height / components.length;
+  const componentHeight = componentStride - margin;
+  const componentWidth = width - margin * 2;
+  const textSize = componentHeight - padding * 2;
 
-  // Calculate how many labels we can stack
-  const labelSpace = width - Padding * 2;
-  const labelCount = clamp(Math.floor(labelSpace / (textSize + LabelPadding)), 1, components.length);
+  const textX = left + width / 2;
 
-  for (let i = 0; i < labelCount; i++) {
-    const [label, component] = components[i];
+  components.forEach(([label, component], index) => {
     const color = component.color;
+    const y = top + index * componentStride + margin / 2;
+    const textY = y + componentHeight / 2;
 
-    // Center a single label; distribute multiple labels evenly.
-    const t = labelCount === 1 ? 0.5 : i / (labelCount - 1);
+    applyRectDimensions(
+      g.append('rect'),
+      {
+        x: left + margin,
+        y,
+        width: componentWidth,
+        height: componentHeight,
+      },
+      horizontal,
+    ).attr('fill', color);
 
-    // Define x and y for label. This is where the colored square is drawn
-    let x: number, y: number;
-    if (horizontal) {
-      y = lerp(wMin, wMax, t);
-      x = h;
-    } else {
-      x = lerp(wMin, wMax, t);
-      y = h;
-    }
-
-    // Append colored square
-    g.append('rect')
-      .attr('x', x - squareSize * 0.5)
-      .attr('y', y - squareSize * 0.5)
-      .attr('width', squareSize)
-      .attr('height', squareSize)
-      .attr('fill', color);
-
-    // Labels are displayed behind the square
     const transform = horizontal
-      ? `translate(${x - squareSize},${y})`
-      : `translate(${x},${y - squareSize})rotate(90)`;
+      ? `translate(${textY},${textX})rotate(-90)`
+      : `translate(${textX},${textY})`;
 
+    // Append text
     const lbl = g.append('text')
       .attr('transform', transform)
       .attr('font-size', `${textSize}px`)
       .attr('dominant-baseline', 'middle')
-      .style('text-anchor', 'end');
-    lbl.text(label);
+      .style('text-anchor', 'middle')
+      .style('font-weight', 'bold')
+      .attr('fill', color)
+      .text(label)
+      .node();
 
-    // TODO: Show short form?
-    /*
-    const bbox = lbl.node().getBBox();
-    if (bbox.width > height * 0.8) {
-      lbl.text(label);
-    }
-    */
-  }
+    const bbox = lbl.getBBox();
+    applyRectDimensions(
+      g.insert('rect', () => lbl),
+      {
+        x: textX - bbox.width / 2 - padding,
+        y: y + padding / 2,
+        width: bbox.width + padding * 2,
+        height: bbox.height + padding / 4,
+      },
+      horizontal,
+    ).attr('fill', 'white');
+  });
 }
 
-export function distributionLegendConfig(data: DistributionComponents) : LegendConfig {
-  const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
-    const g = select(elm);
-    g.selectAll('*').remove();
-    renderDistributionLabels(
-      g,
-      bounds,
-      data,
-      track.options.horizontal,
-    );
-  };
-  return LegendHelper.basicLegendSvgConfig(() => 3, onLegendUpdate);
+function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: DistributionTrack): void {
+  const g = select(elm);
+  g.selectAll('*').remove();
+  renderDistributionPlotLegend(
+    g,
+    bounds,
+    track.options,
+  );
 }
+
+function getGraphTrackLegendRows(track: DistributionTrack): number {
+  return Object.keys(track.options?.components ?? {}).length || 3;
+}
+
+export default LegendHelper.basicLegendSvgConfig(getGraphTrackLegendRows, onUpdateLegend);
