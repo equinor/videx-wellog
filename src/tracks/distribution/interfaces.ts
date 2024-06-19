@@ -29,6 +29,8 @@ export interface DistributionComponents {
   [key: string]: {
     /** Color of the element. */
     color: string;
+    /** Optional color for legend labels. */
+    textColor?: string;
   };
 }
 

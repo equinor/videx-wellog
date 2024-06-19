@@ -17,9 +17,18 @@ import {
 } from './mock-data';
 
 const distributionComponents = {
-  'carbonate': { color: 'FireBrick' },
-  'sand': { color: 'BurlyWood' },
-  'shale': { color: 'LightSlateGray' },
+  'carbonate': {
+    color: 'FireBrick',
+    textColor: '#8E1B1B',
+  },
+  'sand': {
+    color: 'SandyBrown',
+    textColor: '#9C693E',
+  },
+  'shale': {
+    color: 'SlateGrey',
+    textColor: '#5A6673',
+  },
 };
 
 export default (delayLoading = false) => {

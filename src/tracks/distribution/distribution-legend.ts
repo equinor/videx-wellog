@@ -36,6 +36,7 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
 
   components.forEach(([label, component], index) => {
     const color = component.color;
+    const textColor = component.textColor ?? color;
     const y = top + index * componentStride + margin / 2;
     const textY = y + componentHeight / 2;
 
@@ -61,7 +62,7 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
       .attr('dominant-baseline', 'middle')
       .style('text-anchor', 'middle')
       .style('font-weight', 'bold')
-      .attr('fill', color)
+      .attr('fill', textColor)
       .text(label)
       .node();
 
