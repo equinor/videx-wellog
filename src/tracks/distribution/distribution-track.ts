@@ -117,7 +117,10 @@ export class DistributionTrack extends CanvasTrack<DistributionTrackOptions> {
     const [min, max] = yscale.domain();
 
     // Filter data based on the visible domain
-    const visibleData = data.filter((d: DistributionData) => d.depth + discreteHeight >= min && d.depth - discreteHeight <= max);
+    const visibleData = data.filter((d: DistributionData) => d && d.depth + discreteHeight >= min && d.depth - discreteHeight <= max);
+
+    // Return if no visible data
+    if (!visibleData?.length) return;
 
     // Transform depth
     const transformedData: DistributionData[] = visibleData.map((d: DistributionData) => ({
@@ -162,6 +165,9 @@ export class DistributionTrack extends CanvasTrack<DistributionTrackOptions> {
       const nextDepth = data[i + 1]?.depth || Infinity;
       return (d.depth >= min && d.depth <= max) || nextDepth > min || prevDepth < max;
     });
+
+    // Return if no visible data
+    if (!visibleData?.length) return;
 
     // Initiate distribution polygons
     const polygonData: { [key: string]: DistributionPolygon } = {};

@@ -100,11 +100,19 @@ function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: GraphTrac
   const lg = select(elm);
 
   const g = lg.select('.svg-legend');
-  const rows = g.selectAll('.legend-row').data(track.plots);
-  rows.enter().append('g').classed('legend-row', true);
-  rows.exit().remove();
 
-  g.selectAll('.legend-row').call(updateLegendRows, bounds, track);
+  const rows = g.selectAll('.legend-row')
+    .data(track.plots)
+    .call(updateLegendRows, bounds, track);
+
+  // Add new rows
+  rows.enter()
+    .append('g')
+    .classed('legend-row', true)
+    .call(updateLegendRows, bounds, track);
+
+  // Remove rows without data
+  rows.exit().remove();
 }
 
 /**
