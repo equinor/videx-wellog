@@ -2,7 +2,7 @@ import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { select, Selection } from 'd3-selection';
 import { clamp } from '@equinor/videx-math';
 import SvgTrack from '../svg-track';
-import { setAttrs, setProps } from '../../utils';
+import { getContrastYIQ, setAttrs, setProps } from '../../utils';
 import { StackedTrackOptions, AreaData, TransformedAreaData } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 
@@ -74,8 +74,8 @@ function plotLabel(
     },
     attrs: {
       class: 'label',
-      fill: 'black',
-      stroke: '#333',
+      fill: getContrastYIQ(d.color),
+      stroke: getContrastYIQ(d.color),
       'text-anchor': 'middle',
       'font-size': `${fontSize}px`,
     },
