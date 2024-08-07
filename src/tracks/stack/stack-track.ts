@@ -1,5 +1,6 @@
 import { scaleLinear, ScaleLinear } from 'd3-scale';
 import { select, Selection } from 'd3-selection';
+import { clamp } from '@equinor/videx-math';
 import SvgTrack from '../svg-track';
 import { setAttrs, setProps } from '../../utils';
 import { StackedTrackOptions, AreaData, TransformedAreaData } from './interfaces';
@@ -30,7 +31,12 @@ function plotLabel(
   }
   g.select('g.label').remove();
 
-  const fontSize = 18;
+  // Restrict fontSize to the smallest of 50% of width and 10% of height
+  let fontSize = Math.min(width * 0.5, height * 0.1);
+
+  // Clamp to ensure fontSize remains readable
+  fontSize = clamp(fontSize, 8, 18);
+
   if ((fontSize + 2) > height || (fontSize + 2) > width) {
     // Disregard any small areas that cannot display a single letter.
     return;
@@ -52,10 +58,6 @@ function plotLabel(
   // we compute our own label offset so that it will rotate from the text middle
   // instead of the text baseline.
   const rad_angle = angle * Math.PI / 180;
-  const dx = Math.sin(rad_angle) * (fontSize + 1) / 3;
-  const dy = Math.cos(rad_angle) * (fontSize + 1) / 3;
-  labelX -= dx;
-  labelY += dy;
 
   const labelTransform = `translate(${labelX},${labelY})rotate(${angle})`;
   const labelGroup = g.append('g')
@@ -65,6 +67,7 @@ function plotLabel(
   const label = labelGroup.append('text').text(d.name);
   setProps(label, {
     styles: {
+      'dominant-baseline': 'middle',
       'text-anchor': 'middle',
       'text-rendering': 'optimizeSpeed',
       'stroke-width': 0.5,
