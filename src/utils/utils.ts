@@ -57,3 +57,17 @@ export function debouncer(debounceInterval: number = 20) : DebounceFunction {
 
   return debounce;
 }
+
+/**
+ * Calculate font color based on background color
+ * Dark background will give white text color and vice versa
+ */
+export function getContrastYIQ(rgbString: string) {
+  const rgb = rgbString.replace(/[^\d,.]/g, '').split(',');
+
+  const r = parseFloat(rgb[0]);
+  const g = parseFloat(rgb[1]);
+  const b = parseFloat(rgb[2]);
+  const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+  return (yiq >= 110) ? 'black' : 'white';
+}
