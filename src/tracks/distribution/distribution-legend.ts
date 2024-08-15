@@ -6,9 +6,6 @@ import { D3Selection } from '../../common/interfaces';
 import { DistributionTrackOptions } from './interfaces';
 import { DistributionTrack } from './distribution-track';
 
-const MarginScale = 0.04;
-const PaddingScale = 0.06;
-
 // Helper function for creating rect
 const applyRectDimensions = (node: D3Selection, { x, y, width, height }, isHorizontal: boolean) => (
   isHorizontal
@@ -24,13 +21,16 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
   const components = Object.entries(options.components ?? {});
   if (components.length === 0) return;
 
-  const margin = Math.min(width, height) * MarginScale;
-  const padding = Math.min(width, height) * PaddingScale;
-
+  // Get available height per component
   const componentStride = height / components.length;
+
+  // Margin is used around colored rect, padding around text
+  const margin = componentStride * 0.1;
+  const padding = componentStride * 0.1;
+
   const componentHeight = componentStride - margin;
   const componentWidth = width - margin * 2;
-  const textSize = componentHeight - padding * 2;
+  const textSize = componentHeight - padding * 4;
 
   const textX = left + width / 2;
 
@@ -63,17 +63,31 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
       .style('text-anchor', 'middle')
       .style('font-weight', 'bold')
       .attr('fill', textColor)
-      .text(label)
-      .node();
+      .text(label);
 
-    const bbox = lbl.getBBox();
+    const node = lbl.node();
+    const bbox = node.getBBox();
+
+    // Calculate the expected width, adding extra padding
+    const expectedWidth = bbox.width + padding * 4;
+
+    // Get scale for indivdual labels
+    const scale = expectedWidth > componentWidth ? componentWidth / expectedWidth : 1;
+
+    // Append the scale to the transform
+    lbl.attr('transform', `${transform}scale(${scale})`);
+
+    // Use scaled values when creating background
+    const scaledWidth = bbox.width * scale;
+    const scaledHeight = bbox.height * scale;
+
     applyRectDimensions(
-      g.insert('rect', () => lbl),
+      g.insert('rect', () => node),
       {
-        x: textX - bbox.width / 2 - padding,
-        y: y + padding / 2,
-        width: bbox.width + padding * 2,
-        height: bbox.height + padding / 4,
+        x: textX - scaledWidth / 2 - padding / 2,
+        y: textY - scaledHeight / 2 - padding / 2,
+        width: scaledWidth + padding,
+        height: scaledHeight + padding,
       },
       horizontal,
     ).attr('fill', 'white');
