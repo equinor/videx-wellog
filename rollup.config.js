@@ -49,6 +49,7 @@ export default [
       file: pkg.browser,
       format: 'umd',
     },
+    external: [...Object.keys(pkg.dependencies || {})],
     plugins: [
       typescript({ tsconfig: './tsconfig.json' }),
       nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
