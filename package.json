@@ -3,7 +3,6 @@
   "name": "@equinor/videx-wellog",
   "version": "0.10.4",
   "license": "MIT",
-  "type": "commonjs",
   "description": "Visualisation components for wellbore log data",
   "repository": "https://github.com/equinor/videx-wellog",
   "bugs": {
@@ -24,6 +23,12 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "require": "./index.cjs",
+      "import": "./index.mjs"
+    }
+  },
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "rollup -c -w",
