@@ -3,7 +3,7 @@
   "name": "@equinor/videx-wellog",
   "version": "0.10.4",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "description": "Visualisation components for wellbore log data",
   "repository": "https://github.com/equinor/videx-wellog",
   "bugs": {
