@@ -6,7 +6,7 @@ import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: "json" };
 
 const onwarn = (warning, warn) => {
   if (warning.code === 'CIRCULAR_DEPENDENCY') {
