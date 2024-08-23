@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { zoomIdentity } from 'd3-zoom';
+import d3Zoom from 'd3-zoom';
 import InterpolatedScaleHandler from '../src/scale-handlers/interpolated-scale-handler';
 
 const EPS = 0.0001;
@@ -73,7 +73,7 @@ describe('InterpolatedScaleHandler', () => {
   });
 
   it('should rescale scale domain according to d3.zoomTransform', () => {
-    let transform = zoomIdentity.translate(0, -10).scale(2);
+    let transform = d3Zoom.zoomIdentity.translate(0, -10).scale(2);
     let expected = [-4.5, 50.5];
     handler.rescale(transform);
 
@@ -83,7 +83,7 @@ describe('InterpolatedScaleHandler', () => {
     expect(handler._alternateBase).to.be.eql([-20, 200]);
 
     expected = [16.4, 53.066667];
-    transform = zoomIdentity.translate(0, -72).scale(3);
+    transform = d3Zoom.zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
     handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
@@ -92,7 +92,7 @@ describe('InterpolatedScaleHandler', () => {
 
   it('should rescale scale domain according to d3.zoomTransform with mode set to 1', () => {
     handler.setMode(1);
-    let transform = zoomIdentity.translate(0, -10).scale(2);
+    let transform = d3Zoom.zoomIdentity.translate(0, -10).scale(2);
     let expected = [-9, 101];
     handler.rescale(transform);
 
@@ -102,7 +102,7 @@ describe('InterpolatedScaleHandler', () => {
     expect(handler._alternateBase).to.be.eql([-20, 200]);
 
     expected = [32.8, 106.13333];
-    transform = zoomIdentity.translate(0, -72).scale(3);
+    transform = d3Zoom.zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
     handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));

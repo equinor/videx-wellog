@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { zoomIdentity } from 'd3-zoom';
+import d3Zoom from 'd3-zoom';
 import BasicScaleHandler from '../src/scale-handlers/basic-scale-handler';
 import ScaleHelper from '../src/utils/scale-helper';
 
@@ -27,7 +27,7 @@ describe('BasicScaleHandler', () => {
   });
 
   it('should rescale scale domain according to d3.zoomTransform', () => {
-    let transform = zoomIdentity.translate(0, -10).scale(2);
+    let transform = d3Zoom.zoomIdentity.translate(0, -10).scale(2);
     let expected = [-4.5, 50.5];
     handler.rescale(transform);
 
@@ -35,7 +35,7 @@ describe('BasicScaleHandler', () => {
     expect(handler.baseDomain()).to.eql([-10, 100]);
 
     expected = [16.4, 53.06667];
-    transform = zoomIdentity.translate(0, -72).scale(3);
+    transform = d3Zoom.zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
     handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
