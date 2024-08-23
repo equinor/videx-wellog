@@ -28,10 +28,16 @@ export default [
       {
         file: pkg.main,
         format: 'cjs',
+        globals: {
+          'd3-zoom': 'd3Zoom'
+        }
       },
       {
         file: pkg.module,
         format: 'esm',
+        globals: {
+          'd3-zoom': 'd3Zoom'
+        }
       },
     ],
     external: [...Object.keys(pkg.dependencies || {})],
