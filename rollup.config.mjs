@@ -54,7 +54,11 @@ export default [
       name: 'videx-wellog',
       file: pkg.browser,
       format: 'umd',
+      globals: {
+        'd3-zoom': 'd3Zoom'
+      }
     },
+    external: [...Object.keys(pkg.dependencies || {})],
     plugins: [
       typescript({ tsconfig: './tsconfig.json' }),
       nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
