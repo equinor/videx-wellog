@@ -55,7 +55,9 @@ export default [
       file: pkg.browser,
       format: 'umd',
       globals: {
-        'd3-zoom': 'd3Zoom'
+        'd3-zoom': 'd3Zoom',
+        'd3-selection' : 'd3Selection',
+        'd3-scale' : 'd3Scale'
       }
     },
     external: [...Object.keys(pkg.dependencies || {})],
