@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import typescript from 'rollup-plugin-typescript2';
-import resolve from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
@@ -37,7 +37,7 @@ export default [
     external: [...Object.keys(pkg.dependencies || {})],
     plugins: [
       typescript({ tsconfig: './tsconfig.json' }),
-      resolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
+      nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
       terser({ mangle: false }),
     ],
     onwarn,
@@ -51,7 +51,7 @@ export default [
     },
     plugins: [
       typescript({ tsconfig: './tsconfig.json' }),
-      resolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
+      nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
       terser({ mangle: false }),
     ],
     onwarn,
