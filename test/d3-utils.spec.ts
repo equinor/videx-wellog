@@ -1,15 +1,8 @@
 import { expect } from 'chai';
-import { JSDOM } from 'jsdom';
 import { select } from 'd3-selection';
 import { setAttrs, setStyles, setProps } from '../src/utils';
 
-
-let document;
-
 describe('d3-utils', () => {
-  beforeEach(() => {
-    document = new JSDOM().window.document;
-  });
 
   it('should be able to set multiple attributes by passing an object', () => {
     const attrsObj = {
@@ -112,4 +105,3 @@ describe('d3-utils', () => {
     expect(elm.style('border-color')).to.eq('purple');
   });
 });
-
