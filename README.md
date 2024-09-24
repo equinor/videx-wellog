@@ -1,5 +1,6 @@
 ![](https://github.com/equinor/videx-wellog/workflows/Node%20CI/badge.svg)
 ![](https://img.shields.io/npm/v/@equinor/videx-wellog)
+[![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/videx-wellog/badge)](https://scm-compliance-api.radix.equinor.com/repos/equinor/videx-wellog/badge)
 
 # Videx well log
 Well log powered by the ViDEx well log components and [Volve open data sets](https://data.equinor.com/) provided by Equinor.
