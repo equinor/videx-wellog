@@ -20,6 +20,9 @@ export interface DistributionTrackOptions extends TrackOptions {
   /** Specifies whether the graph should interpolate between the points. */
   interpolate?: boolean,
 
+  /** Number of legend entries to display in the track. */
+  legendEntries?: number,
+
   /** List of distribution components. */
   components?: DistributionComponents,
 }
