@@ -15,14 +15,16 @@ const applyRectDimensions = (node: D3Selection, { x, y, width, height }, isHoriz
 
 function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, options: DistributionTrackOptions) : void {
   const { width, height, left = 0, top = 0 } = bounds;
-  const { horizontal = false } = options;
+  const { horizontal = false, legendEntries } = options;
 
   // Get components in distribution, return if missing
   const components = Object.entries(options.components ?? {});
   if (components.length === 0) return;
 
-  // Get available height per component
-  const componentStride = height / components.length;
+  const entries = Math.min(components.length, legendEntries ?? components.length);
+
+  // Get available height per entry
+  const componentStride = height / entries;
 
   // Margin is used around colored rect, padding around text
   const margin = componentStride * 0.1;
@@ -34,7 +36,9 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
 
   const textX = left + width / 2;
 
-  components.forEach(([label, component], index) => {
+  for (let index = 0; index < entries; index++) {
+    const [label, component] = components[index];
+
     const color = component.color;
     const textColor = component.textColor ?? color;
     const y = top + index * componentStride + margin / 2;
@@ -91,7 +95,7 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
       },
       horizontal,
     ).attr('fill', 'white');
-  });
+  }
 }
 
 function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: DistributionTrack): void {
@@ -105,7 +109,8 @@ function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: Distribut
 }
 
 function getGraphTrackLegendRows(track: DistributionTrack): number {
-  return Object.keys(track.options?.components ?? {}).length || 3;
+  const componentCount = Object.keys(track.options?.components ?? {}).length || 3;
+  return track.options?.legendEntries ?? componentCount;
 }
 
 export default LegendHelper.basicLegendSvgConfig(getGraphTrackLegendRows, onUpdateLegend);
