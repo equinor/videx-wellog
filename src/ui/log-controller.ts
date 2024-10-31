@@ -653,7 +653,7 @@ export default class LogController {
       newtracks.append('div')
         .classed('track-legend', true)
         .classed('hidden', legendHeight <= 0)
-        .style([attr.size], `${legendHeight}px`);
+        .style(attr.size, `${legendHeight}px`);
     }
 
     newtracks.append('div').attr('class', 'track-container');
@@ -714,7 +714,7 @@ export default class LogController {
     if (showLegend) {
       const legend = selection.select('.track-legend');
       legend
-        .style([sizeAttr], `${legendHeight}px`)
+        .style(sizeAttr, `${legendHeight}px`)
         .classed('hidden', legendHeight <= 0);
     }
   }
