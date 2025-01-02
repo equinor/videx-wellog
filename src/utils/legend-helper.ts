@@ -17,6 +17,13 @@ export interface LegendBounds {
 
 export type LegendOnUpdateFunction = (elm: Element, bounds: LegendBounds, track: Track) => void;
 
+interface BasicVerticalLinkLabelConfig {
+  label: string;
+  abbr: string;
+  onClick: () => void;
+  title?: string;
+}
+
 export interface LegendConfig {
   elementType: string,
   getLegendRows(track: Track) : number,
@@ -97,7 +104,7 @@ export default class LegendHelper {
    * Convenience function for creating a legend config object for
    * a clickable rotated label legend.
    */
-  static basicVerticalLinkLabel({ label, abbr, onClick, title = null }) : LegendConfig {
+  static basicVerticalLinkLabel({ label, abbr, onClick, title = null }:BasicVerticalLinkLabelConfig) : LegendConfig {
     const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
       const g = select(elm);
       g.selectAll('*').remove();
