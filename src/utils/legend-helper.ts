@@ -17,6 +17,13 @@ export interface LegendBounds {
 
 export type LegendOnUpdateFunction = (elm: Element, bounds: LegendBounds, track: Track) => void;
 
+interface BasicVerticalLinkLabelConfig {
+  label: string;
+  abbr: string;
+  onClick: () => void;
+  title?: string;
+}
+
 export interface LegendConfig {
   elementType: string,
   getLegendRows(track: Track) : number,
@@ -48,7 +55,7 @@ export default class LegendHelper {
   /**
    * Renders a simple rotated text label that is scaled to fit bounds
    */
-  static renderBasicVerticalSvgLabel(g: D3Selection, bounds: LegendBounds, label: string, abbr: string, horizontal: boolean = false) : void {
+  static renderBasicVerticalSvgLabel(g: D3Selection, bounds: LegendBounds, label: string, abbr: string, horizontal: boolean = false) : D3Selection {
     const { width, height, left = 0, top = 0 } = bounds;
 
     const y = top + height * 0.9;
@@ -71,6 +78,7 @@ export default class LegendHelper {
     if (bbox.width > height * 0.8) {
       lbl.text(abbr || label);
     }
+    return lbl;
   }
 
   /**
@@ -88,6 +96,37 @@ export default class LegendHelper {
         abbr || track.options.abbr,
         track.options.horizontal,
       );
+    };
+    return LegendHelper.basicLegendSvgConfig(() => 3, onLegendUpdate);
+  }
+
+  /**
+   * Convenience function for creating a legend config object for
+   * a clickable rotated label legend.
+   */
+  static basicVerticalLinkLabel({ label, abbr, onClick, title = null }:BasicVerticalLinkLabelConfig) : LegendConfig {
+    const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
+      const g = select(elm);
+      g.selectAll('*').remove();
+      const labelGroup = g.append('g')
+        .style('fill', '#0000EE')
+        .style('text-decoration', 'underline')
+        .style('cursor', 'pointer');
+
+      labelGroup.append('title').text(title);
+
+      const labelElement = LegendHelper.renderBasicVerticalSvgLabel(
+        labelGroup,
+        bounds,
+        label || track.options.label,
+        abbr || track.options.abbr,
+        track.options.horizontal,
+      );
+
+      if (onClick && typeof onClick === 'function') {
+        labelElement
+          .on('click', onClick);
+      }
     };
     return LegendHelper.basicLegendSvgConfig(() => 3, onLegendUpdate);
   }
