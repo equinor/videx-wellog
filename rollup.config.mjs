@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
+
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
@@ -15,11 +16,11 @@ const onwarn = (warning, warn) => {
   warn(warning);
 };
 
-const exportedStyles = {
-  'scale-styles': 'src/tracks/scale/styles.scss',
-  'log-styles': 'src/ui/log-styles.scss',
-  'loader-styles': 'src/ui/loader-styles.scss',
-};
+const exportedStyles = [
+  { src: 'src/tracks/scale/styles.scss', rename: 'scale-styles.scss' },
+  { src: 'src/ui/log-styles.scss', rename: 'log-styles.scss' },
+  { src: 'src/ui/loader-styles.scss', rename: 'loader-styles.scss' },
+];
 
 export default [
   {
@@ -64,17 +65,15 @@ export default [
     },
     plugins: [
       postcss({
-        plugins: [
-          autoprefixer,
-        ],
+        plugins: [ autoprefixer ],
         extract: true,
         extensions: ['.scss', '.css'],
       }),
       copy({
-        targets: Object.entries(exportedStyles).map(d => ({
-          src: d[1],
+        targets: exportedStyles.map(({ src, rename }) => ({
+          src,
           dest: 'dist/styles',
-          rename: `${d[0]}.scss`,
+          rename,
         })),
       }),
     ],
