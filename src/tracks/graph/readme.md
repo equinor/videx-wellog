@@ -11,13 +11,13 @@ Example of a graph track options-object, adding a simple line plot. Different pl
   data: async function getData(){...},  // function to be called for fetching track data
   plots:[                               // plots
     {
-      id: 'HAZI',                       // plot id
+      id: 'AZI',                       // plot id
       type: 'line',                     // type (line/area/dot/differential)
       options: {                        // plot options
         scale: 'linear',                // plot scale
         domain: [0, 360],               // plot domain
         color: 'blue',                  // color for line graph
-        data: d => d.HAZI.dataPoints,   // accessor function to get data returned by track data function
+        data: d => d.AZI.dataPoints,   // accessor function to get data returned by track data function
       },
     },
     (...)
