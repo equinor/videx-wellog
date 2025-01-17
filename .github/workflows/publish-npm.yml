@@ -1,0 +1,21 @@
+name: Publish to NPM
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: "The working directory to publish from"
+        required: false
+        default: "."
+        type: string
+    secrets:
+      npm_token:
+        description: "The NPM token to use for publishing"
+        required: true
+
+jobs:
+  publish:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
