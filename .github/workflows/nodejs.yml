@@ -40,4 +40,7 @@ jobs:
           echo $BUMP >> $GITHUB_OUTPUT
       - name: Publish
         if: ${{steps.compare.outputs.BUMP == 'true'}} && github.event.pull_request.merged = true
-        uses: .github/workflows/publish-npm.yml
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: |
+          npm publish
