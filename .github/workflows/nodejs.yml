@@ -3,9 +3,6 @@ name: Node CI
 on:
   push:
     branches: [dev]
-  pull_request:
-    branches: [dev]
-    types: closed
 
 jobs:
   build:
@@ -29,15 +26,8 @@ jobs:
           npm run lint
         env:
           CI: true
-      - name: Compare versions
-        id: compare
-        shell: bash
+      - name: Publish to NPM
+        env:
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          PKG_VERSION="$(npm search videx-wellog -json true | jq .[].version -r)"
-          echo "Online version: $PKG_VERSION"
-          LOCAL_VERSION="$(cat package.json | jq .version -r)"
-          if ! printf "$LOCAL_VERSION\n$PKG_VERSION" | sort -V -C; then BUMP=true; else BUMP=false; fi;
-          echo $BUMP >> $GITHUB_OUTPUT
-      - name: Publish
-        if: ${{steps.compare.outputs.BUMP == 'true'}} && github.event.pull_request.merged = true
-        uses: .github/workflows/publish-npm.yml
+          npm publish
