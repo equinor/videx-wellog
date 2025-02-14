@@ -109,7 +109,13 @@ export default class LinePlot extends Plot<LinePlotOptions> {
       ctx.stroke();
     };
 
-    const [min, max] = isLogarithmic ? xscale.domain().map(Math.log10) : xscale.domain();
+    let [min, max] = isLogarithmic ? xscale.domain().map(Math.log10) : xscale.domain();
+
+    // Flip to support inverted ranges
+    if (min > max) {
+      [min, max] = [max, min];
+    }
+
     const range = (max - min);
 
     let prev: Tuplet<number>;
