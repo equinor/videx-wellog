@@ -6,6 +6,7 @@ import terser from '@rollup/plugin-terser';
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
 import copy from 'rollup-plugin-copy';
+import glslify from 'rollup-plugin-glslify';
 
 import pkg from './package.json' assert { type: "json" };
 
@@ -37,6 +38,7 @@ export default [
     ],
     external: [...Object.keys(pkg.dependencies || {})],
     plugins: [
+      glslify(),
       typescript({ tsconfig: './tsconfig.json' }),
       nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
       terser({ mangle: false }),
@@ -51,6 +53,7 @@ export default [
       format: 'umd',
     },
     plugins: [
+      glslify(),
       typescript({ tsconfig: './tsconfig.json' }),
       nodeResolve({ extensions: ['.mjs', '.js', '.json', '.node', '.ts'] }),
       terser({ mangle: false }),
