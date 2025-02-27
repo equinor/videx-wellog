@@ -17,8 +17,13 @@ export interface DistributionTrackOptions extends TrackOptions {
   /** The height to use for discrete values. */
   discreteHeight?: number,
 
-  /** Specifies whether the graph should interpolate between the points. */
-  interpolate?: boolean,
+  /**
+   * Specifies the type of interpolation to use when rendering the graph.
+   * - 0: Linear - Smoothly interpolates between data points.
+   * - 1: Nearest - Jumps to the nearest data point without smoothing.
+   * - 2: Discrete - Displays distinct steps with adaptive height defined by `discreteHeight`.
+   */
+  interpolationType?: number,
 
   /** Number of legend entries to display in the track. */
   legendEntries?: number,

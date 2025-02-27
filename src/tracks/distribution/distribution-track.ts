@@ -1,55 +1,45 @@
-import { ScaleLinear, scaleLinear } from 'd3-scale';
-import CanvasTrack from '../canvas-track';
-import {
-  DistributionData,
-  DistributionTrackOptions,
-} from './interfaces';
-import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
+import { color } from 'd3-color';
+import WebGL2Track from '../webgl2-track';
+import { DistributionTrackOptions } from './interfaces';
+import { OnMountEvent } from '../interfaces';
 
-interface DistributionPolygon {
-  /** Color of the element. */
-  color: string;
-  /** Points array to store depths and values. */
-  points: { depth: number, value: number }[];
-}
+import vertexShaderSource from './distribution-shader.vert.glsl';
+import fragmentShaderSource from './distribution-shader.frag.glsl';
 
 const defaultOptions: DistributionTrackOptions = {
-  discreteHeight: 10,
-  interpolate: false,
+  interpolationType: 0,
+  discreteHeight: 0.01,
 };
 
-/** Helper function for drawing filled rectangle vertically or horizontally. */
-const fillRect = (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, horizontal: boolean) => {
-  ctx.fillRect(
-    horizontal ? y : x,
-    horizontal ? x : y,
-    horizontal ? height : width,
-    horizontal ? width : height,
-  );
-};
+// Defined to avoid creating new arrays when clearing
+const ComponentColorsClear = new Float32Array([]);
+const InterpolationConfigClear = new Float32Array([0, 0]);
 
 /** Track for visualising distribution of data. */
-export class DistributionTrack extends CanvasTrack<DistributionTrackOptions> {
-  xscale: ScaleLinear<number, number>;
+export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
+  interpolationConfigArray: Float32Array;
 
   constructor(id: string | number, options: DistributionTrackOptions = {}) {
     super(id, {
       ...defaultOptions,
       ...options,
     });
-
-    this.xscale = scaleLinear().domain([0, 1]);
   }
+
+  // Reference shaders code
+  protected vertexShaderSource = vertexShaderSource;
+  protected fragmentShaderSource = fragmentShaderSource;
 
   /** Override of onMount from base class. */
   onMount(event: OnMountEvent) {
     super.onMount(event);
 
-    const {
-      options,
-      loader,
-    } = this;
+    const { options, loader } = this;
 
+    // Setup interpolation config array based on interpolation settings
+    this.interpolationConfigArray = new Float32Array([options.interpolationType, options.discreteHeight]);
+
+    // Load data
     if (options.data) {
       const showLoader = options.showLoader ?? Boolean(loader);
 
@@ -61,189 +51,81 @@ export class DistributionTrack extends CanvasTrack<DistributionTrackOptions> {
     }
   }
 
-  /** Override of onUpdate from base class. */
-  onUpdate(event: OnUpdateEvent) {
-    super.onUpdate(event);
-    if (this.options.horizontal) {
-      this.xscale.range([0, this.elm.clientHeight]);
-    } else {
-      this.xscale.range([0, this.elm.clientWidth]);
+  protected processData(data?: any): void {
+    const { options, gl, program } = this;
+
+    // Get uniform locations
+    const componentCountLocation = gl.getUniformLocation(program, 'u_componentCount');
+    const componentColorsLocation = gl.getUniformLocation(program, 'u_componentColors');
+    const entryCountLocation = gl.getUniformLocation(program, 'u_entryCount');
+    const interpolationConfigLocation = gl.getUniformLocation(program, 'u_interpolationConfig');
+
+    if (!data) {
+      // Clear uniforms
+      gl.uniform1i(componentCountLocation, 0);
+      gl.uniform3fv(componentColorsLocation, ComponentColorsClear);
+      gl.uniform1i(entryCountLocation, 0);
+      gl.uniform2fv(interpolationConfigLocation, InterpolationConfigClear);
+
+      // Unbind texture
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, null);
+
+      return;
     }
-    this.plot();
-  }
 
-  /** Override of onRescale from base class. */
-  onRescale(event: OnRescaleEvent) {
-    super.onRescale(event);
-    this.plot();
-  }
+    // Extract and normalize RGB arrays from components
+    const rgbArray = Object.values(options.components).map(component => {
+      const { r, g, b } = color(component.color).rgb();
+      return [r / 255, g / 255, b / 255];
+    });
 
-  private plot() {
-    const {
-      ctx,
-      data,
-      options,
-    } = this;
-
-    if (!ctx) return;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-    // Return early if 'data' is undefined or empty
-    if (!data?.length) return;
-
-    if (options.interpolate) {
-      this.plotInterpolated();
-    } else {
-      this.plotDiscrete();
-    }
-  }
-
-  private plotDiscrete() {
-    const {
-      ctx,
-      scale: yscale,
-      xscale,
-      data,
-      options,
-    } = this;
-
-    const {
-      discreteHeight,
-    } = options;
-
-    // Get the current visible domain
-    const [min, max] = yscale.domain();
-
-    // Filter data based on the visible domain
-    const visibleData = data.filter((d: DistributionData) => d && d.depth + discreteHeight >= min && d.depth - discreteHeight <= max);
-
-    // Return if no visible data
-    if (!visibleData?.length) return;
-
-    // Transform depth
-    const transformedData: DistributionData[] = visibleData.map((d: DistributionData) => ({
-      depth: yscale(d.depth),
-      composition: d.composition,
-    }));
-
-    transformedData.forEach(d => {
-      let cumulativeWidth = 0;
-      d.composition.forEach(({ key, value }) => {
-        const width = xscale(value / 100); // Scale the width using xscale
-        const color = options.components[key]?.color || 'black';
-        ctx.fillStyle = color;
-        fillRect(
-          ctx,
-          cumulativeWidth,
-          d.depth - discreteHeight / 2,
-          width,
-          discreteHeight,
-          options.horizontal,
-        );
-        cumulativeWidth += width;
+    // Flatten the data into a normalized 1D array
+    const flatData = data.flatMap((d: any) => {
+      let cumulative = 0;
+      const composition = d.composition.map((p: any) => {
+        cumulative += p.value / 100;
+        return cumulative;
       });
-    });
-  }
-
-  private plotInterpolated() {
-    const {
-      ctx,
-      scale: yscale,
-      xscale,
-      data,
-      options,
-    } = this;
-
-    // Get the current visible domain
-    const [min, max] = yscale.domain();
-
-    // Filter data based on the visible domain and adjacent points
-    const visibleData = data.filter((d: DistributionData, i: number) => {
-      const prevDepth = data[i - 1]?.depth || -Infinity;
-      const nextDepth = data[i + 1]?.depth || Infinity;
-      return (d.depth >= min && d.depth <= max) || nextDepth > min || prevDepth < max;
+      return [d.depth, ...composition];
     });
 
-    // Return if no visible data
-    if (!visibleData?.length) return;
+    // Pass uniforms
+    gl.uniform1i(componentCountLocation, rgbArray.length);
+    gl.uniform3fv(componentColorsLocation, rgbArray.flat());
+    gl.uniform1i(entryCountLocation, data.length);
+    gl.uniform2fv(interpolationConfigLocation, this.interpolationConfigArray);
 
-    // Initiate distribution polygons
-    const polygonData: { [key: string]: DistributionPolygon } = {};
-    Object.entries(options.components).forEach(([key, component]) => {
-      polygonData[key] = {
-        color: component.color,
-        points: [],
-      };
-    });
+    // Calculate texture dimensions
+    const width = rgbArray.length + 1;
+    const height = flatData.length / width;
 
-    // Populate depths and values for each component
-    visibleData.forEach((d: DistributionData) => {
-      const depth = yscale(d.depth);
-      let cumulativeWidth = 0;
-      Object.keys(polygonData).forEach(key => {
-        const comp = d.composition.find(c => c.key === key);
-        if (comp) {
-          cumulativeWidth += xscale(comp.value / 100);
-        }
-        polygonData[key].points.push({
-          depth,
-          value: cumulativeWidth,
-        });
-      });
-    });
+    // Create and bind texture
+    const texture = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, texture);
 
-    const createPolygon = (points: { depth: number, value: number }[]): [number, number][] => {
-      const polygonPoints: [number, number][] = [];
+    // Create a red-channel only texture from data
+    gl.texImage2D(
+      gl.TEXTURE_2D,
+      0,
+      gl.R32F,
+      width,
+      height,
+      0,
+      gl.RED,
+      gl.FLOAT,
+      new Float32Array(flatData),
+    );
 
-      const addPoint = (x: number, y: number) => polygonPoints.push(options.horizontal ? [y, x] : [x, y]);
+    // Set Texture Parameters
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 
-      // Add first point
-      const firstPoint = points[0];
-      addPoint(0, firstPoint.depth);
-
-      // Add the points of the polygon
-      points.forEach(({ depth, value }) => addPoint(value, depth));
-
-      // Add last point
-      const lastPoint = points[points.length - 1];
-      addPoint(0, lastPoint.depth);
-
-      return polygonPoints;
-    };
-
-    // Create and draw polygons
-    // Drawn in reverse order to make sure the wider polygons are in the back.
-    Object.values(polygonData).reverse().forEach((polygon, i) => {
-      // Draw simple rect for background polygon
-      if (i === 0) {
-        const firstPoint = polygon.points[0];
-        const lastPoint = polygon.points[polygon.points.length - 1];
-        ctx.fillStyle = polygon.color;
-        fillRect(
-          ctx,
-          0,
-          firstPoint.depth,
-          xscale(1),
-          lastPoint.depth - firstPoint.depth,
-          options.horizontal,
-        );
-        return;
-      }
-
-      const polygonPoints = createPolygon(polygon.points);
-      ctx.fillStyle = polygon.color;
-      ctx.beginPath();
-      polygonPoints.forEach(([x, y], index) => {
-        if (index === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      });
-      ctx.closePath();
-      ctx.fill();
-    });
+    // Get Location of Texture in Shader
+    const dataTextureLocation = gl.getUniformLocation(program, 'u_dataTexture');
+    gl.uniform1i(dataTextureLocation, 0); // Texture unit 0
   }
 }
