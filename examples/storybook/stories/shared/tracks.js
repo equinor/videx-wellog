@@ -13,6 +13,7 @@ import {
   ex2,
   ex3,
   ex4_large,
+  exampleDipPlotData,
   exampleDistributionData,
 } from './mock-data';
 
@@ -70,6 +71,32 @@ export default (delayLoading = false) => {
       }],
     }),
     new GraphTrack(3, {
+      label: 'Dip',
+      tooltip: 'a graph with dip plots',
+      abbr: 'Dip',
+      data: exampleDipPlotData,
+      scale: 'linear',
+      domain: [0, 20, 50, 90],
+      legendConfig: graphLegendConfig,
+      majorTicksOnly: true,
+      padding: {
+        size: 20,
+        hideExcessData: false,
+      },
+      plots: [
+        {
+          id: 'dip',
+          type: 'dip',
+          options: {
+            legendInfo: () => ({
+              label: 'DIP',
+              unit: 'deg',
+            }),
+          },
+        },
+      ],
+    }),
+    new GraphTrack(4, {
       label: 'Some noise',
       abbr: 'noise',
       data: ex2,
@@ -102,7 +129,7 @@ export default (delayLoading = false) => {
         },
       }],
     }),
-    new GraphTrack(4, {
+    new GraphTrack(5, {
       label: 'Sinus curve',
       abbr: 'sin',
       data: ex3,
@@ -136,13 +163,13 @@ export default (delayLoading = false) => {
         },
       }],
     }),
-    new StackedTrack(5, {
+    new StackedTrack(6, {
       label:"Formation",
       showLines: false,
       labelRotation: -90,
       data: ex4_large,
     }),
-    new DistributionTrack(6, {
+    new DistributionTrack(7, {
       label: 'Distribution',
       abbr: 'Dst',
       data: exampleDistributionData,

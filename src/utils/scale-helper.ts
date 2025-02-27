@@ -12,8 +12,12 @@ export default class ScaleHelper {
    * Get pixel ratio from scale
    */
   static getPixelRatio(scale: Scale) : number {
-    const [dmin, dmax] = scale.domain();
-    const [rmin, rmax] = scale.range();
+    const domain = scale.domain();
+    const dmin = domain[0];
+    const dmax = domain[domain.length - 1];
+    const range = scale.range();
+    const rmin = range[0];
+    const rmax = range[range.length - 1];
     const deltaDomain = Math.abs(dmax - dmin);
     const deltaRange = Math.abs(rmax - rmin);
     return deltaRange / deltaDomain;
@@ -23,8 +27,12 @@ export default class ScaleHelper {
    * Get domain ratio from scale
    */
   static getDomainRatio(scale: Scale) : number {
-    const [dmin, dmax] = scale.domain();
-    const [rmin, rmax] = scale.range();
+    const domain = scale.domain();
+    const dmin = domain[0];
+    const dmax = domain[domain.length - 1];
+    const range = scale.range();
+    const rmin = range[0];
+    const rmax = range[range.length - 1];
     const deltaDomain = Math.abs(dmax - dmin);
     const deltaRange = Math.abs(rmax - rmin);
     return deltaDomain / deltaRange;
@@ -34,7 +42,9 @@ export default class ScaleHelper {
    * Get the domain span of a scale
    */
   static getDomainSpan(scale: Scale, absoluteValue: boolean = true) : number {
-    const [d1, d2] = scale.domain();
+    const domain = scale.domain();
+    const d1 = domain[0];
+    const d2 = domain[domain.length - 1];
     const span = d2 - d1;
     return absoluteValue ? Math.abs(span) : span;
   }
@@ -43,7 +53,9 @@ export default class ScaleHelper {
    * Get the domain span of a scale in pixels
    */
   static getDomainPixelSpan(scale: Scale, domain?: Domain) : number {
-    const [d1, d2] = domain || scale.domain();
+    const theDomain = domain || scale.domain();
+    const d1 = theDomain[0];
+    const d2 = theDomain[theDomain.length - 1];
 
     const y1 = scale(d1);
     const y2 = scale(d2);
@@ -55,7 +67,9 @@ export default class ScaleHelper {
    * Get the range span of a scale in pixels
    */
   static getRangeSpan(scale: Scale) : number {
-    const [r0, r1] = scale.range();
+    const range = scale.range();
+    const r0 = range[0];
+    const r1 = range[range.length - 1];
     return Math.abs(r1 - r0);
   }
 
@@ -100,14 +114,33 @@ export default class ScaleHelper {
       minor: [],
     };
 
+    // Get start of the range to handle applied padding
+    const rangeStart = Math.min(...scale.range());
+
     for (let i = 1; i < hTicks; i += 1) {
-      const x = i * hStep;
+      const x = scale.invert((i * hStep) + rangeStart);
       if (center && (i % center) === 0) {
-        ticks.major.push(scale.invert(x));
+        ticks.major.push(x);
       } else {
-        ticks.minor.push(scale.invert(x));
+        ticks.minor.push(x);
       }
     }
+    return ticks;
+  }
+
+  /**
+   * Creates major ticks only
+   */
+  static createMajorTicks(scale: Scale) : ScaleHandlerTicks {
+    const ticks = {
+      major: [],
+      minor: [],
+    };
+
+    const scaleTicks = scale.ticks();
+    scaleTicks.forEach((t) => {
+      ticks.major.push(t);
+    });
     return ticks;
   }
 
@@ -127,7 +160,9 @@ export default class ScaleHelper {
    * Create major and minor ticks from scale
    */
   static createTicks(scale: Scale) : ScaleHandlerTicks {
-    const [dmin, dmax] = scale.domain();
+    const domain = scale.domain();
+    const dmin = domain[0];
+    const dmax = domain[domain.length - 1];
 
     const height = ScaleHelper.getRangeSpan(scale);
 

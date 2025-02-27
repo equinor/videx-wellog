@@ -37,6 +37,28 @@ describe('ScaleHelper', () => {
 
   });
 
+  it('should be able to create major ticks only from a linear scale', () => {
+    const scale = scaleLinear().domain([0, 1000]).range([0, 100]);
+    const actual = ScaleHelper.createMajorTicks(scale);
+
+    const expected = {
+      major: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+      minor: [],
+    };
+    expect(actual).to.be.eql(expected);
+  });
+
+  it('should be able to create major ticks only from a piecewise linear scale', () => {
+    const scale = scaleLinear().domain([0, 20, 50, 90]).range([0, 100]);
+    const actual = ScaleHelper.createMajorTicks(scale);
+
+    const expected = {
+      major: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+      minor: [],
+    };
+    expect(actual).to.be.eql(expected);
+  });
+
   it('should be able to create scaled major and minor ticks from log scale', () => {
     const scale = scaleLog().domain([0.1, 10000]).range([0, 100]);
     const actual = ScaleHelper.createLogTicks(scale);
@@ -110,5 +132,20 @@ describe('ScaleHelper', () => {
   it('should return the scales domain ratio (dpixels per domain units)', () => {
     const scale = scaleLinear().domain([21, 90]).range([0, 245]);
     expect(ScaleHelper.getDomainRatio(scale)).to.be.closeTo(0.28163, EPS);
+  });
+
+  it('should return the domain span of a linear scale', () => {
+    const scale = scaleLinear().domain([25, 100]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, false)).to.eq(75);
+  });
+
+  it('should return the domain span of a linear piecewise scale', () => {
+    const scale = scaleLinear().domain([25, 50, 75, 100]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, false)).to.eq(75);
+  });
+
+  it('should return the domain span of a linear scale as an absolute value', () => {
+    const scale = scaleLinear().domain([100, 0]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, true)).to.eq(100);
   });
 });

@@ -40,7 +40,8 @@ export function renderTextLabels(
   const lineY = top + (h * 0.5);
   const textSize = h * 0.35;
   const centerX = left + w / 2;
-  const [min, max] = domain;
+  const min = domain[0];
+  const max = domain[domain.length - 1];
 
   const isLargeFont = (largeFontEnabled && w > 90);
 

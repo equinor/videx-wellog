@@ -253,3 +253,19 @@ export const exampleDistributionData = () => {
 
   return data;
 };
+
+export const exampleDipPlotData = () => {
+  const colors = ['#228b22', '#ff4500', '#00bfff', '#8b864e', '#ee82ee', '#6a5acd', '#8b1a1a', '#ff8451', '#000000', '#a020f0']
+  const shapes = ['ball', 'breakout', 'circle', 'square', 'tee', 'tensile', 'triangle']
+
+  const data = range(0, 1000, 10).map(d => [
+    d,
+    Math.random() * 90,
+    Math.random() * 360,
+    {
+      color: colors[Math.floor(Math.random() * colors.length)],
+      shape: shapes[Math.floor(Math.random() * shapes.length)],
+    }
+  ]);
+  return data;
+}

@@ -31,13 +31,19 @@ function getGraphTrackLegendRows(track: GraphTrack): number {
 function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: GraphTrack): void {
   const { horizontal } = track.options;
   let posY = bounds.top;
-  const width = bounds.width;
+  const padding = track.options.padding?.size ?? 0;
+  // If the total padding to be applied to the track is greater than the available width,
+  // or the value provided is a negative value,
+  // set the padding to zero
+  const disablePadding = (padding * 2) > bounds.width || padding < 0;
+  const legendPadding = disablePadding ? 0 : padding;
+  const width = bounds.width - legendPadding;
   const legendRows = getGraphTrackLegendRows(track);
   const legendRowHeight = bounds.height / legendRows;
   selection.each(function updateLegendRow(plot) {
     const g = select(this);
     g.selectAll('*').remove();
-    const left = plot.offset * width;
+    const left = (plot.offset * (width - legendPadding)) + legendPadding;
     if (track.options.togglePlotFromLegend) {
       g.style('cursor', 'pointer');
       g.append('title').text('Toggle plot on/off');

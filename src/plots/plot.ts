@@ -1,6 +1,6 @@
 import { createScale } from '../tracks/graph/factory';
 import { Range, Scale } from '../common/interfaces';
-import { PlotData, PlotOptions } from './interfaces';
+import { DipPlotData, PlotData, PlotOptions } from './interfaces';
 import { DataHelper } from '../utils';
 
 /**
@@ -9,7 +9,7 @@ import { DataHelper } from '../utils';
 export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOptions> {
   id: string | number;
   options: PLOT_OPTIONS;
-  data: PlotData | any;
+  data: PlotData | DipPlotData | any;
   scale: Scale;
   range: Range;
 

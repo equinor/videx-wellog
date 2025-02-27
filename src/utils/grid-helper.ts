@@ -19,8 +19,8 @@ export default class GridHelper {
    * Ticks are dictionaries of major and minor number arrays
    */
   static drawGrid(ctx: CanvasRenderingContext2D, xscale: Scale, xticks: ScaleHandlerTicks, yscale: Scale, yticks: ScaleHandlerTicks) : void {
-    const [x0, x1] = xscale.range();
-    const [y0, y1] = yscale.range();
+    const xScaleRange = xscale.range();
+    const yScaleRange = yscale.range();
 
     ctx.save();
     // vertical gridlines: MUST check if scale is linear/log
@@ -30,8 +30,13 @@ export default class GridHelper {
     xticks.minor.forEach(tick => {
       const x = xscale(tick);
       ctx.beginPath();
-      ctx.moveTo(x, y0);
-      ctx.lineTo(x, y1);
+      yScaleRange.forEach((y, index) => {
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
       ctx.stroke();
     });
     ctx.strokeStyle = colorMajor;
@@ -39,8 +44,13 @@ export default class GridHelper {
     xticks.major.forEach(tick => {
       const x = xscale(tick);
       ctx.beginPath();
-      ctx.moveTo(x, y0);
-      ctx.lineTo(x, y1);
+      yScaleRange.forEach((y, index) => {
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
       ctx.stroke();
     });
 
@@ -50,8 +60,13 @@ export default class GridHelper {
     yticks.minor.forEach(tick => {
       const y = yscale(tick);
       ctx.beginPath();
-      ctx.moveTo(x0, y);
-      ctx.lineTo(x1, y);
+      xScaleRange.forEach((x, index) => {
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
       ctx.stroke();
     });
     ctx.strokeStyle = colorMajor;
@@ -59,8 +74,13 @@ export default class GridHelper {
     yticks.major.forEach(tick => {
       const y = yscale(tick);
       ctx.beginPath();
-      ctx.moveTo(x0, y);
-      ctx.lineTo(x1, y);
+      xScaleRange.forEach((x, index) => {
+        if (index === 0) {
+          ctx.moveTo(x, y);
+        } else {
+          ctx.lineTo(x, y);
+        }
+      });
       ctx.stroke();
     });
 

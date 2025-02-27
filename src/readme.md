@@ -19,5 +19,6 @@ Track components are located in the `./tracks` folder:
   * `LinePlot` - linear line graph
   * `LineStepPlot` - linear stepladder graph
   * `AreaPlot` - area graph
+  * `DipPlot` - discrete dip graph
   * `DotPlot` - discrete points graph
   * `DifferentialPlot` - differential graph, for correlation of two data series.
