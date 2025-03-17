@@ -17,8 +17,6 @@ const config = {
       builder: {},
     },
   },
-  docs: {
-    autodocs: "tag",
-  },
+  docs: {},
 };
 export default config;
