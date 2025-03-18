@@ -1,4 +1,4 @@
-name: Node CI
+name: Build Storybook
 
 on:
   pull_request:
@@ -25,6 +25,6 @@ jobs:
         run: |
           npm ci
           npm run storybook:install
-          cd examples\storybook;npm run build-storybook
+          cd examples/storybook;npm run build-storybook
         env:
           CI: true
