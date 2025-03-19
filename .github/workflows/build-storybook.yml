@@ -25,6 +25,6 @@ jobs:
         run: |
           npm ci
           npm run storybook:install
-          cd examples/storybook;npm run build-storybook
+          npm run storybook:build
         env:
           CI: true

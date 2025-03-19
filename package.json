@@ -39,7 +39,8 @@
     "postdocs": "copyfiles .nojekyll docs",
     "lint": "npx eslint src --ext ts --color",
     "storybook": "cd examples/storybook && npm run storybook",
-    "storybook:install": "cd examples/storybook && npm install"
+    "storybook:install": "cd examples/storybook && npm install",
+    "storybook:build": "cd examples/storybook && npm run build-storybook"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
