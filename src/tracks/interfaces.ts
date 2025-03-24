@@ -34,11 +34,15 @@ export interface OnRescaleEvent extends TrackEvent {
 
 export interface TrackOptions {
   /**
-   * Label to use in title if used with TrackGrouop
+   * Label to use in title if used with TrackGroup
    */
   label?: string,
   /**
-   * Short label to use in title if used with TrackGrouop
+   * Tooltip to show when mouse hovers over track title if used with TrackGroup
+   */
+  tooltip?: string,
+  /**
+   * Short label to use in title if used with TrackGroup
    */
   abbr?: string,
   /**

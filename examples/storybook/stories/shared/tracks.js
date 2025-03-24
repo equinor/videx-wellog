@@ -51,6 +51,7 @@ export default (delayLoading = false) => {
     }),
     new GraphTrack(2, {
       label: 'Pointy',
+      tooltip: 'a graph with points',
       abbr: 'Pt',
       data: ex1,
       scale: 'linear',

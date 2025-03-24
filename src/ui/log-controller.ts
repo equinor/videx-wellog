@@ -640,7 +640,7 @@ export default class LogController {
       setProps(titleDiv, {
         attrs: d => ({
           class: 'track-title',
-          title: d.options.label || d.id,
+          title: d.options.tooltip || d.options.label || d.id,
         }),
         styles: {
           [attr.size]: `${titleHeight}px`,
