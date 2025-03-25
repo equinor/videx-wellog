@@ -31,7 +31,7 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
   const padding = componentStride * 0.1;
 
   const componentHeight = componentStride - margin;
-  const componentWidth = width - margin * 2;
+  const componentWidth = Math.max(0, width - margin * 2);
   const textSize = componentHeight - padding * 4;
 
   const textX = left + width / 2;
