@@ -2,11 +2,12 @@ import { scaleLinear } from 'd3-scale';
 import {
   AreaPlot,
   DifferentialPlot,
+  DipPlot,
   DotPlot,
   LinePlot,
   LineStepPlot
 } from '../../../src';
-import { ex1, ex3 } from './shared/mock-data';
+import { ex1, ex3, exampleDipPlotData } from './shared/mock-data';
 
 export default { 
   title: 'Plot types',
@@ -103,6 +104,32 @@ export const differentialPlot = () => {
     return canvas;
   };
 
+export const dipPlot = () => {
+  const width = 500;
+  const height = 200;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+
+  const domain = [0, 500];
+  const range = [0, width];
+
+  // domain axis scale
+  const scale = scaleLinear().domain(domain).range(range);
+
+  // create instance and set options
+  const plot = new DipPlot(1, {
+    scale: 'linear',
+    domain: domain,
+  }).setData(exampleDipPlotData());
+
+  // plot
+  plot.setRange(range)
+    .plot(canvas.getContext('2d'), scale);
+
+  return canvas;
+};
   
 export const dotPlot = () => {
     const width = 500;

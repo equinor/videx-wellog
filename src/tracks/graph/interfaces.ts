@@ -21,6 +21,11 @@ export interface PlotFactory {
   [propName: string]: PlotCreatorFunction,
 }
 
+interface PaddingConfig {
+  size: number,
+  hideExcessData: boolean,
+}
+
 /**
  * Available graph track options
  */
@@ -69,6 +74,15 @@ export interface GraphTrackOptions extends TrackOptions {
    * if the domain (zoom level) changes.
    */
   alwaysTransform?: boolean,
+  /**
+   * Option to add spacing around the track, for when information may extend beyond the track itself,
+   * for example stat dip tail that defines aziumuth
+   */
+  padding?: PaddingConfig,
+  /**
+   * Option to only use major ticks in the graph track
+   */
+  majorTicksOnly?: boolean,
 
   forceDataUpdateOnToggle?: boolean,
 }

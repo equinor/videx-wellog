@@ -210,4 +210,53 @@ export interface DifferentialPlotOptions extends PlotOptions {
 
 }
 
-export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions;
+/**
+ * Available dip plot categories
+ */
+export interface DipPlotCategory {
+  /**
+   * Plot color
+   */
+  color: string,
+  /**
+   * Dip shape
+   */
+  shape: string,
+}
+
+/**
+ * Data format used by dip plot data entry
+ * @example [
+ *    4517.7686,
+ *    19.6916,
+ *    66.5322
+ *    {
+ *      color: #ff0000,
+ *      shape: 'ball',
+ *    }
+ * ]
+ */
+export type DipPlotDataEntry = [number, number, number, DipPlotCategory];
+
+/**
+ * Data format used by dip plot data
+ */
+export type DipPlotData = DipPlotDataEntry[];
+
+/**
+ * Function to control what data to plot, where
+ * w is the depth, x is the dip, y is the azimuth and z is the cateogry
+ */
+type DefinedDipFunction = (w?: number, x?:number, y?:number, z?: DipPlotCategory) => boolean;
+
+/**
+ * Available dip plot options
+ */
+export interface DipPlotOptions extends PlotOptions {
+  /**
+   * Set condition for what data to plot.
+   */
+  defined?: DefinedDipFunction,
+}
+
+export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions | DipPlotOptions;

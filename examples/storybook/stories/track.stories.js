@@ -30,6 +30,48 @@ export const graphTrack = () => {
   return div;
 };
 
+export const graphTrackPiecewise =  {
+  render: (args) => {
+    const div = document.createElement('div');
+    const width = `${args.width}px`
+    div.style.height = '500px';
+    div.style.width = width;
+
+    if(args.horizontal){
+      div.style.width = '500px';
+      div.style.height = width;
+    }
+
+    const scale = scaleLinear().domain([0, 500]).range([0, 500]);
+
+    const track = new GraphTrack('id', {
+      domain: args.domain,
+      majorTicksOnly: args.majorTicksOnly,
+      horizontal: args.horizontal,
+      padding: {
+        size: args.paddingSize,
+        hideExcessData: args.hideExcessData,
+      }
+    });
+
+    // Using requestAnimationFrame to ensure that the div is attached
+    // to the DOM before calling init
+    requestAnimationFrame(() => {
+      track.init(div, scale);
+    });
+
+    return div;
+  },
+  args:{
+    domain: [0, 20, 50, 100],
+    horizontal: false,
+    majorTicksOnly: true,
+    paddingSize: 20,
+    hideExcessData: true,
+    width: 200
+  },
+};
+
 export const graphTrackMultiplePlots = () => {
   const div = document.createElement('div');
   div.style.height = '500px';

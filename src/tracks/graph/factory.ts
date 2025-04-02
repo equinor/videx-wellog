@@ -2,6 +2,7 @@ import { scaleLinear, scaleLog } from 'd3-scale';
 import {
   LinePlot,
   AreaPlot,
+  DipPlot,
   DotPlot,
   DifferentialPlot,
   LineStepPlot,
@@ -90,6 +91,7 @@ export function createPlotType(PlotType: { new(id: string | number, options: Plo
 export const plotFactory: PlotFactory = {
   line: createPlotType(LinePlot),
   area: createPlotType(AreaPlot),
+  dip: createPlotType(DipPlot),
   dot: createPlotType(DotPlot),
   differential: createDifferentialPlot,
   linestep: createPlotType(LineStepPlot),

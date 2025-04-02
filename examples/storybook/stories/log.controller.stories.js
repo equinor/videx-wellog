@@ -68,7 +68,7 @@ export const logControllerHorizontal = () => {
   const logController = new LogController({
     showLegend: true,
     showTitles: true,
-    horizontal: false,
+    horizontal: true,
   });
 
   const tracks = createTracks();

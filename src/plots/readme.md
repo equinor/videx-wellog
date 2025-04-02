@@ -15,6 +15,9 @@ Plots data as a linear stepladder graph.
 ## Area Plot
 Plots data as an area graph.
 
+## Dip Plot
+Plots discrete dip shapes for each data point, each with shape, colour and rotation.
+
 ## Dot Plot
 Plots discrete dots for each data point
 

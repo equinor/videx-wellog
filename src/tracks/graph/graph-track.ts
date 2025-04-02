@@ -106,21 +106,58 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   }
 
   /**
+   * Create range based on domain.
+   */
+  createRange(isHorizontal: boolean) : number[] {
+    const domain = this.trackScale.domain();
+    const domainIndex = domain.length - 1;
+    const elmWidth = isHorizontal ? this.elm.clientHeight : this.elm.clientWidth;
+    const padding = this.options.padding?.size ?? 0;
+    // If the total padding to be applied to the track is greater than the available width,
+    // or the value provided is a negative value,
+    // set the padding to zero
+    const disablePadding = (padding * 2) > elmWidth || padding < 0;
+    const trackPadding = disablePadding ? 0 : Math.abs(padding);
+    const trackWidth = elmWidth - (trackPadding * 2);
+    const range = [];
+
+    // Add start entry
+    range.push(trackPadding);
+
+    // If the domain has more than two entries (start and end),
+    // add the others equally spaced along the range
+    for (let i = 1; i < domainIndex; i++) {
+      const rangeEntry = ((trackWidth / domainIndex) * i) + trackPadding;
+      range.push(rangeEntry);
+    }
+
+    // Add last entry
+    range.push(elmWidth - trackPadding);
+
+    // Reverse the array for horizontal mode
+    if (isHorizontal) {
+      const horizontalRange = range.reverse();
+      return horizontalRange;
+    }
+    return range;
+  }
+
+  /**
    * Set new range to track and plot scales
    */
   updateRange() : void {
-    const range = this.options.horizontal
-      ? [this.elm.clientHeight, 0]
-      : [0, this.elm.clientWidth];
-    this.trackScale.range(range);
+    const range = this.createRange(this.options.horizontal);
 
+    this.trackScale.range(range);
     this.plots.forEach(plot => {
       let r = range;
       if (Number.isFinite(plot.options.offset)) {
         const [r0, r1] = range;
+        const trackPadding = this.options.padding?.size ?? 0;
+
         r = this.options.horizontal
-          ? [r0 - plot.options.offset * Math.abs(r0 - r1), r1]
-          : [plot.options.offset * (r1 - r0), r1];
+          ? [r0 - plot.options.offset * Math.abs(r0 - r1) + trackPadding, r1]
+          : [plot.options.offset * (r1 - r0) + trackPadding, r1];
       }
       plot.options.horizontal = this.options.horizontal;
       plot.setRange(r);
@@ -198,6 +235,38 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   }
 
   /**
+   * Set padding on track
+   */
+  setPadding() : void {
+    const {
+      ctx,
+      options: {
+        horizontal,
+        padding,
+      },
+    } = this;
+
+    const trackPadding = padding?.size;
+    const elmHeight = horizontal ? this.elm.clientWidth : this.elm.clientHeight;
+    const elmWidth = horizontal ? this.elm.clientHeight : this.elm.clientWidth;
+    // If padding is being applied to the track,
+    // check if we should hide the excess data
+    if (
+      padding?.hideExcessData
+      && elmWidth > (trackPadding * 2)
+    ) {
+      ctx.fillStyle = '#eee';
+      if (horizontal) {
+        ctx.fillRect(0, 0, elmHeight, trackPadding);
+        ctx.fillRect(0, (elmWidth - trackPadding), elmHeight, elmWidth);
+      } else {
+        ctx.fillRect(0, 0, trackPadding, elmHeight);
+        ctx.fillRect((elmWidth - trackPadding), 0, trackPadding, elmHeight);
+      }
+    }
+  }
+
+  /**
    * Plot graph track
    */
   plot() : void {
@@ -209,6 +278,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
       options: {
         horizontal,
         scale: scaleType,
+        majorTicksOnly,
       },
     } = this;
 
@@ -220,10 +290,19 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
     let xticks: ScaleHandlerTicks;
     let yticks: ScaleHandlerTicks;
 
+    // If the domain is piecewise eg [0, 20, 50 90],
+    // display using standard tick rendering.
+    let linearTicks = null;
+    if (vscale.domain().length > 2) {
+      linearTicks = majorTicksOnly ? ScaleHelper.createMajorTicks(vscale) : ScaleHelper.createTicks(vscale);
+    } else {
+      linearTicks = ScaleHelper.createLinearTicks(vscale);
+    }
+
     if (horizontal) {
       yticks = scaleType === 'log'
         ? ScaleHelper.createLogTicks(vscale)
-        : ScaleHelper.createLinearTicks(vscale);
+        : linearTicks;
 
       xticks = ScaleHelper.createTicks(dscale);
 
@@ -231,7 +310,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
     } else {
       xticks = scaleType === 'log'
         ? ScaleHelper.createLogTicks(vscale)
-        : ScaleHelper.createLinearTicks(vscale);
+        : linearTicks;
 
       yticks = ScaleHelper.createTicks(dscale);
 
@@ -239,6 +318,8 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
     }
     ctx.restore();
     plots.forEach(plot => plot.plot(ctx, dscale));
+
+    this.setPadding();
   }
 
   /** Updates all plots with data by triggering each plot's data accessor function. */
