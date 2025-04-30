@@ -1,3 +1,4 @@
+/* eslint-disable import/no-relative-packages */
 import { scaleLinear } from 'd3-scale';
 
 import {
@@ -5,7 +6,7 @@ import {
   ScaleTrack,
   StackedTrack,
   DualScaleTrack,
-  InterpolatedScaleHandler
+  InterpolatedScaleHandler,
 } from '../../../src';
 
 import { ex3, ex4, ex4_large, ex4_fix, ex7, ex7_shortName } from './shared/mock-data';
@@ -30,14 +31,14 @@ export const graphTrack = () => {
   return div;
 };
 
-export const graphTrackPiecewise =  {
+export const graphTrackPiecewise = {
   render: (args) => {
     const div = document.createElement('div');
-    const width = `${args.width}px`
+    const width = `${args.width}px`;
     div.style.height = '500px';
     div.style.width = width;
 
-    if(args.horizontal){
+    if (args.horizontal) {
       div.style.width = '500px';
       div.style.height = width;
     }
@@ -51,7 +52,7 @@ export const graphTrackPiecewise =  {
       padding: {
         size: args.paddingSize,
         hideExcessData: args.hideExcessData,
-      }
+      },
     });
 
     // Using requestAnimationFrame to ensure that the div is attached
@@ -62,13 +63,13 @@ export const graphTrackPiecewise =  {
 
     return div;
   },
-  args:{
+  args: {
     domain: [0, 20, 50, 100],
     horizontal: false,
     majorTicksOnly: true,
     paddingSize: 20,
     hideExcessData: true,
-    width: 200
+    width: 200,
   },
 };
 
@@ -116,7 +117,7 @@ export const graphTrackSinglePlot = () => {
 
   const scale = scaleLinear().domain([0, 100]).range([0, 500]);
 
-  const track = new GraphTrack('id',  {
+  const track = new GraphTrack('id', {
     scale: 'linear',
     domain: [0, 100],
     data: [[0, 0], [100, 100]],
@@ -189,7 +190,7 @@ export const stackedTrack = {
     div.style.height = '700px';
     div.style.width = '150px';
     div.style.background = 'lightgrey';
-    if(args.horizontal){
+    if (args.horizontal) {
       div.style.width = '700px';
       div.style.height = '150px';
     }
@@ -201,13 +202,14 @@ export const stackedTrack = {
       'formation (random large)': ex4_large,
       'formation (fix)': ex4_fix,
       'facies (standardName)': ex7,
-      'facies (shortName)': ex7_shortName
-  };
-  const selectedDataSet = args.dataSet;
-  const data = datasets[selectedDataSet];
+      'facies (shortName)': ex7_shortName,
+    };
+
+    const selectedDataSet = args.dataSet;
+    const data = datasets[selectedDataSet];
 
     const track = new StackedTrack('id', {
-      data: data,
+      data,
       horizontal: args.horizontal,
       showLines: args.showLines,
       showLabels: args.showLabels,
@@ -223,14 +225,14 @@ export const stackedTrack = {
     return div;
   },
   argTypes: {
-    dataSet:{
-      control: 'radio', 
+    dataSet: {
+      control: 'radio',
       options: [
         'formation (random small)',
         'formation (random large)',
         'formation (fix)',
         'facies (standardName)',
-        'facies (shortName)'
+        'facies (shortName)',
       ],
     },
     labelRotation: {
@@ -242,7 +244,7 @@ export const stackedTrack = {
       },
     },
   },
-  args:{
+  args: {
     dataSet: 'formation (fix)',
     horizontal: false,
     showLines: true,

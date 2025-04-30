@@ -5,7 +5,7 @@ export const ex1 = range(domain[0], domain[1], 10).map(d => [d, Math.random()]);
 
 export const ex2 = {
   noise: range(domain[0], domain[1]).map(d => [d, Math.random() * 90]),
-  noise2: range(domain[0], domain[1]).map(d => [d, Math.random() * 20])
+  noise2: range(domain[0], domain[1]).map(d => [d, Math.random() * 20]),
 };
 
 const sin = range(domain[0], domain[1]).map(d => [d, Math.sin((d / 2000) * Math.PI * 2 * 20) * 25 + 50]);
@@ -15,15 +15,15 @@ export const ex3 = {
 };
 
 // Random Formation track (position and formation id.)
-export const ex4 = async (formationLength=10) => {
+export const ex4 = async (formationLength = 10) => {
   const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
   const colors = [
-    {r:0,g:200,b:200},
-    {r:2,g:200,b:2},
-    {r:53,g:53,b:240},
-    {r:224,g:254,b:84},
-    {r:175,g:15,b:115},
-    {r:116,g:116,b:116}
+    { r: 0, g: 200, b: 200 },
+    { r: 2, g: 200, b: 2 },
+    { r: 53, g: 53, b: 240 },
+    { r: 224, g: 254, b: 84 },
+    { r: 175, g: 15, b: 115 },
+    { r: 116, g: 116, b: 116 },
   ];
 
   const arr = [];
@@ -38,7 +38,7 @@ export const ex4 = async (formationLength=10) => {
       name,
       to: newTo,
       from: currentFrom,
-      color: c
+      color: c,
     };
     arr.push(area);
     currentFrom = newTo;
@@ -46,50 +46,45 @@ export const ex4 = async (formationLength=10) => {
   return arr;
 };
 
-export const ex4_large = async () => {
-  return ex4(3000);
-};
+export const ex4_large = async () => ex4(3000);
 
-export const ex4_xlarge = async () => {
-  return ex4(30000);
-};
+export const ex4_xlarge = async () => ex4(30000);
 
 // Formation track like in ex4 but with fixed position and color.
 export const ex4_fix = async () => {
   const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
   const colors = [
-    {r:0,g:200,b:200},
-    {r:2,g:200,b:2},
-    {r:53,g:53,b:240},
-    {r:224,g:254,b:84},
-    {r:175,g:15,b:115},
-    {r:116,g:116,b:116}
+    { r: 0, g: 200, b: 200 },
+    { r: 2, g: 200, b: 2 },
+    { r: 53, g: 53, b: 240 },
+    { r: 224, g: 254, b: 84 },
+    { r: 175, g: 15, b: 115 },
+    { r: 116, g: 116, b: 116 },
   ];
   const facies = [
-    {id:1,from:10,to:40},
-    {id:2,from:40,to:90},
-    {id:3,from:90,to:240},
-    {id:4,from:240,to:340},
-    {id:5,from:340,to:600},
-    {id:0,from:600,to:670},
-    {id:2,from:670,to:720},
-    {id:5,from:720,to:930}
+    { id: 1, from: 10, to: 40 },
+    { id: 2, from: 40, to: 90 },
+    { id: 3, from: 90, to: 240 },
+    { id: 4, from: 240, to: 340 },
+    { id: 5, from: 340, to: 600 },
+    { id: 0, from: 600, to: 670 },
+    { id: 2, from: 670, to: 720 },
+    { id: 5, from: 720, to: 930 },
   ];
   const arr = [];
   for (let index = 0; index < 8; index++) {
     const f = facies[index];
 
-    const name = names[f.id];
     const area = {
       name: names[f.id],
       to: f.to,
       from: f.from,
-      color: colors[f.id]
+      color: colors[f.id],
     };
     arr.push(area);
   }
   return arr;
-}
+};
 
 export const ex5 = async () => {
   const cementLength = 10;
@@ -113,7 +108,7 @@ export const ex5 = async () => {
         r,
         g,
         b,
-      }
+      },
     };
     arr.push(area);
     currentFrom = newTo;
@@ -144,29 +139,29 @@ export const ex6 = async () => {
 };
 
 // Facies Track using standard Name
-export const ex7 = async (useShortName=false) => {
+export const ex7 = async (useShortName = false) => {
   const faciesTable = [
-    { standardName: "Sandstone", shortName: "SS", color: [240, 230, 140] },
-    { standardName: "Shale", shortName: "SH", color: [128, 128, 128] },
-    { standardName: "Limestone", shortName: "LS", color: [255, 248, 220] },
-    { standardName: "Conglomerate", shortName: "CG", color: [210, 105, 30] },
-    { standardName: "Mudstone", shortName: "MS", color: [46, 139, 87] },
-    { standardName: "Siltstone", shortName: "ST", color: [192, 192, 192] },
-    { standardName: "Marl", shortName: "MR", color: [173, 216, 230] },
-    { standardName: "Dolomite", shortName: "DO", color: [255, 255, 224] },
-    { standardName: "Evaporite", shortName: "EV", color: [255, 255, 255] },
-    { standardName: "Chert", shortName: "CH", color: [105, 105, 105] },
-    { standardName: "Gypsum", shortName: "GP", color: [255, 192, 203] },
-    { standardName: "Granite", shortName: "GN", color: [175, 175, 175] },
-    { standardName: "Basalt", shortName: "BA", color: [50, 50, 50] },
-    { standardName: "Schist", shortName: "SC", color: [100, 100, 100] },
-    { standardName: "Quartzite", shortName: "QT", color: [230, 230, 230] },
-    { standardName: "Phyllite", shortName: "PH", color: [120, 120, 120] },
-    { standardName: "Gneiss", shortName: "GN", color: [200, 200, 200] },
-    { standardName: "Marble", shortName: "MB", color: [255, 228, 196] },
-    { standardName: "Serpentine", shortName: "SP", color: [154, 205, 50] },
-    { standardName: "Anhydrite", shortName: "AH", color: [220, 220, 220] },
-    { standardName: "Breccia", shortName: "BC", color: [160, 82, 45] }
+    { standardName: 'Sandstone', shortName: 'SS', color: [240, 230, 140] },
+    { standardName: 'Shale', shortName: 'SH', color: [128, 128, 128] },
+    { standardName: 'Limestone', shortName: 'LS', color: [255, 248, 220] },
+    { standardName: 'Conglomerate', shortName: 'CG', color: [210, 105, 30] },
+    { standardName: 'Mudstone', shortName: 'MS', color: [46, 139, 87] },
+    { standardName: 'Siltstone', shortName: 'ST', color: [192, 192, 192] },
+    { standardName: 'Marl', shortName: 'MR', color: [173, 216, 230] },
+    { standardName: 'Dolomite', shortName: 'DO', color: [255, 255, 224] },
+    { standardName: 'Evaporite', shortName: 'EV', color: [255, 255, 255] },
+    { standardName: 'Chert', shortName: 'CH', color: [105, 105, 105] },
+    { standardName: 'Gypsum', shortName: 'GP', color: [255, 192, 203] },
+    { standardName: 'Granite', shortName: 'GN', color: [175, 175, 175] },
+    { standardName: 'Basalt', shortName: 'BA', color: [50, 50, 50] },
+    { standardName: 'Schist', shortName: 'SC', color: [100, 100, 100] },
+    { standardName: 'Quartzite', shortName: 'QT', color: [230, 230, 230] },
+    { standardName: 'Phyllite', shortName: 'PH', color: [120, 120, 120] },
+    { standardName: 'Gneiss', shortName: 'GN', color: [200, 200, 200] },
+    { standardName: 'Marble', shortName: 'MB', color: [255, 228, 196] },
+    { standardName: 'Serpentine', shortName: 'SP', color: [154, 205, 50] },
+    { standardName: 'Anhydrite', shortName: 'AH', color: [220, 220, 220] },
+    { standardName: 'Breccia', shortName: 'BC', color: [160, 82, 45] },
   ];
 
   // unsorted and with consecutive facies on purpose
@@ -196,35 +191,33 @@ export const ex7 = async (useShortName=false) => {
     { id: 11, from: 895, to: 930 },
     { id: 9, from: 930, to: 960 },
     { id: 5, from: 960, to: 990 },
-    { id: 0, from: 990, to: 1000 }
+    { id: 0, from: 990, to: 1000 },
   ];
   const arr = [];
   for (let index = 0; index < depthSequence.length; index++) {
     const f = depthSequence[index];
 
-    const name = useShortName ?
-      faciesTable[f.id].shortName:
-      faciesTable[f.id].standardName;
+    const name = useShortName
+      ? faciesTable[f.id].shortName
+      : faciesTable[f.id].standardName;
     const color = {
       r: faciesTable[f.id].color[0],
       g: faciesTable[f.id].color[1],
-      b: faciesTable[f.id].color[2]
+      b: faciesTable[f.id].color[2],
     };
     const area = {
-      name: name,
+      name,
       to: f.to,
       from: f.from,
-      color: color
+      color,
     };
     arr.push(area);
   }
   return arr;
-}
+};
 
 // Facies Track using short Name
-export const ex7_shortName = async() => {
-  return ex7(true);
-};
+export const ex7_shortName = async () => ex7(true);
 
 export const exampleDistributionData = () => {
   const components = ['carbonate', 'sand', 'shale'];
@@ -255,8 +248,8 @@ export const exampleDistributionData = () => {
 };
 
 export const exampleDipPlotData = () => {
-  const colors = ['#228b22', '#ff4500', '#00bfff', '#8b864e', '#ee82ee', '#6a5acd', '#8b1a1a', '#ff8451', '#000000', '#a020f0']
-  const shapes = ['ball', 'breakout', 'circle', 'square', 'tee', 'tensile', 'triangle']
+  const colors = ['#228b22', '#ff4500', '#00bfff', '#8b864e', '#ee82ee', '#6a5acd', '#8b1a1a', '#ff8451', '#000000', '#a020f0'];
+  const shapes = ['ball', 'breakout', 'circle', 'square', 'tee', 'tensile', 'triangle'];
 
   const data = range(0, 1000, 10).map(d => [
     d,
@@ -265,7 +258,7 @@ export const exampleDipPlotData = () => {
     {
       color: colors[Math.floor(Math.random() * colors.length)],
       shape: shapes[Math.floor(Math.random() * shapes.length)],
-    }
+    },
   ]);
   return data;
-}
+};

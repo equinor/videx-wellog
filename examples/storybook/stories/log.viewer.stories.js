@@ -1,15 +1,16 @@
+/* eslint-disable import/no-relative-packages */
 import {
-    GraphTrack,
-    StackedTrack,
-    ScaleTrack,
-    LogViewer,
-    DualScaleTrack, 
-    InterpolatedScaleHandler,
+  GraphTrack,
+  StackedTrack,
+  ScaleTrack,
+  LogViewer,
+  DualScaleTrack,
+  InterpolatedScaleHandler,
 } from '../../../src';
 
 import createTracks from './shared/tracks';
 import { ex4, ex5, ex6 } from './shared/mock-data';
-  
+
 export default { title: 'Log Viewer' };
 
 // log.viewer.story

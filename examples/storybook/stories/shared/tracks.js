@@ -1,3 +1,4 @@
+/* eslint-disable import/no-relative-packages */
 import {
   ScaleTrack,
   GraphTrack,
@@ -18,15 +19,15 @@ import {
 } from './mock-data';
 
 const distributionComponents = {
-  'carbonate': {
+  carbonate: {
     color: 'FireBrick',
     textColor: '#8E1B1B',
   },
-  'sand': {
+  sand: {
     color: 'SandyBrown',
     textColor: '#9C693E',
   },
-  'shale': {
+  shale: {
     color: 'SlateGrey',
     textColor: '#5A6673',
   },
@@ -164,7 +165,7 @@ export default (delayLoading = false) => {
       }],
     }),
     new StackedTrack(6, {
-      label:"Formation",
+      label: 'Formation',
       showLines: false,
       labelRotation: -90,
       data: ex4_large,
@@ -185,7 +186,9 @@ export default (delayLoading = false) => {
       if (track.options.data) {
         const delay = 1000 + Math.random() * 1000;
         const data = track.options.data;
-        track.options.data = () => new Promise(resolve => setTimeout(() => resolve(data), delay));
+        track.options.data = () => new Promise(resolve => {
+          setTimeout(() => resolve(data), delay);
+        });
       }
     });
   }
