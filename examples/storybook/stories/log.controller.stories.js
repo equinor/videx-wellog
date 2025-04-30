@@ -1,11 +1,12 @@
+/* eslint-disable import/no-relative-packages */
 import {
-  LogController, ScaleTrack, GraphTrack
+  LogController, ScaleTrack, GraphTrack,
 } from '../../../src';
 
 import createTracks from './shared/tracks';
 
-export default  {
-  title: "Log Controller",
+export default {
+  title: 'Log Controller',
 };
 
 export const logControllerWithArgs = {
@@ -45,17 +46,17 @@ export const logControllerWithArgs = {
       logController
         .init(div)
         .setTracks(tracks);
-      if( args.animation ) {
-      createAnimationStep()();
+      if (args.animation) {
+        createAnimationStep()();
       }
     });
 
     return div;
   },
-  args:{
+  args: {
     showLegend: true,
     showTitles: true,
-    horizontal: true,
+    horizontal: false,
     animation: true,
   },
 };
