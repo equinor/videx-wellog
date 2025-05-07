@@ -8,7 +8,9 @@ import {
   scaleLegendConfig,
   distributionLegendConfig,
   DistributionTrack,
+  ColorStripTrack,
 } from '../../../../src';
+import { exampleMajorityPredictionData } from './majority-prediction-mock';
 import {
   ex1,
   ex2,
@@ -177,6 +179,12 @@ export default (delayLoading = false) => {
       legendConfig: distributionLegendConfig,
       components: distributionComponents,
       interpolate: true,
+    }),
+    new ColorStripTrack(8, {
+      label: 'Color Strip',
+      abbr: 'CS',
+      data: exampleMajorityPredictionData,
+      legendConfig: LegendHelper.basicVerticalLabel('Majority Prediction', 'Pred'),
     }),
   ];
 

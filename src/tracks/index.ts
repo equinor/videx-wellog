@@ -7,3 +7,4 @@ export * from './graph';
 export * from './scale';
 export * from './stack';
 export * from './distribution';
+export * from './color-strip';
