@@ -3,7 +3,7 @@ import WebGL2Track from '../webgl2-track';
 import { DistributionTrackOptions } from './interfaces';
 import { OnMountEvent } from '../interfaces';
 
-import vertexShaderSource from './distribution-shader.vert.glsl';
+import vertexShaderSource from '../../common/simple-shader.vert.glsl';
 import fragmentShaderSource from './distribution-shader.frag.glsl';
 
 const defaultOptions: DistributionTrackOptions = {

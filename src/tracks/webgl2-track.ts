@@ -85,6 +85,11 @@ export default abstract class WebGL2Track<TOptions extends TrackOptions> extends
     // Get and store domain uniform location
     this.domainLocation = gl.getUniformLocation(program, 'u_domain');
 
+    const horizontalLocation = gl.getUniformLocation(program, 'u_horizontal');
+    if (horizontalLocation !== null) {
+      gl.uniform1i(horizontalLocation, this.options?.horizontal ? 1 : 0);
+    }
+
     // Ensure vertex buffer cover full track
     setupBuffer(gl, program);
   }
