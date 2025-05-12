@@ -3,7 +3,7 @@ import { select, Selection } from 'd3-selection';
 import { clamp } from '@equinor/videx-math';
 import SvgTrack from '../svg-track';
 import { getContrastYIQ, setAttrs, setProps } from '../../utils';
-import { StackedTrackOptions, AreaData, TransformedAreaData } from './interfaces';
+import { StackedTrackOptions, AreaData, TransformedAreaData, StackedTrackLabelOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 
 /**
@@ -12,7 +12,6 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
  * @param {object} d data record
  * @param {number} trackWidth width of the track.
  * @param {number[]} offsets label offsets
- * @param {number} angle label angle regarding to the main track axis.
  */
 function plotLabel(
   g: Selection<HTMLElement, unknown, null, undefined>,
@@ -20,7 +19,7 @@ function plotLabel(
   trackWidth: number,
   offsets: number[],
   horizontal: boolean,
-  angle: number,
+  { rotation: angle, horizontalScaleRatio, verticalScaleRatio },
 ) {
   // label
   let height = d.yTo - d.yFrom - offsets[0] - offsets[1];
@@ -31,8 +30,8 @@ function plotLabel(
   }
   g.select('g.label').remove();
 
-  // Restrict fontSize to the smallest of 50% of width and 10% of height
-  let fontSize = Math.min(width * 0.5, height * 0.1);
+  // Restrict fontSize to the smallest of width*hRatio and height*vRatio
+  let fontSize = Math.min(width * horizontalScaleRatio, height * verticalScaleRatio);
 
   // Clamp to ensure fontSize remains readable
   fontSize = clamp(fontSize, 8, 18);
@@ -82,7 +81,7 @@ function plotLabel(
   });
 
   // Computes the with and height of the surrounding rectangle of the rotated label.
-  // Note that le label is enlarged by 2 px
+  // Note that the label is enlarged by 2 px
   const label_bbox = label.node().getBBox();
   const rot_label_width = Math.abs(Math.cos(rad_angle) * (label_bbox.width + 2)) + Math.abs(Math.sin(rad_angle) * (label_bbox.height + 2));
   const rot_label_height = Math.abs(Math.cos(rad_angle) * (label_bbox.height + 2)) + Math.abs(Math.sin(rad_angle) * (label_bbox.width + 2));
@@ -102,7 +101,12 @@ function plotLabel(
 const defaultOptions = {
   showLines: true,
   showLabels: true,
-  labelRotation: 0,
+};
+
+const defaultLabelOptions: StackedTrackLabelOptions = {
+  rotation: 0,
+  horizontalScaleRatio: 0.5,
+  verticalScaleRatio: 0.1,
 };
 
 /**
@@ -112,7 +116,9 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   xscale: ScaleLinear<number, number>;
 
   constructor(id: string | number, options) {
-    super(id, { ...defaultOptions, ...options });
+    const labelOptions = { ...defaultLabelOptions, ...(options.labelOptions ?? {}) };
+    delete options.labelOptions;
+    super(id, { ...defaultOptions, labelOptions, ...options });
   }
 
   /**
@@ -122,9 +128,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   onMount(event: OnMountEvent) {
     super.onMount(event);
 
-    const {
-      options,
-    } = this;
+    const { options } = this;
 
     this.xscale = scaleLinear().domain([0, 1]);
 
@@ -305,7 +309,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
           Math.max(0, -d.yFrom),
           Math.max(0, d.yTo - yMax),
         ];
-        plotLabel(fg, d, trackWidth, offsets, options.horizontal, options.labelRotation);
+        plotLabel(fg, d, trackWidth, offsets, options.horizontal, options.labelOptions);
       });
     }
     selection.exit().remove();
