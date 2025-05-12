@@ -20,6 +20,11 @@ interface StackedTrackOptions extends TrackOptions {
    */
   showLines?: boolean,
 
+  /** Option for the label logic. */
+  labelOptions?: StackedTrackLabelOptions,
+}
+
+export interface StackedTrackLabelOptions {
   /**
    * @brief Rotation angle for the labels.
    *
@@ -27,7 +32,13 @@ interface StackedTrackOptions extends TrackOptions {
    * (i.e. The vertical line if the track is vertical and
    * the horizontal line if the track is horizontal.)
    */
-  labelRotation?: number,
+  rotation: number,
+
+  /** The ratio of width to use when determing font scale. Will be used if smaller than verticalScaleRatio. Default value is 0.5. */
+  horizontalScaleRatio: number,
+
+  /** The ratio of height to use when determing font scale. Will be used if smaller than horizontalScaleRatio. Default value is 0.1. */
+  verticalScaleRatio: number,
 }
 
 interface TransformedAreaData {
