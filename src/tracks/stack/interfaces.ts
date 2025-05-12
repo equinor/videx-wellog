@@ -34,10 +34,10 @@ export interface StackedTrackLabelOptions {
    */
   rotation: number,
 
-  /** The ratio of width to use when determing font scale. Will be used if smaller than verticalScaleRatio. Default value is 0.5. */
+  /** The ratio of width to use when determining font scale. Will be used if smaller than verticalScaleRatio. Default value is 0.5. */
   horizontalScaleRatio: number,
 
-  /** The ratio of height to use when determing font scale. Will be used if smaller than horizontalScaleRatio. Default value is 0.1. */
+  /** The ratio of height to use when determining font scale. Will be used if smaller than horizontalScaleRatio. Default value is 0.1. */
   verticalScaleRatio: number,
 }
 
