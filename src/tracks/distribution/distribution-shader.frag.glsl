@@ -10,7 +10,7 @@ uniform vec3 u_componentColors[32];
 
 uniform int u_entryCount;
 
-// x: interpolationType (0: Linear, 1: Nearest, 2: Discrete)
+// x: interpolationType (0: Linear, 1: Nearest, 2: Discrete, 3: Next)
 // y: discreteHeight
 uniform vec2 u_interpolationConfig;
 
@@ -143,6 +143,8 @@ void main() {
           float cumulativeFrom = getCumulativeAt(x, fromSampleY, textureWidth);
           float cumulativeTo = getCumulativeAt(x, toSampleY, textureWidth);
           cumulativeValue = mix(cumulativeFrom, cumulativeTo, t);
+        } else if (interpolationType == 3) { // Next
+            cumulativeValue = getCumulativeAt(x, toSampleY, textureWidth);
         } else { // Nearest & Discrete
             float sampleY = (t < 0.5) ? fromSampleY : toSampleY;
             cumulativeValue = getCumulativeAt(x, sampleY, textureWidth);
