@@ -40,9 +40,9 @@ void main() {
         float midDepth = getEntryAtRow(mid).a;
 
         if (targetDepth < midDepth) {
+            matchIndex = mid;
             high = mid - 1;
         } else {
-            matchIndex = mid;
             low = mid + 1;
         }
     }
