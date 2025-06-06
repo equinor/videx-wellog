@@ -187,46 +187,44 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
       }
     }
 
-    const merged = DataHelper.mergeDataSeries(scaleddata[0] || [], scaleddata[1] || []);
-
     // render correlation areas
     const areaFunction1 = area<Triplet<number>>().context(ctx);
     const areaFunction2 = area<Triplet<number>>().context(ctx);
 
     if (horizontal) {
       areaFunction1
-        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
+        .defined(d => def(d[1], d[0]))
         .y0(max)
         .y1(d => d[1])
         .x(d => d[0]);
 
       areaFunction2
-        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
+        .defined(d => def(d[1], d[0]))
         .y0(min)
-        .y1(d => d[2])
+        .y1(d => d[1])
         .x(d => d[0]);
     } else {
       areaFunction1
-        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
+        .defined(d => def(d[1], d[0]))
         .x0(min)
         .x1(d => d[1])
         .y(d => d[0]);
 
       areaFunction2
-        .defined(d => def(d[1], d[0]) && def(d[2], d[0]))
+        .defined(d => def(d[1], d[0]))
         .x0(max)
-        .x1(d => d[2])
+        .x1(d => d[1])
         .y(d => d[0]);
     }
 
     ctx.save();
     ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
-    areaFunction2(merged);
+    areaFunction2(scaleddata[1]);
     ctx.clip();
 
     ctx.beginPath();
-    areaFunction1(merged);
+    areaFunction1(scaleddata[0]);
     ctx.fillStyle = serie1.fill;
     ctx.fill();
     ctx.restore();
@@ -242,11 +240,11 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
     ctx.save();
     ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
-    areaFunction1(merged);
+    areaFunction1(scaleddata[0]);
     ctx.clip();
 
     ctx.beginPath();
-    areaFunction2(merged);
+    areaFunction2(scaleddata[1]);
     ctx.fillStyle = serie2.fill;
     ctx.fill();
     ctx.restore();
