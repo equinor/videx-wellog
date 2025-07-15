@@ -1,8 +1,13 @@
 name: Unit test
 on: [push]
 
+permissions: {}
+
 jobs:
   build:
+    permissions:
+      contents: read
+      id-token: write
     runs-on: ubuntu-latest
 
     steps:

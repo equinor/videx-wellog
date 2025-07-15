@@ -2,8 +2,13 @@ name: Run tests and upload coverage
 
 on: push
 
+permissions: {}
+
 jobs:
   test:
+    permissions:
+      contents: read
+      id-token: write
     name: Run tests and collect coverage
     runs-on: ubuntu-latest
 
