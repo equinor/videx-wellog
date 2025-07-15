@@ -1,6 +1,8 @@
 name: Unit test
 on: [push]
 
+permissions: {}
+
 jobs:
   build:
     permissions:
