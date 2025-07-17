@@ -19,6 +19,11 @@ export default class DipShape {
   public azimuth: number;
   public x1: number;
   public y1: number;
+  private length: number;
+  private radius: number;
+  private barLength: number;
+  private tailLength: number;
+  private teeLength: number;
 
   constructor(
     ctx: CanvasRenderingContext2D,
@@ -32,16 +37,26 @@ export default class DipShape {
     this.azimuth = azimuth;
     this.x1 = x1;
     this.y1 = y1;
+    this.length = 7.5;
+    this.radius = this.length * 0.67;
+    this.barLength = this.length * 1.25;
+    this.teeLength = this.length * 1.8;
+    this.tailLength = this.length * 2.5;
   }
 
   draw() : void {
+    const {
+      category,
+      length,
+    } = this;
+
     this.drawTail();
-    switch (this.category.shape) {
+    switch (category.shape) {
       case DipPlotShape.TRIANGLE:
-        this.drawPolygon(10, 3);
+        this.drawPolygon(length, 3);
         break;
       case DipPlotShape.SQUARE:
-        this.drawPolygon(10, 4);
+        this.drawPolygon(length, 4);
         break;
       case DipPlotShape.CIRCLE:
         this.drawCircle();
@@ -65,9 +80,16 @@ export default class DipShape {
   }
 
   drawArc() : void {
+    const {
+      radius,
+      x1,
+      y1,
+    } = this;
+
     const arcL = Math.PI * 2;
+
     this.ctx.beginPath();
-    this.ctx.arc(this.x1, this.y1, 7.5, 0, arcL);
+    this.ctx.arc(x1, y1, radius, 0, arcL);
   }
 
   addFill(color: string = this.category.color) : void {
@@ -83,23 +105,30 @@ export default class DipShape {
   drawTail() : void {
     const {
       azimuth,
+      barLength,
+      category,
       ctx,
+      tailLength,
       x1,
       y1,
     } = this;
 
     ctx.beginPath();
     ctx.lineWidth = 2;
-    if ([DipPlotShape.BREAKOUT, DipPlotShape.TENSILE].includes(this.category.shape as DipPlotShape)) {
-      const tailLength = 12.5;
-      const x2 = x1 + Math.cos(azimuth) * tailLength;
-      const y2 = y1 + Math.sin(azimuth) * tailLength;
+
+    if ([DipPlotShape.BREAKOUT, DipPlotShape.TENSILE].includes(category.shape as DipPlotShape)) {
+      const x2 = x1 + Math.cos(azimuth) * barLength;
+      const y2 = y1 + Math.sin(azimuth) * barLength;
       ctx.moveTo(x2, y2);
-      const x3 = x1 - Math.cos(azimuth) * tailLength;
-      const y3 = y1 - Math.sin(azimuth) * tailLength;
+      const x3 = x1 - Math.cos(azimuth) * barLength;
+      const y3 = y1 - Math.sin(azimuth) * barLength;
       ctx.lineTo(x3, y3);
+    } else if ([DipPlotShape.TEE].includes(category.shape as DipPlotShape)) {
+      ctx.moveTo(x1, y1);
+      const x2 = x1 + Math.cos(azimuth) * barLength;
+      const y2 = y1 + Math.sin(azimuth) * barLength;
+      ctx.lineTo(x2, y2);
     } else {
-      const tailLength = this.category.shape === DipPlotShape.TEE ? 12.5 : 25;
       ctx.moveTo(x1, y1);
       const x2 = x1 + Math.cos(azimuth) * tailLength;
       const y2 = y1 + Math.sin(azimuth) * tailLength;
@@ -154,17 +183,17 @@ export default class DipShape {
   drawBreakout() : void {
     const {
       azimuth,
+      length,
       x1,
       y1,
     } = this;
 
     this.drawArc();
     this.addStroke();
-    const triBreakoutLength = 10;
-    const triX1 = x1 + Math.cos(azimuth) * triBreakoutLength;
-    const triY1 = y1 + Math.sin(azimuth) * triBreakoutLength;
-    const triX2 = x1 - Math.cos(azimuth) * triBreakoutLength;
-    const triY2 = y1 - Math.sin(azimuth) * triBreakoutLength;
+    const triX1 = x1 + Math.cos(azimuth) * length;
+    const triY1 = y1 + Math.sin(azimuth) * length;
+    const triX2 = x1 - Math.cos(azimuth) * length;
+    const triY2 = y1 - Math.sin(azimuth) * length;
     this.drawPolygon(4, 3, triX1, triY1);
     this.drawPolygon(4, 3, triX2, triY2, azimuth + 3.14159);
   }
@@ -173,6 +202,7 @@ export default class DipShape {
     const {
       azimuth,
       ctx,
+      teeLength,
       x1,
       y1,
     } = this;
@@ -180,7 +210,6 @@ export default class DipShape {
     ctx.beginPath();
     ctx.lineWidth = 3;
     const angleAdjust = 67.5;
-    const teeLength = 18;
     const xLeft = x1 + Math.cos(azimuth - angleAdjust) * teeLength;
     const yLeft = y1 + Math.sin(azimuth - angleAdjust) * teeLength;
     ctx.moveTo(xLeft, yLeft);
