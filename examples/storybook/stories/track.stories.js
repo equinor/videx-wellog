@@ -6,10 +6,12 @@ import {
   ScaleTrack,
   StackedTrack,
   DualScaleTrack,
+  DistributionTrack,
+  distributionLegendConfig,
   InterpolatedScaleHandler,
 } from '../../../src';
 
-import { ex3, ex4, ex4_large, ex4_fix, ex7, ex7_shortName } from './shared/mock-data';
+import { ex3, ex4, ex4_large, ex4_fix, ex7, ex7_shortName, exampleDistributionData } from './shared/mock-data';
 
 export default { title: 'Track types' };
 
@@ -251,4 +253,44 @@ export const stackedTrack = {
     showLabels: true,
     labelRotation: 0,
   },
+};
+
+export const distributionTrack = () => {
+  const div = document.createElement('div');
+  div.style.height = '500px';
+  div.style.width = '100px';
+
+  const scale = scaleLinear().domain([500, 1000]).range([0, 100]);
+
+  const distributionComponents = {
+    carbonate: {
+      color: 'FireBrick',
+      textColor: '#8E1B1B',
+    },
+    sand: {
+      color: 'SandyBrown',
+      textColor: '#9C693E',
+    },
+    shale: {
+      color: 'SlateGrey',
+      textColor: '#5A6673',
+    },
+  };
+
+  const distTrack = new DistributionTrack(1, {
+    label: 'Distribution',
+    abbr: 'Dst',
+    data: exampleDistributionData,
+    legendConfig: distributionLegendConfig,
+    components: distributionComponents,
+    interpolate: true,
+  });
+
+  // Using requestAnimationFrame to ensure that the div is attached
+  // to the DOM before calling init
+  requestAnimationFrame(() => {
+    distTrack.init(div, scale);
+  });
+
+  return div;
 };
