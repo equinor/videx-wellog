@@ -263,20 +263,20 @@ export const distributionTrack = () => {
   const scale = scaleLinear().domain([500, 1000]).range([0, 100]);
 
   const distributionComponents = {
-  carbonate: {
-    color: 'FireBrick',
-    textColor: '#8E1B1B',
-  },
-  sand: {
-    color: 'SandyBrown',
-    textColor: '#9C693E',
-  },
-  shale: {
-    color: 'SlateGrey',
-    textColor: '#5A6673',
-  },
-};
-  
+    carbonate: {
+      color: 'FireBrick',
+      textColor: '#8E1B1B',
+    },
+    sand: {
+      color: 'SandyBrown',
+      textColor: '#9C693E',
+    },
+    shale: {
+      color: 'SlateGrey',
+      textColor: '#5A6673',
+    },
+  };
+
   const distTrack = new DistributionTrack(1, {
     label: 'Distribution',
     abbr: 'Dst',
@@ -285,7 +285,6 @@ export const distributionTrack = () => {
     components: distributionComponents,
     interpolate: true,
   });
-
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
