@@ -32,7 +32,7 @@ jobs:
         env:
           CI: true
       - name: Publish to NPM
-        uses: JS-DevTools/npm-publish@1fe17a093199d8fabed85cbcc6f0f79eb06470da
+        uses: JS-DevTools/npm-publish@7f8fe47b3bea1be0c3aec2b717c5ec1f3e03410b
         with:
           token: ${{secrets.NPM_TOKEN}}
           provenance: true
