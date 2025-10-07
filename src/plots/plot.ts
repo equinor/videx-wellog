@@ -103,5 +103,5 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
   /**
    * Plot function should be overridden
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {} // eslint-disable-line class-methods-use-this, @typescript-eslint/no-unused-vars
+  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {} // eslint-disable-line @typescript-eslint/no-unused-vars
 }

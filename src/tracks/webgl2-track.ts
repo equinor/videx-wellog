@@ -1,4 +1,3 @@
-/* eslint-disable no-multi-assign */
 import { select, Selection } from 'd3-selection';
 import Track from './track';
 import { setProps } from '../utils';

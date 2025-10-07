@@ -43,6 +43,7 @@
     "storybook:build": "cd examples/storybook && npm run build-storybook"
   },
   "devDependencies": {
+    "@eslint/js": "^9.37.0",
     "@rollup/plugin-node-resolve": "^16.0.2",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.1.4",
@@ -53,13 +54,11 @@
     "@types/d3-shape": "^3.1.7",
     "@types/d3-zoom": "^3.0.8",
     "@types/jest": "^29.5.5",
-    "@typescript-eslint/eslint-plugin": "^5.37.0",
-    "@typescript-eslint/parser": "^5.37.0",
     "autoprefixer": "^10.4.21",
     "chai": "^4.4.1",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.57.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint": "^9.37.0",
+    "eslint-plugin-import": "^2.32.0",
     "jest": "^30.0.4",
     "jest-environment-jsdom": "^30.0.4",
     "rimraf": "^3.0.2",
@@ -71,7 +70,8 @@
     "ts-jest": "^29.4.0",
     "tslib": "^2.8.1",
     "typedoc": "^0.28.13",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
   },
   "dependencies": {
     "@equinor/videx-math": "^1.1.3",

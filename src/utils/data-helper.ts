@@ -323,7 +323,7 @@ export default class DataHelper {
         return data[idx][1];
       }
     } catch (err) {
-      console.error(err); // eslint-disable-line no-console
+      console.error(err);
     }
     return null;
   }
@@ -349,7 +349,7 @@ export default class DataHelper {
         return bestMatch[1];
       }
     } catch (err) {
-      console.error(err); // eslint-disable-line no-console
+      console.error(err);
     }
 
     return null;
@@ -370,7 +370,7 @@ export default class DataHelper {
 
       return index > -1 ? data[index][1] : null;
     } catch (err) {
-      console.error(err); // eslint-disable-line no-console
+      console.error(err);
     }
     return null;
   }

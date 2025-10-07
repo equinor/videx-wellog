@@ -1,4 +1,3 @@
-/* eslint-disable no-continue */
 import { Line, line } from 'd3-shape';
 import Plot from './plot';
 import { Scale, Tuplet } from '../common/interfaces';

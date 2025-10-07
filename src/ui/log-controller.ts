@@ -147,8 +147,8 @@ export default class LogController {
    * Set the tracks for this controller, replacing any existing tracks
    * @param tracks track or tracks to set
    */
-  public setTracks(...track: Track[]) : LogController // eslint-disable-line @typescript-eslint/semi
-  public setTracks(tracks: Track[]) : LogController // eslint-disable-line @typescript-eslint/semi
+  public setTracks(...track: Track[]) : LogController
+  public setTracks(tracks: Track[]) : LogController
   public setTracks(...tracks: any[]) : LogController {
     this.tracks = tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
     this.tracks.sort((a, b) => a.order - b.order);
@@ -261,7 +261,7 @@ export default class LogController {
     }
   }
 
-  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController { // eslint-disable-line default-param-last
+  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController {
     const [d1, d2] = domain;
     if (d1 === d2) return this;
     const current = zoomTransform(this.zoomHandler.node());
