@@ -1,4 +1,4 @@
-@import 'ui/log-styles';
-@import 'ui/loader-styles';
-@import 'tracks/scale/styles';
+@forward 'ui/log-styles';
+@forward 'ui/loader-styles';
+@forward 'tracks/scale/styles';
 
