@@ -38,7 +38,7 @@ export default defineConfig([
     "@typescript-eslint/no-unsafe-function-type": "off",
     "@typescript-eslint/no-this-alias": "off",
     "@typescript-eslint/no-empty-object-type": "off",
-    "import/named": "off" // Due to locl linking
+    "import/named": "off"
     },
   },
 ]);
