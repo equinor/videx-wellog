@@ -23,7 +23,7 @@ describe('Utils', () => {
     expect(hashString('bar')).to.eq(97299);
   });
 
-  it('should be able to debounce function calls with debouncer', (done) => {
+  it('should be able to debounce function calls with debouncer', () => {
     const delay = 10;
 
     let i = 0;
@@ -41,7 +41,6 @@ describe('Utils', () => {
     setTimeout(
       () => {
         expect(i).to.eq(1);
-        done();
       }, delay + 1);
   });
 });
