@@ -244,10 +244,14 @@ export type DipPlotDataEntry = [number, number, number, DipPlotCategory];
 export type DipPlotData = DipPlotDataEntry[];
 
 /**
- * Function to control what data to plot, where
- * w is the depth, x is the dip, y is the azimuth, z is the cateogry and s is the optional dip size
+ * Function to control what data to plot
  */
-type DefinedDipFunction = (w?: number, x?:number, y?:number, z?: DipPlotCategory, s?:number) => boolean;
+type DefinedDipFunction = (
+  depth?: number,
+  dip?:number,
+  azimnuth?:number,
+  category?: DipPlotCategory
+) => boolean;
 
 /**
  * Available dip plot options
