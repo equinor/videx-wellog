@@ -37,7 +37,7 @@ export default class DipShape {
     this.azimuth = azimuth;
     this.x1 = x1;
     this.y1 = y1;
-    this.length = 7.5;
+    this.length = 5;
     this.radius = this.length * 0.67;
     this.barLength = this.length * 1.25;
     this.teeLength = this.length * 1.8;
