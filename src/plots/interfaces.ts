@@ -249,7 +249,7 @@ export type DipPlotData = DipPlotDataEntry[];
 type DefinedDipFunction = (
   depth?: number,
   dip?:number,
-  azimnuth?:number,
+  azimuth?:number,
   category?: DipPlotCategory
 ) => boolean;
 
