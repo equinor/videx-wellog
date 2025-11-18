@@ -250,7 +250,7 @@ type DefinedDipFunction = (
   depth?: number,
   dip?:number,
   azimuth?:number,
-  category?: DipPlotCategory
+  category?: DipPlotCategory,
 ) => boolean;
 
 /**
