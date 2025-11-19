@@ -88,6 +88,11 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
     let ops = this.options;
     const path = key.split('.');
 
+    const blockedKeys = ['__proto__', 'constructor', 'prototype'];
+    if (path.some(p => blockedKeys.includes(p))) {
+      throw new Error('Prototype pollution attempt detected');
+    }
+
     if (path.length === 2 && path[0].match(/serie(1|2)/)) {
       if (!ops[path[0]]) {
         ops[path[0]] = {};
