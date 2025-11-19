@@ -30,7 +30,8 @@ export default class DipPlot extends Plot<DipPlotOptions> {
       const azimuthInRadians = azimuth * (Math.PI / 180);
       const x1 = options.horizontal ? scale(d[0]) : xscale(d[1]);
       const y1 = options.horizontal ? xscale(d[1]) : scale(d[0]);
-      const dipShape = new DipShape(ctx, category, azimuthInRadians, x1, y1);
+      const dipSize = options.dipSize;
+      const dipShape = new DipShape(ctx, category, azimuthInRadians, x1, y1, dipSize);
       dipShape.draw();
     });
 

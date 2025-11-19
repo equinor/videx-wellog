@@ -19,7 +19,7 @@ export default class DipShape {
   public azimuth: number;
   public x1: number;
   public y1: number;
-  private length: number;
+  public dipSize: number;
   private radius: number;
   private barLength: number;
   private tailLength: number;
@@ -31,32 +31,33 @@ export default class DipShape {
     azimuth: number,
     x1: number,
     y1: number,
+    dipSize: number = 5,
   ) {
     this.ctx = ctx;
     this.category = category;
     this.azimuth = azimuth;
     this.x1 = x1;
     this.y1 = y1;
-    this.length = 7.5;
-    this.radius = this.length * 0.67;
-    this.barLength = this.length * 1.25;
-    this.teeLength = this.length * 1.8;
-    this.tailLength = this.length * 2.5;
+    this.dipSize = dipSize;
+    this.radius = this.dipSize * 0.67;
+    this.barLength = this.dipSize * 1.25;
+    this.teeLength = this.dipSize * 1.8;
+    this.tailLength = this.dipSize * 2.5;
   }
 
   draw() : void {
     const {
       category,
-      length,
+      dipSize,
     } = this;
 
     this.drawTail();
     switch (category.shape) {
       case DipPlotShape.TRIANGLE:
-        this.drawPolygon(length, 3);
+        this.drawPolygon(dipSize, 3);
         break;
       case DipPlotShape.SQUARE:
-        this.drawPolygon(length, 4);
+        this.drawPolygon(dipSize, 4);
         break;
       case DipPlotShape.CIRCLE:
         this.drawCircle();
@@ -183,17 +184,17 @@ export default class DipShape {
   drawBreakout() : void {
     const {
       azimuth,
-      length,
+      dipSize,
       x1,
       y1,
     } = this;
 
     this.drawArc();
     this.addStroke();
-    const triX1 = x1 + Math.cos(azimuth) * length;
-    const triY1 = y1 + Math.sin(azimuth) * length;
-    const triX2 = x1 - Math.cos(azimuth) * length;
-    const triY2 = y1 - Math.sin(azimuth) * length;
+    const triX1 = x1 + Math.cos(azimuth) * dipSize;
+    const triY1 = y1 + Math.sin(azimuth) * dipSize;
+    const triX2 = x1 - Math.cos(azimuth) * dipSize;
+    const triY2 = y1 - Math.sin(azimuth) * dipSize;
     this.drawPolygon(4, 3, triX1, triY1);
     this.drawPolygon(4, 3, triX2, triY2, azimuth + 3.14159);
   }

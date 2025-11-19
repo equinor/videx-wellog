@@ -244,10 +244,14 @@ export type DipPlotDataEntry = [number, number, number, DipPlotCategory];
 export type DipPlotData = DipPlotDataEntry[];
 
 /**
- * Function to control what data to plot, where
- * w is the depth, x is the dip, y is the azimuth and z is the cateogry
+ * Function to control what data to plot
  */
-type DefinedDipFunction = (w?: number, x?:number, y?:number, z?: DipPlotCategory) => boolean;
+type DefinedDipFunction = (
+  depth?: number,
+  dip?:number,
+  azimuth?:number,
+  category?: DipPlotCategory,
+) => boolean;
 
 /**
  * Available dip plot options
@@ -257,6 +261,10 @@ export interface DipPlotOptions extends PlotOptions {
    * Set condition for what data to plot.
    */
   defined?: DefinedDipFunction,
+  /**
+   * Base dip size (single value to scale size)
+   */
+  dipSize?: number,
 }
 
 export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions | DipPlotOptions;
