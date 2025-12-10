@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "@equinor/videx-wellog",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "type": "module",
   "license": "MIT",
   "description": "Visualisation components for wellbore log data",

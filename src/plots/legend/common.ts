@@ -6,6 +6,7 @@ import { LegendBounds } from '../../utils/legend-helper';
 interface LegendOptions {
   addLabelBg?: boolean;
   largeFontEnabled?: boolean;
+  dash?: number[];
 }
 
 /** Helper function to setup a white front background using bounding box of given text. */
@@ -194,6 +195,7 @@ export function renderBasicPlotLegend(
       'stroke-width': lineWidth,
       stroke: color,
       fill: color,
+      ...(legendOptions.dash ? {'stroke-dasharray': legendOptions.dash } : {} )
     },
   });
 
