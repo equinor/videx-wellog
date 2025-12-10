@@ -195,7 +195,7 @@ export function renderBasicPlotLegend(
       'stroke-width': lineWidth,
       stroke: color,
       fill: color,
-      ...(legendOptions.dash ? {'stroke-dasharray': legendOptions.dash } : {} )
+      ...(legendOptions.dash && {'stroke-dasharray': legendOptions.dash })
     },
   });
 
