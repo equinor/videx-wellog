@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - dev
+
+permissions: {}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-24.04
+    env:
+      NODE_VERSION: "20.x"
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Release Please
+        id: release
+        uses: googleapis/release-please-action@16a9c90856f42705d54a6fda1823352bdc62cf38
+        with:
+          release-type: node
+
+      - name: Checkout
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3
+        with:
+          persist-credentials: false
+
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm ci
+
+      - name: Build library
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm run build --if-present
+
+      - name: Publish package
+        if: ${{ steps.release.outputs.release_created }}
+        uses: JS-DevTools/npm-publish@7f8fe47b3bea1be0c3aec2b717c5ec1f3e03410b
+        with:
+          token: ${{ secrets.NPM_TOKEN}}
+          access: public
+          provenance: true
