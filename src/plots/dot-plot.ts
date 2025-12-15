@@ -10,16 +10,13 @@ export default class DotPlot extends Plot<DotPlotOptions> {
   /**
    * Renders dot plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
-    const r = options.radius || Math.min(5, ScaleHelper.getRangeSpan(xscale) * 0.04);
+    const r =
+      options.radius || Math.min(5, ScaleHelper.getRangeSpan(xscale) * 0.04);
 
     ctx.save();
 

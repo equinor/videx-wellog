@@ -11,10 +11,17 @@ export default class UIHelper {
    * NOTE: Requires elements to be within the same containing DOM element
    * and stacked side-by-side horizontally.
    */
-  static pickHStackedElement(elements: HTMLElement[], xpos: number) : HTMLElement {
+  static pickHStackedElement(
+    elements: HTMLElement[],
+    xpos: number,
+  ): HTMLElement {
     for (let i = 0; i < elements.length; i++) {
       const elm = elements[i];
-      if (elm && xpos >= elm.offsetLeft && xpos <= elm.offsetLeft + elm.clientWidth) {
+      if (
+        elm &&
+        xpos >= elm.offsetLeft &&
+        xpos <= elm.offsetLeft + elm.clientWidth
+      ) {
         return elm;
       }
     }
@@ -27,10 +34,17 @@ export default class UIHelper {
    * NOTE: Requires elements to be within the same containing DOM element
    * and stacked top-by-down vertically.
    */
-  static pickVStackedElement(elements: HTMLElement[], ypos: number) : HTMLElement {
+  static pickVStackedElement(
+    elements: HTMLElement[],
+    ypos: number,
+  ): HTMLElement {
     for (let i = 0; i < elements.length; i++) {
       const elm = elements[i];
-      if (elm && ypos >= elm.offsetTop && ypos <= elm.offsetTop + elm.clientHeight) {
+      if (
+        elm &&
+        ypos >= elm.offsetTop &&
+        ypos <= elm.offsetTop + elm.clientHeight
+      ) {
         return elm;
       }
     }

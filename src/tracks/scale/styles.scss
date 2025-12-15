@@ -3,12 +3,12 @@ $scale_minor_color: #777;
 $scale_slave_scale_bg: #f9f9f9;
 $scale_bg: white;
 
-
 .scale-track {
-  stroke: $scale_master_color; }
-  .scale-track .label-bg {
-    stroke: $scale_bg;
-    fill: $scale_bg;
+  stroke: $scale_master_color;
+}
+.scale-track .label-bg {
+  stroke: $scale_bg;
+  fill: $scale_bg;
 }
 
 .slave-scale {
@@ -44,4 +44,3 @@ $scale_bg: white;
   stroke-width: 0.5;
   stroke: $scale_master_color;
 }
-

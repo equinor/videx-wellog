@@ -18,7 +18,7 @@ export type DifferentialPlotData = Triplet<number>[];
  * and x is the domain part of a prop data tuplet
  * @example (y, x) => Number.isFinite(y) && Number.isFinite(x)
  */
-export type DefinedFunction = (y?:number, x?:number) => boolean;
+export type DefinedFunction = (y?: number, x?: number) => boolean;
 
 /**
  * When used in combination with a Track, it is the track's responsibility to fetch
@@ -28,7 +28,10 @@ export type DefinedFunction = (y?:number, x?:number) => boolean;
  * @example data => data //default
  * @example data => data.dataSeries[1].dataPoints
  */
-export type DataAccessorFunction = (data: any, plotOptions?: Map<string | number, PlotOptions>) => (PlotData | [PlotData, PlotData] | any);
+export type DataAccessorFunction = (
+  data: any,
+  plotOptions?: Map<string | number, PlotOptions>,
+) => PlotData | [PlotData, PlotData] | any;
 
 /**
  * Base interface for plot options
@@ -38,27 +41,27 @@ export interface PlotOptions {
    * offset position to draw the plot
    * @example 0.5 // renders the plot 50 % off from origin
    */
-  offset?: number,
+  offset?: number;
   /**
    * Scale type: 'linear' or 'log'. Default is 'linear'.
    */
-  scale?: string,
+  scale?: string;
   /**
    * Y axis (range) for plot data. Default is [0, 100].
    */
-  domain?: Domain | Function,
+  domain?: Domain | Function;
   /**
    * Stroke color
    */
-  color?: string,
+  color?: string;
   /**
    * Set condition for what data to plot. Default is v => v !== null
    */
-  defined?: DefinedFunction,
+  defined?: DefinedFunction;
   /**
    * Flag to hide/show a plot. Default is false.
    */
-  hidden?: boolean,
+  hidden?: boolean;
   /**
    * Set plot orientation. Default is true (horizontally).
    */
@@ -67,28 +70,28 @@ export interface PlotOptions {
    * @deprecated
    * use dataAccessor
    */
-  data?: DataAccessorFunction,
+  data?: DataAccessorFunction;
   /**
    * Plot data accessor function when used with GraphTrack
    */
-  dataAccessor?: DataAccessorFunction,
+  dataAccessor?: DataAccessorFunction;
   /**
    * The number of rows in the legend section (if used with LogController) this particular plot requires
    */
-  legendRows?: number,
+  legendRows?: number;
   /**
    * Automatically filter data to current scale. This may increase performance for larger datasets,
    * as data outside the current domain is not passed to the plots. Overlap may be controlled by the
    * filterOverlapFactor option. Filtering is off (false) by default.
    */
-  filterToScale?: boolean,
+  filterToScale?: boolean;
   /**
    * Used to control how much overlap or excess is added when filtering data compared to the current domain.
    * Ex. if the current domain is [100, 200], and with an overlap factor of 0.5, data will
    * be filtered using the extended domain [50, 250], leaving an excess of 50 units in both ends. This improves
    * the user experience during panning.
    */
-  filterOverlapFactor?: number,
+  filterOverlapFactor?: number;
 }
 
 /**
@@ -98,29 +101,29 @@ export interface LinePlotOptions extends PlotOptions {
   /**
    * Stroke color
    */
-  color?: string,
+  color?: string;
   /**
    * Stroke width
    */
-  width?: number,
+  width?: number;
   /**
    * Dash array
    * @example [4, 4] // 4 pixels stroked, 4 pixels skipped
    */
-  dash?: number[],
+  dash?: number[];
   /**
    * If enabled, will wrap logs outside of domain and display as dashed.
    */
-  allowWrapping?: boolean,
+  allowWrapping?: boolean;
   /**
    * Dash array used for wrapped plot (Default: [2, 3])
    * @example [2, 3] // Draw 2, skip 3 pixels
    */
-  dashWrapped?: number[],
+  dashWrapped?: number[];
   /**
    * If enabled, points surrounded by non-defined values will be displayed as a dot
    */
-  showIsolatedPoints?: boolean,
+  showIsolatedPoints?: boolean;
 }
 
 /**
@@ -130,7 +133,7 @@ export interface DotPlotOptions extends LinePlotOptions {
   /**
    * Dot radius
    */
-  radius?: number,
+  radius?: number;
 }
 
 /**
@@ -140,28 +143,28 @@ export interface AreaPlotOptions extends PlotOptions {
   /**
    * Fill color
    */
-  fill?: string,
+  fill?: string;
   /**
    * Stroke color
    */
-  color?: string,
+  color?: string;
   /**
    * Stroke width
    */
-  width?: number,
+  width?: number;
   /**
    * Fill opacity
    */
-  fillOpacity?: number,
+  fillOpacity?: number;
   /**
    * Use the minimum value of the domain as base for the area polygon.
    * Default is true, setting to false will invert the drawing of the polygon.
    */
-  useMinAsBase?: boolean,
+  useMinAsBase?: boolean;
   /**
    * If set, will also fill the opposite area in the color specified. Not set by default.
    */
-  inverseColor?: string,
+  inverseColor?: string;
 }
 
 /**
@@ -171,23 +174,23 @@ interface DifferentialPlotSerieOptions {
   /**
    * Scale type: 'linear' or 'log'
    */
-  scale?: string,
+  scale?: string;
   /**
    * Y axis (range) for plot data
    */
-  domain?: Domain | Function,
+  domain?: Domain | Function;
   /**
    * Stroke color
    */
-  color?: string,
+  color?: string;
   /**
    * Fill color of areas defined between the curves
    */
-  fill?: string,
+  fill?: string;
   /**
    * Stroke width
    */
-  lineWidth?: number,
+  lineWidth?: number;
 }
 /**
  * Available differential plot serie options
@@ -196,18 +199,17 @@ export interface DifferentialPlotOptions extends PlotOptions {
   /**
    * Options for data serie 1
    */
-  serie1?: DifferentialPlotSerieOptions,
+  serie1?: DifferentialPlotSerieOptions;
   /**
    * Options for data serie 2
    */
-  serie2?: DifferentialPlotSerieOptions,
+  serie2?: DifferentialPlotSerieOptions;
   /**
    * Fill opacity for both series
    */
-  fillOpacity?: number,
+  fillOpacity?: number;
 
-  forceDataUpdateOnToggle?: boolean,
-
+  forceDataUpdateOnToggle?: boolean;
 }
 
 /**
@@ -217,11 +219,11 @@ export interface DipPlotCategory {
   /**
    * Plot color
    */
-  color: string,
+  color: string;
   /**
    * Dip shape
    */
-  shape: string,
+  shape: string;
 }
 
 /**
@@ -248,8 +250,8 @@ export type DipPlotData = DipPlotDataEntry[];
  */
 type DefinedDipFunction = (
   depth?: number,
-  dip?:number,
-  azimuth?:number,
+  dip?: number,
+  azimuth?: number,
   category?: DipPlotCategory,
 ) => boolean;
 
@@ -260,11 +262,17 @@ export interface DipPlotOptions extends PlotOptions {
   /**
    * Set condition for what data to plot.
    */
-  defined?: DefinedDipFunction,
+  defined?: DefinedDipFunction;
   /**
    * Base dip size (single value to scale size)
    */
-  dipSize?: number,
+  dipSize?: number;
 }
 
-export type AnyPlotOptions = PlotOptions | LinePlotOptions | DotPlotOptions | AreaPlotOptions | DifferentialPlotOptions | DipPlotOptions;
+export type AnyPlotOptions =
+  | PlotOptions
+  | LinePlotOptions
+  | DotPlotOptions
+  | AreaPlotOptions
+  | DifferentialPlotOptions
+  | DipPlotOptions;

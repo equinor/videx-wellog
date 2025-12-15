@@ -12,7 +12,7 @@ export default function renderDefaultPlotLegend(
   bounds: LegendBounds,
   legendInfo: LegendInfo,
   plot: Plot,
-) : void {
+): void {
   renderBasicPlotLegend(
     g,
     bounds,

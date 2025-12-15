@@ -10,9 +10,9 @@ export type ReducerFunction = (data: PlotData) => Tuplet<number>[];
  */
 export default class DataHelper {
   /**
- * Reduce multiple points to the its average values.
- */
-  static mean(segment: PlotData) : Tuplet<number>[] {
+   * Reduce multiple points to the its average values.
+   */
+  static mean(segment: PlotData): Tuplet<number>[] {
     if (segment.length <= 2) return segment;
     let avgV = 0;
     let avgD = 0;
@@ -23,7 +23,7 @@ export default class DataHelper {
     return [[avgD / segment.length, avgV / segment.length]];
   }
 
-  static minmax(segment: PlotData) : Tuplet<number>[] {
+  static minmax(segment: PlotData): Tuplet<number>[] {
     if (segment.length <= 2) return segment;
     let min = segment[0][1];
     let max = -Infinity;
@@ -45,9 +45,9 @@ export default class DataHelper {
   }
 
   /**
-  * Test if the data is within the scale's domain
-  */
-  static isWithinBounds(scale: Scale, datapoints: PlotData) : boolean {
+   * Test if the data is within the scale's domain
+   */
+  static isWithinBounds(scale: Scale, datapoints: PlotData): boolean {
     if (!datapoints || datapoints.length < 1) return false;
 
     const [min, max] = scale.domain();
@@ -60,10 +60,10 @@ export default class DataHelper {
   }
 
   /**
-  * Remove successive entries of NULL values, leaving only the first
-  * NULL value. Required by the resample function.
-  */
-  static trimUndefinedValues(datapoints: PlotData) : PlotData {
+   * Remove successive entries of NULL values, leaving only the first
+   * NULL value. Required by the resample function.
+   */
+  static trimUndefinedValues(datapoints: PlotData): PlotData {
     let prev = 0;
     return datapoints?.filter(pt => {
       let include = true;
@@ -76,10 +76,14 @@ export default class DataHelper {
   }
 
   /**
-  * Cut data points that are outside the current visible domain.
-  * An excess will ensure that panning is smooth
-  */
-  static filterData(datapoints: PlotData, domain: Domain, overlapFactor: number = 0.5) : PlotData {
+   * Cut data points that are outside the current visible domain.
+   * An excess will ensure that panning is smooth
+   */
+  static filterData(
+    datapoints: PlotData,
+    domain: Domain,
+    overlapFactor: number = 0.5,
+  ): PlotData {
     const [d0, d1] = domain;
     const span = d1 - d0;
     const overlap = overlapFactor * span;
@@ -90,8 +94,12 @@ export default class DataHelper {
       const within = pt[0] >= dmin && pt[0] <= dmax;
       if (within) return true;
 
-      const crossingMin = pt[0] < dmin && i + 1 < datapoints.length && datapoints[i + 1][0] > dmin;
-      const crossingMax = pt[0] > dmax && i - 1 >= 0 && datapoints[i - 1][0] < dmax;
+      const crossingMin =
+        pt[0] < dmin &&
+        i + 1 < datapoints.length &&
+        datapoints[i + 1][0] > dmin;
+      const crossingMax =
+        pt[0] > dmax && i - 1 >= 0 && datapoints[i - 1][0] < dmax;
 
       return crossingMin || crossingMax;
     });
@@ -102,7 +110,7 @@ export default class DataHelper {
    * @param data data to search
    * @param start start index to search from
    */
-  static findNextDefined(data: PlotData, start: number = 0) : number {
+  static findNextDefined(data: PlotData, start: number = 0): number {
     for (let i = start; i < data.length; i++) {
       if (Number.isFinite(data[i][1])) {
         return i;
@@ -116,7 +124,7 @@ export default class DataHelper {
    * @param data data to search
    * @param start start index to search from
    */
-  static findNextUndefined(data: PlotData, start: number = 0) : number {
+  static findNextUndefined(data: PlotData, start: number = 0): number {
     for (let i = start; i < data.length; i++) {
       if (!Number.isFinite(data[i][1])) {
         return i;
@@ -126,16 +134,20 @@ export default class DataHelper {
   }
 
   /**
-  * Resample large data series to reduce detail when number of points are
-  * greater than the number of pixels to render it to. NOTE: you should pass the data through
-  * the DataHelper.trimUndefinedValues before passing it to this function. Also, this function
-  * assumes the datapoints are more or less uniformly spaced. The DataHelper.downsample is
-  * probably safer and yields better results.
-  * @param datapoints data to resample
-  * @param ratio resample ratio
-  * @param reducer function to reduce segments
-  */
-  static resample(datapoints: PlotData, ratio: number, reducer: ReducerFunction = DataHelper.mean) : PlotData {
+   * Resample large data series to reduce detail when number of points are
+   * greater than the number of pixels to render it to. NOTE: you should pass the data through
+   * the DataHelper.trimUndefinedValues before passing it to this function. Also, this function
+   * assumes the datapoints are more or less uniformly spaced. The DataHelper.downsample is
+   * probably safer and yields better results.
+   * @param datapoints data to resample
+   * @param ratio resample ratio
+   * @param reducer function to reduce segments
+   */
+  static resample(
+    datapoints: PlotData,
+    ratio: number,
+    reducer: ReducerFunction = DataHelper.mean,
+  ): PlotData {
     if (ratio <= 2 || datapoints.length < 100) return datapoints;
 
     ratio = Math.floor(ratio);
@@ -195,7 +207,11 @@ export default class DataHelper {
    * @param scale scale to control downsampling
    * @param reducer function to reduce segments
    */
-  static downsample(datapoints: PlotData, scale: Scale, reducer: ReducerFunction = DataHelper.minmax) : PlotData {
+  static downsample(
+    datapoints: PlotData,
+    scale: Scale,
+    reducer: ReducerFunction = DataHelper.minmax,
+  ): PlotData {
     if (datapoints.length < 10) return datapoints;
     const ratio = ScaleHelper.getDomainRatio(scale);
     const lastIndex = datapoints.length - 1;
@@ -235,11 +251,11 @@ export default class DataHelper {
   }
 
   /**
-  * Trim two data series so that it can be correlated.
-  * Used in differential plot.
-  */
-  static mergeDataSeries(arr1: PlotData, arr2: PlotData) : DifferentialPlotData {
-    const res : DifferentialPlotData = [];
+   * Trim two data series so that it can be correlated.
+   * Used in differential plot.
+   */
+  static mergeDataSeries(arr1: PlotData, arr2: PlotData): DifferentialPlotData {
+    const res: DifferentialPlotData = [];
     let n = 0;
 
     if (arr1.length > 0 && arr2.length > 0) {
@@ -248,8 +264,10 @@ export default class DataHelper {
       let j = 0;
 
       // return empty array if no overlap in md between the two arrays
-      if (arr1[0][0] < arr2[0][0] && arr1[arr1.length - 1][0] < arr2[0][0]) return [];
-      if (arr2[0][0] < arr1[0][0] && arr2[arr2.length - 1][0] < arr1[0][0]) return [];
+      if (arr1[0][0] < arr2[0][0] && arr1[arr1.length - 1][0] < arr2[0][0])
+        return [];
+      if (arr2[0][0] < arr1[0][0] && arr2[arr2.length - 1][0] < arr1[0][0])
+        return [];
 
       // correlate values using arr1 as master, averaging arr2
       while (i < arr1.length && j < arr2.length) {
@@ -308,9 +326,10 @@ export default class DataHelper {
    * value. The data set is considered to be contineous rather
    * than discrete.
    */
-  static queryContinuousData(queryVal: number, data: PlotData) : number | null {
+  static queryContinuousData(queryVal: number, data: PlotData): number | null {
     try {
-      if (queryVal < data[0][0] || queryVal > data[data.length - 1][0]) return null;
+      if (queryVal < data[0][0] || queryVal > data[data.length - 1][0])
+        return null;
       let idx = data.findIndex(d => queryVal <= d[0]);
       if (idx > 0) {
         const qFound = data[idx][0];
@@ -333,17 +352,26 @@ export default class DataHelper {
    * of the item where the first item is closest to the query
    * value. The data set is considered to be discrete.
    */
-  static queryPointData(queryVal: number, data: PlotData, threshold: number = 0) : number | null {
+  static queryPointData(
+    queryVal: number,
+    data: PlotData,
+    threshold: number = 0,
+  ): number | null {
     try {
       const bestMatch = data
-        .filter(d => queryVal - threshold <= d[0] && d[0] <= queryVal + threshold)
-        .reduce((match, d) => {
-          const rank = Math.abs(queryVal - d[0]);
-          if (match.rank === null || rank < match.rank) {
-            return { data: d, rank };
-          }
-          return match;
-        }, { data: null, rank: null }).data;
+        .filter(
+          d => queryVal - threshold <= d[0] && d[0] <= queryVal + threshold,
+        )
+        .reduce(
+          (match, d) => {
+            const rank = Math.abs(queryVal - d[0]);
+            if (match.rank === null || rank < match.rank) {
+              return { data: d, rank };
+            }
+            return match;
+          },
+          { data: null, rank: null },
+        ).data;
 
       if (bestMatch !== null) {
         return bestMatch[1];
@@ -362,11 +390,15 @@ export default class DataHelper {
    * an item is the end of the previous item and the start of the
    * next (zones).
    */
-  static queryZoneData(queryVal:number, data:PlotData) : number | null {
+  static queryZoneData(queryVal: number, data: PlotData): number | null {
     try {
-      const index = data.findIndex((d, i, arr) => (
-        i < arr.length - 1 && d[1] !== null && d[0] <= queryVal && arr[i + 1][0] > queryVal
-      ));
+      const index = data.findIndex(
+        (d, i, arr) =>
+          i < arr.length - 1 &&
+          d[1] !== null &&
+          d[0] <= queryVal &&
+          arr[i + 1][0] > queryVal,
+      );
 
       return index > -1 ? data[index][1] : null;
     } catch (err) {

@@ -27,8 +27,8 @@ const defaultOptions = {
 };
 
 interface LegendMap {
-  elm: Element,
-  track: Track,
+  elm: Element;
+  track: Track;
 }
 
 /**
@@ -45,8 +45,8 @@ export default class LogController {
   public height: number;
   public debounce: DebounceFunction;
   public legends: {
-    [propName: string]: LegendMap,
-    [propName: number]: LegendMap,
+    [propName: string]: LegendMap;
+    [propName: number]: LegendMap;
   };
   public legendRows: number;
 
@@ -106,7 +106,7 @@ export default class LogController {
    * Simple creator function for minimal setup
    * @param showTitles optional flag to show titles or not
    */
-  static basic(showTitles: boolean = true) : LogController {
+  static basic(showTitles: boolean = true): LogController {
     return new LogController({
       showTitles,
       showLegend: false,
@@ -118,7 +118,7 @@ export default class LogController {
    * returns self for chaining.
    * @param element HTML element to attach itself to
    */
-  public init(element: HTMLElement) : LogController {
+  public init(element: HTMLElement): LogController {
     this.onMount(element);
     return this;
   }
@@ -127,7 +127,7 @@ export default class LogController {
    * Initialize the component and attach itself to the provided DOM element.
    * @param element HTML element to attach itself to
    */
-  public onMount(element: HTMLElement) : void {
+  public onMount(element: HTMLElement): void {
     this.setup(element);
     this.zoom = zoom().on('zoom', this.zoomed);
     this.adjustToSize();
@@ -137,7 +137,7 @@ export default class LogController {
   /**
    * To unregister event listeners etc.
    */
-  public onUnmount() : void {
+  public onUnmount(): void {
     if (this._observer) {
       this._observer.disconnect();
     }
@@ -147,10 +147,11 @@ export default class LogController {
    * Set the tracks for this controller, replacing any existing tracks
    * @param tracks track or tracks to set
    */
-  public setTracks(...track: Track[]) : LogController
-  public setTracks(tracks: Track[]) : LogController
-  public setTracks(...tracks: any[]) : LogController {
-    this.tracks = tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
+  public setTracks(...track: Track[]): LogController;
+  public setTracks(tracks: Track[]): LogController;
+  public setTracks(...tracks: any[]): LogController {
+    this.tracks =
+      tracks.length === 1 && Array.isArray(tracks[0]) ? tracks[0] : tracks;
     this.tracks.sort((a, b) => a.order - b.order);
 
     if (this.options.showLegend) this.updateLegendRows();
@@ -164,14 +165,14 @@ export default class LogController {
    * Adds a single track to the log controller
    * @param track track to be added
    */
-  public addTrack(track: Track) : LogController {
+  public addTrack(track: Track): LogController {
     this.tracks.push(track);
     this.tracks.sort((a, b) => a.order - b.order);
 
     if (
-      this.options.showLegend
-      && track.options.legendConfig
-      && track.options.legendConfig.getLegendRows(track) > this.legendRows
+      this.options.showLegend &&
+      track.options.legendConfig &&
+      track.options.legendConfig.getLegendRows(track) > this.legendRows
     ) {
       this.updateLegendRows();
     }
@@ -187,7 +188,7 @@ export default class LogController {
    * Removes a track from the log controller component
    * @param track track to be removed
    */
-  public removeTrack(track: Track) : LogController {
+  public removeTrack(track: Track): LogController {
     const idx = this.tracks.findIndex(d => d.id === track.id);
     if (idx >= 0) {
       if (this.options.showLegend && this.legends[track.id]) {
@@ -195,9 +196,9 @@ export default class LogController {
       }
       this.tracks.splice(idx, 1);
       if (
-        this.options.showLegend
-        && track.options.legendConfig
-        && track.options.legendConfig.getLegendRows(track) >= this.legendRows
+        this.options.showLegend &&
+        track.options.legendConfig &&
+        track.options.legendConfig.getLegendRows(track) >= this.legendRows
       ) {
         this.updateLegendRows();
       }
@@ -212,15 +213,12 @@ export default class LogController {
    * Rescale according to new container size
    * @param force Set to true in order to force update even if size has not changed
    */
-  public adjustToSize(force: boolean = false) : void {
+  public adjustToSize(force: boolean = false): void {
     const {
       container,
       width: oldWidth,
       height: oldHeight,
-      options: {
-        showLegend,
-        showTitles,
-      },
+      options: { showLegend, showTitles },
       innerBounds: oldBounds,
       _trackHeight: oldTrackHeight,
     } = this;
@@ -239,8 +237,12 @@ export default class LogController {
     // recalculate sizes
     this._uiScale = Math.max(Math.min(1, this.width / uiScaleFactor), 0.7);
     this._titleHeight = showTitles ? titleBarBaseSize * this._uiScale : 0;
-    this._titleFontSize = showTitles ? this._titleHeight * titleFontSizeFactor : 0;
-    this._legendHeight = showLegend ? this.legendRows * legendBaseSize * this._uiScale : 0;
+    this._titleFontSize = showTitles
+      ? this._titleHeight * titleFontSizeFactor
+      : 0;
+    this._legendHeight = showLegend
+      ? this.legendRows * legendBaseSize * this._uiScale
+      : 0;
     this._trackHeight = bounds.length - this._titleHeight - this._legendHeight;
 
     if (this._trackHeight <= 0 || bounds.length <= 0) return;
@@ -256,12 +258,19 @@ export default class LogController {
       this.adjustTrackTitles();
     }
 
-    if (bounds.span !== oldBounds.span || this._trackHeight !== oldTrackHeight) {
+    if (
+      bounds.span !== oldBounds.span ||
+      this._trackHeight !== oldTrackHeight
+    ) {
       this.updateTracks();
     }
   }
 
-  public zoomTo(domain: Domain, duration: number = 0, callback?: Function) : LogController {
+  public zoomTo(
+    domain: Domain,
+    duration: number = 0,
+    callback?: Function,
+  ): LogController {
     const [d1, d2] = domain;
     if (d1 === d2) return this;
     const current = zoomTransform(this.zoomHandler.node());
@@ -297,7 +306,7 @@ export default class LogController {
    * @param domain optional domain to scale to
    * @param duration optional duration of transition effect, 0 = no transition
    */
-  public rescale() : void {
+  public rescale(): void {
     const transform = zoomTransform(this.zoomHandler.node());
     const scale = this.scaleHandler.dataScale;
     this.tracks.forEach(track => {
@@ -316,7 +325,7 @@ export default class LogController {
   /**
    * Force a redraw
    */
-  public refresh() : void {
+  public refresh(): void {
     this.updateTracks();
     this.rescale();
   }
@@ -324,7 +333,7 @@ export default class LogController {
   /**
    * Update track-elements based on current registered track instances
    */
-  public updateTracks() : LogController {
+  public updateTracks(): LogController {
     const {
       container,
       tracks,
@@ -353,7 +362,7 @@ export default class LogController {
   /**
    * Remove all tracks and update ui
    */
-  public reset() : LogController {
+  public reset(): LogController {
     this.container.selectAll('.track').remove();
     return this.setTracks([]);
   }
@@ -383,7 +392,7 @@ export default class LogController {
    * @param track Track to process
    * @param element Legend element
    */
-  protected processLegendConfig(track: Track, element: Element) : void {
+  protected processLegendConfig(track: Track, element: Element): void {
     const { legendConfig } = track.options;
 
     if (!legendConfig) return;
@@ -406,10 +415,8 @@ export default class LogController {
     }
 
     if (legendConfig.onInit) {
-      legendConfig.onInit(
-        legendElement,
-        track,
-        () => this.updateLegend(track.id),
+      legendConfig.onInit(legendElement, track, () =>
+        this.updateLegend(track.id),
       );
     }
     this.legends[track.id] = {
@@ -421,7 +428,7 @@ export default class LogController {
   /**
    * Event handler for pan/zoom
    */
-  protected zoomed(event) : void {
+  protected zoomed(event): void {
     const { transform } = event;
     if (this.options.horizontal) {
       this.scaleHandler.rescale(transform, 'x');
@@ -434,13 +441,11 @@ export default class LogController {
   /**
    * Recalculates transform based on new container size
    */
-  protected adjustZoomTransform() : void {
+  protected adjustZoomTransform(): void {
     const {
       zoomHandler,
       scaleHandler,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
 
     const [d1, d2] = scaleHandler.baseDomain();
@@ -463,10 +468,8 @@ export default class LogController {
   /**
    * Determines the required number of rows in the legend section.
    */
-  protected updateLegendRows() : void {
-    const {
-      tracks,
-    } = this;
+  protected updateLegendRows(): void {
+    const { tracks } = this;
 
     const maxRows = tracks.reduce((rows, track) => {
       if (track.options.legendConfig) {
@@ -486,14 +489,10 @@ export default class LogController {
    * Updates the legend for a specific track
    * @param id Track id
    */
-  protected updateLegend(id:(string | number)) : void {
+  protected updateLegend(id: string | number): void {
     if (!this.options.showLegend) return;
     if (this.legends && this.legends[id]) {
-      const {
-        legends,
-        _uiScale: uiScale,
-        _legendHeight: legendHeight,
-      } = this;
+      const { legends, _uiScale: uiScale, _legendHeight: legendHeight } = this;
 
       const { elm, track } = legends[id];
       const { legendConfig, horizontal } = track.options;
@@ -523,15 +522,16 @@ export default class LogController {
    * Adjust track titles according to available space. Uses abbrievation
    * istead of full label if not enough space.
    */
-  protected adjustTrackTitles() : void {
+  protected adjustTrackTitles(): void {
     const { horizontal } = this.options;
     const isTooSmall = horizontal
       ? (element: HTMLElement) => element.clientHeight < element.scrollHeight
       : (element: HTMLElement) => element.clientWidth < element.scrollWidth;
 
-    this.container.selectAll('.track-title')
+    this.container
+      .selectAll('.track-title')
       .text(d => d.options.label || d.id)
-      .each(function updateTitle(d:any) {
+      .each(function updateTitle(d: any) {
         if (isTooSmall(this) && d.options.abbr) {
           select(this).text(d.options.abbr);
         }
@@ -541,15 +541,12 @@ export default class LogController {
   /**
    * Trigger onUpdate event after tracks has been altered in size
    */
-  protected postUpdateTracks() : void {
+  protected postUpdateTracks(): void {
     const {
       container,
       scaleHandler,
       updateLegend,
-      options: {
-        showLegend,
-        showTitles,
-      },
+      options: { showLegend, showTitles },
     } = this;
 
     if (container.node().clientWidth === 0) return;
@@ -586,8 +583,8 @@ export default class LogController {
    * Remove DOM-elements belonging to removed tracks
    * @param selection exit selection
    */
-  private _trackExit(selection: D3Selection) : void {
-    selection.each((d) => d.onUnmount && d.onUnmount());
+  private _trackExit(selection: D3Selection): void {
+    selection.each(d => d.onUnmount && d.onUnmount());
 
     selection
       .interrupt()
@@ -610,18 +607,14 @@ export default class LogController {
    * Add DOM-elements for new tracks
    * @param selection enter selection
    */
-  private _trackEnter(selection: D3Selection) : void {
+  private _trackEnter(selection: D3Selection): void {
     const {
       scaleHandler,
       processLegendConfig,
       _titleHeight: titleHeight,
       _legendHeight: legendHeight,
       _titleFontSize: fontSize,
-      options: {
-        showTitles,
-        showLegend,
-        horizontal,
-      },
+      options: { showTitles, showLegend, horizontal },
     } = this;
 
     const attr = horizontal
@@ -632,7 +625,8 @@ export default class LogController {
 
     setStyles(newtracks, {
       flex: '0 0 0%',
-      [attr.maxSpan]: (d: Track) => (d.options.maxWidth ? `${d.options.maxWidth}px` : null),
+      [attr.maxSpan]: (d: Track) =>
+        d.options.maxWidth ? `${d.options.maxWidth}px` : null,
     });
 
     if (showTitles) {
@@ -650,7 +644,8 @@ export default class LogController {
     }
 
     if (showLegend) {
-      newtracks.append('div')
+      newtracks
+        .append('div')
         .classed('track-legend', true)
         .classed('hidden', legendHeight <= 0)
         .style(attr.size, `${legendHeight}px`);
@@ -671,7 +666,8 @@ export default class LogController {
       d.options.horizontal = horizontal;
 
       if (d.onMount) d.onMount(ev);
-      if (d.options.legendConfig) processLegendConfig(d, this.querySelector('.track-legend'));
+      if (d.options.legendConfig)
+        processLegendConfig(d, this.querySelector('.track-legend'));
     });
 
     newtracks
@@ -688,16 +684,12 @@ export default class LogController {
    * Update DOM-elements for existing tracks
    * @param selection update selection
    */
-  private _trackUpdate(selection: D3Selection) : void {
+  private _trackUpdate(selection: D3Selection): void {
     const {
       _titleHeight: titleHeight,
       _legendHeight: legendHeight,
       _titleFontSize: fontSize,
-      options: {
-        showTitles,
-        showLegend,
-        horizontal,
-      },
+      options: { showTitles, showLegend, horizontal },
     } = this;
 
     const sizeAttr = horizontal ? 'width' : 'height';
@@ -739,7 +731,7 @@ export default class LogController {
    * Getter for (base) domain
    * @returns {number[]}
    */
-  get domain() : Domain {
+  get domain(): Domain {
     return this.scale.domain();
   }
 
@@ -758,7 +750,7 @@ export default class LogController {
    * Getter for scaleHandler
    * @returns {class} current scale handler
    */
-  get scaleHandler() : ScaleHandler {
+  get scaleHandler(): ScaleHandler {
     return this._scaleHandler;
   }
 
@@ -774,7 +766,7 @@ export default class LogController {
   /**
    * Getter for the component's internal scale
    */
-  get scale() : Scale {
+  get scale(): Scale {
     return this.scaleHandler.scale;
   }
 }

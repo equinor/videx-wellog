@@ -31,14 +31,18 @@ describe('BasicScaleHandler', () => {
     let expected = [-4.5, 50.5];
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.eql([-10, 100]);
 
     expected = [16.4, 53.06667];
     transform = zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.eql([-10, 100]);
   });
 

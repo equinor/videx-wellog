@@ -37,13 +37,16 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
     const { options, loader } = this;
 
     // Setup interpolation config array based on interpolation settings
-    this.interpolationConfigArray = new Float32Array([options.interpolationType, options.discreteHeight]);
+    this.interpolationConfigArray = new Float32Array([
+      options.interpolationType,
+      options.discreteHeight,
+    ]);
 
     // Load data
     if (options.data) {
       const showLoader = options.showLoader ?? Boolean(loader);
 
-      if (showLoader && typeof (options.data) === 'function') {
+      if (showLoader && typeof options.data === 'function') {
         this.loadData(options.data, showLoader);
       } else {
         this.data = options.data;
@@ -55,10 +58,19 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
     const { options, gl, program } = this;
 
     // Get uniform locations
-    const componentCountLocation = gl.getUniformLocation(program, 'u_componentCount');
-    const componentColorsLocation = gl.getUniformLocation(program, 'u_componentColors');
+    const componentCountLocation = gl.getUniformLocation(
+      program,
+      'u_componentCount',
+    );
+    const componentColorsLocation = gl.getUniformLocation(
+      program,
+      'u_componentColors',
+    );
     const entryCountLocation = gl.getUniformLocation(program, 'u_entryCount');
-    const interpolationConfigLocation = gl.getUniformLocation(program, 'u_interpolationConfig');
+    const interpolationConfigLocation = gl.getUniformLocation(
+      program,
+      'u_interpolationConfig',
+    );
 
     if (!data) {
       // Clear uniforms

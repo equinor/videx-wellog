@@ -28,14 +28,18 @@ function getGraphTrackLegendRows(track: GraphTrack): number {
 /**
  * Updates the selection of legend rows of a graph track
  */
-function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: GraphTrack): void {
+function updateLegendRows(
+  selection: D3Selection,
+  bounds: LegendBounds,
+  track: GraphTrack,
+): void {
   const { horizontal } = track.options;
   let posY = bounds.top;
   const padding = track.options.padding?.size ?? 0;
   // If the total padding to be applied to the track is greater than the available width,
   // or the value provided is a negative value,
   // set the padding to zero
-  const disablePadding = (padding * 2) > bounds.width || padding < 0;
+  const disablePadding = padding * 2 > bounds.width || padding < 0;
   const legendPadding = disablePadding ? 0 : padding;
   const width = bounds.width - legendPadding;
   const legendRows = getGraphTrackLegendRows(track);
@@ -43,7 +47,7 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
   selection.each(function updateLegendRow(plot) {
     const g = select(this);
     g.selectAll('*').remove();
-    const left = (plot.offset * (width - legendPadding)) + legendPadding;
+    const left = plot.offset * (width - legendPadding) + legendPadding;
     if (track.options.togglePlotFromLegend) {
       g.style('cursor', 'pointer');
       g.append('title').text('Toggle plot on/off');
@@ -77,9 +81,10 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
 
     posY += rowBounds.height;
 
-    const legendInfo = track.data && plot.options.legendInfo
-      ? plot.options.legendInfo(track.data)
-      : {};
+    const legendInfo =
+      track.data && plot.options.legendInfo
+        ? plot.options.legendInfo(track.data)
+        : {};
 
     if (plot.options.renderLegend) {
       plot.options.renderLegend(g, rowBounds, legendInfo, plot);
@@ -102,17 +107,23 @@ function updateLegendRows(selection: D3Selection, bounds: LegendBounds, track: G
 /**
  * Updates the legend section of a graph track
  */
-function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: GraphTrack): void {
+function onUpdateLegend(
+  elm: HTMLElement,
+  bounds: LegendBounds,
+  track: GraphTrack,
+): void {
   const lg = select(elm);
 
   const g = lg.select('.svg-legend');
 
-  const rows = g.selectAll('.legend-row')
+  const rows = g
+    .selectAll('.legend-row')
     .data(track.plots)
     .call(updateLegendRows, bounds, track);
 
   // Add new rows
-  rows.enter()
+  rows
+    .enter()
     .append('g')
     .classed('legend-row', true)
     .call(updateLegendRows, bounds, track);
@@ -124,4 +135,7 @@ function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: GraphTrac
 /**
  * A legend config object that can be added to a graph track config
  */
-export default LegendHelper.basicLegendSvgConfig(getGraphTrackLegendRows, onUpdateLegend);
+export default LegendHelper.basicLegendSvgConfig(
+  getGraphTrackLegendRows,
+  onUpdateLegend,
+);

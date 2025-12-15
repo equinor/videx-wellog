@@ -1,19 +1,28 @@
 import { select } from 'd3-selection';
-import LegendHelper, {
-  LegendBounds,
-} from '../../utils/legend-helper';
+import LegendHelper, { LegendBounds } from '../../utils/legend-helper';
 import { D3Selection } from '../../common/interfaces';
 import { DistributionTrackOptions } from './interfaces';
 import { DistributionTrack } from './distribution-track';
 
 // Helper function for creating rect
-const applyRectDimensions = (node: D3Selection, { x, y, width, height }, isHorizontal: boolean) => (
+const applyRectDimensions = (
+  node: D3Selection,
+  { x, y, width, height },
+  isHorizontal: boolean,
+) =>
   isHorizontal
     ? node.attr('x', y).attr('y', x).attr('width', height).attr('height', width)
-    : node.attr('x', x).attr('y', y).attr('width', width).attr('height', height)
-);
+    : node
+        .attr('x', x)
+        .attr('y', y)
+        .attr('width', width)
+        .attr('height', height);
 
-function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, options: DistributionTrackOptions) : void {
+function renderDistributionPlotLegend(
+  g: D3Selection,
+  bounds: LegendBounds,
+  options: DistributionTrackOptions,
+): void {
   const { width, height, left = 0, top = 0 } = bounds;
   const { horizontal = false, legendEntries } = options;
 
@@ -21,7 +30,10 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
   const components = Object.entries(options.components ?? {});
   if (components.length === 0) return;
 
-  const entries = Math.min(components.length, legendEntries ?? components.length);
+  const entries = Math.min(
+    components.length,
+    legendEntries ?? components.length,
+  );
 
   // Get available height per entry
   const componentStride = height / entries;
@@ -60,7 +72,8 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
       : `translate(${textX},${textY})`;
 
     // Append text
-    const lbl = g.append('text')
+    const lbl = g
+      .append('text')
       .attr('transform', transform)
       .attr('font-size', `${textSize}px`)
       .attr('dominant-baseline', 'middle')
@@ -76,7 +89,8 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
     const expectedWidth = bbox.width + padding * 4;
 
     // Get scale for indivdual labels
-    const scale = expectedWidth > componentWidth ? componentWidth / expectedWidth : 1;
+    const scale =
+      expectedWidth > componentWidth ? componentWidth / expectedWidth : 1;
 
     // Append the scale to the transform
     lbl.attr('transform', `${transform}scale(${scale})`);
@@ -98,19 +112,23 @@ function renderDistributionPlotLegend(g: D3Selection, bounds: LegendBounds, opti
   }
 }
 
-function onUpdateLegend(elm: HTMLElement, bounds: LegendBounds, track: DistributionTrack): void {
+function onUpdateLegend(
+  elm: HTMLElement,
+  bounds: LegendBounds,
+  track: DistributionTrack,
+): void {
   const g = select(elm);
   g.selectAll('*').remove();
-  renderDistributionPlotLegend(
-    g,
-    bounds,
-    track.options,
-  );
+  renderDistributionPlotLegend(g, bounds, track.options);
 }
 
 function getGraphTrackLegendRows(track: DistributionTrack): number {
-  const componentCount = Object.keys(track.options?.components ?? {}).length || 3;
+  const componentCount =
+    Object.keys(track.options?.components ?? {}).length || 3;
   return track.options?.legendEntries ?? componentCount;
 }
 
-export default LegendHelper.basicLegendSvgConfig(getGraphTrackLegendRows, onUpdateLegend);
+export default LegendHelper.basicLegendSvgConfig(
+  getGraphTrackLegendRows,
+  onUpdateLegend,
+);

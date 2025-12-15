@@ -40,7 +40,11 @@ export const logViewerMultipleTracks = () => {
   const scaleTrack = new ScaleTrack('scale', { maxWidth: 60 });
   const graphTrack1 = new GraphTrack('graph1', { width: 2 });
   const graphTrack2 = new GraphTrack('graph2');
-  const viewer = LogViewer.basic().setTracks(scaleTrack, graphTrack1, graphTrack2);
+  const viewer = LogViewer.basic().setTracks(
+    scaleTrack,
+    graphTrack1,
+    graphTrack2,
+  );
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
@@ -52,7 +56,7 @@ export const logViewerMultipleTracks = () => {
 };
 
 // log.viewer.dual.scale.track.story
-const btnMode = (viewer) => {
+const btnMode = viewer => {
   const btn = document.createElement('button');
   btn.style.width = '200px';
   btn.style.height = '40px';
@@ -62,7 +66,7 @@ const btnMode = (viewer) => {
 
   let mode = viewer.scaleHandler.mode || 0;
   btn.onclick = () => {
-    mode = !(parseInt(mode, 10)) ? 1 : 0;
+    mode = !parseInt(mode, 10) ? 1 : 0;
     viewer.scaleHandler.setMode(mode);
     viewer.adjustZoomTransform();
     viewer.rescale();
@@ -77,8 +81,14 @@ export const logViewerMultipleDualScaleTracks = () => {
   div.style.width = '500px';
   div.style.height = '500px';
 
-  const scaleTrack1 = new DualScaleTrack('scale multiplied by 2', { maxWidth: 180, mode: 1 });
-  const scaleTrack2 = new DualScaleTrack('scale divided by 2', { maxWidth: 180, mode: 0 });
+  const scaleTrack1 = new DualScaleTrack('scale multiplied by 2', {
+    maxWidth: 180,
+    mode: 1,
+  });
+  const scaleTrack2 = new DualScaleTrack('scale divided by 2', {
+    maxWidth: 180,
+    mode: 0,
+  });
   const viewer = LogViewer.basic().setTracks(scaleTrack1, scaleTrack2);
 
   const forward = v => v / 2;
@@ -89,7 +99,10 @@ export const logViewerMultipleDualScaleTracks = () => {
     forwardInterpolatedDomain: domain => domain.map(v => forward(v)),
     reverseInterpolatedDomain: domain => domain.map(v => reverse(v)),
   };
-  const scaleHandler = new InterpolatedScaleHandler(interpolator, [-10, 100]).range([0, 500]);
+  const scaleHandler = new InterpolatedScaleHandler(
+    interpolator,
+    [-10, 100],
+  ).range([0, 500]);
 
   viewer.scaleHandler = scaleHandler;
 
@@ -187,9 +200,7 @@ export const logViewerHorizontal = () => {
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    viewer
-      .init(div)
-      .setTracks(tracks);
+    viewer.init(div).setTracks(tracks);
   });
 
   return div;
@@ -206,9 +217,7 @@ export const logViewerLegend = () => {
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    viewer
-      .init(div)
-      .setTracks(tracks);
+    viewer.init(div).setTracks(tracks);
   });
 
   return div;

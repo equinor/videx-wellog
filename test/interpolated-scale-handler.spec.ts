@@ -15,7 +15,9 @@ beforeEach(() => {
     forwardInterpolatedDomain: domain => domain.map(v => forward(v)),
     reverseInterpolatedDomain: domain => domain.map(v => reverse(v)),
   };
-  handler = new InterpolatedScaleHandler(interpolator, [-10, 100]).range([0, 100]);
+  handler = new InterpolatedScaleHandler(interpolator, [-10, 100]).range([
+    0, 100,
+  ]);
 });
 
 describe('InterpolatedScaleHandler', () => {
@@ -77,7 +79,9 @@ describe('InterpolatedScaleHandler', () => {
     let expected = [-4.5, 50.5];
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.be.eql([-10, 100]);
     expect(handler._baseDomain).to.be.eql([-10, 100]);
     expect(handler._alternateBase).to.be.eql([-20, 200]);
@@ -86,7 +90,9 @@ describe('InterpolatedScaleHandler', () => {
     transform = zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.be.eql([-10, 100]);
   });
 
@@ -96,7 +102,9 @@ describe('InterpolatedScaleHandler', () => {
     let expected = [-9, 101];
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.be.eql([-20, 200]);
     expect(handler._baseDomain).to.be.eql([-10, 100]);
     expect(handler._alternateBase).to.be.eql([-20, 200]);
@@ -105,7 +113,9 @@ describe('InterpolatedScaleHandler', () => {
     transform = zoomIdentity.translate(0, -72).scale(3);
     handler.rescale(transform);
 
-    handler.scale.domain().forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
+    handler.scale
+      .domain()
+      .forEach((value, i) => expect(value).to.be.closeTo(expected[i], EPS));
     expect(handler.baseDomain()).to.be.eql([-20, 200]);
   });
 

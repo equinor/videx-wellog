@@ -13,7 +13,7 @@ export default class BasicScaleHandler implements ScaleHandler {
   public scale: Scale;
   protected _baseDomain: Domain;
 
-  constructor(baseDomain : Domain = [0, 100]) {
+  constructor(baseDomain: Domain = [0, 100]) {
     this._baseDomain = baseDomain;
 
     this.scale = scaleLinear().domain(baseDomain).range([0, 100]);
@@ -25,9 +25,11 @@ export default class BasicScaleHandler implements ScaleHandler {
   /**
    * Update scale according to transform
    */
-  rescale(transform: ZoomTransform, axis = 'y') : ScaleHandler {
+  rescale(transform: ZoomTransform, axis = 'y'): ScaleHandler {
     const transScale = this.scale.copy().domain(this.baseDomain());
-    const range = transScale.range().map(axis === 'x' ? transform.invertX : transform.invertY, transform);
+    const range = transScale
+      .range()
+      .map(axis === 'x' ? transform.invertX : transform.invertY, transform);
     if (range[0] === range[1]) return this;
     const domain = range.map(transScale.invert, transScale);
     this.scale.domain(domain);
@@ -37,16 +39,16 @@ export default class BasicScaleHandler implements ScaleHandler {
   /**
    * Return ticks based on scale's current domain and range
    */
-  ticks() : ScaleHandlerTicks {
+  ticks(): ScaleHandlerTicks {
     return ScaleHelper.createTicks(this.scale);
   }
 
   /**
    * set or get base domain
    */
-  baseDomain() : Domain;
-  baseDomain(newDomain : Domain) : ScaleHandler;
-  baseDomain(newDomain? : Domain) : ScaleHandler | Domain {
+  baseDomain(): Domain;
+  baseDomain(newDomain: Domain): ScaleHandler;
+  baseDomain(newDomain?: Domain): ScaleHandler | Domain {
     if (newDomain) {
       this._baseDomain = newDomain;
       this.scale.domain(newDomain);
@@ -58,9 +60,9 @@ export default class BasicScaleHandler implements ScaleHandler {
   /**
    * set or get scale's range
    */
-  range() : Range;
-  range(newRange : Range) : ScaleHandler;
-  range(newRange? : Range) : ScaleHandler | Range {
+  range(): Range;
+  range(newRange: Range): ScaleHandler;
+  range(newRange?: Range): ScaleHandler | Range {
     if (newRange) {
       this.scale.range(newRange);
       return this;
@@ -71,7 +73,7 @@ export default class BasicScaleHandler implements ScaleHandler {
   /**
    * Getter for the scale exposed to the wellog component's tracks
    */
-  get dataScale() : Scale {
+  get dataScale(): Scale {
     return this.scale;
   }
 }

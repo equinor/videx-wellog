@@ -12,7 +12,7 @@ export default function renderLineStepPlotLegend(
   bounds: LegendBounds,
   legendInfo: LegendInfo,
   plot: LineStepPlot,
-) : void {
+): void {
   renderBasicPlotLegend(
     g,
     bounds,

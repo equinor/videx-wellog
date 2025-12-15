@@ -6,11 +6,11 @@ export interface ColorStripTrackOptions extends TrackOptions {
    * returning data. The plots will need to have a data accessor function defined, that
    * can pick the data it needs from this value.
    */
-  data?: Promise<any> | Function | any,
+  data?: Promise<any> | Function | any;
 
   /** Whether or not to show the loader (if configured) */
-  showLoader?: boolean,
+  showLoader?: boolean;
 
   /** Orientation of track. Default is false or unset (vertical). */
-  horizontal?: boolean,
+  horizontal?: boolean;
 }

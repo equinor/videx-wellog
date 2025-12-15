@@ -36,21 +36,23 @@ export function renderTextLabels(
   domain: number[],
   color: string,
   { addLabelBg, largeFontEnabled }: LegendOptions = {},
-) : void {
+): void {
   const { height: h, width: w, top, left } = bounds;
-  const lineY = top + (h * 0.5);
+  const lineY = top + h * 0.5;
   const textSize = h * 0.35;
   const centerX = left + w / 2;
   const min = domain[0];
   const max = domain[domain.length - 1];
 
-  const isLargeFont = (largeFontEnabled && w > 90);
+  const isLargeFont = largeFontEnabled && w > 90;
 
   const unitTextSixe = textSize * 0.85;
   const unitY = lineY + unitTextSixe;
 
-  const domainTextSize = isLargeFont ? (textSize * 1.1) : unitTextSixe;
-  const subY = isLargeFont ? (lineY + (domainTextSize / 2) - (h * 0.05)) : (lineY + domainTextSize);
+  const domainTextSize = isLargeFont ? textSize * 1.1 : unitTextSixe;
+  const subY = isLargeFont
+    ? lineY + domainTextSize / 2 - h * 0.05
+    : lineY + domainTextSize;
 
   // #region Label
   const labelX = centerX;
@@ -59,9 +61,7 @@ export function renderTextLabels(
 
   let labelBg;
   if (addLabelBg) {
-    labelBg = g.append('rect')
-      .classed('label-bg', true)
-      .attr('fill', 'white');
+    labelBg = g.append('rect').classed('label-bg', true).attr('fill', 'white');
   }
 
   const labelText = g.append('text').text(label);
@@ -80,10 +80,10 @@ export function renderTextLabels(
   if (addLabelBg) {
     const bbox = labelText.node().getBBox();
     setAttrs(labelBg, {
-      x: (centerX + bbox.x) - 1,
+      x: centerX + bbox.x - 1,
       y: top + 1,
       width: bbox.width + 2,
-      height: (h * 0.5) - 2,
+      height: h * 0.5 - 2,
     });
   }
   // #endregion
@@ -114,8 +114,14 @@ export function renderTextLabels(
     maxBg = g.append('rect');
   }
 
-  const minText = (Math.abs(min) > 1000 && min % 1000 === 0) ? `${Math.round(min / 1000)}k` : `${min}`;
-  const maxText = (Math.abs(max) > 1000 && max % 1000 === 0) ? `${Math.round(max / 1000)}k` : `${max}`;
+  const minText =
+    Math.abs(min) > 1000 && min % 1000 === 0
+      ? `${Math.round(min / 1000)}k`
+      : `${min}`;
+  const maxText =
+    Math.abs(max) > 1000 && max % 1000 === 0
+      ? `${Math.round(max / 1000)}k`
+      : `${max}`;
 
   const minDomain = g.append('text').text(minText);
   setProps(minDomain, {
@@ -164,11 +170,11 @@ export function renderBasicPlotLegend(
   domain: number[],
   color: string,
   legendOptions: LegendOptions = {},
-) : void {
+): void {
   const x1 = bounds.left + 2;
   const x2 = Math.max(x1, bounds.left + bounds.width - 2);
 
-  const lineY = bounds.top + (bounds.height * 0.5);
+  const lineY = bounds.top + bounds.height * 0.5;
   const lineWidth = bounds.height * 0.1;
 
   /** Hidden rect behind line to expand clickable graphic. */
@@ -195,17 +201,9 @@ export function renderBasicPlotLegend(
       'stroke-width': lineWidth,
       stroke: color,
       fill: color,
-      ...(legendOptions.dash && {'stroke-dasharray': legendOptions.dash })
+      ...(legendOptions.dash && { 'stroke-dasharray': legendOptions.dash }),
     },
   });
 
-  renderTextLabels(
-    g,
-    bounds,
-    label,
-    unit,
-    domain,
-    color,
-    legendOptions,
-  );
+  renderTextLabels(g, bounds, label, unit, domain, color, legendOptions);
 }

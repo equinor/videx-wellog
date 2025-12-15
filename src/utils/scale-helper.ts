@@ -11,7 +11,7 @@ export default class ScaleHelper {
   /**
    * Get pixel ratio from scale
    */
-  static getPixelRatio(scale: Scale) : number {
+  static getPixelRatio(scale: Scale): number {
     const domain = scale.domain();
     const dmin = domain[0];
     const dmax = domain[domain.length - 1];
@@ -26,7 +26,7 @@ export default class ScaleHelper {
   /**
    * Get domain ratio from scale
    */
-  static getDomainRatio(scale: Scale) : number {
+  static getDomainRatio(scale: Scale): number {
     const domain = scale.domain();
     const dmin = domain[0];
     const dmax = domain[domain.length - 1];
@@ -41,7 +41,7 @@ export default class ScaleHelper {
   /**
    * Get the domain span of a scale
    */
-  static getDomainSpan(scale: Scale, absoluteValue: boolean = true) : number {
+  static getDomainSpan(scale: Scale, absoluteValue: boolean = true): number {
     const domain = scale.domain();
     const d1 = domain[0];
     const d2 = domain[domain.length - 1];
@@ -52,7 +52,7 @@ export default class ScaleHelper {
   /**
    * Get the domain span of a scale in pixels
    */
-  static getDomainPixelSpan(scale: Scale, domain?: Domain) : number {
+  static getDomainPixelSpan(scale: Scale, domain?: Domain): number {
     const theDomain = domain || scale.domain();
     const d1 = theDomain[0];
     const d2 = theDomain[theDomain.length - 1];
@@ -66,7 +66,7 @@ export default class ScaleHelper {
   /**
    * Get the range span of a scale in pixels
    */
-  static getRangeSpan(scale: Scale) : number {
+  static getRangeSpan(scale: Scale): number {
     const range = scale.range();
     const r0 = range[0];
     const r1 = range[range.length - 1];
@@ -76,7 +76,7 @@ export default class ScaleHelper {
   /**
    * Creates logarithmic major and minor ticks for a log scale
    */
-  static createLogTicks(scale: Scale) : ScaleHandlerTicks {
+  static createLogTicks(scale: Scale): ScaleHandlerTicks {
     const [, xmax] = scale.domain();
     const guides = [];
     const ticks = {
@@ -92,7 +92,7 @@ export default class ScaleHelper {
 
     const scaleTicks = scale.ticks().splice(1);
 
-    scaleTicks.forEach((t) => {
+    scaleTicks.forEach(t => {
       if (guides.includes(t)) {
         ticks.major.push(t);
       } else {
@@ -105,7 +105,7 @@ export default class ScaleHelper {
   /**
    * Creates linear major and minor ticks
    */
-  static createLinearTicks(scale: Scale, num: number = 10) : ScaleHandlerTicks {
+  static createLinearTicks(scale: Scale, num: number = 10): ScaleHandlerTicks {
     const hTicks = num;
     const hStep = ScaleHelper.getRangeSpan(scale) / hTicks;
     const center = hTicks / 2;
@@ -118,8 +118,8 @@ export default class ScaleHelper {
     const rangeStart = Math.min(...scale.range());
 
     for (let i = 1; i < hTicks; i += 1) {
-      const x = scale.invert((i * hStep) + rangeStart);
-      if (center && (i % center) === 0) {
+      const x = scale.invert(i * hStep + rangeStart);
+      if (center && i % center === 0) {
         ticks.major.push(x);
       } else {
         ticks.minor.push(x);
@@ -131,14 +131,14 @@ export default class ScaleHelper {
   /**
    * Creates major ticks only
    */
-  static createMajorTicks(scale: Scale) : ScaleHandlerTicks {
+  static createMajorTicks(scale: Scale): ScaleHandlerTicks {
     const ticks = {
       major: [],
       minor: [],
     };
 
     const scaleTicks = scale.ticks();
-    scaleTicks.forEach((t) => {
+    scaleTicks.forEach(t => {
       ticks.major.push(t);
     });
     return ticks;
@@ -147,10 +147,14 @@ export default class ScaleHelper {
   /**
    * Internal. Creates minor ticks based around a value, number of steps and step size
    */
-  private static createMinorTicks(v: number, steps: number, stepSize: number) : number[] {
+  private static createMinorTicks(
+    v: number,
+    steps: number,
+    stepSize: number,
+  ): number[] {
     const res = [];
     for (let i = 1; i < steps; i += 1) {
-      const mv = v + (i * stepSize);
+      const mv = v + i * stepSize;
       res.push(mv);
     }
     return res;
@@ -159,7 +163,7 @@ export default class ScaleHelper {
   /**
    * Create major and minor ticks from scale
    */
-  static createTicks(scale: Scale) : ScaleHandlerTicks {
+  static createTicks(scale: Scale): ScaleHandlerTicks {
     const domain = scale.domain();
     const dmin = domain[0];
     const dmax = domain[domain.length - 1];
@@ -177,7 +181,7 @@ export default class ScaleHelper {
       major.push(...scale.ticks(nTicks));
 
       const tickHeight = height / major.length;
-      const majorSize = major.length > 1 ? major[1] - major[0] : (major[0] || 0);
+      const majorSize = major.length > 1 ? major[1] - major[0] : major[0] || 0;
 
       let numMinor = majorSize <= 1 ? majorSize * 10 : Math.min(10, majorSize);
 
@@ -188,9 +192,17 @@ export default class ScaleHelper {
 
         const minorSize = majorSize / numMinor;
 
-        minor.push(...ScaleHelper.createMinorTicks(major[0] - majorSize, numMinor, minorSize));
+        minor.push(
+          ...ScaleHelper.createMinorTicks(
+            major[0] - majorSize,
+            numMinor,
+            minorSize,
+          ),
+        );
         major.forEach(tick => {
-          minor.push(...ScaleHelper.createMinorTicks(tick, numMinor, minorSize));
+          minor.push(
+            ...ScaleHelper.createMinorTicks(tick, numMinor, minorSize),
+          );
         });
       }
     }

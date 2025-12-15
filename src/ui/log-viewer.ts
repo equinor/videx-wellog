@@ -16,14 +16,14 @@ export default class LogViewer extends LogController {
    * Simple creator function for minimal setup
    * @param showTitles optional flag to show titles or not
    */
-  static basic(showTitles: boolean = true) : LogViewer {
+  static basic(showTitles: boolean = true): LogViewer {
     return new LogViewer({
       showTitles,
       showLegend: false,
     });
   }
 
-  public onMount(element: HTMLElement) : void {
+  public onMount(element: HTMLElement): void {
     super.setup(element);
 
     const overlay = createOverlay(this, this.container);
@@ -35,7 +35,9 @@ export default class LogViewer extends LogController {
     overlay.elm.call(this.zoom);
 
     const wheelZoomFunc = overlay.elm.on('wheel.zoom').bind(overlay.elm.node());
-    const dblClickZoomFunc = overlay.elm.on('dblclick.zoom').bind(overlay.elm.node());
+    const dblClickZoomFunc = overlay.elm
+      .on('dblclick.zoom')
+      .bind(overlay.elm.node());
     overlay.elm.on('dblclick.zoom', event => {
       if (this.overlay.enabled) {
         dblClickZoomFunc(event);
@@ -45,7 +47,8 @@ export default class LogViewer extends LogController {
       if (this.overlay.enabled) {
         if (event.ctrlKey || event.shiftKey) {
           const scaleMod = zoomTransform(overlay.elm.node()).k / 3;
-          const transitionAmount = event.wheelDeltaY / wheelPanFactor / scaleMod;
+          const transitionAmount =
+            event.wheelDeltaY / wheelPanFactor / scaleMod;
           if (this.options.horizontal) {
             this.zoom.translateBy(overlay.elm, transitionAmount, 0);
           } else {
@@ -62,7 +65,7 @@ export default class LogViewer extends LogController {
     this._initialized = true;
   }
 
-  public adjustToSize(force: boolean = false) : void {
+  public adjustToSize(force: boolean = false): void {
     super.adjustToSize(force);
 
     const {
@@ -72,10 +75,7 @@ export default class LogViewer extends LogController {
       height,
       overlay,
       _trackHeight,
-      options: {
-        horizontal,
-        onResize,
-      },
+      options: { horizontal, onResize },
     } = this;
 
     const overlaySize = {
@@ -111,7 +111,7 @@ export default class LogViewer extends LogController {
    * @param domain optional domain to scale to
    * @param duration optional duration of transition effect, 0 = no transition
    */
-  public rescale() : void {
+  public rescale(): void {
     super.rescale();
     const transform = zoomTransform(this.zoomHandler.node());
     this.overlay.elm.dispatch('rescale', { detail: { transform } });
@@ -120,7 +120,7 @@ export default class LogViewer extends LogController {
   /**
    * Event handler for pan/zoom
    */
-  protected zoomed(event) : void {
+  protected zoomed(event): void {
     const { transform, sourceEvent } = event;
 
     // abort if event was triggered by user interaction when overlay is disabled

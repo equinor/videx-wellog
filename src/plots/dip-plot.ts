@@ -10,12 +10,8 @@ export default class DipPlot extends Plot<DipPlotOptions> {
   /**
    * Renders dip plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
@@ -31,7 +27,14 @@ export default class DipPlot extends Plot<DipPlotOptions> {
       const x1 = options.horizontal ? scale(d[0]) : xscale(d[1]);
       const y1 = options.horizontal ? xscale(d[1]) : scale(d[0]);
       const dipSize = options.dipSize;
-      const dipShape = new DipShape(ctx, category, azimuthInRadians, x1, y1, dipSize);
+      const dipShape = new DipShape(
+        ctx,
+        category,
+        azimuthInRadians,
+        x1,
+        y1,
+        dipSize,
+      );
       dipShape.draw();
     });
 

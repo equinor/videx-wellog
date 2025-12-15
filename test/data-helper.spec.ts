@@ -4,18 +4,38 @@ import { scaleLinear } from 'd3-scale';
 import DataHelper from '../src/utils/data-helper';
 import { PlotData } from '../src/plots/interfaces';
 
-
 describe('DataHelper', () => {
   // eslint-disable-next-line max-len
-  const datapoints : PlotData = [[0, null], [1, null], [2, 10], [3, 20], [4, 10], [5, null], [6, null], [7, 30], [8, 32], [9, 60], [10, 43], [11, 50], [12, 2], [13, 51]];
+  const datapoints: PlotData = [
+    [0, null],
+    [1, null],
+    [2, 10],
+    [3, 20],
+    [4, 10],
+    [5, null],
+    [6, null],
+    [7, 30],
+    [8, 32],
+    [9, 60],
+    [10, 43],
+    [11, 50],
+    [12, 2],
+    [13, 51],
+  ];
 
   it('should reduce a segment of data points to its average', () => {
     let segment = datapoints.slice(2, 5);
     expect(DataHelper.mean(segment)).to.eql([[3, 40 / 3]]);
-    expect(DataHelper.minmax(segment)).to.eql([[2, 10], [4, 20]]);
+    expect(DataHelper.minmax(segment)).to.eql([
+      [2, 10],
+      [4, 20],
+    ]);
     segment = datapoints.slice(9, 13);
     expect(DataHelper.mean(segment)).to.eql([[10.5, 155 / 4]]);
-    expect(DataHelper.minmax(segment)).to.eql([[9, 60], [12, 2]]);
+    expect(DataHelper.minmax(segment)).to.eql([
+      [9, 60],
+      [12, 2],
+    ]);
   });
 
   it('should be able to check if a set of points are within a scale domain', () => {
@@ -27,40 +47,80 @@ describe('DataHelper', () => {
 
   it('should filter data points based on provided domain and an excess factor', () => {
     expect(DataHelper.filterData(datapoints, [3, 5], 0)).to.eql([
-      [3, 20], [4, 10], [5, null],
+      [3, 20],
+      [4, 10],
+      [5, null],
     ]);
 
     expect(DataHelper.filterData(datapoints, [3, 5], 0.5)).to.eql([
-      [2, 10], [3, 20], [4, 10], [5, null], [6, null],
+      [2, 10],
+      [3, 20],
+      [4, 10],
+      [5, null],
+      [6, null],
     ]);
 
     expect(DataHelper.filterData(datapoints, [4, 5], 1)).to.eql([
-      [3, 20], [4, 10], [5, null], [6, null],
+      [3, 20],
+      [4, 10],
+      [5, null],
+      [6, null],
     ]);
 
     // should not filter points required to draw the first and last point
     // that are within the domain
     expect(DataHelper.filterData(datapoints, [4.1, 4.9], 0)).to.eql([
-      [4, 10], [5, null],
+      [4, 10],
+      [5, null],
     ]);
   });
 
   it('should not filter out boundary values within the domain', () => {
-    expect(DataHelper.filterData([[3, 20], [4, 10]], [3.1, 3.9], 0)).to.eql([
-      [3, 20], [4, 10],
+    expect(
+      DataHelper.filterData(
+        [
+          [3, 20],
+          [4, 10],
+        ],
+        [3.1, 3.9],
+        0,
+      ),
+    ).to.eql([
+      [3, 20],
+      [4, 10],
     ]);
 
-    expect(DataHelper.filterData([[3, 20], [4, 10]], [3, 3.9], 0)).to.eql([
-      [3, 20], [4, 10],
+    expect(
+      DataHelper.filterData(
+        [
+          [3, 20],
+          [4, 10],
+        ],
+        [3, 3.9],
+        0,
+      ),
+    ).to.eql([
+      [3, 20],
+      [4, 10],
     ]);
 
-    expect(DataHelper.filterData([[3, 20], [4, 10]], [3.1, 4], 0)).to.eql([
-      [3, 20], [4, 10],
+    expect(
+      DataHelper.filterData(
+        [
+          [3, 20],
+          [4, 10],
+        ],
+        [3.1, 4],
+        0,
+      ),
+    ).to.eql([
+      [3, 20],
+      [4, 10],
     ]);
   });
 
   it('should be able to resample data points to a given ratio', () => {
-    const data : PlotData = range(0, 10000, 1).map(d => [d, d]);
+    const data: PlotData = range(0, 10000, 1).map(d => [d, d]);
     expect(DataHelper.resample(data, 1)).to.eql(data);
     expect(DataHelper.resample(data, 1000)).to.eql([
       [0, 0],
@@ -75,7 +135,7 @@ describe('DataHelper', () => {
       [8500.5, 8500.5],
       [9499.5, 9499.5],
       [9999, 9999],
-     ]);
+    ]);
     expect(DataHelper.resample(data, 200)).to.eql([
       [0, 0],
       [100.5, 100.5],
@@ -133,8 +193,16 @@ describe('DataHelper', () => {
   });
 
   it('should be able to downsample data points to a given scale', () => {
-    const scale = scaleLinear().domain([0, 14]).range([0, 2])
-    expect(DataHelper.downsample(datapoints, scale)).to.eql([[2,10],[3,20],[4,10],[5,null],[7,60],[12,2],[13,51]]);
+    const scale = scaleLinear().domain([0, 14]).range([0, 2]);
+    expect(DataHelper.downsample(datapoints, scale)).to.eql([
+      [2, 10],
+      [3, 20],
+      [4, 10],
+      [5, null],
+      [7, 60],
+      [12, 2],
+      [13, 51],
+    ]);
   });
 
   it('should be able to trim undefined data (no more than one neighbouring null value)', () => {
@@ -153,18 +221,20 @@ describe('DataHelper', () => {
       [13, 51],
     ]);
 
-    expect(DataHelper.trimUndefinedValues([
-      [0, 0],
-      [1, null],
-      [2, null],
-      [3, 0],
-      [4, null],
-      [5, 0],
-      [6, null],
-      [7, 0],
-      [8, null],
-      [9, null],
-    ])).to.eql([
+    expect(
+      DataHelper.trimUndefinedValues([
+        [0, 0],
+        [1, null],
+        [2, null],
+        [3, 0],
+        [4, null],
+        [5, 0],
+        [6, null],
+        [7, 0],
+        [8, null],
+        [9, null],
+      ]),
+    ).to.eql([
       [0, 0],
       [1, null],
       [3, 0],
@@ -178,13 +248,10 @@ describe('DataHelper', () => {
 
   it('should be able to merge two dataseries into one correlated serie', () => {
     const serie1 = DataHelper.trimUndefinedValues(datapoints);
-    
-    const serie2 : PlotData = serie1.slice(3, 10).map(d => [d[0], -d[1]]);
 
-    let actual = DataHelper.mergeDataSeries(
-      serie1,
-      serie2,
-    );
+    const serie2: PlotData = serie1.slice(3, 10).map(d => [d[0], -d[1]]);
+
+    let actual = DataHelper.mergeDataSeries(serie1, serie2);
 
     let expected = [
       [0, null, null],
@@ -226,17 +293,13 @@ describe('DataHelper', () => {
     expect(actual).to.eql(expected);
   });
 
-  it('should return an empty array if the second array\'s highest point starts after the lowest point of the other array', () => {
+  it("should return an empty array if the second array's highest point starts after the lowest point of the other array", () => {
     const serie1 = DataHelper.trimUndefinedValues(datapoints);
-    const serie2 : PlotData = serie1.map(d => [d[0]+20, -d[1]]);
+    const serie2: PlotData = serie1.map(d => [d[0] + 20, -d[1]]);
 
-    let actual = DataHelper.mergeDataSeries(
-      serie1,
-      serie2,
-    );
+    let actual = DataHelper.mergeDataSeries(serie1, serie2);
 
     let expected = [];
     expect(actual).to.eql(expected);
-
   });
 });

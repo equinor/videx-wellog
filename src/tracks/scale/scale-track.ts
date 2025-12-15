@@ -35,7 +35,7 @@ export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
   /**
    * Override of onMount from base class
    */
-  onMount(trackEvent: OnMountEvent) : void {
+  onMount(trackEvent: OnMountEvent): void {
     super.onMount(trackEvent);
     this.createTicks();
   }
@@ -43,7 +43,7 @@ export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
   /**
    * Override of onRescale from base class
    */
-  onRescale(trackEvent: OnRescaleEvent) : void {
+  onRescale(trackEvent: OnRescaleEvent): void {
     super.onRescale(trackEvent);
     this.createTicks();
     if (this.legendUpdate) this.legendUpdate();
@@ -53,20 +53,21 @@ export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
   /**
    * Override of onUpdate from base class
    */
-  onUpdate(trackEvent: OnUpdateEvent) : void {
+  onUpdate(trackEvent: OnUpdateEvent): void {
     super.onUpdate(trackEvent);
     const { elm } = this;
-    this.xscale.range([0, this.options.horizontal ? elm.clientHeight : elm.clientWidth]);
+    this.xscale.range([
+      0,
+      this.options.horizontal ? elm.clientHeight : elm.clientWidth,
+    ]);
     this.plot();
   }
 
   /**
    * Create scale tick intervals
    */
-  createTicks() : void {
-    const {
-      scale,
-    } = this;
+  createTicks(): void {
+    const { scale } = this;
     if (!scale) this.ticks = [];
     else this.ticks = ScaleHelper.createTicks(scale).major;
   }
@@ -80,9 +81,7 @@ export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
       scale,
       labelBounds,
       ticks,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
     const [, max] = xscale.domain();
 
@@ -93,25 +92,31 @@ export default class ScaleTrack extends SvgTrack<ScaleTrackOptions> {
 
     g.selectAll('g.major-tick')
       .data(data)
-      .call(horizontal ? renderHorizontalTicks : renderTicks, xscale, labelBounds, max, horizontal);
+      .call(
+        horizontal ? renderHorizontalTicks : renderTicks,
+        xscale,
+        labelBounds,
+        max,
+        horizontal,
+      );
   }
 
   /**
    * Plot
    */
-  plot() : void {
+  plot(): void {
     const {
       createRuler,
       plotGroup: g,
       xscale,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
 
     if (!g) return;
 
-    this.labelBounds = horizontal ? computeLabelBoundsHorizontal(xscale) : computeLabelBounds(xscale);
+    this.labelBounds = horizontal
+      ? computeLabelBoundsHorizontal(xscale)
+      : computeLabelBounds(xscale);
 
     g.attr('class', 'scale-track master-scale');
 

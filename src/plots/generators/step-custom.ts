@@ -14,24 +14,24 @@ class StepCustom {
     this._y = NaN;
   }
 
-  areaStart() : void {
+  areaStart(): void {
     this._line = true;
   }
 
-  areaEnd() : void {
+  areaEnd(): void {
     this._line = false;
   }
 
-  lineStart() : void {
+  lineStart(): void {
     this._x = NaN;
     this._y = NaN;
   }
 
-  lineEnd() : void {
+  lineEnd(): void {
     if (this._line) this._ctx.closePath();
   }
 
-  point(x: number, y: number) : void {
+  point(x: number, y: number): void {
     if (!(Number.isNaN(x) || Number.isNaN(y))) {
       if (Number.isNaN(this._y)) {
         this._ctx.moveTo(x, y);
@@ -39,7 +39,9 @@ class StepCustom {
         if (y !== this._y) this._ctx.lineTo(x, this._y);
         this._ctx.lineTo(x, y);
       }
-    } else if (!(Number.isNaN(x) || Number.isNaN(this._x) || Number.isNaN(this._y))) {
+    } else if (
+      !(Number.isNaN(x) || Number.isNaN(this._x) || Number.isNaN(this._y))
+    ) {
       this._ctx.lineTo(x, this._y);
     }
     this._x = x;

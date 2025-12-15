@@ -8,7 +8,7 @@ import { ScaleHandlerTicks, ScaleInterpolator } from './interfaces';
 /**
  * Default no-ops interpolator
  */
-const noInterpolator : ScaleInterpolator = {
+const noInterpolator: ScaleInterpolator = {
   forward: v => v,
   reverse: v => v,
   forwardInterpolatedDomain: domain => domain,
@@ -29,12 +29,13 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   private _mode: number;
   private _alternateBase: Domain;
 
-  constructor(interpolator?: ScaleInterpolator, baseDomain : Domain = [0, 100]) {
+  constructor(interpolator?: ScaleInterpolator, baseDomain: Domain = [0, 100]) {
     super(baseDomain);
 
     this._mode = 0;
     this.interpolator = interpolator || noInterpolator;
-    this._alternateBase = this.interpolator.reverseInterpolatedDomain(baseDomain);
+    this._alternateBase =
+      this.interpolator.reverseInterpolatedDomain(baseDomain);
 
     this.ticks = this.ticks.bind(this);
   }
@@ -45,37 +46,37 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
    * will handle interpolation/conversion between the domains, using the
    * provided scale interpolator.
    */
-  createInterpolatedScale() : Scale {
-    const {
-      interpolator,
-    } = this;
+  createInterpolatedScale(): Scale {
+    const { interpolator } = this;
     const _t = this;
     const domain = interpolator.forwardInterpolatedDomain(_t.scale.domain());
 
-    const iscale = (v:number) => {
+    const iscale = (v: number) => {
       const iv = interpolator.reverse(v);
       return _t.scale(iv);
     };
 
-    iscale.invert = (v:number) => interpolator.forward(_t.scale.invert(v));
+    iscale.invert = (v: number) => interpolator.forward(_t.scale.invert(v));
 
-    function d() : Domain;
-    function d(newDomain: Domain) : Scale;
-    function d(newDomain?: Domain) : Scale | Domain {
+    function d(): Domain;
+    function d(newDomain: Domain): Scale;
+    function d(newDomain?: Domain): Scale | Domain {
       if (newDomain) throw Error('Scale is read-only and may not be altered!');
       return domain;
     }
 
-    function r() : Range;
-    function r(newRange: Range) : Scale;
-    function r(newRange?: Range) : Scale | Range {
+    function r(): Range;
+    function r(newRange: Range): Scale;
+    function r(newRange?: Range): Scale | Range {
       if (newRange) throw Error('Scale is read-only and may not be altered!');
       return _t.scale.range();
     }
 
     iscale.domain = d;
     iscale.range = r;
-    iscale.ticks = scaleLinear().domain(domain).range(iscale.range().slice()).ticks;
+    iscale.ticks = scaleLinear()
+      .domain(domain)
+      .range(iscale.range().slice()).ticks;
     iscale.copy = () => this.createInterpolatedScale();
     return iscale;
   }
@@ -87,7 +88,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
    * mode = 0: master mode
    * mode = 1: alternate mode
    */
-  setMode(m: number) : InterpolatedScaleHandler {
+  setMode(m: number): InterpolatedScaleHandler {
     if (m === 0 || m === 1) {
       this._mode = m;
       this.rescaleToMode();
@@ -99,12 +100,8 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   /**
    * Rescales the domain of the internal scale according to the selected mode.
    */
-  rescaleToMode() : InterpolatedScaleHandler {
-    const {
-      _mode: mode,
-      interpolator,
-      scale,
-    } = this;
+  rescaleToMode(): InterpolatedScaleHandler {
+    const { _mode: mode, interpolator, scale } = this;
 
     let d;
     if (mode === 1) {
@@ -119,12 +116,8 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   /**
    * Return ticks based on scale's current domain and range
    */
-  ticks(mode?: number) : ScaleHandlerTicks {
-    const {
-      _mode,
-      scale,
-      interpolator,
-    } = this;
+  ticks(mode?: number): ScaleHandlerTicks {
+    const { _mode, scale, interpolator } = this;
 
     if (mode === undefined || mode === _mode) {
       return ScaleHelper.createTicks(scale);
@@ -143,15 +136,11 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   /**
    * set or get base domain, according to current on mode
    */
-  baseDomain() : Domain;
-  baseDomain(newDomain : Domain) : this;
-  baseDomain(newDomain? : Domain) : this | Domain {
+  baseDomain(): Domain;
+  baseDomain(newDomain: Domain): this;
+  baseDomain(newDomain?: Domain): this | Domain {
     if (newDomain) {
-      const {
-        _mode: mode,
-        interpolator,
-        scale,
-      } = this;
+      const { _mode: mode, interpolator, scale } = this;
 
       this._baseDomain = newDomain;
 
@@ -169,14 +158,14 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
   /**
    * Getter for the current mode
    */
-  get mode() : number {
+  get mode(): number {
     return this._mode;
   }
 
   /**
    * Overrides the getter for the scale exposed to the wellog component's tracks
    */
-  get dataScale() : Scale {
+  get dataScale(): Scale {
     return this._mode === 1 ? this.createInterpolatedScale() : this.scale;
   }
 }

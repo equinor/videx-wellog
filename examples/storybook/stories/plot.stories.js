@@ -34,24 +34,26 @@ export const areaPlot = () => {
   }).setData(ex1);
 
   // plot
-  plot.setRange([90, 0])
-    .plot(canvas.getContext('2d'), scale);
+  plot.setRange([90, 0]).plot(canvas.getContext('2d'), scale);
 
   // change color and fill opacity
-  plot.setRange([190, 100])
+  plot
+    .setRange([190, 100])
     .setOption('color', 'orange')
     .setOption('fillOpacity', 0.25)
     .plot(canvas.getContext('2d'), scale);
 
   // max value as base
-  plot.setRange([320, 220])
+  plot
+    .setRange([320, 220])
     .setOption('color', 'gray')
     .setOption('fillOpacity', 0.7)
     .setOption('useMinAsBase', false)
     .plot(canvas.getContext('2d'), scale);
 
   // inverse color
-  plot.setRange([390, 300])
+  plot
+    .setRange([390, 300])
     .setOption('inverseColor', 'red')
     .plot(canvas.getContext('2d'), scale);
 
@@ -76,11 +78,11 @@ export const differentialPlot = () => {
   }).setData(Object.values(ex3));
 
   // plot
-  diffPlot.setRange([90, 0])
-    .plot(canvas.getContext('2d'), scale);
+  diffPlot.setRange([90, 0]).plot(canvas.getContext('2d'), scale);
 
   // colors and fills
-  diffPlot.setRange([190, 100])
+  diffPlot
+    .setRange([190, 100])
     .setOptions({
       'serie1.color': 'red',
       'serie1.fill': 'yellow',
@@ -90,7 +92,8 @@ export const differentialPlot = () => {
     .plot(canvas.getContext('2d'), scale);
 
   // individual scales
-  diffPlot.setRange([380, 280])
+  diffPlot
+    .setRange([380, 280])
     .setOptions({
       fillOpacity: 1,
       'serie1.scale': 'log',
@@ -125,8 +128,7 @@ export const dipPlot = () => {
   }).setData(exampleDipPlotData());
 
   // plot
-  plot.setRange(range)
-    .plot(canvas.getContext('2d'), scale);
+  plot.setRange(range).plot(canvas.getContext('2d'), scale);
 
   return canvas;
 };
@@ -149,17 +151,18 @@ export const dotPlot = () => {
   }).setData(ex1);
 
   // plot
-  plot.setRange([90, 0])
-    .plot(canvas.getContext('2d'), scale);
+  plot.setRange([90, 0]).plot(canvas.getContext('2d'), scale);
 
   // change color radius
-  plot.setRange([190, 100])
+  plot
+    .setRange([190, 100])
     .setOption('color', 'green')
     .setOption('radius', 8)
     .plot(canvas.getContext('2d'), scale);
 
   // small radius
-  plot.setRange([290, 200])
+  plot
+    .setRange([290, 200])
     .setOption('color', 'purple')
     .setOption('radius', 1)
     .plot(canvas.getContext('2d'), scale);
@@ -185,18 +188,19 @@ export const linePlot = () => {
   }).setData(ex1);
 
   // standard
-  plot.setRange([100, 0])
-    .plot(canvas.getContext('2d'), scale);
+  plot.setRange([100, 0]).plot(canvas.getContext('2d'), scale);
 
   // change color and line style
-  plot.setRange([200, 100])
+  plot
+    .setRange([200, 100])
     .setOption('color', 'green')
     .setOption('width', 3)
     .setOption('dash', [4, 4])
     .plot(canvas.getContext('2d'), scale);
 
   // set multiple options
-  plot.setRange([300, 200])
+  plot
+    .setRange([300, 200])
     .setOptions({
       dash: null,
       color: 'purple',
@@ -228,18 +232,19 @@ export const lineStepPlot = () => {
   }).setData(ex1);
 
   // standard
-  plot.setRange([100, 0])
-    .plot(canvas.getContext('2d'), scale);
+  plot.setRange([100, 0]).plot(canvas.getContext('2d'), scale);
 
   // change color and line style
-  plot.setRange([200, 100])
+  plot
+    .setRange([200, 100])
     .setOption('color', 'green')
     .setOption('width', 3)
     .setOption('dash', [4, 4])
     .plot(canvas.getContext('2d'), scale);
 
   // set multiple options
-  plot.setRange([300, 200])
+  plot
+    .setRange([300, 200])
     .setOptions({
       dash: null,
       color: 'purple',

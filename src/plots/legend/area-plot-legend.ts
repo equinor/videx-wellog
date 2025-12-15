@@ -8,7 +8,12 @@ import AreaPlot from '../area-plot';
 /**
  * Renders area legend to a SVG group element according to bounds.
  */
-export default function renderAreaPlotLegend(g: D3Selection, bounds: LegendBounds, legendInfo: LegendInfo, plot: AreaPlot) : void {
+export default function renderAreaPlotLegend(
+  g: D3Selection,
+  bounds: LegendBounds,
+  legendInfo: LegendInfo,
+  plot: AreaPlot,
+): void {
   const { top, left, width, height } = bounds;
   const shadeH = height / 2;
   const shadeY = top;
@@ -16,16 +21,21 @@ export default function renderAreaPlotLegend(g: D3Selection, bounds: LegendBound
   const minIsLeft = min <= max;
   const fillOpacity = Math.min(plot.options.fillOpacity + 0.25, 1);
   const centerX = left + width / 2;
-  const useMinAsBase = plot.options.useMinAsBase === undefined ? true : plot.options.useMinAsBase;
+  const useMinAsBase =
+    plot.options.useMinAsBase === undefined ? true : plot.options.useMinAsBase;
 
   if (plot.options.inverseColor) {
     const shadeW = Math.max(0, width - 2);
 
-    const fillNrm = useMinAsBase && minIsLeft
-      ? plot.options.color : plot.options.inverseColor;
+    const fillNrm =
+      useMinAsBase && minIsLeft
+        ? plot.options.color
+        : plot.options.inverseColor;
 
-    const fillInv = useMinAsBase && minIsLeft
-      ? plot.options.inverseColor : plot.options.color;
+    const fillInv =
+      useMinAsBase && minIsLeft
+        ? plot.options.inverseColor
+        : plot.options.color;
 
     setAttrs(g.append('rect'), {
       x: left + 2,

@@ -8,20 +8,20 @@ interface StackedTrackOptions extends TrackOptions {
    * The plots will need to have a data accessor function defined,
    * that can pick the data it needs from this value.
    */
-  data?: Promise<any> | Function | any,
+  data?: Promise<any> | Function | any;
 
   /**
    * @brief Option to show labels on the track.
    */
-  showLabels?: boolean,
+  showLabels?: boolean;
 
   /**
    * @brief Option to show lines on the track.
    */
-  showLines?: boolean,
+  showLines?: boolean;
 
   /** Option for the label logic. */
-  labelOptions?: StackedTrackLabelOptions,
+  labelOptions?: StackedTrackLabelOptions;
 }
 
 export interface StackedTrackLabelOptions {
@@ -32,64 +32,60 @@ export interface StackedTrackLabelOptions {
    * (i.e. The vertical line if the track is vertical and
    * the horizontal line if the track is horizontal.)
    */
-  rotation: number,
+  rotation: number;
 
   /** The ratio of width to use when determining font scale. Will be used if smaller than verticalScaleRatio. Default value is 0.5. */
-  horizontalScaleRatio: number,
+  horizontalScaleRatio: number;
 
   /** The ratio of height to use when determining font scale. Will be used if smaller than horizontalScaleRatio. Default value is 0.1. */
-  verticalScaleRatio: number,
+  verticalScaleRatio: number;
 }
 
 interface TransformedAreaData {
   /**
    * Name of area, used in rendering label
    */
-  name: string,
+  name: string;
   /**
    * Start value for area
    */
-  yFrom: number,
+  yFrom: number;
   /**
    * End value for area
    */
-  yTo: number,
+  yTo: number;
   /**
    * Fill color for area
    */
-  color: string,
+  color: string;
   /**
    * Opacity for area
    */
-  opacity?: number,
+  opacity?: number;
 }
 
 interface AreaData {
   /**
    * Name of area, used in rendering label
    */
-  name?: string,
+  name?: string;
   /**
    * Start value for area
    */
-  from: number,
+  from: number;
   /**
    * End value for area
    */
-  to: number,
+  to: number;
   /**
    * Fill color for area
    */
   color: {
-    r: number,
-    g: number,
-    b: number,
-    a?: number,
-  },
+    r: number;
+    g: number;
+    b: number;
+    a?: number;
+  };
 }
 
-export {
-  StackedTrackOptions,
-  TransformedAreaData,
-  AreaData,
-};
+export { StackedTrackOptions, TransformedAreaData, AreaData };

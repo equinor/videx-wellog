@@ -10,12 +10,8 @@ export default class LineStepPlot extends Plot<LinePlotOptions> {
   /**
    * Renders line-step plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
@@ -26,9 +22,13 @@ export default class LineStepPlot extends Plot<LinePlotOptions> {
       .curve(stepCustom)
       .context(ctx);
     if (options.horizontal) {
-      lineFunction.y(d => (d[1] === null ? NaN : xscale(d[1]))).x(d => (d[0] === null ? NaN : scale(d[0])));
+      lineFunction
+        .y(d => (d[1] === null ? NaN : xscale(d[1])))
+        .x(d => (d[0] === null ? NaN : scale(d[0])));
     } else {
-      lineFunction.x(d => (d[1] == null ? NaN : xscale(d[1]))).y(d => (d[0] == null ? NaN : scale(d[0])));
+      lineFunction
+        .x(d => (d[1] == null ? NaN : xscale(d[1])))
+        .y(d => (d[0] == null ? NaN : scale(d[0])));
     }
 
     ctx.beginPath();
