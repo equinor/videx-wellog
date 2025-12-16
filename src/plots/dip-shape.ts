@@ -45,11 +45,8 @@ export default class DipShape {
     this.tailLength = this.dipSize * 2.5;
   }
 
-  draw() : void {
-    const {
-      category,
-      dipSize,
-    } = this;
+  draw(): void {
+    const { category, dipSize } = this;
 
     this.drawTail();
     switch (category.shape) {
@@ -80,12 +77,8 @@ export default class DipShape {
     }
   }
 
-  drawArc() : void {
-    const {
-      radius,
-      x1,
-      y1,
-    } = this;
+  drawArc(): void {
+    const { radius, x1, y1 } = this;
 
     const arcL = Math.PI * 2;
 
@@ -93,31 +86,27 @@ export default class DipShape {
     this.ctx.arc(x1, y1, radius, 0, arcL);
   }
 
-  addFill(color: string = this.category.color) : void {
+  addFill(color: string = this.category.color): void {
     this.ctx.fillStyle = color;
     this.ctx.fill();
   }
 
-  addStroke(color: string = this.category.color) : void {
+  addStroke(color: string = this.category.color): void {
     this.ctx.strokeStyle = color;
     this.ctx.stroke();
   }
 
-  drawTail() : void {
-    const {
-      azimuth,
-      barLength,
-      category,
-      ctx,
-      tailLength,
-      x1,
-      y1,
-    } = this;
+  drawTail(): void {
+    const { azimuth, barLength, category, ctx, tailLength, x1, y1 } = this;
 
     ctx.beginPath();
     ctx.lineWidth = 2;
 
-    if ([DipPlotShape.BREAKOUT, DipPlotShape.TENSILE].includes(category.shape as DipPlotShape)) {
+    if (
+      [DipPlotShape.BREAKOUT, DipPlotShape.TENSILE].includes(
+        category.shape as DipPlotShape,
+      )
+    ) {
       const x2 = x1 + Math.cos(azimuth) * barLength;
       const y2 = y1 + Math.sin(azimuth) * barLength;
       ctx.moveTo(x2, y2);
@@ -145,21 +134,19 @@ export default class DipShape {
     x1: number = this.x1,
     y1: number = this.y1,
     azimuth: number = this.azimuth,
-  ) : void {
-    const {
-      ctx,
-    } = this;
+  ): void {
+    const { ctx } = this;
 
     ctx.beginPath();
     ctx.lineWidth = 2;
 
     // Angle between vertices of polygon
-    const verticesAngle = ((Math.PI * 2) / sides);
+    const verticesAngle = (Math.PI * 2) / sides;
     // Rotate squares 45 degrees
     const rotate = sides === 4 ? azimuth + 0.7854 : azimuth;
 
     for (let i = 0; i < sides; i++) {
-      const rotPos = (verticesAngle * i) + rotate;
+      const rotPos = verticesAngle * i + rotate;
       ctx.lineTo(
         x1 + radius * Math.cos(rotPos),
         y1 + radius * Math.sin(rotPos),
@@ -170,24 +157,19 @@ export default class DipShape {
     this.addFill();
   }
 
-  drawCircle() : void {
+  drawCircle(): void {
     this.drawArc();
     this.addFill('#fff');
     this.addStroke();
   }
 
-  drawSphere() : void {
+  drawSphere(): void {
     this.drawArc();
     this.addFill();
   }
 
-  drawBreakout() : void {
-    const {
-      azimuth,
-      dipSize,
-      x1,
-      y1,
-    } = this;
+  drawBreakout(): void {
+    const { azimuth, dipSize, x1, y1 } = this;
 
     this.drawArc();
     this.addStroke();
@@ -199,14 +181,8 @@ export default class DipShape {
     this.drawPolygon(4, 3, triX2, triY2, azimuth + 3.14159);
   }
 
-  drawTee() : void {
-    const {
-      azimuth,
-      ctx,
-      teeLength,
-      x1,
-      y1,
-    } = this;
+  drawTee(): void {
+    const { azimuth, ctx, teeLength, x1, y1 } = this;
 
     ctx.beginPath();
     ctx.lineWidth = 3;

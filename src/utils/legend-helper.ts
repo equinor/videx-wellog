@@ -6,16 +6,24 @@ export type LegendRowsFunction = (track: Track) => number;
 
 export type LegendTriggerFunction = () => void;
 
-export type LegendOnInitFunction = (elm: Element, track: Track, updateTrigger: LegendTriggerFunction) => void;
+export type LegendOnInitFunction = (
+  elm: Element,
+  track: Track,
+  updateTrigger: LegendTriggerFunction,
+) => void;
 
 export interface LegendBounds {
-  top: number,
-  left: number,
-  height: number,
-  width: number,
+  top: number;
+  left: number;
+  height: number;
+  width: number;
 }
 
-export type LegendOnUpdateFunction = (elm: Element, bounds: LegendBounds, track: Track) => void;
+export type LegendOnUpdateFunction = (
+  elm: Element,
+  bounds: LegendBounds,
+  track: Track,
+) => void;
 
 interface BasicVerticalLinkLabelConfig {
   label: string;
@@ -25,10 +33,10 @@ interface BasicVerticalLinkLabelConfig {
 }
 
 export interface LegendConfig {
-  elementType: string,
-  getLegendRows(track: Track) : number,
-  onInit: LegendOnInitFunction,
-  onUpdate: LegendOnUpdateFunction,
+  elementType: string;
+  getLegendRows(track: Track): number;
+  onInit: LegendOnInitFunction;
+  onUpdate: LegendOnUpdateFunction;
 }
 
 /**
@@ -38,7 +46,10 @@ export default class LegendHelper {
   /**
    * Creates a basic legend config required by the wellog component
    */
-  static basicLegendSvgConfig(trackRowsFunc: LegendRowsFunction, updateFunc: LegendOnUpdateFunction) : LegendConfig {
+  static basicLegendSvgConfig(
+    trackRowsFunc: LegendRowsFunction,
+    updateFunc: LegendOnUpdateFunction,
+  ): LegendConfig {
     return {
       elementType: 'svg',
       getLegendRows: track => trackRowsFunc(track),
@@ -55,11 +66,17 @@ export default class LegendHelper {
   /**
    * Renders a simple rotated text label that is scaled to fit bounds
    */
-  static renderBasicVerticalSvgLabel(g: D3Selection, bounds: LegendBounds, label: string, abbr: string, horizontal: boolean = false) : D3Selection {
+  static renderBasicVerticalSvgLabel(
+    g: D3Selection,
+    bounds: LegendBounds,
+    label: string,
+    abbr: string,
+    horizontal: boolean = false,
+  ): D3Selection {
     const { width, height, left = 0, top = 0 } = bounds;
 
     const y = top + height * 0.9;
-    const x = left + Math.max(0, (width / 2));
+    const x = left + Math.max(0, width / 2);
 
     const textSize = Math.min(12, Math.min(width, 40) / 3);
 
@@ -67,7 +84,8 @@ export default class LegendHelper {
       ? `translate(${y},${x})`
       : `translate(${x},${y})rotate(90)`;
 
-    const lbl = g.append('text')
+    const lbl = g
+      .append('text')
       .attr('transform', transform)
       .attr('font-size', `${textSize}px`)
       .attr('dominant-baseline', 'middle')
@@ -85,7 +103,7 @@ export default class LegendHelper {
    * Convenience function for quickly creating a legend config object for
    * a rotated label legend.
    */
-  static basicVerticalLabel(label: string, abbr: string) : LegendConfig {
+  static basicVerticalLabel(label: string, abbr: string): LegendConfig {
     const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
       const g = select(elm);
       g.selectAll('*').remove();
@@ -104,11 +122,17 @@ export default class LegendHelper {
    * Convenience function for creating a legend config object for
    * a clickable rotated label legend.
    */
-  static basicVerticalLinkLabel({ label, abbr, onClick, title = null }:BasicVerticalLinkLabelConfig) : LegendConfig {
+  static basicVerticalLinkLabel({
+    label,
+    abbr,
+    onClick,
+    title = null,
+  }: BasicVerticalLinkLabelConfig): LegendConfig {
     const onLegendUpdate: LegendOnUpdateFunction = (elm, bounds, track) => {
       const g = select(elm);
       g.selectAll('*').remove();
-      const labelGroup = g.append('g')
+      const labelGroup = g
+        .append('g')
         .style('fill', '#0000EE')
         .style('text-decoration', 'underline')
         .style('cursor', 'pointer');
@@ -124,8 +148,7 @@ export default class LegendHelper {
       );
 
       if (onClick && typeof onClick === 'function') {
-        labelElement
-          .on('click', onClick);
+        labelElement.on('click', onClick);
       }
     };
     return LegendHelper.basicLegendSvgConfig(() => 3, onLegendUpdate);

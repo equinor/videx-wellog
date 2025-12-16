@@ -12,16 +12,13 @@ export default class AreaPlot extends Plot<AreaPlotOptions> {
    * @param ctx canvas context instance
    * @param scale y-scale
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
-    const useMinAsBase = options.useMinAsBase === undefined ? true : options.useMinAsBase;
+    const useMinAsBase =
+      options.useMinAsBase === undefined ? true : options.useMinAsBase;
 
     const [d0, d1] = xscale.domain();
     const dmin = Math.min(d0, d1);
@@ -33,20 +30,22 @@ export default class AreaPlot extends Plot<AreaPlotOptions> {
     const zeroValue = useMinAsBase ? rmin : rmax;
 
     let index = 0;
-    const splitted = plotdata.reduce((acc, v) => {
-      if (acc.length > 0 && v[1] === null) {
-        acc[++index] = [];
-      } else {
-        acc[index].push(v);
-      }
-      return acc;
-    }, [[]]);
+    const splitted = plotdata.reduce(
+      (acc, v) => {
+        if (acc.length > 0 && v[1] === null) {
+          acc[++index] = [];
+        } else {
+          acc[index].push(v);
+        }
+        return acc;
+      },
+      [[]],
+    );
 
     splitted.forEach(data => {
       ctx.save();
 
-      const areaFunction = area()
-        .context(ctx);
+      const areaFunction = area().context(ctx);
 
       if (options.horizontal) {
         areaFunction
@@ -65,8 +64,7 @@ export default class AreaPlot extends Plot<AreaPlotOptions> {
       if (options.inverseColor) {
         const inverseValue = useMinAsBase ? rmax : rmin;
 
-        const inverseAreaFunction = area()
-          .context(ctx);
+        const inverseAreaFunction = area().context(ctx);
 
         if (options.horizontal) {
           inverseAreaFunction

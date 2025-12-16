@@ -61,17 +61,19 @@ export default (delayLoading = false) => {
       scale: 'linear',
       domain: [0, 1],
       legendConfig: graphLegendConfig,
-      plots: [{
-        id: 'dots',
-        type: 'dot',
-        options: {
-          color: 'orange',
-          legendInfo: () => ({
-            label: 'DOT',
-            unit: 'bar',
-          }),
+      plots: [
+        {
+          id: 'dots',
+          type: 'dot',
+          options: {
+            color: 'orange',
+            legendInfo: () => ({
+              label: 'DOT',
+              unit: 'bar',
+            }),
+          },
         },
-      }],
+      ],
     }),
     new GraphTrack(3, {
       label: 'Dip',
@@ -104,67 +106,73 @@ export default (delayLoading = false) => {
       abbr: 'noise',
       data: ex2,
       legendConfig: graphLegendConfig,
-      plots: [{
-        id: 'noise',
-        type: 'line',
-        options: {
-          color: 'blue',
-          filterToScale: false,
-          dataAccessor: d => d.noise,
-          legendInfo: () => ({
-            label: 'Plot1',
-            unit: 'mm',
-          }),
+      plots: [
+        {
+          id: 'noise',
+          type: 'line',
+          options: {
+            color: 'blue',
+            filterToScale: false,
+            dataAccessor: d => d.noise,
+            legendInfo: () => ({
+              label: 'Plot1',
+              unit: 'mm',
+            }),
+          },
         },
-      }, {
-        id: 'more_noise',
-        type: 'linestep',
-        options: {
-          scale: 'linear',
-          domain: [0, 40],
-          color: 'black',
-          offset: 0.5,
-          dataAccessor: d => d.noise2,
-          legendInfo: () => ({
-            label: 'Plot2',
-            unit: 'Pwr',
-          }),
+        {
+          id: 'more_noise',
+          type: 'linestep',
+          options: {
+            scale: 'linear',
+            domain: [0, 40],
+            color: 'black',
+            offset: 0.5,
+            dataAccessor: d => d.noise2,
+            legendInfo: () => ({
+              label: 'Plot2',
+              unit: 'Pwr',
+            }),
+          },
         },
-      }],
+      ],
     }),
     new GraphTrack(5, {
       label: 'Sinus curve',
       abbr: 'sin',
       data: ex3,
       legendConfig: graphLegendConfig,
-      plots: [{
-        id: 'noise',
-        type: 'area',
-        options: {
-          legendInfo: () => ({
-            label: 'Noise',
-            unit: 'Amp',
-          }),
-          color: 'green',
-          inverseColor: 'blue',
-          useMinAsBase: false,
-          width: 0.5,
-          fillOpacity: 0.3,
-          dataAccessor: d => d.noise,
+      plots: [
+        {
+          id: 'noise',
+          type: 'area',
+          options: {
+            legendInfo: () => ({
+              label: 'Noise',
+              unit: 'Amp',
+            }),
+            color: 'green',
+            inverseColor: 'blue',
+            useMinAsBase: false,
+            width: 0.5,
+            fillOpacity: 0.3,
+            dataAccessor: d => d.noise,
+          },
         },
-      }, {
-        id: 'sin',
-        type: 'line',
-        options: {
-          color: 'purple',
-          width: 3,
-          legendInfo: () => ({
-            label: 'SIN',
-            unit: 'W',
-          }),
-          dataAccessor: d => d.sin,
+        {
+          id: 'sin',
+          type: 'line',
+          options: {
+            color: 'purple',
+            width: 3,
+            legendInfo: () => ({
+              label: 'SIN',
+              unit: 'W',
+            }),
+            dataAccessor: d => d.sin,
+          },
         },
-      }],
+      ],
     }),
     new StackedTrack(6, {
       label: 'Formation',
@@ -184,7 +192,10 @@ export default (delayLoading = false) => {
       label: 'Color Strip',
       abbr: 'CS',
       data: exampleMajorityPredictionData,
-      legendConfig: LegendHelper.basicVerticalLabel('Majority Prediction', 'Pred'),
+      legendConfig: LegendHelper.basicVerticalLabel(
+        'Majority Prediction',
+        'Pred',
+      ),
     }),
   ];
 
@@ -194,9 +205,10 @@ export default (delayLoading = false) => {
       if (track.options.data) {
         const delay = 1000 + Math.random() * 1000;
         const data = track.options.data;
-        track.options.data = () => new Promise(resolve => {
-          setTimeout(() => resolve(data), delay);
-        });
+        track.options.data = () =>
+          new Promise(resolve => {
+            setTimeout(() => resolve(data), delay);
+          });
       }
     });
   }

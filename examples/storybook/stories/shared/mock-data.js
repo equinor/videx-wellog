@@ -8,7 +8,10 @@ export const ex2 = {
   noise2: range(domain[0], domain[1]).map(d => [d, Math.random() * 20]),
 };
 
-const sin = range(domain[0], domain[1]).map(d => [d, Math.sin((d / 2000) * Math.PI * 2 * 20) * 25 + 50]);
+const sin = range(domain[0], domain[1]).map(d => [
+  d,
+  Math.sin((d / 2000) * Math.PI * 2 * 20) * 25 + 50,
+]);
 export const ex3 = {
   sin,
   noise: sin.map(v => [v[0], v[1] * Math.random() + 35]),
@@ -16,7 +19,14 @@ export const ex3 = {
 
 // Random Formation track (position and formation id.)
 export const ex4 = async (formationLength = 10) => {
-  const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
+  const names = [
+    'Utsira Fm.',
+    'Frigg Fm.',
+    'Skade Fm.',
+    'Tor Fm.',
+    'Draupne Fm.',
+    'Hod Fm.',
+  ];
   const colors = [
     { r: 0, g: 200, b: 200 },
     { r: 2, g: 200, b: 2 },
@@ -27,9 +37,9 @@ export const ex4 = async (formationLength = 10) => {
   ];
 
   const arr = [];
-  let currentFrom = Math.random() * 1000 / formationLength;
+  let currentFrom = (Math.random() * 1000) / formationLength;
   for (let index = 1; index <= formationLength; index++) {
-    const newTo = currentFrom + Math.random() * 1500 / formationLength;
+    const newTo = currentFrom + (Math.random() * 1500) / formationLength;
 
     const formation = Math.floor(Math.random() * names.length);
     const name = `${names[formation]}`;
@@ -52,7 +62,14 @@ export const ex4_xlarge = async () => ex4(30000);
 
 // Formation track like in ex4 but with fixed position and color.
 export const ex4_fix = async () => {
-  const names = ['Utsira Fm.', 'Frigg Fm.', 'Skade Fm.', 'Tor Fm.', 'Draupne Fm.', 'Hod Fm.'];
+  const names = [
+    'Utsira Fm.',
+    'Frigg Fm.',
+    'Skade Fm.',
+    'Tor Fm.',
+    'Draupne Fm.',
+    'Hod Fm.',
+  ];
   const colors = [
     { r: 0, g: 200, b: 200 },
     { r: 2, g: 200, b: 2 },
@@ -131,7 +148,9 @@ export const ex6 = async () => {
       from: index * step,
       to: (index + 1) * step,
       value,
-      color: value ? { r: 255, g: 10, b: 219, a: 1 } : { r: 0, g: 0, b: 0, a: 0 },
+      color: value
+        ? { r: 255, g: 10, b: 219, a: 1 }
+        : { r: 0, g: 0, b: 0, a: 0 },
     };
     arr.push(area);
   }
@@ -248,8 +267,27 @@ export const exampleDistributionData = () => {
 };
 
 export const exampleDipPlotData = () => {
-  const colors = ['#228b22', '#ff4500', '#00bfff', '#8b864e', '#ee82ee', '#6a5acd', '#8b1a1a', '#ff8451', '#000000', '#a020f0'];
-  const shapes = ['ball', 'breakout', 'circle', 'square', 'tee', 'tensile', 'triangle'];
+  const colors = [
+    '#228b22',
+    '#ff4500',
+    '#00bfff',
+    '#8b864e',
+    '#ee82ee',
+    '#6a5acd',
+    '#8b1a1a',
+    '#ff8451',
+    '#000000',
+    '#a020f0',
+  ];
+  const shapes = [
+    'ball',
+    'breakout',
+    'circle',
+    'square',
+    'tee',
+    'tensile',
+    'triangle',
+  ];
 
   const data = range(0, 1000, 10).map(d => [
     d,

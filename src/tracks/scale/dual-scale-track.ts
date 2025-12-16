@@ -1,6 +1,12 @@
 import { scaleLinear } from 'd3-scale';
 import SvgTrack from '../svg-track';
-import { renderTicks, computeLabelBounds, LabelBounds, renderHorizontalTicks, computeLabelBoundsHorizontal } from './common';
+import {
+  renderTicks,
+  computeLabelBounds,
+  LabelBounds,
+  renderHorizontalTicks,
+  computeLabelBoundsHorizontal,
+} from './common';
 import ScaleHelper from '../../utils/scale-helper';
 import { DualScaleTrackOptions } from './interfaces';
 import { Scale, D3Selection, Domain } from '../../common/interfaces';
@@ -17,8 +23,8 @@ import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
  * scale-handler's setMode-function.
  */
 export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
-  xscale : Scale;
-  viewMode : number;
+  xscale: Scale;
+  viewMode: number;
   scaleHandler: InterpolatedScaleHandler;
   ticks: number[];
   labelBounds: LabelBounds;
@@ -46,14 +52,14 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   /**
    * Allow triggering of update event without parameters
    */
-  refresh() : void {
+  refresh(): void {
     this.onUpdate({ elm: this.elm, scale: this.scale });
   }
 
   /**
    * Override of onMount from base class
    */
-  onMount(trackEvent: OnMountEvent) : void {
+  onMount(trackEvent: OnMountEvent): void {
     super.onMount(trackEvent);
     this.scaleHandler = trackEvent.scaleHandler;
     this.createTicks();
@@ -62,7 +68,7 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   /**
    * Override of onRescale from base class
    */
-  onRescale(trackEvent: OnRescaleEvent) : void {
+  onRescale(trackEvent: OnRescaleEvent): void {
     super.onRescale(trackEvent);
     this.createTicks();
     if (this.legendUpdate) this.legendUpdate();
@@ -72,20 +78,21 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   /**
    * Override of onUpdate from base class
    */
-  onUpdate(trackEvent: OnUpdateEvent) : void {
+  onUpdate(trackEvent: OnUpdateEvent): void {
     super.onUpdate(trackEvent);
     const { elm } = this;
-    this.xscale.range([0, this.options.horizontal ? elm.clientHeight : elm.clientWidth]);
+    this.xscale.range([
+      0,
+      this.options.horizontal ? elm.clientHeight : elm.clientWidth,
+    ]);
     this.plot();
   }
 
   /**
    * Create scale tick intervals according to mode
    */
-  createTicks() : void {
-    const {
-      scaleHandler,
-    } = this;
+  createTicks(): void {
+    const { scaleHandler } = this;
     if (!scaleHandler) this.ticks = [];
     else this.ticks = ScaleHelper.createTicks(scaleHandler.scale).major;
   }
@@ -93,15 +100,13 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   /**
    * Create scale ruler ticks base on current mode and render
    */
-  createRuler(g: D3Selection) : void {
+  createRuler(g: D3Selection): void {
     const {
       xscale,
       scaleHandler,
       labelBounds,
       ticks,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
     const [, max] = xscale.domain();
 
@@ -112,21 +117,24 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
 
     g.selectAll('g.major-tick')
       .data(data)
-      .call(horizontal ? renderHorizontalTicks : renderTicks, xscale, labelBounds, max);
+      .call(
+        horizontal ? renderHorizontalTicks : renderTicks,
+        xscale,
+        labelBounds,
+        max,
+      );
   }
 
   /**
    * Create ticks for inverse mode
    */
-  createMeasures(g: D3Selection) : void {
+  createMeasures(g: D3Selection): void {
     const {
       xscale,
       scaleHandler,
       labelBounds,
       viewMode,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
 
     const [, max] = xscale.domain();
@@ -149,27 +157,32 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
 
     g.selectAll('g.major-tick')
       .data(data)
-      .call(horizontal ? renderHorizontalTicks : renderTicks, xscale, labelBounds, max);
+      .call(
+        horizontal ? renderHorizontalTicks : renderTicks,
+        xscale,
+        labelBounds,
+        max,
+      );
   }
 
   /**
    * Plot the scale track
    */
-  plot() : void {
+  plot(): void {
     const {
       createRuler,
       createMeasures,
       plotGroup: g,
       isMaster,
       xscale,
-      options: {
-        horizontal,
-      },
+      options: { horizontal },
     } = this;
 
     if (!g) return;
 
-    this.labelBounds = horizontal ? computeLabelBoundsHorizontal(xscale) : computeLabelBounds(xscale);
+    this.labelBounds = horizontal
+      ? computeLabelBoundsHorizontal(xscale)
+      : computeLabelBounds(xscale);
 
     const modeClass = isMaster ? 'master-scale' : 'slave-scale';
     g.attr('class', `scale-track ${modeClass}`);
@@ -184,23 +197,19 @@ export default class DualScaleTrack extends SvgTrack<DualScaleTrackOptions> {
   /**
    * Getter for determining if the track is in master mode or not
    */
-  get isMaster() : boolean {
-    const {
-      viewMode,
-      scaleHandler,
-    } = this;
+  get isMaster(): boolean {
+    const { viewMode, scaleHandler } = this;
     if (!scaleHandler) return false;
-    return scaleHandler.mode === undefined ? true : viewMode === scaleHandler.mode;
+    return scaleHandler.mode === undefined
+      ? true
+      : viewMode === scaleHandler.mode;
   }
 
   /**
    * Getter for scale extent according to mode
    */
-  get extent() : Domain {
-    const {
-      viewMode,
-      scaleHandler,
-    } = this;
+  get extent(): Domain {
+    const { viewMode, scaleHandler } = this;
 
     if (scaleHandler?.mode === viewMode) {
       return scaleHandler?.scale?.domain();

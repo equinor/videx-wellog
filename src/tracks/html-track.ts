@@ -13,21 +13,20 @@ export default class HtmlTrack extends Track<TrackOptions> {
   /**
    * Override to add HMTL container for plotting track data
    */
-  onMount(trackEvent: OnMountEvent) : void {
+  onMount(trackEvent: OnMountEvent): void {
     super.onMount(trackEvent);
-    this.container = select(trackEvent.elm).append('div').style('position', 'relative');
+    this.container = select(trackEvent.elm)
+      .append('div')
+      .style('position', 'relative');
   }
 
   /**
    * Override to scale HTML container on resize
    */
-  onUpdate(trackEvent: OnUpdateEvent) : void {
+  onUpdate(trackEvent: OnUpdateEvent): void {
     super.onUpdate(trackEvent);
 
-    const {
-      container,
-      elm,
-    } = this;
+    const { container, elm } = this;
     if (container) {
       setStyles(container, {
         width: `${elm.clientWidth}px`,

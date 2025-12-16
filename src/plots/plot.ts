@@ -6,7 +6,9 @@ import { DataHelper } from '../utils';
 /**
  * Abstract base class for plots
  */
-export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOptions> {
+export default abstract class Plot<
+  PLOT_OPTIONS extends PlotOptions = PlotOptions,
+> {
   id: string | number;
   options: PLOT_OPTIONS;
   data: PlotData | DipPlotData | any;
@@ -21,19 +23,22 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
       ...options,
     };
     this.data = [];
-    this.scale = options.scale && typeof options.domain !== 'function' ? createScale(options.scale, options.domain || [0, 1]) : null;
+    this.scale =
+      options.scale && typeof options.domain !== 'function'
+        ? createScale(options.scale, options.domain || [0, 1])
+        : null;
     this.setRange = this.setRange.bind(this);
     this.setData = this.setData.bind(this);
   }
 
-  get offset() : number {
+  get offset(): number {
     return this.options.offset || 0;
   }
 
   /**
    * Set range of plot scale
    */
-  setRange(range: Range) : Plot {
+  setRange(range: Range): Plot {
     if (this.scale) this.scale.range(range);
     this.range = range;
     return this;
@@ -45,14 +50,25 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
    * @param scale
    * @param plots Plots on track
    */
-  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PLOT_OPTIONS>) : Plot {
+  setData(
+    data: any,
+    scale?: Scale,
+    plotOptions?: Map<string | number, PLOT_OPTIONS>,
+  ): Plot {
     let plotData = data;
-    if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
+    if (
+      this.options.dataAccessor &&
+      typeof this.options.dataAccessor === 'function'
+    ) {
       plotData = this.options.dataAccessor(data, plotOptions);
     }
     if (this.options.filterToScale && scale) {
       const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
-      plotData = DataHelper.filterData(plotData, scale.domain(), filterOverlapFactor);
+      plotData = DataHelper.filterData(
+        plotData,
+        scale.domain(),
+        filterOverlapFactor,
+      );
     }
     this.data = plotData;
     return this;
@@ -61,7 +77,7 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
   /**
    * Set option
    */
-  setOption(key: string, value: any) : Plot {
+  setOption(key: string, value: any): Plot {
     if (!this.options) {
       this.options = {} as PLOT_OPTIONS;
     }
@@ -81,7 +97,7 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
    * Set multiple options
    * @param options object containing options to set
    */
-  setOptions(options: any) : Plot {
+  setOptions(options: any): Plot {
     Object.entries(options).forEach(o => {
       this.setOption(o[0], o[1]);
     });
@@ -103,5 +119,6 @@ export default abstract class Plot<PLOT_OPTIONS extends PlotOptions = PlotOption
   /**
    * Plot function should be overridden
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {} // eslint-disable-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {}
 }

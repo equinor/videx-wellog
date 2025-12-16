@@ -20,7 +20,7 @@ export class ColorStripTrack extends WebGL2Track<ColorStripTrackOptions> {
     if (options.data) {
       const showLoader = options.showLoader ?? Boolean(loader);
 
-      if (showLoader && typeof (options.data) === 'function') {
+      if (showLoader && typeof options.data === 'function') {
         this.loadData(options.data, showLoader);
       } else {
         this.data = options.data;

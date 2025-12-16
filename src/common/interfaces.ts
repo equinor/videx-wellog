@@ -20,21 +20,21 @@ export type D3Selection = any;
  */
 export interface Scale {
   /** scale value from domain to range */
-  (v: number) : number,
+  (v: number): number;
   /** get scale's current domain */
-  domain() : Domain,
+  domain(): Domain;
   /** set scale's current domain */
-  domain(newDomain?: Domain) : Scale,
+  domain(newDomain?: Domain): Scale;
   /** get scale's current range */
-  range() : Range,
+  range(): Range;
   /** set scale's current range */
-  range(newRange?: Range) : Scale,
+  range(newRange?: Range): Scale;
   /** inverse scale range value to domain value */
-  invert(v:number) : number,
+  invert(v: number): number;
   /** get a list of ticks based on scale domain and range, and optionally desired number of ticks */
-  ticks(nTicks?: number) : number[],
+  ticks(nTicks?: number): number[];
   /** clone scale */
-  copy() : Scale,
+  copy(): Scale;
   /** Allow any other properties */
-  [propName:string]: any,
+  [propName: string]: any;
 }

@@ -3,7 +3,6 @@ import { select } from 'd3-selection';
 import { setAttrs, setStyles, setProps } from '../src/utils';
 
 describe('d3-utils', () => {
-
   it('should be able to set multiple attributes by passing an object', () => {
     const attrsObj = {
       cx: 10,

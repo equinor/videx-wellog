@@ -13,7 +13,7 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   scale2: Scale;
   data: [PlotData, PlotData];
   extent: [number, number];
-  constructor(id : string | number, options : DifferentialPlotOptions = {}) {
+  constructor(id: string | number, options: DifferentialPlotOptions = {}) {
     const opts: DifferentialPlotOptions = {
       serie1: {
         color: 'red',
@@ -33,11 +33,12 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
 
     const { serie1, serie2 } = options;
 
-    if (options.scale && options.domain && typeof options.domain !== 'function') {
-      this.scale = createScale(
-        options.scale,
-        options.domain || [0, 1],
-      );
+    if (
+      options.scale &&
+      options.domain &&
+      typeof options.domain !== 'function'
+    ) {
+      this.scale = createScale(options.scale, options.domain || [0, 1]);
       this.scale1 = this.scale;
       this.scale2 = this.scale;
     }
@@ -55,14 +56,23 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
     }
   }
 
-  setData(data : any, scale?: Scale, plotOptions?: Map<string | number, PlotOptions>) : DifferentialPlot {
+  setData(
+    data: any,
+    scale?: Scale,
+    plotOptions?: Map<string | number, PlotOptions>,
+  ): DifferentialPlot {
     let diffplotData = data;
-    if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
+    if (
+      this.options.dataAccessor &&
+      typeof this.options.dataAccessor === 'function'
+    ) {
       diffplotData = this.options.dataAccessor(data, plotOptions);
     }
     if (this.options.filterToScale && scale) {
       const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
-      diffplotData = diffplotData.map((d: PlotData) => DataHelper.filterData(d, scale.domain(), filterOverlapFactor));
+      diffplotData = diffplotData.map((d: PlotData) =>
+        DataHelper.filterData(d, scale.domain(), filterOverlapFactor),
+      );
     }
     this.data = diffplotData;
     return this;
@@ -71,7 +81,7 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   /**
    * Override of base to support multiple scales
    */
-  setRange(range: Range) : DifferentialPlot {
+  setRange(range: Range): DifferentialPlot {
     if (this.scale1) this.scale1.range(range);
     if (this.scale2) this.scale2.range(range);
     this.range = range;
@@ -81,7 +91,7 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   /**
    * Update plot options
    */
-  setOption(key: string, value: any) : DifferentialPlot {
+  setOption(key: string, value: any): DifferentialPlot {
     if (!this.options) {
       this.options = {};
     }
@@ -125,26 +135,17 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
 
     if (typeof options.domain === 'function') {
       const domain = options.domain(data);
-      this.scale = createScale(
-        options.scale || graphOptions.scale,
-        domain,
-      );
+      this.scale = createScale(options.scale || graphOptions.scale, domain);
       this.scale1 = this.scale;
       this.scale2 = this.scale;
     }
     if (typeof options.serie1.domain === 'function') {
       const domain = options.serie1.domain(data);
-      this.scale1 = createScale(
-        options.scale || graphOptions.scale,
-        domain,
-      );
+      this.scale1 = createScale(options.scale || graphOptions.scale, domain);
     }
     if (typeof options.serie2.domain === 'function') {
       const domain = options.serie2.domain(data);
-      this.scale2 = createScale(
-        options.scale || graphOptions.scale,
-        domain,
-      );
+      this.scale2 = createScale(options.scale || graphOptions.scale, domain);
     }
 
     if (range) {
@@ -156,7 +157,7 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   /**
    * Renders differential plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
     const {
       scale1: xscale1,
       scale2: xscale2,
@@ -181,12 +182,16 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
       const a = plotdata[0][i];
       const b = plotdata[1][i];
       if (a) {
-        scaleddata[0][i] = def(a[1], a[0]) ? [scale(a[0]), xscale1(a[1])] : [scale(a[0]), a[1]];
+        scaleddata[0][i] = def(a[1], a[0])
+          ? [scale(a[0]), xscale1(a[1])]
+          : [scale(a[0]), a[1]];
         if (scaleddata[0][i][1] < min) min = scaleddata[0][i][1];
         if (scaleddata[0][i][1] > max) max = scaleddata[0][i][1];
       }
       if (b) {
-        scaleddata[1][i] = def(b[1], b[0]) ? [scale(b[0]), xscale2(b[1])] : [scale(b[0]), b[1]];
+        scaleddata[1][i] = def(b[1], b[0])
+          ? [scale(b[0]), xscale2(b[1])]
+          : [scale(b[0]), b[1]];
         if (scaleddata[1][i][1] < min) min = scaleddata[1][i][1];
         if (scaleddata[1][i][1] > max) max = scaleddata[1][i][1];
       }

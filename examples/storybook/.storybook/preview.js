@@ -13,7 +13,7 @@ const preview = {
     options: {
       storySort: {
         order: ['Plot types', 'Track types', 'Log Controller', 'Log Viewer'],
-      }
+      },
     },
   },
 };

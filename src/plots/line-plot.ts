@@ -10,12 +10,8 @@ export default class LinePlot extends Plot<LinePlotOptions> {
   /**
    * Renders line plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
@@ -69,7 +65,8 @@ export default class LinePlot extends Plot<LinePlotOptions> {
         .forEach(d => {
           ctx.beginPath();
 
-          if (options.horizontal) ctx.arc(scale(d[0]), xscale(d[1]), 1, 0, arcL);
+          if (options.horizontal)
+            ctx.arc(scale(d[0]), xscale(d[1]), 1, 0, arcL);
           else ctx.arc(xscale(d[1]), scale(d[0]), 1, 0, arcL);
 
           ctx.fill();
@@ -82,14 +79,13 @@ export default class LinePlot extends Plot<LinePlotOptions> {
   /**
    * Renders segments outside of domain.
    */
-  plotWrapped(ctx: CanvasRenderingContext2D, lineFunction: Line<[number, number]>) {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plotWrapped(
+    ctx: CanvasRenderingContext2D,
+    lineFunction: Line<[number, number]>,
+  ) {
+    const { scale: xscale, data: plotdata, options } = this;
 
-    const isLogarithmic = (options.scale === 'log');
+    const isLogarithmic = options.scale === 'log';
 
     // Return if plot has no points, or is horizontal
     // TODO: Add support for horizontal plots?
@@ -102,20 +98,24 @@ export default class LinePlot extends Plot<LinePlotOptions> {
     /** Helper function for plotting segment with given displacement. */
     const plotSegment = (segment: PlotData, disp: number) => {
       ctx.beginPath();
-      lineFunction(segment.map(
-        ([y, x]) => (isLogarithmic ? [y, 10 ** (Math.log10(x) + disp)] : [y, x + disp]),
-      ));
+      lineFunction(
+        segment.map(([y, x]) =>
+          isLogarithmic ? [y, 10 ** (Math.log10(x) + disp)] : [y, x + disp],
+        ),
+      );
       ctx.stroke();
     };
 
-    let [min, max] = isLogarithmic ? xscale.domain().map(Math.log10) : xscale.domain();
+    let [min, max] = isLogarithmic
+      ? xscale.domain().map(Math.log10)
+      : xscale.domain();
 
     // Flip to support inverted ranges
     if (min > max) {
       [min, max] = [max, min];
     }
 
-    const range = (max - min);
+    const range = max - min;
 
     let prev: Tuplet<number>;
     let segment: PlotData = [];
@@ -134,7 +134,7 @@ export default class LinePlot extends Plot<LinePlotOptions> {
 
       const curX = isLogarithmic ? Math.log10(cur[1]) : cur[1];
       if (curX > max || curX < min) {
-        segmentDisp = (curX > max) ? -range : range;
+        segmentDisp = curX > max ? -range : range;
         if (segment.length === 0 && prev) {
           segment.push(prev);
         }

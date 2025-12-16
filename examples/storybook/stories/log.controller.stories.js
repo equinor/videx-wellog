@@ -1,7 +1,5 @@
 /* eslint-disable import/no-relative-packages */
-import {
-  LogController, ScaleTrack, GraphTrack,
-} from '../../../src';
+import { LogController, ScaleTrack, GraphTrack } from '../../../src';
 
 import createTracks from './shared/tracks';
 
@@ -10,7 +8,7 @@ export default {
 };
 
 export const logControllerWithArgs = {
-  render: (args) => {
+  render: args => {
     const div = document.createElement('div');
     div.style.height = '95vh';
 
@@ -43,9 +41,7 @@ export const logControllerWithArgs = {
     // Using requestAnimationFrame to ensure that the div is attached
     // to the DOM before calling init
     requestAnimationFrame(() => {
-      logController
-        .init(div)
-        .setTracks(tracks);
+      logController.init(div).setTracks(tracks);
       if (args.animation) {
         createAnimationStep()();
       }
@@ -95,9 +91,7 @@ export const logControllerHorizontal = () => {
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    logController
-      .init(div)
-      .setTracks(tracks);
+    logController.init(div).setTracks(tracks);
 
     createAnimationStep()();
   });
@@ -120,16 +114,9 @@ export const logControllerLegend = () => {
     logController
       .init(div)
       .setTracks(tracks)
-      .zoomTo(
-        [900, 960],
-        1000,
-        () => logController.zoomTo(
-          [200, 400],
-          2000,
-          () => logController.zoomTo(
-            [400, 600],
-            1000,
-          ),
+      .zoomTo([900, 960], 1000, () =>
+        logController.zoomTo([200, 400], 2000, () =>
+          logController.zoomTo([400, 600], 1000),
         ),
       );
   });
@@ -146,13 +133,16 @@ export const logControllerMultipleTracks = () => {
   const scaleTrack = new ScaleTrack('scale', { maxWidth: 60 });
   const graphTrack1 = new GraphTrack('graph1', { width: 2 });
   const graphTrack2 = new GraphTrack('graph2');
-  const logController = LogController.basic().setTracks(scaleTrack, graphTrack1, graphTrack2);
+  const logController = LogController.basic().setTracks(
+    scaleTrack,
+    graphTrack1,
+    graphTrack2,
+  );
 
   // Using requestAnimationFrame to ensure that the div is attached
   // to the DOM before calling init
   requestAnimationFrame(() => {
-    logController.init(div)
-      .zoomTo([900, 960], 1000);
+    logController.init(div).zoomTo([900, 960], 1000);
   });
 
   return div;

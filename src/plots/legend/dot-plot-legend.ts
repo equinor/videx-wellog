@@ -13,7 +13,7 @@ export default function renderDotPlotLegend(
   bounds: LegendBounds,
   legendInfo: LegendInfo,
   plot: DotPlot,
-) : void {
+): void {
   const { top, left, width } = bounds;
   const r = Math.min(5, (left + width) * 0.04);
   const cx1 = left + 4 + r;
@@ -44,12 +44,5 @@ export default function renderDotPlotLegend(
     },
   });
 
-  renderTextLabels(
-    g,
-    bounds,
-    label,
-    unit,
-    scale.domain(),
-    options.color,
-  );
+  renderTextLabels(g, bounds, label, unit, scale.domain(), options.color);
 }

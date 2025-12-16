@@ -6,16 +6,16 @@ export interface DistributionTrackOptions extends TrackOptions {
    * returning data. The plots will need to have a data accessor function defined, that
    * can pick the data it needs from this value.
    */
-  data?: Promise<any> | Function | any,
+  data?: Promise<any> | Function | any;
 
   /** Whether or not to show the loader (if configured) */
-  showLoader?: boolean,
+  showLoader?: boolean;
 
   /** Orientation of track. Default is false or unset (vertical). */
-  horizontal?: boolean,
+  horizontal?: boolean;
 
   /** The height to use for discrete values. */
-  discreteHeight?: number,
+  discreteHeight?: number;
 
   /**
    * Specifies the type of interpolation to use when rendering the graph.
@@ -23,13 +23,13 @@ export interface DistributionTrackOptions extends TrackOptions {
    * - 1: Nearest - Jumps to the nearest data point without smoothing.
    * - 2: Discrete - Displays distinct steps with adaptive height defined by `discreteHeight`.
    */
-  interpolationType?: number,
+  interpolationType?: number;
 
   /** Number of legend entries to display in the track. */
-  legendEntries?: number,
+  legendEntries?: number;
 
   /** List of distribution components. */
-  components?: DistributionComponents,
+  components?: DistributionComponents;
 }
 
 /** Represents a collection of distribution components. */
@@ -44,7 +44,7 @@ export interface DistributionComponents {
 
 export interface DistributionData {
   /** Depth of distribution. */
-  depth: number,
+  depth: number;
 
   /** Composition of the distribution. */
   composition: CompositionEntry[];

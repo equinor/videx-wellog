@@ -11,7 +11,15 @@ import {
   InterpolatedScaleHandler,
 } from '../../../src';
 
-import { ex3, ex4, ex4_large, ex4_fix, ex7, ex7_shortName, exampleDistributionData } from './shared/mock-data';
+import {
+  ex3,
+  ex4,
+  ex4_large,
+  ex4_fix,
+  ex7,
+  ex7_shortName,
+  exampleDistributionData,
+} from './shared/mock-data';
 
 export default { title: 'Track types' };
 
@@ -34,7 +42,7 @@ export const graphTrack = () => {
 };
 
 export const graphTrackPiecewise = {
-  render: (args) => {
+  render: args => {
     const div = document.createElement('div');
     const width = `${args.width}px`;
     div.style.height = '500px';
@@ -84,23 +92,26 @@ export const graphTrackMultiplePlots = () => {
 
   const track = new GraphTrack('id', {
     data: ex3,
-    plots: [{
-      id: 'noise',
-      type: 'area',
-      options: {
-        color: 'green',
-        fillOpacity: 0.3,
-        dataAccessor: d => d.noise,
+    plots: [
+      {
+        id: 'noise',
+        type: 'area',
+        options: {
+          color: 'green',
+          fillOpacity: 0.3,
+          dataAccessor: d => d.noise,
+        },
       },
-    }, {
-      id: 'sin',
-      type: 'line',
-      options: {
-        color: 'purple',
-        width: 3,
-        dataAccessor: d => d.sin,
+      {
+        id: 'sin',
+        type: 'line',
+        options: {
+          color: 'purple',
+          width: 3,
+          dataAccessor: d => d.sin,
+        },
       },
-    }],
+    ],
   });
 
   // Using requestAnimationFrame to ensure that the div is attached
@@ -122,7 +133,10 @@ export const graphTrackSinglePlot = () => {
   const track = new GraphTrack('id', {
     scale: 'linear',
     domain: [0, 100],
-    data: [[0, 0], [100, 100]],
+    data: [
+      [0, 0],
+      [100, 100],
+    ],
     plots: [
       {
         id: 'test',
@@ -155,7 +169,10 @@ export const dualScaleTrack = () => {
     forwardInterpolatedDomain: domain => domain.map(v => forward(v)),
     reverseInterpolatedDomain: domain => domain.map(v => reverse(v)),
   };
-  const scaleHandler = new InterpolatedScaleHandler(interpolator, [-10, 100]).range([0, 500]);
+  const scaleHandler = new InterpolatedScaleHandler(
+    interpolator,
+    [-10, 100],
+  ).range([0, 500]);
 
   const track = new DualScaleTrack('id');
 
@@ -187,7 +204,7 @@ export const scaleTrack = () => {
 };
 
 export const stackedTrack = {
-  render: (args) => {
+  render: args => {
     const div = document.createElement('div');
     div.style.height = '700px';
     div.style.width = '150px';

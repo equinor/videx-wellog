@@ -1,10 +1,19 @@
 import { select, Selection } from 'd3-selection';
 import Track from './track';
 import { setProps } from '../utils';
-import { TrackOptions, OnMountEvent, OnUpdateEvent, OnRescaleEvent } from './interfaces';
+import {
+  TrackOptions,
+  OnMountEvent,
+  OnUpdateEvent,
+  OnRescaleEvent,
+} from './interfaces';
 
 /** Compile a shader from source */
-function compileShader(gl: WebGL2RenderingContext, source: string, type: number): WebGLShader {
+function compileShader(
+  gl: WebGL2RenderingContext,
+  source: string,
+  type: number,
+): WebGLShader {
   const shader = gl.createShader(type);
   if (!shader) throw new Error('Could not create shader');
 
@@ -27,10 +36,14 @@ function setupBuffer(gl: WebGL2RenderingContext, program: WebGLProgram) {
 
   // Create rect spanning full canvas
   const vertices = new Float32Array([
-    -1.0, -1.0, // Bottom-left
-    1.0, -1.0, // Bottom-right
-    -1.0, 1.0, // Top-left
-    1.0, 1.0, // Top-right
+    -1.0,
+    -1.0, // Bottom-left
+    1.0,
+    -1.0, // Bottom-right
+    -1.0,
+    1.0, // Top-left
+    1.0,
+    1.0, // Top-right
   ]);
   gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
 
@@ -41,7 +54,9 @@ function setupBuffer(gl: WebGL2RenderingContext, program: WebGLProgram) {
 }
 
 /** Base track for WebGL2 rendering. */
-export default abstract class WebGL2Track<TOptions extends TrackOptions> extends Track<TOptions> {
+export default abstract class WebGL2Track<
+  TOptions extends TrackOptions,
+> extends Track<TOptions> {
   canvas: Selection<HTMLCanvasElement, unknown, null, undefined>;
   gl: WebGL2RenderingContext;
 
@@ -52,20 +67,28 @@ export default abstract class WebGL2Track<TOptions extends TrackOptions> extends
   protected abstract fragmentShaderSource: string;
 
   /** Override to add canvas element for WebGL2 rendering. */
-  onMount(trackEvent: OnMountEvent) : void {
+  onMount(trackEvent: OnMountEvent): void {
     super.onMount(trackEvent);
 
     this.canvas = select(trackEvent.elm)
       .append('canvas')
       .style('position', 'absolute');
 
-    const gl = this.gl = this.canvas.node().getContext('webgl2');
+    const gl = (this.gl = this.canvas.node().getContext('webgl2'));
     if (!gl) return;
 
-    const vertexShader = compileShader(gl, this.vertexShaderSource, gl.VERTEX_SHADER);
-    const fragmentShader = compileShader(gl, this.fragmentShaderSource, gl.FRAGMENT_SHADER);
+    const vertexShader = compileShader(
+      gl,
+      this.vertexShaderSource,
+      gl.VERTEX_SHADER,
+    );
+    const fragmentShader = compileShader(
+      gl,
+      this.fragmentShaderSource,
+      gl.FRAGMENT_SHADER,
+    );
 
-    const program = this.program = gl.createProgram();
+    const program = (this.program = gl.createProgram());
     if (!program) return;
 
     // Attach shaders and link program

@@ -7,23 +7,26 @@ import { Plot } from '../../plots';
  * Config object used to define a plot in the graph track options
  */
 export interface PlotConfig {
-  id: string | number,
-  type: string,
-  options?: AnyPlotOptions,
+  id: string | number;
+  type: string;
+  options?: AnyPlotOptions;
 }
 
-export type PlotCreatorFunction = (config: PlotConfig, trackScale: Scale) => Plot;
+export type PlotCreatorFunction = (
+  config: PlotConfig,
+  trackScale: Scale,
+) => Plot;
 
 /**
  * Factory object for creating an instance of a plot given a type
  */
 export interface PlotFactory {
-  [propName: string]: PlotCreatorFunction,
+  [propName: string]: PlotCreatorFunction;
 }
 
 interface PaddingConfig {
-  size: number,
-  hideExcessData: boolean,
+  size: number;
+  hideExcessData: boolean;
 }
 
 /**
@@ -33,56 +36,56 @@ export interface GraphTrackOptions extends TrackOptions {
   /**
    * Collection of plot config objects
    */
-  plots?: PlotConfig[],
+  plots?: PlotConfig[];
   /**
    * Data for all plots in the track. May be of any type or a function or promise
    * returning data. The plots will need to have a data accessor function defined, that
    * can pick the data it needs from this value.
    */
-  data?: Promise<any> | Function | any,
+  data?: Promise<any> | Function | any;
   /**
    * Whether or not to show the loader or not (if configured)
    */
-  showLoader?: boolean,
+  showLoader?: boolean;
   /**
    * Scale type to use. This scale applies to all plots unless the plot config has its
    * own scale and domain set. Can be 'linear' or 'log'.
    */
-  scale?: string,
+  scale?: string;
   /**
    * Domain to use for the graph data range
    */
-  domain?: Domain,
+  domain?: Domain;
   /**
    * Determines if the legend should be clickable to toggle plots on/off when used within a
    * LogController with graphLegendConfig enabled. Default is true.
    */
-  togglePlotFromLegend?: boolean,
+  togglePlotFromLegend?: boolean;
   /**
    * Plot factory to use. If using custom plot types, you need to pass an extended/custom plot
    * factory that knows how to create an instance of plot types which are not part of the libs
    * standard plot types.
    */
-  plotFactory?: PlotFactory,
+  plotFactory?: PlotFactory;
   /**
    * An optional function to transform the track data before being passed to the plots. This
    * is typically used to downsample data at low zoom levels.
    */
-  transform?: (data:any, scale: Scale) => Promise<any>,
+  transform?: (data: any, scale: Scale) => Promise<any>;
   /**
    * Set to true to always run data transform function. By default (false), transforms will only run
    * if the domain (zoom level) changes.
    */
-  alwaysTransform?: boolean,
+  alwaysTransform?: boolean;
   /**
    * Option to add spacing around the track, for when information may extend beyond the track itself,
    * for example stat dip tail that defines aziumuth
    */
-  padding?: PaddingConfig,
+  padding?: PaddingConfig;
   /**
    * Option to only use major ticks in the graph track
    */
-  majorTicksOnly?: boolean,
+  majorTicksOnly?: boolean;
 
-  forceDataUpdateOnToggle?: boolean,
+  forceDataUpdateOnToggle?: boolean;
 }

@@ -3,7 +3,12 @@ import { select, Selection } from 'd3-selection';
 import { clamp } from '@equinor/videx-math';
 import SvgTrack from '../svg-track';
 import { getContrastYIQ, setAttrs, setProps } from '../../utils';
-import { StackedTrackOptions, AreaData, TransformedAreaData, StackedTrackLabelOptions } from './interfaces';
+import {
+  StackedTrackOptions,
+  AreaData,
+  TransformedAreaData,
+  StackedTrackLabelOptions,
+} from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
 
 /**
@@ -31,12 +36,15 @@ function plotLabel(
   g.select('g.label').remove();
 
   // Restrict fontSize to the smallest of width*hRatio and height*vRatio
-  let fontSize = Math.min(width * horizontalScaleRatio, height * verticalScaleRatio);
+  let fontSize = Math.min(
+    width * horizontalScaleRatio,
+    height * verticalScaleRatio,
+  );
 
   // Clamp to ensure fontSize remains readable
   fontSize = clamp(fontSize, 8, 18);
 
-  if ((fontSize + 2) > height || (fontSize + 2) > width) {
+  if (fontSize + 2 > height || fontSize + 2 > width) {
     // Disregard any small areas that cannot display a single letter.
     return;
   }
@@ -56,10 +64,11 @@ function plotLabel(
   // Because 'alignment-baseline: middle' is not portable,
   // we compute our own label offset so that it will rotate from the text middle
   // instead of the text baseline.
-  const rad_angle = angle * Math.PI / 180;
+  const rad_angle = (angle * Math.PI) / 180;
 
   const labelTransform = `translate(${labelX},${labelY})rotate(${angle})`;
-  const labelGroup = g.append('g')
+  const labelGroup = g
+    .append('g')
     .attr('class', 'label')
     .attr('transform', labelTransform);
   const labelBg = labelGroup.append('rect');
@@ -83,8 +92,12 @@ function plotLabel(
   // Computes the with and height of the surrounding rectangle of the rotated label.
   // Note that the label is enlarged by 2 px
   const label_bbox = label.node().getBBox();
-  const rot_label_width = Math.abs(Math.cos(rad_angle) * (label_bbox.width + 2)) + Math.abs(Math.sin(rad_angle) * (label_bbox.height + 2));
-  const rot_label_height = Math.abs(Math.cos(rad_angle) * (label_bbox.height + 2)) + Math.abs(Math.sin(rad_angle) * (label_bbox.width + 2));
+  const rot_label_width =
+    Math.abs(Math.cos(rad_angle) * (label_bbox.width + 2)) +
+    Math.abs(Math.sin(rad_angle) * (label_bbox.height + 2));
+  const rot_label_height =
+    Math.abs(Math.cos(rad_angle) * (label_bbox.height + 2)) +
+    Math.abs(Math.sin(rad_angle) * (label_bbox.width + 2));
   if (rot_label_width > width || rot_label_height > height) {
     labelGroup.remove();
   } else {
@@ -116,7 +129,10 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
   xscale: ScaleLinear<number, number>;
 
   constructor(id: string | number, options) {
-    const labelOptions = { ...defaultLabelOptions, ...(options.labelOptions ?? {}) };
+    const labelOptions = {
+      ...defaultLabelOptions,
+      ...(options.labelOptions ?? {}),
+    };
     delete options.labelOptions;
     super(id, { ...defaultOptions, labelOptions, ...options });
   }
@@ -142,12 +158,14 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
           for (let index = 1; index < data.length; index++) {
             const currentArea = data[index];
             const previousArea = data[index - 1];
-            if (previousArea.name === currentArea.name
-              && previousArea.color.r === currentArea.color.r
-              && previousArea.color.g === currentArea.color.g
-              && previousArea.color.b === currentArea.color.b
-              && previousArea.color.a === currentArea.color.a
-              && previousArea.to === currentArea.from) {
+            if (
+              previousArea.name === currentArea.name &&
+              previousArea.color.r === currentArea.color.r &&
+              previousArea.color.g === currentArea.color.g &&
+              previousArea.color.b === currentArea.color.b &&
+              previousArea.color.a === currentArea.color.a &&
+              previousArea.to === currentArea.from
+            ) {
               // Merge similar area with previous entry
               previousArea.to = currentArea.to;
               data.splice(index, 1); // Remove the current element after merging
@@ -190,13 +208,7 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
    * Override plot from base class. Plots track data.
    */
   plot() {
-    const {
-      plotGroup: g,
-      scale: yscale,
-      xscale,
-      data,
-      options,
-    } = this;
+    const { plotGroup: g, scale: yscale, xscale, data, options } = this;
 
     if (!g) return;
 
@@ -220,8 +232,8 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
         };
         const lastIndex = areaData.length - 1;
         if (
-          lastIndex >= 0
-          && (transformedData.yTo - areaData[lastIndex].yFrom) < 0.5
+          lastIndex >= 0 &&
+          transformedData.yTo - areaData[lastIndex].yFrom < 0.5
         ) {
           // do not make area smaller than 0.5px
           areaData[lastIndex].yTo = transformedData.yTo;
@@ -231,11 +243,17 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
         }
       });
 
-    const selection = g.selectAll('g.area').data(areaData, (d: TransformedAreaData) => d.name);
+    const selection = g
+      .selectAll('g.area')
+      .data(areaData, (d: TransformedAreaData) => d.name);
 
-    const horizontalTransform = (d: TransformedAreaData) => `translate(${d.yFrom}, 0)`;
-    const verticalTransform = (d: TransformedAreaData) => `translate(0, ${d.yFrom})`;
-    const transform = options.horizontal ? horizontalTransform : verticalTransform;
+    const horizontalTransform = (d: TransformedAreaData) =>
+      `translate(${d.yFrom}, 0)`;
+    const verticalTransform = (d: TransformedAreaData) =>
+      `translate(0, ${d.yFrom})`;
+    const transform = options.horizontal
+      ? horizontalTransform
+      : verticalTransform;
 
     selection.attr('transform', transform);
 
@@ -259,7 +277,9 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
 
     setAttrs(selection.select('rect'), rectGeom);
 
-    const newAreas = selection.enter().append('g')
+    const newAreas = selection
+      .enter()
+      .append('g')
       .classed('area', true)
       .attr('transform', transform);
 
@@ -272,45 +292,100 @@ export class StackedTrack extends SvgTrack<StackedTrackOptions> {
       };
 
       const sc25 = xscale(0.25);
-      const sc50 = xscale(0.50);
+      const sc50 = xscale(0.5);
       const sc75 = xscale(0.75);
       const horizontalLineData = [
-        { className: 'line-top', x1: () => 0, x2: () => 0, y1: () => sc25, y2: () => sc75 },
-        { className: 'line-bottom', x1: (d) => d.yTo - d.yFrom, x2: (d) => d.yTo - d.yFrom, y1: () => sc25, y2: () => sc75 },
-        { className: 'line-middle', x1: () => 0, x2: (d) => d.yTo - d.yFrom, y1: () => sc50, y2: () => sc50 },
+        {
+          className: 'line-top',
+          x1: () => 0,
+          x2: () => 0,
+          y1: () => sc25,
+          y2: () => sc75,
+        },
+        {
+          className: 'line-bottom',
+          x1: d => d.yTo - d.yFrom,
+          x2: d => d.yTo - d.yFrom,
+          y1: () => sc25,
+          y2: () => sc75,
+        },
+        {
+          className: 'line-middle',
+          x1: () => 0,
+          x2: d => d.yTo - d.yFrom,
+          y1: () => sc50,
+          y2: () => sc50,
+        },
       ];
       const verticalLineData = [
-        { className: 'line-top', x1: () => sc25, x2: () => sc75, y1: () => 0, y2: () => 0 },
-        { className: 'line-bottom', x1: () => sc25, x2: () => sc75, y1: (d) => d.yTo - d.yFrom, y2: (d) => d.yTo - d.yFrom },
-        { className: 'line-middle', x1: () => sc50, x2: () => sc50, y1: () => 0, y2: (d) => d.yTo - d.yFrom },
+        {
+          className: 'line-top',
+          x1: () => sc25,
+          x2: () => sc75,
+          y1: () => 0,
+          y2: () => 0,
+        },
+        {
+          className: 'line-bottom',
+          x1: () => sc25,
+          x2: () => sc75,
+          y1: d => d.yTo - d.yFrom,
+          y2: d => d.yTo - d.yFrom,
+        },
+        {
+          className: 'line-middle',
+          x1: () => sc50,
+          x2: () => sc50,
+          y1: () => 0,
+          y2: d => d.yTo - d.yFrom,
+        },
       ];
-      const lineData = options.horizontal ? horizontalLineData : verticalLineData;
+      const lineData = options.horizontal
+        ? horizontalLineData
+        : verticalLineData;
 
-      lineData.forEach((l: { className: any; x1: any; y1: any; x2: any; y2: any; }) => {
-        const { className, x1, y1, x2, y2 } = l;
-        setAttrs(
-          selection.select(`line.${className}`),
-          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d) }),
-        );
-        const line = newAreas.append('line');
-        setAttrs(
-          line,
-          (d: TransformedAreaData) => ({ x1: x1(d), y1: y1(d), x2: x2(d), y2: y2(d), class: `${className}`, ...lineAttrs }),
-        );
-      });
+      lineData.forEach(
+        (l: { className: any; x1: any; y1: any; x2: any; y2: any }) => {
+          const { className, x1, y1, x2, y2 } = l;
+          setAttrs(
+            selection.select(`line.${className}`),
+            (d: TransformedAreaData) => ({
+              x1: x1(d),
+              y1: y1(d),
+              x2: x2(d),
+              y2: y2(d),
+            }),
+          );
+          const line = newAreas.append('line');
+          setAttrs(line, (d: TransformedAreaData) => ({
+            x1: x1(d),
+            y1: y1(d),
+            x2: x2(d),
+            y2: y2(d),
+            class: `${className}`,
+            ...lineAttrs,
+          }));
+        },
+      );
     }
 
     if (options.showLabels !== false) {
       const [, yMax] = yscale.range();
       const trackWidth = xscale(1) - xscale(0);
-      g.selectAll('g.area').each((d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
-        const fg = select(nodes[i]);
-        const offsets = [
-          Math.max(0, -d.yFrom),
-          Math.max(0, d.yTo - yMax),
-        ];
-        plotLabel(fg, d, trackWidth, offsets, options.horizontal, options.labelOptions);
-      });
+      g.selectAll('g.area').each(
+        (d: TransformedAreaData, i: number, nodes: HTMLElement[]) => {
+          const fg = select(nodes[i]);
+          const offsets = [Math.max(0, -d.yFrom), Math.max(0, d.yTo - yMax)];
+          plotLabel(
+            fg,
+            d,
+            trackWidth,
+            offsets,
+            options.horizontal,
+            options.labelOptions,
+          );
+        },
+      );
     }
     selection.exit().remove();
   }

@@ -18,7 +18,13 @@ export default class GridHelper {
    * Draws grid to canvas according to input scales and ticks dictionaries.
    * Ticks are dictionaries of major and minor number arrays
    */
-  static drawGrid(ctx: CanvasRenderingContext2D, xscale: Scale, xticks: ScaleHandlerTicks, yscale: Scale, yticks: ScaleHandlerTicks) : void {
+  static drawGrid(
+    ctx: CanvasRenderingContext2D,
+    xscale: Scale,
+    xticks: ScaleHandlerTicks,
+    yscale: Scale,
+    yticks: ScaleHandlerTicks,
+  ): void {
     const xScaleRange = xscale.range();
     const yScaleRange = yscale.range();
 
