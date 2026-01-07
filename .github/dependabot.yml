@@ -7,6 +7,11 @@ updates:
       day: monday
       time: "02:00"
       timezone: Europe/Oslo
+    groups:
+      all-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
     commit-message:
       prefix: "[github-actions] "
 
