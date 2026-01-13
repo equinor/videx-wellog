@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/equinor/videx-wellog/compare/v1.3.1...v1.3.2) (2026-01-13)
+
+
+### Bug Fixes
+
+* **110:** remove npm engine ([#395](https://github.com/equinor/videx-wellog/issues/395)) ([d9ae67a](https://github.com/equinor/videx-wellog/commit/d9ae67a3b50c8bf186ec38e774bad9c0db6e740f))
+
 ## [1.3.1](https://github.com/equinor/videx-wellog/compare/v1.3.0...v1.3.1) (2026-01-06)
 
 
