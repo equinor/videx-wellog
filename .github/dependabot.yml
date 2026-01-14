@@ -16,7 +16,9 @@ updates:
       prefix: "[github-actions] "
 
   - package-ecosystem: npm
-    directory: /
+    directories:
+      - "/"
+      - "/examples/storybook"
     schedule:
       interval: weekly
       day: monday
