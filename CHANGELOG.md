@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/equinor/videx-wellog/compare/v1.3.2...v1.3.3) (2026-01-15)
+
+
+### Bug Fixes
+
+* **npm:** bump the all-version-updates group across 2 directories with 19 updates ([#399](https://github.com/equinor/videx-wellog/issues/399)) ([3184f18](https://github.com/equinor/videx-wellog/commit/3184f18e819d035799ec20d256c8e758dcf0723b))
+
 ## [1.3.2](https://github.com/equinor/videx-wellog/compare/v1.3.1...v1.3.2) (2026-01-13)
 
 
