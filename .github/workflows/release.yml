@@ -32,7 +32,7 @@ jobs:
 
       - name: Setup Node ${{ env.NODE_VERSION }}
         if: ${{ steps.release.outputs.release_created }}
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238
         with:
           node-version: ${{ env.NODE_VERSION }}
           package-manager-cache: false
@@ -47,7 +47,7 @@ jobs:
 
       - name: Publish package
         if: ${{ steps.release.outputs.release_created }}
-        uses: JS-DevTools/npm-publish@d2fef917d9aa6e1f0ee5eac28ed023eb4921ce51
+        uses: JS-DevTools/npm-publish@4ce4bd0f334d5316473155078da1955d42148494
         with:
           token: ${{ secrets.NPM_TOKEN}}
           access: public
