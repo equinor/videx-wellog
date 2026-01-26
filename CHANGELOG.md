@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/equinor/videx-wellog/compare/v1.3.3...v1.3.4) (2026-01-26)
+
+
+### Bug Fixes
+
+* **npm:** bump lodash from 4.17.21 to 4.17.23 in /examples/storybook ([#403](https://github.com/equinor/videx-wellog/issues/403)) ([97a4cc7](https://github.com/equinor/videx-wellog/commit/97a4cc7b6265852c18f2bec5e835a16b11419c9a))
+
 ## [1.3.3](https://github.com/equinor/videx-wellog/compare/v1.3.2...v1.3.3) (2026-01-15)
 
 
