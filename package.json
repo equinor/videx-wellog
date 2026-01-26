@@ -62,7 +62,7 @@
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
     "jsdom": "^27.2.0",
-    "prettier": "3.7.4",
+    "prettier": "3.8.1",
     "rimraf": "^6.1.2",
     "rollup": "^4.52.4",
     "rollup-plugin-copy": "^3.5.0",
