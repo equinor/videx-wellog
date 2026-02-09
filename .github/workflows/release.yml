@@ -47,7 +47,7 @@ jobs:
 
       - name: Publish package
         if: ${{ steps.release.outputs.release_created }}
-        uses: JS-DevTools/npm-publish@4ce4bd0f334d5316473155078da1955d42148494
+        uses: JS-DevTools/npm-publish@0fd2f4369c5d6bcfcde6091a7c527d810b9b5c3f
         with:
           token: ${{ secrets.NPM_TOKEN}}
           access: public
