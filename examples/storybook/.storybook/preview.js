@@ -1,4 +1,3 @@
-// import '../../../src/styles.scss';
 import './styles.scss';
 
 /** @type { import('@storybook/html').Preview } */
