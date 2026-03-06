@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.5](https://github.com/equinor/videx-wellog/compare/v1.3.4...v1.3.5) (2026-03-06)
+
+
+### Bug Fixes
+
+* **430:** security updates ([#431](https://github.com/equinor/videx-wellog/issues/431)) ([49e3003](https://github.com/equinor/videx-wellog/commit/49e3003cd17441e8137baf3fae0243ab1afb1c66))
+* **npm:** bump serialize-javascript and @rollup/plugin-terser ([#433](https://github.com/equinor/videx-wellog/issues/433)) ([e12d7fb](https://github.com/equinor/videx-wellog/commit/e12d7fbcbca10b51fd1c8c5053fbfbfaae5e4130))
+
 ## [1.3.4](https://github.com/equinor/videx-wellog/compare/v1.3.3...v1.3.4) (2026-01-26)
 
 
