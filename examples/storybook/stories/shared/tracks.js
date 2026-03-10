@@ -9,6 +9,7 @@ import {
   distributionLegendConfig,
   DistributionTrack,
   ColorStripTrack,
+  MarkerTrack,
 } from '../../../../src';
 import { exampleMajorityPredictionData } from './majority-prediction-mock';
 import {
@@ -18,6 +19,7 @@ import {
   ex4_large,
   exampleDipPlotData,
   exampleDistributionData,
+  exampleFaultPickData,
 } from './mock-data';
 
 const distributionComponents = {
@@ -196,6 +198,12 @@ export default (delayLoading = false) => {
         'Majority Prediction',
         'Pred',
       ),
+    }),
+    new MarkerTrack(9, {
+      label: 'Fault Picks',
+      abbr: 'FLT',
+      data: exampleFaultPickData,
+      color: 'red',
     }),
   ];
 

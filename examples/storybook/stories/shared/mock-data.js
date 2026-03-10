@@ -1,3 +1,4 @@
+import { lerp } from '@equinor/videx-math';
 import { range } from 'd3-array';
 
 const domain = [0, 1500];
@@ -299,4 +300,15 @@ export const exampleDipPlotData = () => {
     },
   ]);
   return data;
+};
+
+export const exampleFaultPickData = () => {
+  const picks = [];
+
+  for (let i = 0; i < 3; i++) {
+    const depth = lerp(100, 900, Math.random());
+    picks.push({ depth });
+  }
+
+  return picks;
 };
