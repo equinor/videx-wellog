@@ -182,6 +182,13 @@ export default (delayLoading = false) => {
       labelRotation: -90,
       data: ex4_large,
     }),
+    new MarkerTrack(9, {
+      label: 'Fault Picks',
+      abbr: 'FP',
+      data: exampleFaultPickData,
+      color: 'red',
+      width: 1.5,
+    }),
     new DistributionTrack(7, {
       label: 'Distribution',
       abbr: 'Dst',
@@ -198,12 +205,6 @@ export default (delayLoading = false) => {
         'Majority Prediction',
         'Pred',
       ),
-    }),
-    new MarkerTrack(9, {
-      label: 'Fault Picks',
-      abbr: 'FLT',
-      data: exampleFaultPickData,
-      color: 'red',
     }),
   ];
 

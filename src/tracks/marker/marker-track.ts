@@ -5,6 +5,26 @@ import { OnMountEvent, OnUpdateEvent, OnRescaleEvent } from '../interfaces';
 import { Scale } from '../../common/interfaces';
 import { applyMajor, applyMinor } from '../../utils/guide-styles';
 
+const createVerticalLineRenderer =
+  (ctx: CanvasRenderingContext2D, scale: Scale, height: number) =>
+  (value: number) => {
+    const x = scale(value);
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, height);
+    ctx.stroke();
+  };
+
+const createHorizontalLineRenderer =
+  (ctx: CanvasRenderingContext2D, scale: Scale, width: number) =>
+  (value: number) => {
+    const y = scale(value);
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  };
+
 export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
   /** Override of onMount from base class. */
   onMount(event: OnMountEvent) {
@@ -37,58 +57,38 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
   }
 
   protected plot() {
-    const { ctx, scale, data } = this;
+    const { ctx, scale, data, options } = this;
+    const { horizontal = false } = options ?? {};
 
     if (!ctx) return;
 
     const width = ctx.canvas.clientWidth;
     const height = ctx.canvas.clientHeight;
 
+    const renderLine = horizontal
+      ? createVerticalLineRenderer(ctx, scale, height)
+      : createHorizontalLineRenderer(ctx, scale, width);
+
     ctx.save();
     ctx.clearRect(0, 0, width, height);
 
-    this.drawDepthTicks(ctx, scale, width);
+    // ===================== DEPTH MARKERS =====================
+    const depthTicks = ScaleHelper.createTicks(scale);
+
+    applyMinor(ctx);
+    depthTicks.minor.forEach(renderLine);
+
+    applyMajor(ctx);
+    depthTicks.major.forEach(renderLine);
+    // =========================================================
 
     data.forEach((d: any) => {
       if (d.depth === undefined) return;
 
-      const y = scale(d.depth);
-
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(width, y);
       ctx.strokeStyle = 'black';
       ctx.lineWidth = 2;
-      ctx.stroke();
+      renderLine(d.depth);
     });
-
-    ctx.restore();
-  }
-
-  private drawDepthTicks(
-    ctx: CanvasRenderingContext2D,
-    scale: Scale,
-    width: number,
-  ) {
-    const ticks = ScaleHelper.createTicks(scale);
-
-    ctx.save();
-
-    function drawTick(tick: number) {
-      const y = scale(tick);
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(width, y);
-      ctx.stroke();
-    }
-
-    // Minor
-    applyMinor(ctx);
-    ticks.minor.forEach(drawTick);
-
-    // Major
-    applyMajor(ctx);
-    ticks.major.forEach(drawTick);
 
     ctx.restore();
   }
