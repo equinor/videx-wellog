@@ -58,7 +58,7 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
 
   protected plot() {
     const { ctx, scale, data, options } = this;
-    const { horizontal = false } = options ?? {};
+    const { horizontal = false, fallbackColor = 'black' } = options ?? {};
 
     if (!ctx) return;
 
@@ -85,7 +85,7 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
     data.forEach((d: any) => {
       if (d.depth === undefined) return;
 
-      ctx.strokeStyle = 'black';
+      ctx.strokeStyle = fallbackColor;
       ctx.lineWidth = 2;
       renderLine(d.depth);
     });

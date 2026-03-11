@@ -13,4 +13,7 @@ export interface MarkerTrackOptions extends TrackOptions {
 
   /** Orientation of track. Default is false or unset (vertical). */
   horizontal?: boolean;
+
+  /** Fallback color for markers. Default is `black`. */
+  fallbackColor?: string;
 }

@@ -186,7 +186,7 @@ export default (delayLoading = false) => {
       label: 'Fault Picks',
       abbr: 'FP',
       data: exampleFaultPickData,
-      color: 'red',
+      fallbackColor: 'DeepPink',
       width: 1.5,
     }),
     new DistributionTrack(7, {
