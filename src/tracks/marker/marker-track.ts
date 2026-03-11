@@ -1,6 +1,6 @@
 import CanvasTrack from '../canvas-track';
 import { ScaleHelper } from '../../utils';
-import { MarkerTrackOptions } from './interfaces';
+import { MarkerData, MarkerTrackOptions } from './interfaces';
 import { OnMountEvent, OnUpdateEvent, OnRescaleEvent } from '../interfaces';
 import { Scale } from '../../common/interfaces';
 import { applyMajor, applyMinor } from '../../utils/guide-styles';
@@ -57,7 +57,8 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
   }
 
   protected plot() {
-    const { ctx, scale, data, options } = this;
+    const { ctx, scale, options } = this;
+    const data: MarkerData[] = this.data;
     const { horizontal = false, fallbackColor = 'black' } = options ?? {};
 
     if (!ctx) return;
@@ -82,7 +83,7 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
     depthTicks.major.forEach(renderLine);
     // =========================================================
 
-    data.forEach((d: any) => {
+    data.forEach(d => {
       if (d.depth === undefined) return;
 
       ctx.strokeStyle = d.color ?? fallbackColor;
