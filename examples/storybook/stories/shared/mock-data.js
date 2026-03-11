@@ -305,9 +305,19 @@ export const exampleDipPlotData = () => {
 export const exampleFaultPickData = () => {
   const picks = [];
 
-  for (let i = 0; i < 3; i++) {
-    const depth = lerp(100, 900, Math.random());
-    picks.push({ depth });
+  const colors = ['#ee82ee', '#00ff00', '#0000ff', '#708090', '#ff0000', '#a52a2a'];
+  const dashes = [
+    [], // No dash
+    [24, 12],
+    [10, 5, 4, 5],
+  ]
+
+  for (let i = 0; i < 5; i++) {
+    picks.push({
+      depth: lerp(100, 900, Math.random()),
+      color: colors[Math.floor(Math.random() * colors.length)],
+      dash: dashes[Math.floor(Math.random() * dashes.length)],
+    });
   }
 
   return picks;

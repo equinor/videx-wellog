@@ -85,8 +85,9 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
     data.forEach((d: any) => {
       if (d.depth === undefined) return;
 
-      ctx.strokeStyle = fallbackColor;
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = d.color ?? fallbackColor;
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash(d.dash ?? []);
       renderLine(d.depth);
     });
 
