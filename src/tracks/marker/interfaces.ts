@@ -11,7 +11,7 @@ export type MarkerData = {
   dash?: number[];
 
   /** Optional custom icon render function */
-  renderIcon?: (ctx: CanvasRenderingContext2D) => void;
+  renderIcon?: (ctx: CanvasRenderingContext2D, size: number) => void;
 };
 
 export interface MarkerTrackOptions extends TrackOptions {
@@ -20,7 +20,7 @@ export interface MarkerTrackOptions extends TrackOptions {
    * returning data. The plots will need to have a data accessor function defined, that
    * can pick the data it needs from this value.
    */
-  data?: MarkerData | Promise<MarkerData> | (() => MarkerData);
+  data?: MarkerData[] | Promise<MarkerData[]> | (() => MarkerData[]);
 
   /** Whether or not to show the loader (if configured) */
   showLoader?: boolean;

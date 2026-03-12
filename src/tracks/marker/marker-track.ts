@@ -58,13 +58,12 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
 
   protected plot() {
     const { ctx, scale, options } = this;
-    const data: MarkerData[] = this.data;
+    const data: MarkerData[] = this.data ?? [];
     const { horizontal = false, fallbackColor = 'black' } = options ?? {};
 
     if (!ctx) return;
 
-    const width = ctx.canvas.clientWidth;
-    const height = ctx.canvas.clientHeight;
+    const { width, height } = ctx.canvas;
 
     const renderLine = horizontal
       ? createVerticalLineRenderer(ctx, scale, height)
@@ -83,14 +82,32 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
     depthTicks.major.forEach(renderLine);
     // =========================================================
 
-    data.forEach(d => {
-      if (d.depth === undefined) return;
+    const iconX = width / 2;
 
-      ctx.strokeStyle = d.color ?? fallbackColor;
-      ctx.lineWidth = 2.5;
-      ctx.setLineDash(d.dash ?? []);
-      renderLine(d.depth);
-    });
+    // Draw in reverse order to ensure higher markers are drawn on top
+    [...data]
+      .sort((a, b) => b.depth - a.depth)
+      .forEach(d => {
+        if (d.depth === undefined) return;
+
+        ctx.strokeStyle = d.color ?? fallbackColor;
+        ctx.lineWidth = 2;
+
+        // Save and restore because we don't want the dash applied to the icon
+        ctx.save();
+        ctx.setLineDash(d.dash ?? []);
+        renderLine(d.depth);
+        ctx.restore();
+
+        if (d.renderIcon) {
+          const iconY = scale(d.depth);
+
+          ctx.save();
+          ctx.translate(iconX, iconY);
+          d.renderIcon(ctx, 10);
+          ctx.restore();
+        }
+      });
 
     ctx.restore();
   }
