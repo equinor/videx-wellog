@@ -187,6 +187,7 @@ export default (delayLoading = false) => {
       abbr: 'FP',
       data: exampleFaultPickData,
       width: 1.5,
+      iconSize: 10,
     }),
     new DistributionTrack(7, {
       label: 'Distribution',

@@ -59,7 +59,11 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
   protected plot() {
     const { ctx, scale, options } = this;
     const data: MarkerData[] = this.data ?? [];
-    const { horizontal = false, fallbackColor = 'black' } = options ?? {};
+    const {
+      horizontal = false,
+      fallbackColor = 'black',
+      iconSize = 10,
+    } = options ?? {};
 
     if (!ctx) return;
 
@@ -82,8 +86,6 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
     depthTicks.major.forEach(renderLine);
     // =========================================================
 
-    const iconX = width / 2;
-
     // Draw in reverse order to ensure higher markers are drawn on top
     [...data]
       .sort((a, b) => b.depth - a.depth)
@@ -100,11 +102,18 @@ export class MarkerTrack extends CanvasTrack<MarkerTrackOptions> {
         ctx.restore();
 
         if (d.renderIcon) {
-          const iconY = scale(d.depth);
-
           ctx.save();
-          ctx.translate(iconX, iconY);
-          d.renderIcon(ctx, 10);
+
+          if (horizontal) {
+            const iconX = scale(d.depth);
+            ctx.translate(iconX, height / 2);
+            ctx.rotate(-Math.PI / 2);
+          } else {
+            const iconY = scale(d.depth);
+            ctx.translate(width / 2, iconY);
+          }
+
+          d.renderIcon(ctx, iconSize);
           ctx.restore();
         }
       });

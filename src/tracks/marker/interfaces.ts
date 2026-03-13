@@ -27,4 +27,7 @@ export interface MarkerTrackOptions extends TrackOptions {
 
   /** Fallback color for markers. Default is `black`. */
   fallbackColor?: string;
+
+  /** Size parameter passed to renderIcon function. Default is 10. */
+  iconSize?: number;
 }
