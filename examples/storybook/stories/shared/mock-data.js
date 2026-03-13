@@ -1,4 +1,9 @@
+import { lerp } from '@equinor/videx-math';
 import { range } from 'd3-array';
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 const domain = [0, 1500];
 export const ex1 = range(domain[0], domain[1], 10).map(d => [d, Math.random()]);
@@ -113,7 +118,7 @@ export const ex5 = async () => {
   for (let index = 1; index <= cementLength; index++) {
     const newTo = currentFrom + 100 + Math.random() * 100;
 
-    const name = `${names[Math.floor(Math.random() * names.length)]} ${Math.floor(Math.random() * 8)}${l[Math.floor(Math.random() * l.length)]}`;
+    const name = `${randomItem(names)} ${Math.floor(Math.random() * 8)}${randomItem(l)}`;
     const r = Math.random() * 255;
     const g = Math.random() * 255;
     const b = Math.random() * 255;
@@ -294,9 +299,72 @@ export const exampleDipPlotData = () => {
     Math.random() * 90,
     Math.random() * 360,
     {
-      color: colors[Math.floor(Math.random() * colors.length)],
-      shape: shapes[Math.floor(Math.random() * shapes.length)],
+      color: randomItem(colors),
+      shape: randomItem(shapes),
     },
   ]);
   return data;
+};
+
+export const exampleFaultPickData = () => {
+  const picks = [];
+
+  const colors = [
+    '#ee82ee',
+    '#00ff00',
+    '#0000ff',
+    '#708090',
+    '#ff0000',
+    '#a52a2a',
+  ];
+
+  const dashes = [
+    [], // No dash
+    [24, 12],
+    [10, 5, 4, 5],
+  ];
+
+  const renderIconFunctions = [
+    undefined, // No function
+    function drawTriangleGlyph(ctx, size) {
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-size, 0);
+      ctx.lineTo(0, -size);
+      ctx.lineTo(size, 0);
+      ctx.stroke();
+    },
+    function drawTwinArrowGlyph(ctx, size) {
+      const wideSize = size * 1.5;
+      const halfSize = size / 2;
+
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+
+      // Top arrow
+      ctx.moveTo(-wideSize, -halfSize);
+      ctx.lineTo(wideSize, -halfSize);
+      ctx.lineTo(0, -size);
+      ctx.lineTo(0, -halfSize);
+
+      // Bottom arrow
+      ctx.moveTo(wideSize, halfSize);
+      ctx.lineTo(-wideSize, halfSize);
+      ctx.lineTo(0, size);
+      ctx.lineTo(0, halfSize);
+
+      ctx.stroke();
+    },
+  ];
+
+  for (let i = 0; i < 5; i++) {
+    picks.push({
+      depth: lerp(100, 900, Math.random()),
+      color: randomItem(colors),
+      dash: randomItem(dashes),
+      renderIcon: randomItem(renderIconFunctions),
+    });
+  }
+
+  return picks;
 };

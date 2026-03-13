@@ -9,6 +9,7 @@ import {
   distributionLegendConfig,
   DistributionTrack,
   ColorStripTrack,
+  MarkerTrack,
 } from '../../../../src';
 import { exampleMajorityPredictionData } from './majority-prediction-mock';
 import {
@@ -18,6 +19,7 @@ import {
   ex4_large,
   exampleDipPlotData,
   exampleDistributionData,
+  exampleFaultPickData,
 } from './mock-data';
 
 const distributionComponents = {
@@ -179,6 +181,13 @@ export default (delayLoading = false) => {
       showLines: false,
       labelRotation: -90,
       data: ex4_large,
+    }),
+    new MarkerTrack(9, {
+      label: 'Fault Picks',
+      abbr: 'FP',
+      data: exampleFaultPickData,
+      width: 1.5,
+      iconSize: 10,
     }),
     new DistributionTrack(7, {
       label: 'Distribution',
