@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/equinor/videx-wellog/compare/v1.3.5...v1.4.0) (2026-03-16)
+
+
+### Features
+
+* **6537:** marker track for fault picks ([#435](https://github.com/equinor/videx-wellog/issues/435)) ([3f79ac4](https://github.com/equinor/videx-wellog/commit/3f79ac47d28017511aec78d94d236a591753af65))
+
 ## [1.3.5](https://github.com/equinor/videx-wellog/compare/v1.3.4...v1.3.5) (2026-03-06)
 
 
