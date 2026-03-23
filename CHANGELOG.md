@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/equinor/videx-wellog/compare/v1.4.0...v1.4.1) (2026-03-23)
+
+
+### Bug Fixes
+
+* **npm:** bump flatted from 3.3.3 to 3.4.2 ([#439](https://github.com/equinor/videx-wellog/issues/439)) ([44290dc](https://github.com/equinor/videx-wellog/commit/44290dcec7a99b1325c75505b0109ae31466f6ac))
+
 ## [1.4.0](https://github.com/equinor/videx-wellog/compare/v1.3.5...v1.4.0) (2026-03-16)
 
 
