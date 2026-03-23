@@ -12,7 +12,7 @@ jobs:
     name: Release
     runs-on: ubuntu-24.04
     env:
-      NODE_VERSION: "20.x"
+      NODE_VERSION: "24.x"
     permissions:
       contents: write
       pull-requests: write
@@ -45,10 +45,11 @@ jobs:
         if: ${{ steps.release.outputs.release_created }}
         run: npm run build --if-present
 
-      - name: Publish package
+      - name: Test
         if: ${{ steps.release.outputs.release_created }}
-        uses: JS-DevTools/npm-publish@0fd2f4369c5d6bcfcde6091a7c527d810b9b5c3f
-        with:
-          token: ${{ secrets.NPM_TOKEN}}
-          access: public
-          provenance: true
+        run: npm test
+
+      - name: Publish to npm
+        if: ${{ steps.release.outputs.release_created }}
+        run: npm publish
+
