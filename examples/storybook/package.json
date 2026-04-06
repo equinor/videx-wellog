@@ -13,8 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "@storybook/addon-essentials": "^8.6.17",
-    "@storybook/addon-webpack5-compiler-swc": "^2.1.0",
-    "@storybook/html": "^8.6.17",
+    "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
+    "@storybook/html": "^10.3.3",
     "@storybook/html-webpack5": "^8.6.17",
     "css-loader": "^7.1.4",
     "postcss-loader": "^8.2.1",
