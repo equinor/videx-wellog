@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.4.2](https://github.com/equinor/videx-wellog/compare/v1.4.1...v1.4.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* **npm:** bump lodash from 4.17.23 to 4.18.1 in /examples/storybook ([#453](https://github.com/equinor/videx-wellog/issues/453)) ([d955274](https://github.com/equinor/videx-wellog/commit/d95527405b5befccca761931643a1551d96a73c0))
+* **npm:** bump picomatch ([#443](https://github.com/equinor/videx-wellog/issues/443)) ([b2f6bc8](https://github.com/equinor/videx-wellog/commit/b2f6bc8dad55bfec755ae9e033e23ea0d44036c5))
+* **npm:** bump picomatch from 2.3.1 to 2.3.2 in /examples/storybook ([#444](https://github.com/equinor/videx-wellog/issues/444)) ([f7fcbab](https://github.com/equinor/videx-wellog/commit/f7fcbab54da28b16638f758c72ce5d5458352648))
+* **npm:** bump serialize-javascript from 7.0.4 to 7.0.5 ([#446](https://github.com/equinor/videx-wellog/issues/446)) ([6dfdb5c](https://github.com/equinor/videx-wellog/commit/6dfdb5c9b1f90a5fede10c24afe7cfe5ef630e3e))
+* **npm:** bump vite from 7.3.1 to 7.3.2 ([#451](https://github.com/equinor/videx-wellog/issues/451)) ([907c162](https://github.com/equinor/videx-wellog/commit/907c16235197f080d293cbf0703e3b723649dcb2))
+* **npm:** bump yaml ([#445](https://github.com/equinor/videx-wellog/issues/445)) ([f4d66c4](https://github.com/equinor/videx-wellog/commit/f4d66c41045b2bcd00db62a18fcea7609cbc1b86))
+* **npm:** bump yaml from 1.10.2 to 1.10.3 in /examples/storybook ([#452](https://github.com/equinor/videx-wellog/issues/452)) ([9444eb8](https://github.com/equinor/videx-wellog/commit/9444eb82805b8e62b257807ed7b4b1246f7dd896))
+
 ## [1.4.1](https://github.com/equinor/videx-wellog/compare/v1.4.0...v1.4.1) (2026-03-23)
 
 
