@@ -1,15 +1,13 @@
-/** @type { import('@storybook/html-webpack5').StorybookConfig } */
 const config = {
   stories: [
     '../stories/**/*.mdx',
     '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
   ],
-  addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-webpack5-compiler-swc',
-  ],
+  core: {
+    builder: '@storybook/builder-vite',
+  },
   framework: {
-    name: '@storybook/html-webpack5',
+    name: '@storybook/html-vite',
     options: {
       builder: {},
     },
