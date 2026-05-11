@@ -42,7 +42,8 @@
     "lint": "npx eslint src --ext ts --color",
     "storybook": "cd examples/storybook && npm run storybook",
     "storybook:install": "cd examples/storybook && npm install",
-    "storybook:build": "cd examples/storybook && npm run build-storybook"
+    "storybook:build": "cd examples/storybook && npm run build-storybook",
+    "prettier": "prettier . --write"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -62,7 +63,7 @@
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
     "jsdom": "^29.1.1",
-    "prettier": "3.7.4",
+    "prettier": "3.8.3",
     "rimraf": "^6.1.2",
     "rollup": "^4.52.4",
     "rollup-plugin-copy": "^3.5.0",
