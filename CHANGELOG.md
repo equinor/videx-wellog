@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.4.3](https://github.com/equinor/videx-wellog/compare/v1.4.2...v1.4.3) (2026-06-08)
+
+
+### Bug Fixes
+
+* **npm:** bump fast-uri from 3.1.0 to 3.1.2 in /examples/storybook ([#466](https://github.com/equinor/videx-wellog/issues/466)) ([c0c32c8](https://github.com/equinor/videx-wellog/commit/c0c32c8c8899e18c6ee518e3c6df559671141b9f))
+* **npm:** bump postcss from 8.5.6 to 8.5.14 ([#463](https://github.com/equinor/videx-wellog/issues/463)) ([46548b5](https://github.com/equinor/videx-wellog/commit/46548b566bae52e2131e8070c0fbd36484151cf2))
+* **npm:** bump postcss from 8.5.8 to 8.5.13 in /examples/storybook ([#464](https://github.com/equinor/videx-wellog/issues/464)) ([d958f0e](https://github.com/equinor/videx-wellog/commit/d958f0e13cc687b3cbb13f1d4c8756c365ff3f1d))
+
 ## [1.4.2](https://github.com/equinor/videx-wellog/compare/v1.4.1...v1.4.2) (2026-04-08)
 
 
