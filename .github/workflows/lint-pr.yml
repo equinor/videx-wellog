@@ -15,6 +15,6 @@ jobs:
     name: Lint PR Title
     permissions:
       contents: read
-    uses: equinor/ops-actions/.github/workflows/commitlint.yml@492516f19214a297c5f9ba6526bedb2a42c775d1 # 9.38.1
+    uses: equinor/ops-actions/.github/workflows/commitlint.yml@792c28d178029e9d2b5ae027e3acbe18da89e9ed # 9.38.2
     with:
       message: ${{ github.event.pull_request.title }}
