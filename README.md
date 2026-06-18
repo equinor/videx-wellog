@@ -14,67 +14,6 @@ It provides composable UI containers, tracks, plots and scale handlers that can 
 npm install @equinor/videx-wellog
 ```
 
-## Quick start
-```ts
-import {
-  LogViewer,
-  ScaleTrack,
-  GraphTrack,
-  graphLegendConfig,
-} from '@equinor/videx-wellog';
-
-const container = document.getElementById('wellog');
-if (!container) throw new Error('Missing #wellog container element');
-
-const viewer = new LogViewer({
-  domain: [0, 3000],
-  showTitles: true,
-  showLegend: true,
-});
-
-const tracks = [
-  new ScaleTrack('md', {
-    label: 'Measured depth',
-    abbr: 'MD',
-    units: 'm',
-    maxWidth: 60,
-  }),
-  new GraphTrack('gamma', {
-    label: 'Gamma ray',
-    abbr: 'GR',
-    scale: 'linear',
-    domain: [0, 150],
-    legendConfig: graphLegendConfig,
-    data: [
-      { depth: 1200, value: 45 },
-      { depth: 1210, value: 52 },
-      { depth: 1220, value: 47 },
-    ],
-    plots: [
-      {
-        id: 'gr',
-        type: 'line',
-        options: {
-          color: '#1967d2',
-          dataAccessor: d => d.value,
-        },
-      },
-    ],
-  }),
-];
-
-viewer.init(container).setTracks(tracks);
-```
-
-## Exports
-The package exports modules from:
-
-- `ui` (for example `LogController`, `LogViewer`)
-- `tracks` (for example `ScaleTrack`, `GraphTrack`, `StackedTrack`, `DistributionTrack`, `ColorStripTrack`, `MarkerTrack`)
-- `plots` (for example `LinePlot`, `AreaPlot`, `DipPlot`, `DotPlot`, `DifferentialPlot`, `LineStepPlot`)
-- `scale-handlers` (for example `BasicScaleHandler`, `InterpolatedScaleHandler`)
-- `utils`
-
 ## Development
 Install dependencies:
 ```
@@ -120,7 +59,7 @@ Tracks are components added to a well log container. A track is responsible for 
 
 ## Distribution Track
 
-`DistributionTrack` visualizes category composition along depth, with optional interpolation modes.
+`DistributionTrack` visualizes data composition (continuous or discrete) along depth, with optional interpolation modes.
 
 ### Config
 Sample configuration object:
@@ -155,7 +94,7 @@ Sample configuration object:
       color: 'SlateGrey',
     },
   },
-  interpolationType: 0, // 0 = linear, 1 = nearest, 2 = discrete
+  interpolationType: 2, // 0 = linear, 1 = nearest, 2 = discrete
   discreteHeight: 0.01, // Used when interpolationType = 2
 }
 ```
