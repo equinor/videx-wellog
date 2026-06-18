@@ -14,6 +14,7 @@ const defaultOptions: DistributionTrackOptions = {
 // Defined to avoid creating new arrays when clearing
 const ComponentColorsClear = new Float32Array([]);
 const InterpolationConfigClear = new Float32Array([0, 0]);
+const IsPatternClear = new Float32Array([]);
 
 /** Track for visualising distribution of data. */
 export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
@@ -66,6 +67,14 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
       program,
       'u_componentColors',
     );
+    const componentPatternColorsLocation = gl.getUniformLocation(
+      program,
+      'u_componentPatternColors',
+    );
+    const componentIsPatternLocation = gl.getUniformLocation(
+      program,
+      'u_componentIsPattern',
+    );
     const entryCountLocation = gl.getUniformLocation(program, 'u_entryCount');
     const interpolationConfigLocation = gl.getUniformLocation(
       program,
@@ -76,6 +85,8 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
       // Clear uniforms
       gl.uniform1i(componentCountLocation, 0);
       gl.uniform3fv(componentColorsLocation, ComponentColorsClear);
+      gl.uniform3fv(componentPatternColorsLocation, ComponentColorsClear);
+      gl.uniform1fv(componentIsPatternLocation, IsPatternClear);
       gl.uniform1i(entryCountLocation, 0);
       gl.uniform2fv(interpolationConfigLocation, InterpolationConfigClear);
 
@@ -86,11 +97,25 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
       return;
     }
 
+    const components = Object.values(options.components);
+
     // Extract and normalize RGB arrays from components
-    const rgbArray = Object.values(options.components).map(component => {
+    const rgbArray = components.map(component => {
       const { r, g, b } = color(component.color).rgb();
       return [r / 255, g / 255, b / 255];
     });
+
+    // Extract diagonal-hatch colors and per-component pattern flags.
+    // Falls back to the base color when no patternColor is defined.
+    const patternRgbArray = components.map(component => {
+      const { r, g, b } = color(
+        component.patternColor ?? component.color,
+      ).rgb();
+      return [r / 255, g / 255, b / 255];
+    });
+    const isPatternArray = components.map(component =>
+      component.patternColor ? 1 : 0,
+    );
 
     // Flatten the data into a normalized 1D array
     const flatData = data.flatMap((d: any) => {
@@ -105,6 +130,8 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
     // Pass uniforms
     gl.uniform1i(componentCountLocation, rgbArray.length);
     gl.uniform3fv(componentColorsLocation, rgbArray.flat());
+    gl.uniform3fv(componentPatternColorsLocation, patternRgbArray.flat());
+    gl.uniform1fv(componentIsPatternLocation, new Float32Array(isPatternArray));
     gl.uniform1i(entryCountLocation, data.length);
     gl.uniform2fv(interpolationConfigLocation, this.interpolationConfigArray);
 

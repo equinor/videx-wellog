@@ -8,6 +8,11 @@ uniform vec2 u_domain;
 uniform int u_componentCount;
 uniform vec3 u_componentColors[32];
 
+// Diagonal-hatch color per component and a flag (>= 0.5) marking which
+// components should be rendered with a hatch pattern.
+uniform vec3 u_componentPatternColors[32];
+uniform float u_componentIsPattern[32];
+
 uniform int u_entryCount;
 
 // x: interpolationType (0: Linear, 1: Nearest, 2: Discrete, 3: Next)
@@ -17,6 +22,11 @@ uniform vec2 u_interpolationConfig;
 uniform sampler2D u_dataTexture;
 
 out vec4 outColor;
+
+// Spacing (in device pixels) of the diagonal hatch lines.
+const float HATCH_SPACING = 8.0;
+// Width (in device pixels) of each diagonal hatch line.
+const float HATCH_LINE_WIDTH = 2.0;
 
 // Converts UV y-coordinate to depth
 float uvToDepth() {
@@ -30,6 +40,13 @@ bool isOutsideDiscreteDistance(float dist) {
 
   // True, if the distance is outside adaptive threshold
   return (dist > adaptiveThreshold);
+}
+
+// Returns 1.0 on a diagonal hatch line, 0.0 otherwise. Uses gl_FragCoord so
+// the spacing stays constant in screen space regardless of zoom level.
+float diagonalHatch() {
+    float diagonal = gl_FragCoord.x - gl_FragCoord.y;
+    return step(mod(diagonal, HATCH_SPACING), HATCH_LINE_WIDTH);
 }
 
 // Gets the depth value at the given row
@@ -152,7 +169,16 @@ void main() {
 
         // If uv.x is less than the cumulative value, this is the component
         if (v_uv.x < cumulativeValue) {
-            outColor = vec4(u_componentColors[x - 1], 1.0);
+            vec3 baseColor = u_componentColors[x - 1];
+
+            // Apply diagonal hatch for components flagged as patterned
+            if (u_componentIsPattern[x - 1] >= 0.5) {
+                vec3 patternColor = u_componentPatternColors[x - 1];
+                float hatch = diagonalHatch();
+                outColor = vec4(mix(baseColor, patternColor, hatch), 1.0);
+            } else {
+                outColor = vec4(baseColor, 1.0);
+            }
             return;
         }
     }
