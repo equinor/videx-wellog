@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/equinor/videx-wellog/compare/v1.4.3...v1.5.0) (2026-06-19)
+
+
+### Features
+
+* **483:** allow stripe pattern on distribution track ([#484](https://github.com/equinor/videx-wellog/issues/484)) ([875ba01](https://github.com/equinor/videx-wellog/commit/875ba01bc1d9083f9a820dea488f6dbc4980f4f6))
+
 ## [1.4.3](https://github.com/equinor/videx-wellog/compare/v1.4.2...v1.4.3) (2026-06-08)
 
 
