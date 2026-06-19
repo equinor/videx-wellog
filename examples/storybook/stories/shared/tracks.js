@@ -195,7 +195,7 @@ export default (delayLoading = false) => {
       data: exampleDistributionData,
       legendConfig: distributionLegendConfig,
       components: distributionComponents,
-      interpolate: true,
+      interpolationType: 0,
     }),
     new ColorStripTrack(8, {
       label: 'Color Strip',
