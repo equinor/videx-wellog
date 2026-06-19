@@ -3,7 +3,9 @@
 [![SCM Compliance](https://scm-compliance-api.radix.equinor.com/repos/equinor/videx-wellog/badge)](https://scm-compliance-api.radix.equinor.com/repos/equinor/videx-wellog/badge)
 
 # Videx well log
-Well log powered by the ViDEx well log components and [Volve open data sets](https://data.equinor.com/) provided by Equinor.
+Videx Well Log is a TypeScript library for rendering interactive well log visualizations.
+
+It provides composable UI containers, tracks, plots and scale handlers that can be combined to build domain-specific well log views.
 
 ![volve-well-log](./resources/volve.png)
 
@@ -12,10 +14,35 @@ Well log powered by the ViDEx well log components and [Volve open data sets](htt
 npm install @equinor/videx-wellog
 ```
 
-## Docs
-Generate type-doc to `./docs`
+## Development
+Install dependencies:
 ```
-npm run docs 
+npm install
+```
+
+Build library output:
+```
+npm run build
+```
+
+Run tests:
+```
+npm test
+```
+
+Run linting:
+```
+npm run lint
+```
+
+Run with file watching:
+```
+npm run start
+```
+
+Generate type-doc to `./docs`:
+```
+npm run docs
 ```
 
 ## Storybook
@@ -26,16 +53,16 @@ npm run storybook:install
 npm run storybook
 ```
 
-# Tracks
+## Tracks
 
-Tracks are containers that can be added to a wellog component. A Track is resposible to react to lifecycle events provided by its container.
+Tracks are components added to a well log container. A track is responsible for reacting to lifecycle events provided by its container.
 
 ## Distribution Track
 
-The Distribution Track visualizes the distribution of categories along a depth axis, showing how different components vary continuously or discretely with depth. 
+`DistributionTrack` visualizes data composition (continuous or discrete) along depth, with optional interpolation modes.
 
 ### Config
-Provided is a sample configuration object for setting up a Distribution Track.
+Sample configuration object:
 
 ```js
 {
@@ -45,37 +72,42 @@ Provided is a sample configuration object for setting up a Distribution Track.
     {
         "depth": 1,
         "composition": [
-            { "key": "Red Stone", "value": 80.00 },
-            { "key": "Grey Stone", "value": 20.00 }
+            { "key": "carbonate", "value": 80.00 },
+            { "key": "shale", "value": 20.00 }
         ]
     },
     {
         "depth": 2,
         "composition": [
-            { "key": "Red Stone", "value": 40.00 },
-            { "key": "Grey Stone", "value": 60.00 }
+            { "key": "carbonate", "value": 40.00 },
+            { "key": "shale", "value": 60.00 }
         ]
     }
   ],
   legendConfig: distributionLegendConfig,
   components: {
-    'Red Stone': {
+    carbonate: {
       color: 'FireBrick',
       textColor: '#8E1B1B', // Optional, will use color by default
     },
-    'Grey Stone': {
+    shale: {
       color: 'SlateGrey',
     },
-},
-  interpolate: true,
+  },
+  interpolationType: 2, // 0 = linear, 1 = nearest, 2 = discrete
+  discreteHeight: 0.01, // Used when interpolationType = 2
 }
 ```
 
-**Note:** _distributionLegendConfig_ will use color given in _components_.
+Important:
+
+- Keys in `composition[].key` should match keys in `components`.
+- `distributionLegendConfig` uses colors defined in `components`.
+- Composition values are interpreted as percentages and should sum to 100.
 
 ### Assumptions
 - Depth is sorted in ascending order.
-- Composition totals 100.
+- Composition totals 100 for each depth sample.
 
 ## Contribution
-We greatly appreciate contributions to this repository, see our [contribution page](./contributing.md) on how to get started.
+Contributions are welcome. See the [contribution guide](./contributing.md) to get started.
