@@ -39,6 +39,11 @@ export interface DistributionComponents {
     color: string;
     /** Optional color for legend labels. */
     textColor?: string;
+    /**
+     * Optional diagonal-hatch color. When set, the component is rendered with
+     * `color` as the background and `patternColor` as diagonal hatch lines.
+     */
+    patternColor?: string;
   };
 }
 
