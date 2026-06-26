@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.1](https://github.com/equinor/videx-wellog/compare/v1.5.0...v1.5.1) (2026-06-26)
+
+
+### Bug Fixes
+
+* **npm:** bump js-yaml from 4.1.1 to 4.2.0 ([#487](https://github.com/equinor/videx-wellog/issues/487)) ([f0094c3](https://github.com/equinor/videx-wellog/commit/f0094c3a16db73cec308395f253acb13884910a8))
+* **npm:** bump js-yaml from 4.1.1 to 4.2.0 in /examples/storybook ([#488](https://github.com/equinor/videx-wellog/issues/488)) ([9d84a67](https://github.com/equinor/videx-wellog/commit/9d84a67dbedac18be17babc12d443539aa112c41))
+* **npm:** bump markdown-it from 14.1.1 to 14.2.0 ([#481](https://github.com/equinor/videx-wellog/issues/481)) ([fce7ec9](https://github.com/equinor/videx-wellog/commit/fce7ec963a0c12fb7a2e9bc1428cf67bc8e1c176))
+* **npm:** bump undici from 7.25.0 to 7.28.0 ([#486](https://github.com/equinor/videx-wellog/issues/486)) ([ecd1ff9](https://github.com/equinor/videx-wellog/commit/ecd1ff9ba44374eb7fff59af7565e28d6150dda0))
+* **npm:** bump vite from 8.0.11 to 8.0.16 ([#479](https://github.com/equinor/videx-wellog/issues/479)) ([a788b42](https://github.com/equinor/videx-wellog/commit/a788b42c5263b56b6778eb5e3e99e78d7621dfee))
+* **npm:** bump vite from 8.0.11 to 8.0.16 in /examples/storybook ([#478](https://github.com/equinor/videx-wellog/issues/478)) ([2130f70](https://github.com/equinor/videx-wellog/commit/2130f70f9d10604020c4655ef1d7006b1f015d9a))
+
 ## [1.5.0](https://github.com/equinor/videx-wellog/compare/v1.4.3...v1.5.0) (2026-06-19)
 
 
