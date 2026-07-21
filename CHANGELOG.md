@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.2](https://github.com/equinor/videx-wellog/compare/v1.5.1...v1.5.2) (2026-07-21)
+
+
+### Bug Fixes
+
+* **npm:** bump ws from 8.20.0 to 8.21.0 in /examples/storybook ([#498](https://github.com/equinor/videx-wellog/issues/498)) ([bcffe08](https://github.com/equinor/videx-wellog/commit/bcffe08418bad784e941a356711129e19c68c973))
+* **taskless:** brace-expansion and js-yaml dependabot july 26 ([#501](https://github.com/equinor/videx-wellog/issues/501)) ([22c58ec](https://github.com/equinor/videx-wellog/commit/22c58ec10ced6ffe0d42646eec54bdd05acfe103))
+* **taskless:** storybook js-yaml dependabot july 26 ([#502](https://github.com/equinor/videx-wellog/issues/502)) ([3254451](https://github.com/equinor/videx-wellog/commit/3254451ccbd7ef7c843375a9dacd0b763a5ef0a5))
+
 ## [1.5.1](https://github.com/equinor/videx-wellog/compare/v1.5.0...v1.5.1) (2026-06-26)
 
 
