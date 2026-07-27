@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.5.3](https://github.com/equinor/videx-wellog/compare/v1.5.2...v1.5.3) (2026-07-27)
+
+
+### Bug Fixes
+
+* **npm:** bump fast-uri from 3.1.2 to 3.1.4 in /examples/storybook ([#507](https://github.com/equinor/videx-wellog/issues/507)) ([d9dab5b](https://github.com/equinor/videx-wellog/commit/d9dab5bec4b58f3f25babd4d305924fd1e3682a5))
+* **npm:** bump immutable from 5.1.5 to 5.1.9 ([#503](https://github.com/equinor/videx-wellog/issues/503)) ([dc2a093](https://github.com/equinor/videx-wellog/commit/dc2a0934a27ca04e8313aad94cc36fa59f034ab3))
+* **npm:** bump linkify-it from 5.0.1 to 5.0.2 ([#505](https://github.com/equinor/videx-wellog/issues/505)) ([aaf0e7d](https://github.com/equinor/videx-wellog/commit/aaf0e7d521314a1865c7d716a920649012b2f4a7))
+* **npm:** bump postcss from 8.5.15 to 8.5.23 ([#509](https://github.com/equinor/videx-wellog/issues/509)) ([1913591](https://github.com/equinor/videx-wellog/commit/1913591766ae6045089c9046d9ad426a293f1be1))
+* **npm:** bump postcss from 8.5.15 to 8.5.23 in /examples/storybook ([#510](https://github.com/equinor/videx-wellog/issues/510)) ([59e961c](https://github.com/equinor/videx-wellog/commit/59e961c06704d4731c221ec007d1ead62fdace7b))
+* **npm:** bump svgo from 2.8.2 to 2.8.3 ([#506](https://github.com/equinor/videx-wellog/issues/506)) ([2c7a7c8](https://github.com/equinor/videx-wellog/commit/2c7a7c895e6455c6264c81ab5a9ff1c70980fa3a))
+
 ## [1.5.2](https://github.com/equinor/videx-wellog/compare/v1.5.1...v1.5.2) (2026-07-21)
 
 
