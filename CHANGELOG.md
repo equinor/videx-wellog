@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.4](https://github.com/equinor/videx-wellog/compare/v1.5.3...v1.5.4) (2026-08-06)
+
+
+### Bug Fixes
+
+* **npm:** bump fast-uri from 3.1.4 to 3.1.5 in /examples/storybook ([#517](https://github.com/equinor/videx-wellog/issues/517)) ([f0f30cc](https://github.com/equinor/videx-wellog/commit/f0f30cc03a6f36ecb36463cb43c4b54b61f15c38))
+* **npm:** bump undici from 7.28.0 to 7.29.0 ([#515](https://github.com/equinor/videx-wellog/issues/515)) ([68d8d5b](https://github.com/equinor/videx-wellog/commit/68d8d5be72737c1235ea9db147460143cd112851))
+
 ## [1.5.3](https://github.com/equinor/videx-wellog/compare/v1.5.2...v1.5.3) (2026-07-27)
 
 
