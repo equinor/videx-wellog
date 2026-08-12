@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import {
   ScaleTrack,
   GraphTrack,
@@ -144,6 +143,7 @@ export default (delayLoading = false) => {
       abbr: 'sin',
       data: ex3,
       legendConfig: graphLegendConfig,
+      referenceLines: [{ value: 30, color: '#f27291', width: 3 }],
       plots: [
         {
           id: 'noise',
