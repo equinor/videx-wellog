@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.5.5](https://github.com/equinor/videx-wellog/compare/v1.5.4...v1.5.5) (2026-08-12)
+
+
+### Bug Fixes
+
+* **npm:** bump js-yaml from 4.3.0 to 4.3.1 ([#520](https://github.com/equinor/videx-wellog/issues/520)) ([5607a35](https://github.com/equinor/videx-wellog/commit/5607a35dee4b562f19777a547965bf59b2e2d3dd))
+* **npm:** bump js-yaml from 4.3.0 to 4.3.1 in /examples/storybook ([#519](https://github.com/equinor/videx-wellog/issues/519)) ([00e55b4](https://github.com/equinor/videx-wellog/commit/00e55b4ff2649aa1efc3f00a09fad0d2eb032ee2))
+* **taskless:** bump brace-expansion and nanoid ([#522](https://github.com/equinor/videx-wellog/issues/522)) ([7e9c228](https://github.com/equinor/videx-wellog/commit/7e9c228295c2dda00f6582c71bc7565e13840119))
+
 ## [1.5.4](https://github.com/equinor/videx-wellog/compare/v1.5.3...v1.5.4) (2026-08-06)
 
 
