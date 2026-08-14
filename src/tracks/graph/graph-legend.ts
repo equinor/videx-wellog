@@ -17,12 +17,21 @@ import {
 } from '../../plots';
 import GraphTrack from './graph-track';
 import { D3Selection } from '../../common/interfaces';
+import { getContrastYIQ, setAttrs, setProps } from '../../utils';
+
+/** Padding around reference line value labels */
+const labelPadding = 2;
 
 /**
  * Function for calculating the number of legend rows required by the track
  */
 function getGraphTrackLegendRows(track: GraphTrack): number {
-  return track.plots.reduce((rows, p) => rows + p.options.legendRows || 0, 0);
+  const plotRows = track.plots.reduce(
+    (rows, p) => rows + p.options.legendRows || 0,
+    0,
+  );
+  // Reserve an extra row at the bottom for reference line value labels
+  return plotRows + (track.options.referenceLines?.length ? 1 : 0);
 }
 
 /**
@@ -105,6 +114,74 @@ function updateLegendRows(
 }
 
 /**
+ * Renders the value of each reference line in a boxed label, in the row reserved
+ * at the bottom of the legend section
+ */
+function updateReferenceLineLabels(
+  container: D3Selection,
+  bounds: LegendBounds,
+  track: GraphTrack,
+): void {
+  container.select('.reference-line-labels').remove();
+
+  const { referenceLines, horizontal } = track.options;
+  if (!referenceLines?.length) return;
+
+  const rowHeight = bounds.height / getGraphTrackLegendRows(track);
+  const rowTop = bounds.top + bounds.height - rowHeight;
+  // Scales down to a minimum of 8px for narrow tracks
+  const fontSize = Math.max(8, Math.min(10, rowHeight * 0.5, bounds.width / 8));
+
+  const g = container.append('g').classed('reference-line-labels', true);
+  g.attr(
+    'transform',
+    horizontal
+      ? `translate(${rowTop},${bounds.width})rotate(-90)`
+      : `translate(0,${rowTop})`,
+  );
+
+  const domain = track.trackScale.domain();
+  const dmin = Math.min(domain[0], domain[domain.length - 1]);
+  const dmax = Math.max(domain[0], domain[domain.length - 1]);
+
+  referenceLines.forEach(line => {
+    const { value, color = 'black' } = line;
+
+    if (!Number.isFinite(value) || value < dmin || value > dmax) return;
+
+    const scaled = track.trackScale(value);
+    if (!Number.isFinite(scaled)) return;
+
+    const pos = horizontal ? bounds.width - scaled : scaled;
+
+    const bg = g.append('rect').attr('fill', color);
+    const label = g.append('text').text(`${value}`);
+
+    setProps(label, {
+      styles: {
+        'text-anchor': 'middle',
+        fill: getContrastYIQ(color),
+      },
+      attrs: {
+        class: 'reference-line-label',
+        'font-size': `${fontSize}px`,
+        'dominant-baseline': 'middle',
+        x: pos,
+        y: rowHeight - fontSize * 0.7,
+      },
+    });
+
+    const bbox = label.node().getBBox();
+    setAttrs(bg, {
+      x: bbox.x - labelPadding,
+      y: bbox.y,
+      width: bbox.width + labelPadding * 2,
+      height: bbox.height * 2,
+    });
+  });
+}
+
+/**
  * Updates the legend section of a graph track
  */
 function onUpdateLegend(
@@ -130,6 +207,8 @@ function onUpdateLegend(
 
   // Remove rows without data
   rows.exit().remove();
+
+  updateReferenceLineLabels(g, bounds, track);
 }
 
 /**

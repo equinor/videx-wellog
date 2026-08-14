@@ -143,7 +143,7 @@ export default (delayLoading = false) => {
       abbr: 'sin',
       data: ex3,
       legendConfig: graphLegendConfig,
-      referenceLines: [{ value: 30, color: '#f27291', width: 3 }],
+      referenceLines: [{ value: 30, color: '#f27291', width: 2 }],
       plots: [
         {
           id: 'noise',
