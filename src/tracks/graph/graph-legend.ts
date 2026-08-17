@@ -19,9 +19,6 @@ import GraphTrack from './graph-track';
 import { D3Selection } from '../../common/interfaces';
 import { getContrastYIQ, setAttrs, setProps } from '../../utils';
 
-/** Padding around reference line value labels */
-const labelPadding = 2;
-
 /**
  * Function for calculating the number of legend rows required by the track
  */
@@ -129,8 +126,9 @@ function updateReferenceLineLabels(
 
   const rowHeight = bounds.height / getGraphTrackLegendRows(track);
   const rowTop = bounds.top + bounds.height - rowHeight;
-  // Scales down to a minimum of 8px for narrow tracks
-  const fontSize = Math.max(8, Math.min(10, rowHeight * 0.5, bounds.width / 8));
+  // Same size as the largest domain values rendered by the plot legends
+  const fontSize = rowHeight * 0.35 * (bounds.width > 90 ? 1.1 : 0.85);
+  const padding = fontSize * 0.25;
 
   const g = container.append('g').classed('reference-line-labels', true);
   g.attr(
@@ -173,9 +171,9 @@ function updateReferenceLineLabels(
 
     const bbox = label.node().getBBox();
     setAttrs(bg, {
-      x: bbox.x - labelPadding,
+      x: bbox.x - padding,
       y: bbox.y,
-      width: bbox.width + labelPadding * 2,
+      width: bbox.width + padding * 2,
       height: bbox.height * 2,
     });
   });
