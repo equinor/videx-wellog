@@ -11,10 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      NODE_VERSION: "20.x"
+      NODE_VERSION: "24.x"
     permissions:
       contents: read
       id-token: write
+      pages: write
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -29,3 +30,13 @@ jobs:
           npm run storybook:build
         env:
           CI: true
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: 'storybook-static'
+        # Deploy to Github Pages
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+        with:
+          token: ${{ github.token }}
