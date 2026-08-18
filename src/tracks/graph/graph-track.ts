@@ -307,7 +307,50 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
     ctx.restore();
     plots.forEach(plot => plot.plot(ctx, dscale));
 
+    this.plotReferenceLines(vscale);
+
     this.setPadding();
+  }
+
+  /**
+   * Render the configured reference lines at explicit values in the track's value domain
+   */
+  protected plotReferenceLines(valueScale: Scale): void {
+    const {
+      ctx,
+      options: { referenceLines, horizontal },
+    } = this;
+
+    if (!referenceLines?.length) return;
+
+    const { width, height } = ctx.canvas;
+    const domain = valueScale.domain();
+    const dmin = Math.min(domain[0], domain[domain.length - 1]);
+    const dmax = Math.max(domain[0], domain[domain.length - 1]);
+
+    ctx.save();
+    referenceLines.forEach(line => {
+      const { value, color = 'black', width: lineWidth = 2, dash } = line;
+
+      if (!Number.isFinite(value) || value < dmin || value > dmax) return;
+
+      const pos = valueScale(value);
+      if (!Number.isFinite(pos)) return;
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.setLineDash(dash ?? []);
+      ctx.beginPath();
+      if (horizontal) {
+        ctx.moveTo(0, pos);
+        ctx.lineTo(width, pos);
+      } else {
+        ctx.moveTo(pos, 0);
+        ctx.lineTo(pos, height);
+      }
+      ctx.stroke();
+    });
+    ctx.restore();
   }
 
   /** Updates all plots with data by triggering each plot's data accessor function. */

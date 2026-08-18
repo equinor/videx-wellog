@@ -30,6 +30,20 @@ interface PaddingConfig {
 }
 
 /**
+ * Config object for rendering a line at an explicit value in the track's value domain
+ */
+export interface ReferenceLineConfig {
+  /** Value in the track's value domain to place the line at */
+  value: number;
+  /** Stroke color of the line. Defaults to 'black'. */
+  color?: string;
+  /** Stroke width of the line in pixels. Defaults to 2. */
+  width?: number;
+  /** Line dash pattern, as accepted by CanvasRenderingContext2D.setLineDash */
+  dash?: number[];
+}
+
+/**
  * Available graph track options
  */
 export interface GraphTrackOptions extends TrackOptions {
@@ -86,6 +100,11 @@ export interface GraphTrackOptions extends TrackOptions {
    * Option to only use major ticks in the graph track
    */
   majorTicksOnly?: boolean;
+  /**
+   * Optional lines rendered on top of the plots at explicit values in the track's value domain,
+   * for example to highlight a cut-off value.
+   */
+  referenceLines?: ReferenceLineConfig[];
 
   forceDataUpdateOnToggle?: boolean;
 }

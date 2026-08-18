@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import { scaleLinear } from 'd3-scale';
 
 import {
@@ -152,6 +151,63 @@ export const graphTrackSinglePlot = () => {
   });
 
   return div;
+};
+
+export const graphTrackReferenceLines = {
+  render: args => {
+    const div = document.createElement('div');
+    div.style.height = '500px';
+    div.style.width = '200px';
+
+    const scale = scaleLinear().domain([0, 1000]).range([0, 500]);
+
+    const track = new GraphTrack('id', {
+      scale: 'linear',
+      domain: [0, 100],
+      data: ex3,
+      plots: [
+        {
+          id: 'noise',
+          type: 'area',
+          options: {
+            color: '#f99d1b',
+            inverseColor: '#12354e',
+            fillOpacity: 1,
+            dataAccessor: d => d.noise,
+          },
+        },
+      ],
+      referenceLines: [
+        {
+          value: args.referenceValue,
+          color: args.referenceColor,
+          width: args.referenceWidth,
+          dash: args.dashed ? [6, 4] : undefined,
+        },
+      ],
+    });
+
+    // Using requestAnimationFrame to ensure that the div is attached
+    // to the DOM before calling init
+    requestAnimationFrame(() => {
+      track.init(div, scale);
+    });
+
+    return div;
+  },
+  argTypes: {
+    referenceColor: { control: 'color' },
+    referenceValue: {
+      control: { type: 'number', min: 0, max: 100, step: 1 },
+    },
+    referenceWidth: { control: { type: 'number', min: 1, max: 10, step: 1 } },
+  },
+  args: {
+    referenceValue: 30,
+    referenceColor: 'green',
+    referenceWidth: 3,
+    dashed: false,
+  },
 };
 
 export const dualScaleTrack = () => {
