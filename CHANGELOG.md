@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/equinor/videx-wellog/compare/v1.5.5...v1.6.0) (2026-08-18)
+
+
+### Features
+
+* **7700:** vertical reference line option in graph track ([#523](https://github.com/equinor/videx-wellog/issues/523)) ([1c92d87](https://github.com/equinor/videx-wellog/commit/1c92d8781a117d4876f4c3a9fba2efafacfe240a))
+
 ## [1.5.5](https://github.com/equinor/videx-wellog/compare/v1.5.4...v1.5.5) (2026-08-12)
 
 
