@@ -7,16 +7,17 @@ on:
 
 permissions: {}
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   release:
     name: Release
     runs-on: ubuntu-24.04
-    env:
-      NODE_VERSION: "24.x"
     permissions:
       contents: write
       pull-requests: write
-      id-token: write
     steps:
       - name: Release Please
         id: release
@@ -24,32 +25,130 @@ jobs:
         with:
           release-type: node
 
+  build:
+    name: Build
+    needs: release
+    runs-on: ubuntu-24.04
+    env:
+      NODE_VERSION: "24.x"
+    permissions: {}
+    outputs:
+      publish_needed: ${{ steps.npm.outputs.publish_needed }}
+    steps:
       - name: Checkout
-        if: ${{ steps.release.outputs.release_created }}
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Setup Node ${{ env.NODE_VERSION }}
-        if: ${{ steps.release.outputs.release_created }}
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
           node-version: ${{ env.NODE_VERSION }}
           package-manager-cache: false
 
+      - name: Check whether current release needs publishing
+        id: npm
+        shell: bash
+        run: |
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          TAG="v${VERSION}"
+          HEAD_SHA="$(git rev-parse HEAD)"
+
+          if ! TAG_SHA="$(git rev-list -n 1 "refs/tags/${TAG}" 2>/dev/null)" || [ -z "${TAG_SHA}" ]; then
+            echo "::notice::Tag ${TAG} does not exist; nothing to publish."
+            echo "Tag ${TAG} does not exist for ${NAME}@${VERSION}; publish_needed=false." >> "$GITHUB_STEP_SUMMARY"
+            echo "publish_needed=false" >> "$GITHUB_OUTPUT"
+          elif [ "${HEAD_SHA}" != "${TAG_SHA}" ]; then
+            echo "::notice::Tag ${TAG} targets ${TAG_SHA}, but HEAD is ${HEAD_SHA}; nothing to publish."
+            echo "Tag ${TAG} resolves to ${TAG_SHA} while HEAD is ${HEAD_SHA}; publish_needed=false." >> "$GITHUB_STEP_SUMMARY"
+            echo "publish_needed=false" >> "$GITHUB_OUTPUT"
+          elif npm view "${NAME}@${VERSION}" version >/dev/null 2>&1; then
+            echo "::notice::${NAME}@${VERSION} is already published."
+            echo "${NAME}@${VERSION} is already published; publish_needed=false." >> "$GITHUB_STEP_SUMMARY"
+            echo "publish_needed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::${NAME}@${VERSION} needs publishing from ${HEAD_SHA}."
+            echo "${NAME}@${VERSION} is not yet published and tag ${TAG} matches HEAD ${HEAD_SHA}; publish_needed=true." >> "$GITHUB_STEP_SUMMARY"
+            echo "publish_needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install dependencies
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.npm.outputs.publish_needed == 'true' }}
         run: npm ci
 
       - name: Build library
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.npm.outputs.publish_needed == 'true' }}
         run: npm run build --if-present
 
       - name: Test
-        if: ${{ steps.release.outputs.release_created }}
+        if: ${{ steps.npm.outputs.publish_needed == 'true' }}
         run: npm test
 
-      - name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm publish
+      - name: Pack npm package
+        if: ${{ steps.npm.outputs.publish_needed == 'true' }}
+        id: pack
+        shell: bash
+        run: |
+          TARBALL="$(npm pack --ignore-scripts --json | node -e 'const fs = require("fs"); const data = JSON.parse(fs.readFileSync(0, "utf8")); if (!Array.isArray(data) || data.length !== 1 || typeof data[0]?.filename !== "string") { console.error("Expected exactly one npm pack result."); process.exit(1); } process.stdout.write(data[0].filename);')"
 
+          case "${TARBALL}" in
+            *.tgz) ;;
+            *)
+              echo "::error::Unexpected npm pack output: ${TARBALL}"
+              exit 1
+              ;;
+          esac
+
+          if [ ! -f "${TARBALL}" ]; then
+            echo "::error::npm pack did not create ${TARBALL}."
+            exit 1
+          fi
+
+          echo "tarball=${TARBALL}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload npm package artifact
+        if: ${{ steps.npm.outputs.publish_needed == 'true' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: npm-package
+          path: ${{ steps.pack.outputs.tarball }}
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    name: Publish
+    needs: build
+    if: ${{ needs.build.outputs.publish_needed == 'true' }}
+    runs-on: ubuntu-24.04
+    env:
+      NODE_VERSION: "24.x"
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Setup Node ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          package-manager-cache: false
+
+      - name: Download npm package artifact
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: npm-package
+          path: npm-package
+
+      - name: Publish to npm
+        shell: bash
+        run: |
+          shopt -s nullglob
+          tarballs=(npm-package/*.tgz)
+
+          if [ "${#tarballs[@]}" -ne 1 ]; then
+            echo "::error::Expected exactly one tarball, found ${#tarballs[@]}."
+            exit 1
+          fi
+
+          npm publish "${tarballs[0]}" --access public --ignore-scripts --provenance
