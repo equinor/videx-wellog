@@ -192,6 +192,15 @@ export default abstract class Track<
   }
 
   /**
+   * Returns true if the track has data to render
+   */
+  hasData(): boolean {
+    const { _data: data } = this;
+    if (data === null || data === undefined) return false;
+    return Array.isArray(data) ? data.length > 0 : true;
+  }
+
+  /**
    * Allow triggering of update event without parameters
    */
   refresh(): void {
