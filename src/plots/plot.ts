@@ -75,6 +75,13 @@ export default abstract class Plot<
   }
 
   /**
+   * Returns true if the plot has data to render
+   */
+  hasData(): boolean {
+    return this.data?.length > 0;
+  }
+
+  /**
    * Set option
    */
   setOption(key: string, value: any): Plot {

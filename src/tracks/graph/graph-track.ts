@@ -318,7 +318,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
    */
   hasData(): boolean {
     if (this.plots.length === 0) return super.hasData();
-    return this.plots.some(p => p.data?.length > 0);
+    return this.plots.some(p => p.hasData());
   }
 
   /**
