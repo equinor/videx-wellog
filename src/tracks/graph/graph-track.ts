@@ -313,6 +313,15 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   }
 
   /**
+   * Override as the track data is a container for the plots' data, which is
+   * extracted by each plot's data accessor
+   */
+  hasData(): boolean {
+    if (this.plots.length === 0) return super.hasData();
+    return this.plots.some(p => p.hasData());
+  }
+
+  /**
    * Render the configured reference lines at explicit values in the track's value domain
    */
   protected plotReferenceLines(valueScale: Scale): void {
@@ -321,7 +330,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
       options: { referenceLines, horizontal },
     } = this;
 
-    if (!referenceLines?.length) return;
+    if (!referenceLines?.length || !this.hasData()) return;
 
     const { width, height } = ctx.canvas;
     const domain = valueScale.domain();

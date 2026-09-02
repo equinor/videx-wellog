@@ -122,7 +122,7 @@ function updateReferenceLineLabels(
   container.select('.reference-line-labels').remove();
 
   const { referenceLines, horizontal } = track.options;
-  if (!referenceLines?.length) return;
+  if (!referenceLines?.length || !track.hasData()) return;
 
   const rowHeight = bounds.height / getGraphTrackLegendRows(track);
   const rowTop = bounds.top + bounds.height - rowHeight;
@@ -131,6 +131,7 @@ function updateReferenceLineLabels(
   const padding = fontSize * 0.25;
 
   const g = container.append('g').classed('reference-line-labels', true);
+  g.append('title').text('Reference line');
   g.attr(
     'transform',
     horizontal

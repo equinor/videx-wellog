@@ -79,6 +79,13 @@ export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   }
 
   /**
+   * Override as the data is a tuple of two series
+   */
+  hasData(): boolean {
+    return this.data?.some(d => d?.length > 0);
+  }
+
+  /**
    * Override of base to support multiple scales
    */
   setRange(range: Range): DifferentialPlot {
