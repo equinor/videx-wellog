@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6.1](https://github.com/equinor/videx-wellog/compare/v1.6.0...v1.6.1) (2026-09-03)
+
+
+### Bug Fixes
+
+* **527:** reference line improvements ([#533](https://github.com/equinor/videx-wellog/issues/533)) ([33aed82](https://github.com/equinor/videx-wellog/commit/33aed8248bfc889b520b48cbb3cf235cff0a342e))
+* **npm:** bump @humanfs/node from 0.16.7 to 0.16.8 ([#537](https://github.com/equinor/videx-wellog/issues/537)) ([2a55425](https://github.com/equinor/videx-wellog/commit/2a55425e7c26bc31479df3bab7668b9b15daf6ee))
+* **npm:** bump browserslist from 4.28.1 to 4.28.8 in /examples/storybook ([#538](https://github.com/equinor/videx-wellog/issues/538)) ([7f6cffa](https://github.com/equinor/videx-wellog/commit/7f6cffa3287e3dcd2ac9cd5427c20b5736e3bc85))
+* **npm:** bump browserslist from 4.28.2 to 4.28.8 ([#536](https://github.com/equinor/videx-wellog/issues/536)) ([65aaba1](https://github.com/equinor/videx-wellog/commit/65aaba163d0e92a83edfc931c5e331b1ef00e401))
+* **npm:** bump fast-uri from 3.1.5 to 3.1.7 in /examples/storybook ([#535](https://github.com/equinor/videx-wellog/issues/535)) ([ed65047](https://github.com/equinor/videx-wellog/commit/ed6504754f3e4f5fd409a9117104fb02354a0bfb))
+
 ## [1.6.0](https://github.com/equinor/videx-wellog/compare/v1.5.5...v1.6.0) (2026-08-18)
 
 
