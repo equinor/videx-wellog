@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/equinor/videx-wellog/compare/v1.6.1...v1.6.2) (2026-09-07)
+
+
+### Bug Fixes
+
+* fix release workflow ([#540](https://github.com/equinor/videx-wellog/issues/540)) ([655a186](https://github.com/equinor/videx-wellog/commit/655a186881ff34b19b746513c6141aed9f61cb2a))
+
 ## [1.6.1](https://github.com/equinor/videx-wellog/compare/v1.6.0...v1.6.1) (2026-09-03)
 
 
