@@ -12,8 +12,7 @@ export default function renderLineStepPlotLegend(
   bounds: LegendBounds,
   legendInfo: LegendInfo,
   plot: LineStepPlot,
-) : void {
-  g.selectAll('*').remove();
+): void {
   renderBasicPlotLegend(
     g,
     bounds,

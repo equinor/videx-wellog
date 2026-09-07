@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { scaleLinear, scaleLog } from 'd3';
+import { scaleLinear, scaleLog } from 'd3-scale';
 import ScaleHelper from '../src/utils/scale-helper';
 
 const EPS = 0.0001;
@@ -34,7 +34,28 @@ describe('ScaleHelper', () => {
       minor: [1000, 2000, 3000, 4000, 6000, 7000, 8000, 9000],
     };
     expect(actual).to.be.eql(expected);
+  });
 
+  it('should be able to create major ticks only from a linear scale', () => {
+    const scale = scaleLinear().domain([0, 1000]).range([0, 100]);
+    const actual = ScaleHelper.createMajorTicks(scale);
+
+    const expected = {
+      major: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
+      minor: [],
+    };
+    expect(actual).to.be.eql(expected);
+  });
+
+  it('should be able to create major ticks only from a piecewise linear scale', () => {
+    const scale = scaleLinear().domain([0, 20, 50, 90]).range([0, 100]);
+    const actual = ScaleHelper.createMajorTicks(scale);
+
+    const expected = {
+      major: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90],
+      minor: [],
+    };
+    expect(actual).to.be.eql(expected);
   });
 
   it('should be able to create scaled major and minor ticks from log scale', () => {
@@ -43,47 +64,9 @@ describe('ScaleHelper', () => {
     const expected = {
       major: [1, 10, 100, 1000],
       minor: [
-        0.2,
-        0.1 * 3,
-        0.4,
-        0.5,
-        0.1 * 6,
-        0.1 * 7,
-        0.8,
-        0.9,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        20,
-        30,
-        40,
-        50,
-        60,
-        70,
-        80,
-        90,
-        200,
-        300,
-        400,
-        500,
-        600,
-        700,
-        800,
-        900,
-        2000,
-        3000,
-        4000,
-        5000,
-        6000,
-        7000,
-        8000,
-        9000,
-        10000,
+        0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 2, 3, 4, 5, 6, 7, 8, 9, 20, 30,
+        40, 50, 60, 70, 80, 90, 200, 300, 400, 500, 600, 700, 800, 900, 2000,
+        3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
       ],
     };
     expect(actual).to.be.eql(expected);
@@ -95,11 +78,19 @@ describe('ScaleHelper', () => {
     expect(ScaleHelper.getRangeSpan(scale)).to.eq(245);
 
     // without specified domain
-    expect(ScaleHelper.getDomainPixelSpan(scale)).to.eq(ScaleHelper.getRangeSpan(scale));
+    expect(ScaleHelper.getDomainPixelSpan(scale)).to.eq(
+      ScaleHelper.getRangeSpan(scale),
+    );
 
     // with specified domain
-    expect(ScaleHelper.getDomainPixelSpan(scale, [30, 40])).to.be.closeTo(35.50724, EPS);
-    expect(ScaleHelper.getDomainPixelSpan(scale, [-30, 0])).to.be.closeTo(106.5217, EPS);
+    expect(ScaleHelper.getDomainPixelSpan(scale, [30, 40])).to.be.closeTo(
+      35.50724,
+      EPS,
+    );
+    expect(ScaleHelper.getDomainPixelSpan(scale, [-30, 0])).to.be.closeTo(
+      106.5217,
+      EPS,
+    );
   });
 
   it('should return the scales pixel ratio (domain units per pixels)', () => {
@@ -110,5 +101,20 @@ describe('ScaleHelper', () => {
   it('should return the scales domain ratio (dpixels per domain units)', () => {
     const scale = scaleLinear().domain([21, 90]).range([0, 245]);
     expect(ScaleHelper.getDomainRatio(scale)).to.be.closeTo(0.28163, EPS);
+  });
+
+  it('should return the domain span of a linear scale', () => {
+    const scale = scaleLinear().domain([25, 100]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, false)).to.eq(75);
+  });
+
+  it('should return the domain span of a linear piecewise scale', () => {
+    const scale = scaleLinear().domain([25, 50, 75, 100]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, false)).to.eq(75);
+  });
+
+  it('should return the domain span of a linear scale as an absolute value', () => {
+    const scale = scaleLinear().domain([100, 0]).range([0, 100]);
+    expect(ScaleHelper.getDomainSpan(scale, true)).to.eq(100);
   });
 });

@@ -1,0 +1,226 @@
+import {
+  ScaleTrack,
+  GraphTrack,
+  StackedTrack,
+  graphLegendConfig,
+  LegendHelper,
+  scaleLegendConfig,
+  distributionLegendConfig,
+  DistributionTrack,
+  ColorStripTrack,
+  MarkerTrack,
+} from '../../../../src';
+import { exampleMajorityPredictionData } from './majority-prediction-mock';
+import {
+  ex1,
+  ex2,
+  ex3,
+  ex4_large,
+  exampleDipPlotData,
+  exampleDistributionData,
+  exampleFaultPickData,
+} from './mock-data';
+
+const distributionComponents = {
+  carbonate: {
+    color: 'FireBrick',
+    textColor: '#8E1B1B',
+  },
+  sand: {
+    color: 'SandyBrown',
+    textColor: '#9C693E',
+  },
+  shale: {
+    color: 'SlateGrey',
+    textColor: '#5A6673',
+  },
+};
+
+export default (delayLoading = false) => {
+  const tracks = [
+    new ScaleTrack(0, {
+      maxWidth: 50,
+      width: 2,
+      label: 'MD',
+      abbr: 'MD',
+      units: 'mtr',
+      legendConfig: scaleLegendConfig,
+    }),
+    new GraphTrack(1, {
+      legendConfig: LegendHelper.basicVerticalLabel('Some label', 'Abbr'),
+      scale: 'log',
+      domain: [0.1, 1000],
+      label: 'Track A',
+      width: 2,
+      data: [],
+    }),
+    new GraphTrack(2, {
+      label: 'Pointy',
+      tooltip: 'a graph with points',
+      abbr: 'Pt',
+      data: ex1,
+      scale: 'linear',
+      domain: [0, 1],
+      legendConfig: graphLegendConfig,
+      plots: [
+        {
+          id: 'dots',
+          type: 'dot',
+          options: {
+            color: 'orange',
+            legendInfo: () => ({
+              label: 'DOT',
+              unit: 'bar',
+            }),
+          },
+        },
+      ],
+    }),
+    new GraphTrack(3, {
+      label: 'Dip',
+      tooltip: 'a graph with dip plots',
+      abbr: 'Dip',
+      data: exampleDipPlotData,
+      scale: 'linear',
+      domain: [0, 20, 50, 90],
+      legendConfig: graphLegendConfig,
+      majorTicksOnly: true,
+      padding: {
+        size: 20,
+        hideExcessData: false,
+      },
+      plots: [
+        {
+          id: 'dip',
+          type: 'dip',
+          options: {
+            legendInfo: () => ({
+              label: 'DIP',
+              unit: 'deg',
+            }),
+          },
+        },
+      ],
+    }),
+    new GraphTrack(4, {
+      label: 'Some noise',
+      abbr: 'noise',
+      data: ex2,
+      legendConfig: graphLegendConfig,
+      plots: [
+        {
+          id: 'noise',
+          type: 'line',
+          options: {
+            color: 'blue',
+            filterToScale: false,
+            dataAccessor: d => d.noise,
+            legendInfo: () => ({
+              label: 'Plot1',
+              unit: 'mm',
+            }),
+          },
+        },
+        {
+          id: 'more_noise',
+          type: 'linestep',
+          options: {
+            scale: 'linear',
+            domain: [0, 40],
+            color: 'black',
+            offset: 0.5,
+            dataAccessor: d => d.noise2,
+            legendInfo: () => ({
+              label: 'Plot2',
+              unit: 'Pwr',
+            }),
+          },
+        },
+      ],
+    }),
+    new GraphTrack(5, {
+      label: 'Sinus curve',
+      abbr: 'sin',
+      data: ex3,
+      legendConfig: graphLegendConfig,
+      referenceLines: [{ value: 30, color: '#f27291', width: 2 }],
+      plots: [
+        {
+          id: 'noise',
+          type: 'area',
+          options: {
+            legendInfo: () => ({
+              label: 'Noise',
+              unit: 'Amp',
+            }),
+            color: 'green',
+            inverseColor: 'blue',
+            useMinAsBase: false,
+            width: 0.5,
+            fillOpacity: 0.3,
+            dataAccessor: d => d.noise,
+          },
+        },
+        {
+          id: 'sin',
+          type: 'line',
+          options: {
+            color: 'purple',
+            width: 3,
+            legendInfo: () => ({
+              label: 'SIN',
+              unit: 'W',
+            }),
+            dataAccessor: d => d.sin,
+          },
+        },
+      ],
+    }),
+    new StackedTrack(6, {
+      label: 'Formation',
+      showLines: false,
+      labelRotation: -90,
+      data: ex4_large,
+    }),
+    new MarkerTrack(9, {
+      label: 'Fault Picks',
+      abbr: 'FP',
+      data: exampleFaultPickData,
+      width: 1.5,
+      iconSize: 10,
+    }),
+    new DistributionTrack(7, {
+      label: 'Distribution',
+      abbr: 'Dst',
+      data: exampleDistributionData,
+      legendConfig: distributionLegendConfig,
+      components: distributionComponents,
+      interpolationType: 0,
+    }),
+    new ColorStripTrack(8, {
+      label: 'Color Strip',
+      abbr: 'CS',
+      data: exampleMajorityPredictionData,
+      legendConfig: LegendHelper.basicVerticalLabel(
+        'Majority Prediction',
+        'Pred',
+      ),
+    }),
+  ];
+
+  if (delayLoading) {
+    // change data to promise to show loaders
+    tracks.forEach(track => {
+      if (track.options.data) {
+        const delay = 1000 + Math.random() * 1000;
+        const data = track.options.data;
+        track.options.data = () =>
+          new Promise(resolve => {
+            setTimeout(() => resolve(data), delay);
+          });
+      }
+    });
+  }
+
+  return tracks;
+};

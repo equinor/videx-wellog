@@ -1,21 +1,19 @@
-import { line, area } from 'd3';
+import { line, area } from 'd3-shape';
 import Plot from './plot';
 import DataHelper from '../utils/data-helper';
 import { createScale } from '../tracks/graph/factory';
-import { PlotData, DifferentialPlotOptions, DifferentialPlotData } from './interfaces';
+import { PlotData, DifferentialPlotOptions, PlotOptions } from './interfaces';
 import { Scale, Triplet, Range } from '../common/interfaces';
-
 
 /**
  * Differential plot
  */
-export default class DifferentialPlot extends Plot {
+export default class DifferentialPlot extends Plot<DifferentialPlotOptions> {
   scale1: Scale;
   scale2: Scale;
-  options: DifferentialPlotOptions;
   data: [PlotData, PlotData];
   extent: [number, number];
-  constructor(id : string | number, options : DifferentialPlotOptions = {}) {
+  constructor(id: string | number, options: DifferentialPlotOptions = {}) {
     const opts: DifferentialPlotOptions = {
       serie1: {
         color: 'red',
@@ -33,59 +31,84 @@ export default class DifferentialPlot extends Plot {
     this.scale2 = null;
     this.setRange = this.setRange.bind(this);
 
-    if (options.scale && options.domain) {
-      this.scale = createScale(
-        options.scale,
-        options.domain || [0, 1],
-      );
+    const { serie1, serie2 } = options;
+
+    if (
+      options.scale &&
+      options.domain &&
+      typeof options.domain !== 'function'
+    ) {
+      this.scale = createScale(options.scale, options.domain || [0, 1]);
       this.scale1 = this.scale;
       this.scale2 = this.scale;
     }
-    if (options.serie1 && options.serie1.scale) {
+    if (serie1?.scale && typeof serie1.domain !== 'function') {
       this.scale1 = createScale(
-        options.serie1.scale,
-        options.serie1.domain || [0, 1],
+        serie1.scale,
+        <number[]>serie1.domain || [0, 1],
       );
     }
-    if (options.serie2 && options.serie2.scale) {
+    if (serie2?.scale && typeof serie2.domain !== 'function') {
       this.scale2 = createScale(
-        options.serie2.scale,
-        options.serie2.domain || [0, 1],
+        serie2.scale,
+        <number[]>serie2.domain || [0, 1],
       );
     }
   }
 
-  setData(data : any, scale?: Scale) : DifferentialPlot {
+  setData(
+    data: any,
+    scale?: Scale,
+    plotOptions?: Map<string | number, PlotOptions>,
+  ): DifferentialPlot {
     let diffplotData = data;
-    if (this.options.dataAccessor && typeof this.options.dataAccessor === 'function') {
-      diffplotData = this.options.dataAccessor(data);
+    if (
+      this.options.dataAccessor &&
+      typeof this.options.dataAccessor === 'function'
+    ) {
+      diffplotData = this.options.dataAccessor(data, plotOptions);
     }
     if (this.options.filterToScale && scale) {
       const filterOverlapFactor = this.options.filterOverlapFactor || 0.5;
-      diffplotData = diffplotData.map((d: PlotData) => DataHelper.filterData(d, scale.domain(), filterOverlapFactor));
+      diffplotData = diffplotData.map((d: PlotData) =>
+        DataHelper.filterData(d, scale.domain(), filterOverlapFactor),
+      );
     }
     this.data = diffplotData;
     return this;
   }
 
   /**
+   * Override as the data is a tuple of two series
+   */
+  hasData(): boolean {
+    return this.data?.some(d => d?.length > 0);
+  }
+
+  /**
    * Override of base to support multiple scales
    */
-  setRange(range: Range) : DifferentialPlot {
+  setRange(range: Range): DifferentialPlot {
     if (this.scale1) this.scale1.range(range);
     if (this.scale2) this.scale2.range(range);
+    this.range = range;
     return this;
   }
 
   /**
    * Update plot options
    */
-  setOption(key: string, value: any) : DifferentialPlot {
+  setOption(key: string, value: any): DifferentialPlot {
     if (!this.options) {
       this.options = {};
     }
     let ops = this.options;
     const path = key.split('.');
+
+    const blockedKeys = ['__proto__', 'constructor', 'prototype'];
+    if (path.some(p => blockedKeys.includes(p))) {
+      throw new Error('Prototype pollution attempt detected');
+    }
 
     if (path.length === 2 && path[0].match(/serie(1|2)/)) {
       if (!ops[path[0]]) {
@@ -114,11 +137,34 @@ export default class DifferentialPlot extends Plot {
     return this;
   }
 
+  updateDynamicScale(data, graphOptions): void {
+    const { options, range } = this;
+
+    if (typeof options.domain === 'function') {
+      const domain = options.domain(data);
+      this.scale = createScale(options.scale || graphOptions.scale, domain);
+      this.scale1 = this.scale;
+      this.scale2 = this.scale;
+    }
+    if (typeof options.serie1.domain === 'function') {
+      const domain = options.serie1.domain(data);
+      this.scale1 = createScale(options.scale || graphOptions.scale, domain);
+    }
+    if (typeof options.serie2.domain === 'function') {
+      const domain = options.serie2.domain(data);
+      this.scale2 = createScale(options.scale || graphOptions.scale, domain);
+    }
+
+    if (range) {
+      this.scale1.range(range);
+      this.scale2.range(range);
+    }
+  }
 
   /**
    * Renders differential plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
     const {
       scale1: xscale1,
       scale2: xscale2,
@@ -143,18 +189,20 @@ export default class DifferentialPlot extends Plot {
       const a = plotdata[0][i];
       const b = plotdata[1][i];
       if (a) {
-        scaleddata[0][i] = def(a[1], a[0]) ? [scale(a[0]), xscale1(a[1])] : [scale(a[0]), a[1]];
+        scaleddata[0][i] = def(a[1], a[0])
+          ? [scale(a[0]), xscale1(a[1])]
+          : [scale(a[0]), a[1]];
         if (scaleddata[0][i][1] < min) min = scaleddata[0][i][1];
         if (scaleddata[0][i][1] > max) max = scaleddata[0][i][1];
       }
       if (b) {
-        scaleddata[1][i] = def(b[1], b[0]) ? [scale(b[0]), xscale2(b[1])] : [scale(b[0]), b[1]];
+        scaleddata[1][i] = def(b[1], b[0])
+          ? [scale(b[0]), xscale2(b[1])]
+          : [scale(b[0]), b[1]];
         if (scaleddata[1][i][1] < min) min = scaleddata[1][i][1];
         if (scaleddata[1][i][1] > max) max = scaleddata[1][i][1];
       }
     }
-
-    const merged = DataHelper.mergeDataSeries(scaleddata[0] || [], scaleddata[1] || []);
 
     // render correlation areas
     const areaFunction1 = area<Triplet<number>>().context(ctx);
@@ -162,50 +210,38 @@ export default class DifferentialPlot extends Plot {
 
     if (horizontal) {
       areaFunction1
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]))
         .y0(max)
         .y1(d => d[1])
         .x(d => d[0]);
 
       areaFunction2
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]))
         .y0(min)
-        .y1(d => d[2])
+        .y1(d => d[1])
         .x(d => d[0]);
     } else {
       areaFunction1
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]))
         .x0(min)
         .x1(d => d[1])
         .y(d => d[0]);
 
       areaFunction2
-        .defined(
-          d => def(d[1], d[0])
-            && def(d[2], d[0])
-        )
+        .defined(d => def(d[1], d[0]))
         .x0(max)
-        .x1(d => d[2])
+        .x1(d => d[1])
         .y(d => d[0]);
     }
 
     ctx.save();
     ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
-    areaFunction2(merged);
+    areaFunction2(scaleddata[1]);
     ctx.clip();
 
     ctx.beginPath();
-    areaFunction1(merged);
+    areaFunction1(scaleddata[0]);
     ctx.fillStyle = serie1.fill;
     ctx.fill();
     ctx.restore();
@@ -221,11 +257,11 @@ export default class DifferentialPlot extends Plot {
     ctx.save();
     ctx.globalAlpha = fillOpacity || 0.5;
     ctx.beginPath();
-    areaFunction1(merged);
+    areaFunction1(scaleddata[0]);
     ctx.clip();
 
     ctx.beginPath();
-    areaFunction2(merged);
+    areaFunction2(scaleddata[1]);
     ctx.fillStyle = serie2.fill;
     ctx.fill();
     ctx.restore();

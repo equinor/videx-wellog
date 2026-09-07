@@ -12,14 +12,14 @@ export default function renderLinePlotLegend(
   bounds: LegendBounds,
   legendInfo: LegendInfo,
   plot: LinePlot,
-) : void {
-  g.selectAll('*').remove();
+): void {
   renderBasicPlotLegend(
     g,
     bounds,
     legendInfo.label,
     legendInfo.unit,
-    plot.scale.domain(),
+    plot.scale?.domain() || [0, 1],
     plot.options.color,
+    { largeFontEnabled: true, dash: plot.options.dash },
   );
 }

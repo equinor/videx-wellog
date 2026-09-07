@@ -1,38 +1,34 @@
-import { line } from 'd3';
+import { line } from 'd3-shape';
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
-import { PlotData, LinePlotOptions } from './interfaces';
+import { LinePlotOptions } from './interfaces';
 import stepCustom from './generators/step-custom';
 /**
  * Line-step plot
  */
-export default class LineStepPlot extends Plot {
-  options: LinePlotOptions;
-  scale: Scale;
-  data: PlotData;
-
+export default class LineStepPlot extends Plot<LinePlotOptions> {
   /**
    * Renders line-step plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
     ctx.save();
 
     const lineFunction = line()
-      .defined(d => true)
+      .defined(() => true)
       .curve(stepCustom)
       .context(ctx);
     if (options.horizontal) {
-      lineFunction.y(d => (d[1] === null ? NaN : xscale(d[1]))).x(d => (d[0] === null ? NaN : scale(d[0])));
+      lineFunction
+        .y(d => (d[1] === null ? NaN : xscale(d[1])))
+        .x(d => (d[0] === null ? NaN : scale(d[0])));
     } else {
-      lineFunction.x(d => (d[1] == null ? NaN : xscale(d[1]))).y(d => (d[0] == null ? NaN : scale(d[0])));
+      lineFunction
+        .x(d => (d[1] == null ? NaN : xscale(d[1])))
+        .y(d => (d[0] == null ? NaN : scale(d[0])));
     }
 
     ctx.beginPath();

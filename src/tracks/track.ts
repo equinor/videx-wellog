@@ -1,11 +1,18 @@
-import { select } from 'd3';
-import { TrackOptions, Transform, OnMountEvent, OnUnmountEvent, OnUpdateEvent, OnRescaleEvent } from './interfaces';
+import { select } from 'd3-selection';
+import {
+  TrackOptions,
+  Transform,
+  OnMountEvent,
+  OnUnmountEvent,
+  OnUpdateEvent,
+  OnRescaleEvent,
+} from './interfaces';
 import { D3Selection, Scale } from '../common/interfaces';
 import { LegendTriggerFunction } from '../utils/legend-helper';
 /**
  * Default options
  */
-const defaults = {
+const defaults: TrackOptions = {
   width: 3,
   maxWidth: null,
   horizontal: false,
@@ -14,8 +21,10 @@ const defaults = {
 /**
  * Abstract base class for wellog tracks
  */
-export default abstract class Track {
-  public options: TrackOptions;
+export default abstract class Track<
+  TRACK_OPTIONS extends TrackOptions = TrackOptions,
+> {
+  public options: TRACK_OPTIONS;
   public id: string | number;
   public elm: HTMLElement;
   public loader: D3Selection;
@@ -25,12 +34,14 @@ export default abstract class Track {
   public order: number;
   public legendUpdate?: LegendTriggerFunction;
 
-
   protected _data: any;
   protected _isLoading: boolean;
   protected _mounted: boolean;
 
-  constructor(id: string | number, options: TrackOptions = {}) {
+  constructor(
+    id: string | number,
+    options: TRACK_OPTIONS = {} as TRACK_OPTIONS,
+  ) {
     this.options = {
       ...defaults,
       ...options,
@@ -57,7 +68,7 @@ export default abstract class Track {
   /**
    * Calls OnMount and OnUpdate. Useful if track is stand-alone
    */
-  init(elm: HTMLElement, scale: Scale) : void {
+  init(elm: HTMLElement, scale: Scale): void {
     this.onMount({ elm, scale });
     this.onUpdate({ elm, scale });
   }
@@ -66,11 +77,8 @@ export default abstract class Track {
    * Handler for onMount event. Called by container when track DOM element
    * is added to the DOM model.
    */
-  onMount(trackEvent: OnMountEvent) : void {
-    const {
-      elm,
-      scale,
-    } = trackEvent;
+  onMount(trackEvent: OnMountEvent): void {
+    const { elm, scale } = trackEvent;
     this.elm = elm;
     this.scale = scale;
 
@@ -84,7 +92,7 @@ export default abstract class Track {
    * Handler for onUnmount event. Called when track DOM-element is remove from the
    * DOM model. Typically, trackEvent will be an empty object, but depends on container.
    */
-  onUnmount(trackEvent: OnUnmountEvent = {}) : void {
+  onUnmount(trackEvent: OnUnmountEvent = {}): void {
     if (this.options.onUnmount) {
       this.options.onUnmount(trackEvent, this);
     }
@@ -94,7 +102,7 @@ export default abstract class Track {
   /**
    * Handler for onChange event. Called by container when track is resized.
    */
-  onUpdate(trackEvent: OnUpdateEvent) : void {
+  onUpdate(trackEvent: OnUpdateEvent): void {
     if (!this._mounted) return;
 
     this.scale = trackEvent.scale;
@@ -106,12 +114,8 @@ export default abstract class Track {
   /**
    * Handler for onRescale event. Called by container when y-scale domain/transform is changed.
    */
-  onRescale(trackEvent: OnRescaleEvent) : void {
-    const {
-      domain,
-      scale,
-      transform,
-    } = trackEvent;
+  onRescale(trackEvent: OnRescaleEvent): void {
+    const { domain, scale, transform } = trackEvent;
 
     if (!this._mounted) return;
 
@@ -134,7 +138,7 @@ export default abstract class Track {
    * Should be called from track implementation in case an
    * unrecoverable error occurs.
    */
-  onError(error: Error | string) : void {
+  onError(error: Error | string): void {
     this._mounted = false;
     this.isLoading = false;
     this.error = error;
@@ -146,6 +150,7 @@ export default abstract class Track {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onDataLoaded(data?: any) {
     if (this.isLoading) this.isLoading = false;
   }
@@ -156,24 +161,24 @@ export default abstract class Track {
    * hidden, and (if supplied) the loader element will be shown, until data
    * is resolved. Calls onDataLoaded if implemented by track.
    */
-  loadData(data: (Promise<any>|Function|any), showLoader: boolean = true) : void {
+  loadData(
+    data: Promise<any> | Function | any,
+    showLoader: boolean = true,
+  ): void {
     if (showLoader) this.isLoading = true;
 
     const onSuccess = d => {
       this._data = d;
       if (this.isLoading) this.isLoading = false;
-      if (this.legendUpdate) this.legendUpdate();
       if (this.onDataLoaded) {
         this.onDataLoaded(d);
       }
+      if (this.legendUpdate) this.legendUpdate();
     };
 
     const res = data();
     if (res.then) {
-      res.then(
-        onSuccess,
-        this.onError,
-      );
+      res.then(onSuccess, this.onError);
     } else if (typeof res === 'object') {
       onSuccess(res);
     } else {
@@ -181,17 +186,31 @@ export default abstract class Track {
     }
   }
 
+  clearData() {
+    this._data = null;
+    this.onDataLoaded(null);
+  }
+
+  /**
+   * Returns true if the track has data to render
+   */
+  hasData(): boolean {
+    const { _data: data } = this;
+    if (data === null || data === undefined) return false;
+    return Array.isArray(data) ? data.length > 0 : true;
+  }
+
   /**
    * Allow triggering of update event without parameters
    */
-  refresh() : void {
+  refresh(): void {
     const { scale } = this;
     if (scale) {
       this.onUpdate({ elm: this.elm, scale });
     }
   }
 
-  get isLoading() : boolean {
+  get isLoading(): boolean {
     return this._isLoading;
   }
 
@@ -204,15 +223,15 @@ export default abstract class Track {
     this.refresh();
   }
 
-  get data() : any {
-    return this._data;
-  }
-
   get isMounted() {
     return this._mounted;
   }
 
-  set data(data: Promise<any>|Function|any) {
+  get data(): any {
+    return this._data;
+  }
+
+  set data(data: Promise<any> | Function | any) {
     if (typeof data === 'function') {
       this.loadData(data, false);
     } else {

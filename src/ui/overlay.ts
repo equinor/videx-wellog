@@ -1,9 +1,12 @@
-import { mouse, select, event } from 'd3';
+import { select, pointer } from 'd3-selection';
 import { setStyles } from '../utils/d3-utils';
 import { D3Selection } from '../common/interfaces';
 import { Overlay, OverlayCallbacks } from './interfaces';
 
-export default function createOverlay(caller: any, container: D3Selection) : Overlay {
+export default function createOverlay(
+  caller: any,
+  container: D3Selection,
+): Overlay {
   const overlay = {
     elm: container.append('div').classed('overlay', true),
     elements: {},
@@ -13,22 +16,45 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
 
   const source = overlay.elm.node();
 
-  overlay.elm.on('mousemove', function overlayTrack() {
+  overlay.elm.on('click', function overlayTrack(event) {
+    if (!overlay.enabled) return;
+    const [mx, my] = pointer(event, this);
+    Object.keys(overlay.listeners).forEach((key: string) => {
+      const target = overlay.elements[key] || null;
+      const ops = overlay.listeners[key];
+
+      if (ops && ops.onClick) {
+        requestAnimationFrame(() =>
+          ops.onClick({
+            x: mx,
+            y: my,
+            target,
+            source,
+            caller,
+          }),
+        );
+      }
+    });
+  });
+
+  overlay.elm.on('mousemove', function overlayTrack(event) {
     if (!overlay.enabled) return;
 
-    const [mx, my] = mouse(this);
+    const [mx, my] = pointer(event, this);
     Object.keys(overlay.listeners).forEach((key: string) => {
       const target = overlay.elements[key] || null;
       const ops = overlay.listeners[key];
 
       if (ops && ops.onMouseMove) {
-        requestAnimationFrame(() => ops.onMouseMove({
-          x: mx,
-          y: my,
-          target,
-          source,
-          caller,
-        }));
+        requestAnimationFrame(() =>
+          ops.onMouseMove({
+            x: mx,
+            y: my,
+            target,
+            source,
+            caller,
+          }),
+        );
       }
     });
   });
@@ -39,16 +65,18 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
       const target = overlay.elements[key] || null;
       const ops = overlay.listeners[key];
       if (ops && ops.onMouseExit) {
-        requestAnimationFrame(() => ops.onMouseExit({
-          target,
-          source,
-          caller,
-        }));
+        requestAnimationFrame(() =>
+          ops.onMouseExit({
+            target,
+            source,
+            caller,
+          }),
+        );
       }
     });
   });
 
-  overlay.elm.on('resize', () => {
+  overlay.elm.on('resize', event => {
     const { top, left, width, height } = event.detail;
 
     setStyles(overlay.elm, {
@@ -64,18 +92,20 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
       const target = overlay.elements[key] || null;
       const ops = overlay.listeners[key];
       if (ops && ops.onResize) {
-        requestAnimationFrame(() => ops.onResize({
-          target,
-          source,
-          caller,
-          width,
-          height,
-        }));
+        requestAnimationFrame(() =>
+          ops.onResize({
+            target,
+            source,
+            caller,
+            width,
+            height,
+          }),
+        );
       }
     });
   });
 
-  overlay.elm.on('rescale', () => {
+  overlay.elm.on('rescale', event => {
     if (!overlay.enabled) return;
 
     const { transform } = event.detail;
@@ -84,18 +114,21 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
       const target = overlay.elements[key] || null;
       const ops = overlay.listeners[key];
       if (ops && ops.onRescale) {
-        requestAnimationFrame(() => ops.onRescale({
-          target,
-          source,
-          caller,
-          transform,
-        }));
+        requestAnimationFrame(() =>
+          ops.onRescale({
+            target,
+            source,
+            caller,
+            transform,
+          }),
+        );
       }
     });
   });
 
-  function create(key: string, callbacks?: OverlayCallbacks) : HTMLElement {
-    const newElm = overlay.elm.append('div')
+  function create(key: string, callbacks?: OverlayCallbacks): HTMLElement {
+    const newElm = overlay.elm
+      .append('div')
       .style('position', 'relative')
       .style('pointer-events', 'none')
       .node();
@@ -106,11 +139,11 @@ export default function createOverlay(caller: any, container: D3Selection) : Ove
     return newElm;
   }
 
-  function register(key: string, callbacks: OverlayCallbacks) : void {
+  function register(key: string, callbacks: OverlayCallbacks): void {
     overlay.listeners[key] = callbacks;
   }
 
-  function remove(key: string) : void {
+  function remove(key: string): void {
     const el = overlay.elements[key];
     if (el) {
       select(el).remove();

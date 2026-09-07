@@ -13,29 +13,22 @@ export default function renderDifferentialPlotLegend(
   bounds: LegendBounds,
   legendInfo: DifferentialPlotLegendInfo,
   plot: DifferentialPlot,
-) : void {
+): void {
   const { top, left, width, height } = bounds;
+  const { legendRows, serie1: options1, serie2: options2 } = plot.options;
+  const { serie1: legend1, serie2: legend2 } = legendInfo;
 
-  const d1 = plot.scale1.domain();
-  const d2 = plot.scale2.domain();
+  const hasTwoLegends = legendRows === 2 && legend2 != null;
+  const d1 = plot.scale1?.domain() || [0, 1];
+  const d2 = plot.scale2?.domain() || [0, 1];
   const fillOpacity = Math.min(plot.options.fillOpacity + 0.25, 1);
   const centerX = left + width / 2;
   const y1 = top;
-  const y2 = top + height * 0.5;
+  const y2 = hasTwoLegends ? top + height * 0.5 : top + height;
   const y3 = top + height;
-  const shadeH = height / 4;
-  const shadeW = Math.max(0, (width / 2) - 2);
+  const shadeH = hasTwoLegends ? height / 4 : height / 2;
+  const shadeW = Math.max(0, width / 2 - 2);
   const shadeY = y1;
-  const {
-    serie1: options1,
-    serie2: options2,
-  } = plot.options;
-  const {
-    serie1: legend1,
-    serie2: legend2,
-  } = legendInfo;
-
-  g.selectAll('*').remove();
 
   if (legend1 && legend1.show) {
     setAttrs(g.append('rect'), {
@@ -66,7 +59,7 @@ export default function renderDifferentialPlotLegend(
       legend1.unit,
       d1,
       options1.color,
-      true,
+      { addLabelBg: true },
     );
   }
 
@@ -82,6 +75,7 @@ export default function renderDifferentialPlotLegend(
       legend2.unit,
       d2,
       options2.color,
+      { largeFontEnabled: true },
     );
   }
 }

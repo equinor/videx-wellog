@@ -1,7 +1,13 @@
 import CanvasTrack from '../canvas-track';
 import { createScale, plotFactory as defaultPlotFactory } from './factory';
-import { GridHelper, ScaleHelper, debouncer, DebounceFunction, DataHelper } from '../../utils';
+import {
+  GridHelper,
+  ScaleHelper,
+  debouncer,
+  DebounceFunction,
+} from '../../utils';
 import { Plot } from '../../plots';
+import { PlotOptions } from '../../plots/interfaces';
 import { Scale } from '../../common/interfaces';
 import { GraphTrackOptions } from './interfaces';
 import { OnMountEvent, OnRescaleEvent, OnUpdateEvent } from '../interfaces';
@@ -11,47 +17,38 @@ const defaultOptions = {
   scale: 'linear',
   domain: [0, 100],
   togglePlotFromLegend: true,
+  forceDataUpdateOnToggle: false,
   plotFactory: defaultPlotFactory,
 };
-
-/**
- * Updates all plots with data by triggering each plot's data accessor function
- */
-function setPlotData(plots: Plot[], data: any, scale: Scale) : void {
-  plots.forEach(p => p.setData(data, scale));
-}
 
 /**
  * An extension to CanvasTrack for rendering plots
  *
  * See ./readme.md in source code for more info
  */
-export default class GraphTrack extends CanvasTrack {
+export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   trackScale: Scale;
-  options: GraphTrackOptions;
   plots: Plot[];
   debounce: DebounceFunction;
 
   private _transformedData?: any;
   private _transformCondition?: number = null;
 
-  constructor(id: string|number, options: GraphTrackOptions = {}) {
+  constructor(id: string | number, options: GraphTrackOptions = {}) {
     super(id, {
       ...defaultOptions,
       ...options,
     });
 
-    this.trackScale = createScale(
-      this.options.scale,
-      this.options.domain,
-    );
+    this.trackScale = createScale(this.options.scale, this.options.domain);
 
     this.plots = [];
 
     if (this.options.plots) {
       this.plots = options.plots.map(p => {
         const createPlot = this.options.plotFactory[p.type];
-        if (!createPlot) throw Error(`No factory function for creating '${p.type}'-plot!`);
+        if (!createPlot)
+          throw Error(`No factory function for creating '${p.type}'-plot!`);
         return createPlot(p, this.trackScale);
       });
     }
@@ -64,17 +61,14 @@ export default class GraphTrack extends CanvasTrack {
   /**
    * Override of onMount to load track data
    */
-  onMount(trackEvent: OnMountEvent) : void {
+  onMount(trackEvent: OnMountEvent): void {
     super.onMount(trackEvent);
-    const {
-      options,
-      loader,
-    } = this;
+    const { options, loader } = this;
 
     if (options.data) {
-      const showLoader = options.showLoader === undefined ? !!loader : options.showLoader;
+      const showLoader = options.showLoader ?? Boolean(loader);
 
-      if (showLoader && typeof (options.data) === 'function') {
+      if (showLoader && typeof options.data === 'function') {
         this.loadData(options.data, showLoader);
       } else {
         this.data = options.data;
@@ -85,16 +79,16 @@ export default class GraphTrack extends CanvasTrack {
   /**
    * Override to allow data transformations, like resampling and filtering
    */
-  onRescale(trackEvent: OnRescaleEvent) : void {
+  onRescale(trackEvent: OnRescaleEvent): void {
     super.onRescale(trackEvent);
-    this.debounce(this.prepareData);
+    this.prepareData();
     this.plot();
   }
 
   /**
    * Override to resize plots and scales
    */
-  onUpdate(trackEvent: OnUpdateEvent) : void {
+  onUpdate(trackEvent: OnUpdateEvent): void {
     super.onUpdate(trackEvent);
     this.updateRange();
     this.plot();
@@ -103,27 +97,70 @@ export default class GraphTrack extends CanvasTrack {
   /**
    * Callback after data loaded, using loadData.
    */
-  onDataLoaded() : void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDataLoaded(data): void {
     this._transformCondition = null;
+    this._transformedData = null;
     this.prepareData();
+    this.updateDynamicScales();
+    this.plot();
+  }
+
+  /**
+   * Create range based on domain.
+   */
+  createRange(isHorizontal: boolean): number[] {
+    const domain = this.trackScale.domain();
+    const domainIndex = domain.length - 1;
+    const elmWidth = isHorizontal
+      ? this.elm.clientHeight
+      : this.elm.clientWidth;
+    const padding = this.options.padding?.size ?? 0;
+    // If the total padding to be applied to the track is greater than the available width,
+    // or the value provided is a negative value,
+    // set the padding to zero
+    const disablePadding = padding * 2 > elmWidth || padding < 0;
+    const trackPadding = disablePadding ? 0 : Math.abs(padding);
+    const trackWidth = elmWidth - trackPadding * 2;
+    const range = [];
+
+    // Add start entry
+    range.push(trackPadding);
+
+    // If the domain has more than two entries (start and end),
+    // add the others equally spaced along the range
+    for (let i = 1; i < domainIndex; i++) {
+      const rangeEntry = (trackWidth / domainIndex) * i + trackPadding;
+      range.push(rangeEntry);
+    }
+
+    // Add last entry
+    range.push(elmWidth - trackPadding);
+
+    // Reverse the array for horizontal mode
+    if (isHorizontal) {
+      const horizontalRange = range.reverse();
+      return horizontalRange;
+    }
+    return range;
   }
 
   /**
    * Set new range to track and plot scales
    */
-  updateRange() : void {
-    const range = this.options.horizontal
-      ? [this.elm.clientHeight, 0]
-      : [0, this.elm.clientWidth];
-    this.trackScale.range(range);
+  updateRange(): void {
+    const range = this.createRange(this.options.horizontal);
 
+    this.trackScale.range(range);
     this.plots.forEach(plot => {
       let r = range;
       if (Number.isFinite(plot.options.offset)) {
         const [r0, r1] = range;
+        const trackPadding = this.options.padding?.size ?? 0;
+
         r = this.options.horizontal
-          ? [r0 - plot.options.offset * Math.abs(r0 - r1), r1]
-          : [plot.options.offset * (r1 - r0), r1];
+          ? [r0 - plot.options.offset * Math.abs(r0 - r1) + trackPadding, r1]
+          : [plot.options.offset * (r1 - r0) + trackPadding, r1];
       }
       plot.options.horizontal = this.options.horizontal;
       plot.setRange(r);
@@ -132,40 +169,60 @@ export default class GraphTrack extends CanvasTrack {
 
   /**
    * Execute configured transform function if applicable on the track's data
-   * and update plots with the result
    */
-  prepareData() : void {
-    const {
-      data,
-      scale,
-      options,
-      plot,
-      plots,
-      _transformCondition: previousCondition,
-    } = this;
-    if (!data) return;
+  prepareData(): void {
+    const { data, options, _transformCondition: previousCondition } = this;
+
+    this.setPlotData(this._transformedData || data);
+
     if (options.transform) {
-      const currentCondition = Math.round(ScaleHelper.getDomainSpan(scale, false) * 10);
-      this._transformCondition = currentCondition;
-      if (options.alwaysTransform || !previousCondition || previousCondition !== currentCondition) {
-        options.transform(data, scale).then(transformed => {
-          this._transformedData = transformed;
-          setPlotData(plots, transformed, scale);
-          plot();
-        });
+      const currentCondition = this.getCurrentCondition();
+      if (
+        options.alwaysTransform ||
+        !previousCondition ||
+        previousCondition !== currentCondition
+      ) {
+        if (!this._transformedData) {
+          this.updateTransform(currentCondition);
+        } else {
+          this.scheduleUpdateTransform(currentCondition);
+        }
       }
-      setPlotData(plots, this._transformedData || this._data, scale);
-      plot();
-    } else {
-      setPlotData(plots, data, scale);
-      plot();
     }
+  }
+
+  updateDynamicScales(): void {
+    const { plots, data } = this;
+    plots.forEach(plot => {
+      plot.updateDynamicScale(data, this.options);
+    });
+  }
+
+  getCurrentCondition(): number {
+    return Math.round(ScaleHelper.getDomainSpan(this.scale, false) * 10);
+  }
+
+  scheduleUpdateTransform(condition: number): void {
+    this.debounce(() => this.updateTransform(condition));
+  }
+
+  updateTransform(condition: number): void {
+    const { data, scale, options, plot } = this;
+
+    this._transformCondition = condition;
+    options.transform(data, scale).then(transformedData => {
+      if (this._transformCondition === condition) {
+        this._transformedData = transformedData;
+        this.setPlotData(transformedData);
+        plot();
+      }
+    });
   }
 
   /**
    * Set option on a Plot by id
    */
-  setPlotOption(id: string | number, key: string, value: any) : GraphTrack {
+  setPlotOption(id: string | number, key: string, value: any): GraphTrack {
     const plot = this.plots.find(d => d.id === id);
     if (plot) {
       plot.setOption(key, value);
@@ -176,18 +233,41 @@ export default class GraphTrack extends CanvasTrack {
   }
 
   /**
+   * Set padding on track
+   */
+  setPadding(): void {
+    const {
+      ctx,
+      options: { horizontal, padding },
+    } = this;
+
+    const trackPadding = padding?.size;
+    const elmHeight = horizontal ? this.elm.clientWidth : this.elm.clientHeight;
+    const elmWidth = horizontal ? this.elm.clientHeight : this.elm.clientWidth;
+    // If padding is being applied to the track,
+    // check if we should hide the excess data
+    if (padding?.hideExcessData && elmWidth > trackPadding * 2) {
+      ctx.fillStyle = '#eee';
+      if (horizontal) {
+        ctx.fillRect(0, 0, elmHeight, trackPadding);
+        ctx.fillRect(0, elmWidth - trackPadding, elmHeight, elmWidth);
+      } else {
+        ctx.fillRect(0, 0, trackPadding, elmHeight);
+        ctx.fillRect(elmWidth - trackPadding, 0, trackPadding, elmHeight);
+      }
+    }
+  }
+
+  /**
    * Plot graph track
    */
-  plot() : void {
+  plot(): void {
     const {
       ctx,
       scale: dscale,
       trackScale: vscale,
       plots,
-      options: {
-        horizontal,
-        scale: scaleType,
-      },
+      options: { horizontal, scale: scaleType, majorTicksOnly },
     } = this;
 
     if (!ctx) return;
@@ -198,18 +278,27 @@ export default class GraphTrack extends CanvasTrack {
     let xticks: ScaleHandlerTicks;
     let yticks: ScaleHandlerTicks;
 
+    // If the domain is piecewise eg [0, 20, 50 90],
+    // display using standard tick rendering.
+    let linearTicks = null;
+    if (vscale.domain().length > 2) {
+      linearTicks = majorTicksOnly
+        ? ScaleHelper.createMajorTicks(vscale)
+        : ScaleHelper.createTicks(vscale);
+    } else {
+      linearTicks = ScaleHelper.createLinearTicks(vscale);
+    }
+
     if (horizontal) {
-      yticks = scaleType === 'log'
-        ? ScaleHelper.createLogTicks(vscale)
-        : ScaleHelper.createLinearTicks(vscale);
+      yticks =
+        scaleType === 'log' ? ScaleHelper.createLogTicks(vscale) : linearTicks;
 
       xticks = ScaleHelper.createTicks(dscale);
 
       GridHelper.drawGrid(ctx, dscale, xticks, vscale, yticks);
     } else {
-      xticks = scaleType === 'log'
-        ? ScaleHelper.createLogTicks(vscale)
-        : ScaleHelper.createLinearTicks(vscale);
+      xticks =
+        scaleType === 'log' ? ScaleHelper.createLogTicks(vscale) : linearTicks;
 
       yticks = ScaleHelper.createTicks(dscale);
 
@@ -217,5 +306,70 @@ export default class GraphTrack extends CanvasTrack {
     }
     ctx.restore();
     plots.forEach(plot => plot.plot(ctx, dscale));
+
+    this.plotReferenceLines(vscale);
+
+    this.setPadding();
+  }
+
+  /**
+   * Override as the track data is a container for the plots' data, which is
+   * extracted by each plot's data accessor
+   */
+  hasData(): boolean {
+    if (this.plots.length === 0) return super.hasData();
+    return this.plots.some(p => p.hasData());
+  }
+
+  /**
+   * Render the configured reference lines at explicit values in the track's value domain
+   */
+  protected plotReferenceLines(valueScale: Scale): void {
+    const {
+      ctx,
+      options: { referenceLines, horizontal },
+    } = this;
+
+    if (!referenceLines?.length || !this.hasData()) return;
+
+    const { width, height } = ctx.canvas;
+    const domain = valueScale.domain();
+    const dmin = Math.min(domain[0], domain[domain.length - 1]);
+    const dmax = Math.max(domain[0], domain[domain.length - 1]);
+
+    ctx.save();
+    referenceLines.forEach(line => {
+      const { value, color = 'black', width: lineWidth = 2, dash } = line;
+
+      if (!Number.isFinite(value) || value < dmin || value > dmax) return;
+
+      const pos = valueScale(value);
+      if (!Number.isFinite(pos)) return;
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = lineWidth;
+      ctx.setLineDash(dash ?? []);
+      ctx.beginPath();
+      if (horizontal) {
+        ctx.moveTo(0, pos);
+        ctx.lineTo(width, pos);
+      } else {
+        ctx.moveTo(pos, 0);
+        ctx.lineTo(pos, height);
+      }
+      ctx.stroke();
+    });
+    ctx.restore();
+  }
+
+  /** Updates all plots with data by triggering each plot's data accessor function. */
+  setPlotData(data: any): void {
+    // Create a map of plot IDs to plot options
+    const plotOptions: Map<string | number, PlotOptions> = new Map();
+    this.plots.forEach(plot => {
+      plotOptions.set(plot.id, plot.options);
+    });
+
+    this.plots.forEach(p => p.setData(data, this.scale, plotOptions));
   }
 }

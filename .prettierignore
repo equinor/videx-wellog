@@ -1,0 +1,7 @@
+# Ignore all HTML, JSON, Markdown and YAML files:
+**/*.html
+**/*.json
+**/*.md
+**/*.yml
+**/*.yaml
+docs

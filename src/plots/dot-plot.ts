@@ -1,35 +1,28 @@
 import Plot from './plot';
 import { Scale } from '../common/interfaces';
-import { PlotData, DotPlotOptions } from './interfaces';
+import { DotPlotOptions } from './interfaces';
 import { ScaleHelper } from '../utils';
 
 /**
  * Dot plot
  */
-export default class DotPlot extends Plot {
-  options: DotPlotOptions;
-  scale: Scale;
-  data: PlotData;
-
+export default class DotPlot extends Plot<DotPlotOptions> {
   /**
    * Renders dot plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
-    const r = options.radius || Math.min(5, ScaleHelper.getRangeSpan(xscale) * 0.04);
+    const r =
+      options.radius || Math.min(5, ScaleHelper.getRangeSpan(xscale) * 0.04);
 
     ctx.save();
 
     ctx.fillStyle = options.color;
     const arcL = Math.PI * 2;
-    plotdata.forEach(d => {
+    plotdata?.forEach(d => {
       if (!options.defined(d[1], d[0])) return;
 
       ctx.beginPath();

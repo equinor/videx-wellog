@@ -4,7 +4,7 @@ export interface ScaleTrackOptions extends TrackOptions {
   /**
    * Units to show in legend if used in LogController
    */
-  units?: string,
+  units?: string;
 }
 
 export interface DualScaleTrackOptions extends ScaleTrackOptions {
@@ -13,5 +13,5 @@ export interface DualScaleTrackOptions extends ScaleTrackOptions {
    * with the InterpolatedScaleHandler, which allows you to toggle between two
    * different scale domains.
    */
-  mode?: number,
+  mode?: number;
 }

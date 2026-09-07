@@ -1,0 +1,42 @@
+name: Build Storybook
+
+on:
+  pull_request:
+    branches: [dev]
+
+permissions: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_VERSION: "24.x"
+    permissions:
+      contents: read
+      id-token: write
+      pages: write
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: npm install, build, and test
+        run: |
+          npm ci
+          npm run storybook:install
+          npm run storybook:build
+        env:
+          CI: true
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: 'examples/storybook/storybook-static'
+        # Deploy to Github Pages
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+        with:
+          token: ${{ github.token }}

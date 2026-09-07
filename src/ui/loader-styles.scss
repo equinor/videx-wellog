@@ -1,11 +1,15 @@
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes dot-keyframes {
   0% {
-    opacity: .4;
+    opacity: 0.4;
     transform: scale(1, 1);
   }
 
@@ -15,7 +19,7 @@
   }
 
   100% {
-    opacity: .4;
+    opacity: 0.4;
     transform: scale(1, 1);
   }
 }
@@ -39,11 +43,11 @@
 }
 
 .track .loader :nth-child(2) {
-  animation-delay: .2s;
+  animation-delay: 0.2s;
 }
 
 .track .loader :nth-child(1) {
-  animation-delay: .4s;
+  animation-delay: 0.4s;
 }
 
 .horizontal {
@@ -56,10 +60,10 @@
   }
 
   .track .loader :nth-child(1) {
-    animation-delay: .2s;
+    animation-delay: 0.2s;
   }
 
   .track .loader :nth-child(2) {
-    animation-delay: .4s;
+    animation-delay: 0.4s;
   }
 }

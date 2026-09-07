@@ -1,11 +1,11 @@
 import { expect } from 'chai';
+import { describe, it } from 'vitest';
 import {
   round,
   numberFormatter,
   hashString,
   debouncer,
 } from '../src/utils/utils';
-
 
 describe('Utils', () => {
   it('should be able to round to a specified decimal', () => {
@@ -23,7 +23,7 @@ describe('Utils', () => {
     expect(hashString('bar')).to.eq(97299);
   });
 
-  it('should be able to debounce function calls with debouncer', (done) => {
+  it('should be able to debounce function calls with debouncer', () => {
     const delay = 10;
 
     let i = 0;
@@ -38,10 +38,8 @@ describe('Utils', () => {
     debounce(counter);
     debounce(counter);
 
-    setTimeout(
-      () => {
-        expect(i).to.eq(1);
-        done();
-      }, delay + 1);
+    setTimeout(() => {
+      expect(i).to.eq(1);
+    }, delay + 1);
   });
 });

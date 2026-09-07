@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    cooldown:
+      default-days: 7
+    schedule:
+      interval: weekly
+      day: monday
+      time: "02:00"
+      timezone: Europe/Oslo
+    groups:
+      all-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+    commit-message:
+      prefix: chore(actions)
+
+  - package-ecosystem: npm
+    directories:
+      - "/"
+      - "/examples/storybook"
+    cooldown:
+      default-days: 7
+    schedule:
+      interval: weekly
+      day: monday
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 5
+    groups:
+      all-version-updates:
+        applies-to: version-updates
+        patterns:
+          - "*"
+    commit-message:
+      prefix: fix(npm)

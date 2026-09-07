@@ -1,25 +1,17 @@
-import { line } from 'd3';
+import { Line, line } from 'd3-shape';
 import Plot from './plot';
-import { Scale } from '../common/interfaces';
+import { Scale, Tuplet } from '../common/interfaces';
 import { PlotData, LinePlotOptions } from './interfaces';
 
 /**
  * Line plot
  */
-export default class LinePlot extends Plot {
-  options: LinePlotOptions;
-  scale: Scale;
-  data: PlotData;
-
+export default class LinePlot extends Plot<LinePlotOptions> {
   /**
    * Renders line plot to canvas context
    */
-  plot(ctx: CanvasRenderingContext2D, scale: Scale) : void {
-    const {
-      scale: xscale,
-      data: plotdata,
-      options,
-    } = this;
+  plot(ctx: CanvasRenderingContext2D, scale: Scale): void {
+    const { scale: xscale, data: plotdata, options } = this;
 
     if (!xscale || options.hidden) return;
 
@@ -49,6 +41,117 @@ export default class LinePlot extends Plot {
       ctx.stroke();
     }
 
+    // Plot wrapping segments
+    if (options.allowWrapping) {
+      this.plotWrapped(ctx, lineFunction);
+    }
+
+    if (options.showIsolatedPoints) {
+      const arcL = Math.PI * 2;
+
+      ctx.fillStyle = options.color;
+
+      plotdata
+        .filter((t, i) => {
+          if (!options.defined(t[1], t[0])) return false;
+
+          const prev = plotdata[i - 1]?.[1];
+          const next = plotdata[i + 1]?.[1];
+
+          if (i === 0) return !options.defined(next);
+          if (i === plotdata.length - 1) return !options.defined(prev);
+          return !options.defined(prev) && !options.defined(next);
+        })
+        .forEach(d => {
+          ctx.beginPath();
+
+          if (options.horizontal)
+            ctx.arc(scale(d[0]), xscale(d[1]), 1, 0, arcL);
+          else ctx.arc(xscale(d[1]), scale(d[0]), 1, 0, arcL);
+
+          ctx.fill();
+        });
+    }
+
     ctx.restore();
+  }
+
+  /**
+   * Renders segments outside of domain.
+   */
+  plotWrapped(
+    ctx: CanvasRenderingContext2D,
+    lineFunction: Line<[number, number]>,
+  ) {
+    const { scale: xscale, data: plotdata, options } = this;
+
+    const isLogarithmic = options.scale === 'log';
+
+    // Return if plot has no points, or is horizontal
+    // TODO: Add support for horizontal plots?
+    if (!plotdata?.length || options.horizontal) {
+      return;
+    }
+
+    ctx.setLineDash(options.dashWrapped || [2, 3]);
+
+    /** Helper function for plotting segment with given displacement. */
+    const plotSegment = (segment: PlotData, disp: number) => {
+      ctx.beginPath();
+      lineFunction(
+        segment.map(([y, x]) =>
+          isLogarithmic ? [y, 10 ** (Math.log10(x) + disp)] : [y, x + disp],
+        ),
+      );
+      ctx.stroke();
+    };
+
+    let [min, max] = isLogarithmic
+      ? xscale.domain().map(Math.log10)
+      : xscale.domain();
+
+    // Flip to support inverted ranges
+    if (min > max) {
+      [min, max] = [max, min];
+    }
+
+    const range = max - min;
+
+    let prev: Tuplet<number>;
+    let segment: PlotData = [];
+
+    // Distance to displace the segment in order to wrap
+    let segmentDisp: number;
+
+    for (let i = 0; i < plotdata.length; i++) {
+      const cur = plotdata[i];
+
+      // If point is not valid, clear prev and skip
+      if (cur[1] === null || cur[1] === undefined) {
+        prev = null;
+        continue;
+      }
+
+      const curX = isLogarithmic ? Math.log10(cur[1]) : cur[1];
+      if (curX > max || curX < min) {
+        segmentDisp = curX > max ? -range : range;
+        if (segment.length === 0 && prev) {
+          segment.push(prev);
+        }
+        segment.push(cur);
+      } else if (segment.length > 0) {
+        segment.push(cur);
+        plotSegment(segment, segmentDisp);
+        segment = [];
+      }
+      prev = cur;
+    }
+
+    // If the data ends with point outside of range
+    if (segment.length > 0) {
+      plotSegment(segment, segmentDisp);
+    }
+
+    ctx.setLineDash([]);
   }
 }

@@ -10,7 +10,7 @@ In general, we follow the "fork-and-pull" Git workflow.
     2. Change or add tests if needed
     3. Run tests and make sure they pass
     4. Add changes to README.md if needed
-4. Commit changes to your own branch
+4. Commit changes to your own branch, please use the [convention commits](https://www.conventionalcommits.org/) format
 5. **Make sure** you merge the latest from "upstream" and resolve conflicts if there is any
 6. Repeat step 3(3) above
 7. Push your work back up to your fork
