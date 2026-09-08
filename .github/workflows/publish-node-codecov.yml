@@ -1,0 +1,279 @@
+name: Publish Node Test and Coverage Reports
+
+on:
+  workflow_run: # zizmor: ignore[dangerous-triggers] only trusted runs pass the job-level guard below
+    workflows: ['Run Node Tests with Code Coverage']
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  prepare-reports:
+    name: Prepare test and coverage reports
+    if: ${{ (github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'dev') || (github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.head_repository.full_name == github.repository) }}
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+    outputs:
+      coverage-ready: ${{ steps.upload-coverage.outcome == 'success' }}
+      junit-ready: ${{ steps.upload-junit.outcome == 'success' }}
+      is-same-repo: ${{ steps.source-artifacts.outputs.is-same-repo }}
+      base-sha: ${{ steps.source-artifacts.outputs.base-sha }}
+      pr-number: ${{ steps.source-artifacts.outputs.pr-number }}
+    steps:
+      - name: Locate source report artifacts
+        id: source-artifacts
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const artifacts = await github.paginate(
+              github.rest.actions.listWorkflowRunArtifacts,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: context.payload.workflow_run.id,
+                per_page: 100,
+              },
+            );
+
+            const idFor = (name) => {
+              const artifact = artifacts.find(
+                (candidate) => candidate.name === name && !candidate.expired,
+              );
+              return artifact ? String(artifact.id) : '';
+            };
+
+            core.setOutput('coverage-id', idFor('coverage'));
+            core.setOutput('junit-id', idFor('test-results'));
+
+            const pr = context.payload.workflow_run.pull_requests?.[0];
+            core.setOutput('is-same-repo', String(context.payload.workflow_run.head_repository?.full_name === context.payload.workflow_run.repository?.full_name));
+            core.setOutput('base-sha', pr?.base?.sha ?? '');
+            core.setOutput('pr-number', pr?.number ? String(pr.number) : '');
+
+      - name: Download coverage artifact
+        id: download-coverage
+        if: ${{ steps.source-artifacts.outputs.coverage-id != '' }}
+        continue-on-error: true
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          artifact-ids: ${{ steps.source-artifacts.outputs.coverage-id }}
+          path: input/coverage
+
+      - name: Validate coverage report
+        id: validate-coverage
+        if: ${{ steps.download-coverage.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          report=input/coverage/Cobertura.xml
+          test -s "$report"
+          test "$(wc -c < "$report")" -le 5242880
+          ! grep -Eiq '<!ENTITY' "$report"
+
+      - name: Generate coverage summary
+        id: generate-coverage
+        if: ${{ steps.validate-coverage.outcome == 'success' }}
+        continue-on-error: true
+        uses: irongut/CodeCoverageSummary@51cc3a756ddcd398d447c044c02cb6aa83fdae95 # v1.3.0
+        with:
+          filename: input/coverage/Cobertura.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: file
+          thresholds: '10 30'
+
+      - name: Find dev baseline
+        id: baseline
+        if: ${{ github.event.workflow_run.event == 'pull_request' }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE_SHA: ${{ steps.source-artifacts.outputs.base-sha }}
+        run: |
+          set -euo pipefail
+          response=$(curl --fail --silent --show-error \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'X-GitHub-Api-Version: 2022-11-28' \
+            "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/actions/workflows/test-node-codecov.yml/runs?branch=dev&event=push&status=success&per_page=100")
+          run_id=$(jq -r --arg sha "$BASE_SHA" '
+            if (.workflow_runs | type) == "array" then
+              ([.workflow_runs[] | select(.head_sha == $sha and .conclusion == "success") | .id][0] // "")
+            else
+              error("Unexpected workflow runs response")
+            end
+          ' <<< "$response")
+          if [ -n "$run_id" ]; then
+            echo "run-id=$run_id" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Locate dev baseline artifact
+        id: baseline-artifact
+        if: ${{ steps.baseline.outputs.run-id != '' }}
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        env:
+          BASELINE_RUN_ID: ${{ steps.baseline.outputs.run-id }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const runId = Number(process.env.BASELINE_RUN_ID);
+            if (!Number.isSafeInteger(runId) || runId <= 0) {
+              core.setOutput('id', '');
+              return;
+            }
+
+            const artifacts = await github.paginate(
+              github.rest.actions.listWorkflowRunArtifacts,
+              {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: runId,
+                per_page: 100,
+              },
+            );
+            const artifact = artifacts.find(
+              (candidate) => candidate.name === 'coverage-dev-baseline' && !candidate.expired,
+            );
+            core.setOutput('id', artifact ? String(artifact.id) : '');
+
+      - name: Download dev baseline
+        id: download-baseline
+        if: ${{ steps.baseline-artifact.outputs.id != '' }}
+        continue-on-error: true
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ steps.baseline.outputs.run-id }}
+          artifact-ids: ${{ steps.baseline-artifact.outputs.id }}
+          path: input/baseline
+
+      - name: Create coverage comparison
+        id: comparison
+        if: ${{ steps.generate-coverage.outcome == 'success' }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PYTHON'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          report = Path('coverage-report.md')
+          report.write_text(Path('code-coverage-results.md').read_text(encoding='utf-8'), encoding='utf-8')
+          baseline = Path('input/baseline/Cobertura.xml')
+          if not baseline.is_file():
+              report.write_text(report.read_text(encoding='utf-8') + '\n> Coverage delta unavailable: no successful retained dev baseline exists for this PR base.\n', encoding='utf-8')
+              raise SystemExit
+
+          def rates(path):
+              root = ET.parse(path).getroot()
+              values = {}
+              for name in ('lines-covered', 'lines-valid', 'branches-covered', 'branches-valid'):
+                  value = int(root.attrib[name])
+                  if value < 0 or (name.endswith('covered') and value > int(root.attrib[name.replace('covered', 'valid')])):
+                      raise ValueError(f'invalid {name}')
+                  values[name] = value
+              return values
+
+          current = rates(Path('input/coverage/Cobertura.xml'))
+          dev = rates(baseline)
+          rows = []
+          for label, covered, valid in (('Lines', 'lines-covered', 'lines-valid'), ('Branches', 'branches-covered', 'branches-valid')):
+              if current[valid] and dev[valid]:
+                  current_rate = current[covered] / current[valid] * 100
+                  dev_rate = dev[covered] / dev[valid] * 100
+                  rows.append(f'| {label} | {current_rate:.2f}% | {dev_rate:.2f}% | {current_rate - dev_rate:+.2f} pp |')
+          report.write_text(report.read_text(encoding='utf-8') + '\n## Overall coverage vs. dev baseline\n\n| Metric | PR | Dev baseline | Delta |\n| --- | ---: | ---: | ---: |\n' + '\n'.join(rows) + '\n', encoding='utf-8')
+          PYTHON
+
+      - name: Upload coverage summary
+        id: upload-coverage
+        if: ${{ steps.generate-coverage.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: coverage-summary
+          path: coverage-report.md
+          retention-days: 5
+          if-no-files-found: error
+
+      - name: Download test results
+        id: download-junit
+        if: ${{ steps.source-artifacts.outputs.junit-id != '' }}
+        continue-on-error: true
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          github-token: ${{ github.token }}
+          run-id: ${{ github.event.workflow_run.id }}
+          artifact-ids: ${{ steps.source-artifacts.outputs.junit-id }}
+          path: input/test-results
+
+      - name: Validate test results
+        id: validate-junit
+        if: ${{ steps.download-junit.outcome == 'success' }}
+        continue-on-error: true
+        run: |
+          set -euo pipefail
+          report=input/test-results/junit.xml
+          test -s "$report"
+          test "$(wc -c < "$report")" -le 5242880
+          ! grep -Eiq '<!ENTITY' "$report"
+
+      - name: Upload test results
+        id: upload-junit
+        if: ${{ steps.validate-junit.outcome == 'success' }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: validated-test-results
+          path: input/test-results/junit.xml
+          retention-days: 5
+          if-no-files-found: error
+
+  publish-reports:
+    name: Publish test and coverage reports
+    needs: prepare-reports
+    if: ${{ always() && (needs.prepare-reports.outputs.coverage-ready == 'true' || needs.prepare-reports.outputs.junit-ready == 'true') }}
+    runs-on: ubuntu-24.04
+    permissions:
+      checks: write
+      contents: read
+      issues: read
+      pull-requests: write
+    steps:
+      - name: Download coverage summary
+        id: coverage
+        if: ${{ needs.prepare-reports.outputs.coverage-ready == 'true' }}
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: coverage-summary
+          path: coverage-summary
+
+      - name: Add coverage summary
+        if: ${{ steps.coverage.outcome == 'success' }}
+        run: cat coverage-summary/coverage-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Add coverage PR comment
+        if: ${{ steps.coverage.outcome == 'success' && needs.prepare-reports.outputs.pr-number != '' && needs.prepare-reports.outputs.is-same-repo == 'true' }}
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          number: ${{ needs.prepare-reports.outputs.pr-number }}
+          path: coverage-summary/coverage-report.md
+
+      - name: Download test results
+        id: junit
+        if: ${{ needs.prepare-reports.outputs.junit-ready == 'true' }}
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
+        with:
+          name: validated-test-results
+          path: test-results
+
+      - name: Publish test results
+        if: ${{ steps.junit.outcome == 'success' && (github.event.workflow_run.event != 'pull_request' || needs.prepare-reports.outputs.is-same-repo == 'true') }}
+        uses: EnricoMi/publish-unit-test-result-action@d0a4676d0e0b938bc201470d88276b7c74c712b3 # v2.24.0
+        with:
+          files: test-results/junit.xml
+          commit: ${{ github.event.workflow_run.head_sha }}
