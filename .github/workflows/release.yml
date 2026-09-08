@@ -24,6 +24,17 @@ jobs:
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7
         with:
           release-type: node
+      - name: Check PR creation
+        id: check-pr
+        if: steps.release.outputs.prs_created == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PRS: ${{ steps.release.outputs.prs }}
+        run: |
+          for pr in $(echo "$PRS" | jq -r '.[].number'); do
+            gh pr edit "${pr}" --add-reviewer equinor/viz
+          done
 
   build:
     name: Build
