@@ -43,7 +43,8 @@
     "storybook": "cd examples/storybook && npm run storybook",
     "storybook:install": "cd examples/storybook && npm install",
     "storybook:build": "cd examples/storybook && npm run build-storybook",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "lintOx": "oxlint"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
@@ -62,7 +63,9 @@
     "copyfiles": "^2.4.1",
     "eslint": "^9.39.2",
     "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-storybook": "^10.6.0",
     "jsdom": "^29.1.1",
+    "oxlint": "^1.82.0",
     "prettier": "3.8.3",
     "rimraf": "^6.1.2",
     "rollup": "^4.60.3",
