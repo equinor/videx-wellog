@@ -126,6 +126,6 @@ export default abstract class Plot<
   /**
    * Plot function should be overridden
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line eslint/no-unused-vars
   plot(ctx: CanvasRenderingContext2D, scale: Scale): void {}
 }

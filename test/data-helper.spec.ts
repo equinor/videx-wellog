@@ -5,7 +5,6 @@ import DataHelper from '../src/utils/data-helper';
 import { PlotData } from '../src/plots/interfaces';
 
 describe('DataHelper', () => {
-  // eslint-disable-next-line max-len
   const datapoints: PlotData = [
     [0, null],
     [1, null],

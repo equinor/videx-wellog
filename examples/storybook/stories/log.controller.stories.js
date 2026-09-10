@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import { LogController, ScaleTrack, GraphTrack } from '../../../src';
 
 import createTracks from './shared/tracks';
