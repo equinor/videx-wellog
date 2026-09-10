@@ -15,6 +15,7 @@
   },
   "rules": {
     "no-unused-expressions": ["error", {"allowTernary": true, "allowShortCircuit": true}],
+    "react/rules-of-hooks": "error",
     "react/react-in-jsx-scope": "off",
     "no-underscore-dangle": "off"
   },
