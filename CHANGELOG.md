@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.6.3](https://github.com/equinor/videx-wellog/compare/v1.6.2...v1.6.3) (2026-09-10)
+
+
+### Bug Fixes
+
+* **493:** replace eslint with oxlint ([#546](https://github.com/equinor/videx-wellog/issues/546)) ([f0948b6](https://github.com/equinor/videx-wellog/commit/f0948b63281292a7886112aceab69ec6c6ca0539))
+* **npm:** bump js-yaml from 4.3.1 to 4.3.2 ([#549](https://github.com/equinor/videx-wellog/issues/549)) ([110343e](https://github.com/equinor/videx-wellog/commit/110343e624e80a7289df69d63a564d5593d816c9))
+* **npm:** bump js-yaml from 4.3.1 to 4.3.2 in /examples/storybook ([#551](https://github.com/equinor/videx-wellog/issues/551)) ([3e15611](https://github.com/equinor/videx-wellog/commit/3e15611247886dec93ea291cc100d5c97541cf4c))
+* **npm:** bump svgo from 2.8.3 to 2.8.4 ([#550](https://github.com/equinor/videx-wellog/issues/550)) ([8993e75](https://github.com/equinor/videx-wellog/commit/8993e754a45b2dd01b7ce031dd02f0336d68a7d0))
+
 ## [1.6.2](https://github.com/equinor/videx-wellog/compare/v1.6.1...v1.6.2) (2026-09-07)
 
 
