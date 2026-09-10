@@ -97,7 +97,7 @@ export default class GraphTrack extends CanvasTrack<GraphTrackOptions> {
   /**
    * Callback after data loaded, using loadData.
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // oxlint-disable-next-line eslint/no-unused-vars
   onDataLoaded(data): void {
     this._transformCondition = null;
     this._transformedData = null;

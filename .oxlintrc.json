@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "oxc", "eslint", "react", "jsx-a11y", "typescript"],
+  "jsPlugins": ["eslint-plugin-storybook"],
+  "ignorePatterns": [
+    "node_modules/*",
+    "dist/*",
+    "docs/*",
+    "*.config.*"
+    ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "rules": {
+    "no-unused-expressions": ["error", {"allowTernary": true, "allowShortCircuit": true}],
+    "react/rules-of-hooks": "error",
+    "react/react-in-jsx-scope": "off",
+    "no-underscore-dangle": "off"
+  },
+  "overrides": [
+    {
+        "files": ["tests/*"],
+        "plugins": ["vitest"]
+    },
+    {
+        "files": ["examples/**/*.stories.js"],
+        "rules": {
+            "storybook/default-exports": "error",
+            "storybook/story-exports": "error",
+            "storybook/hierarchy-separator": "error",
+            "storybook/no-uninstalled-addons": "error"
+        }
+    }
+  ]
+}

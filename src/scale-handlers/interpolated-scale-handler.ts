@@ -1,4 +1,3 @@
-// eslint-disable no-redeclare
 import { scaleLinear } from 'd3-scale';
 import BasicScaleHandler from './basic-scale-handler';
 import ScaleHelper from '../utils/scale-helper';
@@ -47,16 +46,15 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
    * provided scale interpolator.
    */
   createInterpolatedScale(): Scale {
-    const { interpolator } = this;
-    const _t = this;
-    const domain = interpolator.forwardInterpolatedDomain(_t.scale.domain());
+    const { interpolator, scale } = this;
+    const domain = interpolator.forwardInterpolatedDomain(scale.domain());
 
     const iscale = (v: number) => {
       const iv = interpolator.reverse(v);
-      return _t.scale(iv);
+      return scale(iv);
     };
 
-    iscale.invert = (v: number) => interpolator.forward(_t.scale.invert(v));
+    iscale.invert = (v: number) => interpolator.forward(scale.invert(v));
 
     function d(): Domain;
     function d(newDomain: Domain): Scale;
@@ -69,7 +67,7 @@ export default class InterpolatedScaleHandler extends BasicScaleHandler {
     function r(newRange: Range): Scale;
     function r(newRange?: Range): Scale | Range {
       if (newRange) throw Error('Scale is read-only and may not be altered!');
-      return _t.scale.range();
+      return scale.range();
     }
 
     iscale.domain = d;

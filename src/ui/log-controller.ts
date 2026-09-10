@@ -652,10 +652,10 @@ export default class LogController {
     }
 
     newtracks.append('div').attr('class', 'track-container');
-    const self = this;
+    const { options } = this;
     newtracks.each(function addTrackCallback(d) {
-      if (self.options.onTrackEnter) {
-        self.options.onTrackEnter(this, d);
+      if (options.onTrackEnter) {
+        options.onTrackEnter(this, d);
       }
       const ev = {
         elm: this.querySelector('.track-container'),

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-relative-packages */
 import { scaleLinear } from 'd3-scale';
 import {
   AreaPlot,
