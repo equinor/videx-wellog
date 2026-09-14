@@ -16,6 +16,7 @@
   "rules": {
     "no-unused-expressions": ["error", {"allowTernary": true, "allowShortCircuit": true}],
     "react/rules-of-hooks": "error",
+    "import/no-unassigned-import": ["warn", {"allow": ["**/*.scss"]}],
     "react/react-in-jsx-scope": "off",
     "no-underscore-dangle": "off"
   },
