@@ -5,7 +5,6 @@ import DataHelper from '../src/utils/data-helper';
 import { PlotData } from '../src/plots/interfaces';
 
 describe('DataHelper', () => {
-  // eslint-disable-next-line max-len
   const datapoints: PlotData = [
     [0, null],
     [1, null],
@@ -40,8 +39,10 @@ describe('DataHelper', () => {
 
   it('should be able to check if a set of points are within a scale domain', () => {
     const scale = scaleLinear().domain([2, 10]);
+    // oxlint-disable-next-line eslint/no-unused-expressions
     expect(DataHelper.isWithinBounds(scale, datapoints)).to.be.true;
     scale.domain([14, 20]);
+    // oxlint-disable-next-line eslint/no-unused-expressions
     expect(DataHelper.isWithinBounds(scale, datapoints)).to.be.false;
   });
 

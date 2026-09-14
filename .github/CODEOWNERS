@@ -1,4 +1,4 @@
-* @equinor/viz
+# * @equinor/viz # comment out to reduce notifications
 
 /.github/ @equinor/rep-infra-frontend
 
