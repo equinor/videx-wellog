@@ -5,6 +5,12 @@ on:
     branches:
       - dev
 
+  pull_request:
+    branches:
+      - dev
+    types:
+      - opened
+
 permissions: {}
 
 concurrency:
@@ -14,6 +20,7 @@ concurrency:
 jobs:
   release:
     name: Release
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -24,21 +31,26 @@ jobs:
         uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7
         with:
           release-type: node
-      - name: Check PR creation
-        id: check-pr
-        if: steps.release.outputs.prs_created == 'true'
-        continue-on-error: true
+
+  check-pr:
+    name: Assign release PR reviewer
+    if: >
+      github.event_name == 'pull_request' &&
+      startsWith(github.event.pull_request.head.ref, 'release-please--')
+    runs-on: ubuntu-24.04
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Add viz as reviewer
         env:
           GH_TOKEN: ${{ github.token }}
-          PRS: ${{ steps.release.outputs.prs }}
-        run: |
-          for pr in $(echo "$PRS" | jq -r '.[].number'); do
-            gh pr edit "${pr}" --add-reviewer equinor/viz
-          done
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: gh pr edit "$PR_NUMBER" --add-reviewer equinor/viz
 
   build:
     name: Build
     needs: release
+    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     env:
       NODE_VERSION: "24.x"
@@ -131,7 +143,7 @@ jobs:
   publish:
     name: Publish
     needs: build
-    if: ${{ needs.build.outputs.publish_needed == 'true' }}
+    if: github.event_name == 'push' && needs.build.outputs.publish_needed == 'true'
     runs-on: ubuntu-24.04
     env:
       NODE_VERSION: "24.x"
