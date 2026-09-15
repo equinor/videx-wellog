@@ -29,10 +29,10 @@ export function renderTextLabels(
 
   const useLargeFont = w > 90;
 
-  const unitTextSixe = textSize * 0.85;
-  const unitY = lineY + unitTextSixe;
+  const unitTextSize = textSize * 0.85;
+  const unitY = lineY + unitTextSize;
 
-  const domainTextSize = useLargeFont ? textSize * 1.1 : unitTextSixe;
+  const domainTextSize = useLargeFont ? textSize * 1.1 : unitTextSize;
 
   const subY = lineY + domainTextSize;
 
@@ -82,7 +82,7 @@ export function renderTextLabels(
       },
       attrs: {
         class: 'legend-unit',
-        'font-size': `${unitTextSixe}px`,
+        'font-size': `${unitTextSize}px`,
         transform: unitTransform,
       },
     });
