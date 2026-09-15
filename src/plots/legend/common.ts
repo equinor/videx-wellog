@@ -5,25 +5,8 @@ import { LegendBounds } from '../../utils/legend-helper';
 // TODO: Allow large font for more than just domains?
 interface LegendOptions {
   addLabelBg?: boolean;
-  largeFontEnabled?: boolean;
   dash?: number[];
 }
-
-/** Helper function to setup a white front background using bounding box of given text. */
-const setupDomainBackground = (bg, text) => {
-  const bbox = text.node().getBBox();
-  setProps(bg, {
-    styles: {
-      fill: 'white',
-    },
-    attrs: {
-      x: bbox.x - 2,
-      y: bbox.y - 2,
-      width: bbox.width + 4,
-      height: bbox.height + 4,
-    },
-  });
-};
 
 /**
  * Renders label, min/max values for domain and unit
@@ -35,7 +18,7 @@ export function renderTextLabels(
   unit: string,
   domain: number[],
   color: string,
-  { addLabelBg, largeFontEnabled }: LegendOptions = {},
+  { addLabelBg }: LegendOptions = {},
 ): void {
   const { height: h, width: w, top, left } = bounds;
   const lineY = top + h * 0.5;
@@ -44,15 +27,14 @@ export function renderTextLabels(
   const min = domain[0];
   const max = domain[domain.length - 1];
 
-  const isLargeFont = largeFontEnabled && w > 90;
+  const useLargeFont = w > 90;
 
   const unitTextSixe = textSize * 0.85;
   const unitY = lineY + unitTextSixe;
 
-  const domainTextSize = isLargeFont ? textSize * 1.1 : unitTextSixe;
-  const subY = isLargeFont
-    ? lineY + domainTextSize / 2 - h * 0.05
-    : lineY + domainTextSize;
+  const domainTextSize = useLargeFont ? textSize * 1.1 : unitTextSixe;
+
+  const subY = lineY + domainTextSize;
 
   // #region Label
   const labelX = centerX;
@@ -108,12 +90,6 @@ export function renderTextLabels(
   // #endregion
 
   // #region Domain
-  let minBg, maxBg;
-  if (isLargeFont) {
-    minBg = g.append('rect');
-    maxBg = g.append('rect');
-  }
-
   const minText =
     Math.abs(min) > 1000 && min % 1000 === 0
       ? `${Math.round(min / 1000)}k`
@@ -151,11 +127,6 @@ export function renderTextLabels(
     },
   });
 
-  // Setup font backgrounds after
-  if (isLargeFont) {
-    setupDomainBackground(minBg, minDomain);
-    setupDomainBackground(maxBg, maxDomain);
-  }
   // #endregion
 }
 

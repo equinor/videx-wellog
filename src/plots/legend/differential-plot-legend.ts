@@ -75,7 +75,6 @@ export default function renderDifferentialPlotLegend(
       legend2.unit,
       d2,
       options2.color,
-      { largeFontEnabled: true },
     );
   }
 }
