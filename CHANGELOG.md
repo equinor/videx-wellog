@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.6](https://github.com/equinor/videx-wellog/compare/v1.6.5...v1.6.6) (2026-09-18)
+
+
+### Bug Fixes
+
+* **npm:** bump vitest from 4.1.5 to 4.1.11 ([#548](https://github.com/equinor/videx-wellog/issues/548)) ([ccc4638](https://github.com/equinor/videx-wellog/commit/ccc4638727c96f544fc0790e7866fc3f3b2b4ee6))
+
 ## [1.6.5](https://github.com/equinor/videx-wellog/compare/v1.6.4...v1.6.5) (2026-09-15)
 
 
