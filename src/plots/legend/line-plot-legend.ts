@@ -20,6 +20,8 @@ export default function renderLinePlotLegend(
     legendInfo.unit,
     plot.scale?.domain() || [0, 1],
     plot.options.color,
-    { largeFontEnabled: true, dash: plot.options.dash },
+    {
+      dash: plot.options.dash,
+    },
   );
 }

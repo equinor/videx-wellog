@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.5](https://github.com/equinor/videx-wellog/compare/v1.6.4...v1.6.5) (2026-09-15)
+
+
+### Bug Fixes
+
+* **7743:** standardise well log legend font size ([#558](https://github.com/equinor/videx-wellog/issues/558)) ([c3144c9](https://github.com/equinor/videx-wellog/commit/c3144c9f513fbe4f931b2828d94c958f81aa58fc))
+
+## [1.6.4](https://github.com/equinor/videx-wellog/compare/v1.6.3...v1.6.4) (2026-09-14)
+
+
+### Bug Fixes
+
+* align oxlint configs ([#554](https://github.com/equinor/videx-wellog/issues/554)) ([168eee3](https://github.com/equinor/videx-wellog/commit/168eee362f56cd96b59c52c59dd1f00ebd90f319))
+
 ## [1.6.3](https://github.com/equinor/videx-wellog/compare/v1.6.2...v1.6.3) (2026-09-10)
 
 
