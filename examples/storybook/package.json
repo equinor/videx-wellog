@@ -13,22 +13,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@storybook/builder-vite": "^10.3.6",
-    "@storybook/html": "^10.3.6",
-    "@storybook/html-vite": "^10.3.6",
-    "css-loader": "^7.1.4",
+    "@storybook/builder-vite": "^10.6.0",
+    "@storybook/html": "^10.6.0",
+    "@storybook/html-vite": "^10.6.0",
+    "css-loader": "^7.1.5",
     "postcss-loader": "^8.2.1",
-    "sass-loader": "^16.0.7",
+    "sass-loader": "^16.0.8",
     "shader-loader": "^1.3.1",
-    "storybook": "^10.3.6",
+    "storybook": "^10.6.0",
     "style-loader": "^4.0.0",
-    "vite-plugin-glsl": "^1.6.0"
+    "vite-plugin-glsl": "^1.6.1"
   },
   "dependencies": {
-    "@equinor/videx-math": "^1.1.8",
+    "@equinor/videx-math": "^1.2.1",
     "d3-array": "^3.2.0",
     "d3-scale": "^4.0.2",
     "d3-selection": "^3.0.0",
-    "vite": "^8.0.11"
+    "vite": "^8.3.0"
   }
 }
