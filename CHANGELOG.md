@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.7](https://github.com/equinor/videx-wellog/compare/v1.6.6...v1.6.7) (2026-09-21)
+
+
+### Bug Fixes
+
+* **539:** dependabot updates ([#563](https://github.com/equinor/videx-wellog/issues/563)) ([4e8e01a](https://github.com/equinor/videx-wellog/commit/4e8e01afd46981173507b8ccb8b9a747cb55d81c))
+
 ## [1.6.6](https://github.com/equinor/videx-wellog/compare/v1.6.5...v1.6.6) (2026-09-18)
 
 
