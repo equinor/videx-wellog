@@ -46,7 +46,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr edit "$PR_NUMBER" --add-reviewer equinor/viz
+        run: gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --add-reviewer equinor/viz
 
   build:
     name: Build
