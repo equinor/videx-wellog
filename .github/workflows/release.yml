@@ -5,12 +5,6 @@ on:
     branches:
       - dev
 
-  pull_request:
-    branches:
-      - dev
-    types:
-      - opened
-
 permissions: {}
 
 concurrency:
@@ -20,7 +14,6 @@ concurrency:
 jobs:
   release:
     name: Release
-    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -32,26 +25,9 @@ jobs:
         with:
           release-type: node
 
-  check-pr:
-    name: Assign release PR reviewer
-    if: >
-      github.event_name == 'pull_request' &&
-      startsWith(github.event.pull_request.head.ref, 'release-please--')
-    runs-on: ubuntu-24.04
-    permissions:
-      pull-requests: write
-    steps:
-      - name: Add viz as reviewer
-        working-directory: ${{ github.workspace }}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --add-reviewer equinor/viz
-
   build:
     name: Build
     needs: release
-    if: github.event_name == 'push'
     runs-on: ubuntu-24.04
     env:
       NODE_VERSION: "24.x"
@@ -144,7 +120,7 @@ jobs:
   publish:
     name: Publish
     needs: build
-    if: github.event_name == 'push' && needs.build.outputs.publish_needed == 'true'
+    if: ${{ needs.build.outputs.publish_needed == 'true' }}
     runs-on: ubuntu-24.04
     env:
       NODE_VERSION: "24.x"
