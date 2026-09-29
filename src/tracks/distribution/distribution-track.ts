@@ -11,11 +11,6 @@ const defaultOptions: DistributionTrackOptions = {
   discreteHeight: 0.01,
 };
 
-// Defined to avoid creating new arrays when clearing
-const ComponentColorsClear = new Float32Array([]);
-const InterpolationConfigClear = new Float32Array([0, 0]);
-const IsPatternClear = new Float32Array([]);
-
 /** Track for visualising distribution of data. */
 export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
   interpolationConfigArray: Float32Array;
@@ -82,13 +77,8 @@ export class DistributionTrack extends WebGL2Track<DistributionTrackOptions> {
     );
 
     if (!data) {
-      // Clear uniforms
       gl.uniform1i(componentCountLocation, 0);
-      gl.uniform3fv(componentColorsLocation, ComponentColorsClear);
-      gl.uniform3fv(componentPatternColorsLocation, ComponentColorsClear);
-      gl.uniform1fv(componentIsPatternLocation, IsPatternClear);
       gl.uniform1i(entryCountLocation, 0);
-      gl.uniform2fv(interpolationConfigLocation, InterpolationConfigClear);
 
       // Unbind texture
       gl.activeTexture(gl.TEXTURE0);
