@@ -27,7 +27,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "start": "rollup -c -w",
-    "prebuild": "rimraf dist",
+    "prebuild": "node scripts/remove.mjs dist",
     "build": "rollup -c",
     "prepub": "npm run build",
     "pub": "npm publish --access=public",
@@ -38,9 +38,9 @@
     "test:coverage": "npm run coverage",
     "coverage": "vitest run --coverage",
     "coverage:ci": "vitest run --coverage",
-    "predocs": "rimraf docs",
+    "predocs": "node scripts/remove.mjs docs",
     "docs": "typedoc --out docs src",
-    "postdocs": "copyfiles .nojekyll docs",
+    "postdocs": "node scripts/copy_docs_assets.mjs",
     "lint": "oxlint",
     "storybook": "cd examples/storybook && npm run storybook",
     "storybook:install": "cd examples/storybook && npm install",
@@ -60,12 +60,10 @@
     "@vitest/coverage-v8": "^5.0.1",
     "autoprefixer": "^10.6.1",
     "chai": "^6.2.1",
-    "copyfiles": "^2.4.1",
     "eslint-plugin-storybook": "^10.6.0",
     "jsdom": "^29.1.1",
     "oxlint": "^1.83.0",
     "prettier": "3.9.8",
-    "rimraf": "^6.1.2",
     "rollup": "^4.63.2",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-glslify": "^1.3.1",
@@ -77,13 +75,12 @@
     "vitest": "^5.0.1"
   },
   "dependencies": {
-    "@equinor/videx-math": "^1.2.1",
+    "@equinor/videx-math": "^1.2.2",
     "d3-array": "^3.2.4",
     "d3-color": "^3.1.0",
     "d3-scale": "^4.0.2",
     "d3-selection": "^3.0.0",
     "d3-shape": "^3.2.0",
-    "d3-zoom": "^3.0.0",
-    "yaml": "^2.9.1"
+    "d3-zoom": "^3.0.0"
   }
 }
