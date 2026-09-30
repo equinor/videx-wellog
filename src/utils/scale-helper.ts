@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-extraneous-class
 import { ScaleHandlerTicks } from '../scale-handlers/interfaces';
 import { Scale, Domain } from '../common/interfaces';
 

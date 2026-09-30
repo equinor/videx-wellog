@@ -178,7 +178,7 @@ export default class DipShape {
     const triX2 = x1 - Math.cos(azimuth) * dipSize;
     const triY2 = y1 - Math.sin(azimuth) * dipSize;
     this.drawPolygon(4, 3, triX1, triY1);
-    this.drawPolygon(4, 3, triX2, triY2, azimuth + 3.14159);
+    this.drawPolygon(4, 3, triX2, triY2, azimuth + Math.PI);
   }
 
   drawTee(): void {

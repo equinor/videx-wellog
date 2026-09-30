@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-extraneous-class
 import { Scale } from '../common/interfaces';
 import { ScaleHandlerTicks } from '../scale-handlers/interfaces';
 import { applyMajor, applyMinor } from './guide-styles';

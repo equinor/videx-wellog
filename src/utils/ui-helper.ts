@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-extraneous-class
 import { select } from 'd3-selection';
 import { Track } from '../tracks';
 
