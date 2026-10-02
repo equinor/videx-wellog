@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-extraneous-class
 import { PlotData, DifferentialPlotData } from '../plots/interfaces';
 import { Scale, Domain, Tuplet } from '../common/interfaces';
 import ScaleHelper from './scale-helper';
