@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.6.8](https://github.com/equinor/videx-wellog/compare/v1.6.7...v1.6.8) (2026-10-05)
+
+
+### Bug Fixes
+
+* **528:** discard unused packages ([#571](https://github.com/equinor/videx-wellog/issues/571)) ([ccd8d1b](https://github.com/equinor/videx-wellog/commit/ccd8d1b992b60c5f0c0eece8fd394f7fc5214fe3))
+* distribution track webgl invalid value ([#570](https://github.com/equinor/videx-wellog/issues/570)) ([86779c3](https://github.com/equinor/videx-wellog/commit/86779c34f904682ffac017fc86731b45c2ce8ad4))
+* **npm:** bump brace-expansion from 1.1.18 to 1.1.21 ([#577](https://github.com/equinor/videx-wellog/issues/577)) ([0c4c2aa](https://github.com/equinor/videx-wellog/commit/0c4c2aa7658db17194baa469b211318cbe44287a))
+* **npm:** bump undici from 7.29.0 to 7.30.0 ([#572](https://github.com/equinor/videx-wellog/issues/572)) ([c67e23f](https://github.com/equinor/videx-wellog/commit/c67e23fee63daa602a73370b5f0558fe66f5a988))
+
 ## [1.6.7](https://github.com/equinor/videx-wellog/compare/v1.6.6...v1.6.7) (2026-09-21)
 
 
