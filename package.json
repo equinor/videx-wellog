@@ -31,8 +31,6 @@
     "build": "rollup -c",
     "prepub": "npm run build",
     "pub": "npm publish --access=public",
-    "prepublishbeta": "npm run build",
-    "publishnpm instbeta": "npm publish --tag beta --access=public",
     "test": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "npm run coverage",
