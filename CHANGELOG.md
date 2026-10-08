@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.9](https://github.com/equinor/videx-wellog/compare/v1.6.8...v1.6.9) (2026-10-08)
+
+
+### Bug Fixes
+
+* **npm:** bump source-map-js from 1.2.1 to 1.2.2 ([#580](https://github.com/equinor/videx-wellog/issues/580)) ([21de1f8](https://github.com/equinor/videx-wellog/commit/21de1f8863563b4d72df9914702412415165be02))
+* **npm:** bump source-map-js from 1.2.1 to 1.2.2 in /examples/storybook ([#581](https://github.com/equinor/videx-wellog/issues/581)) ([0801ceb](https://github.com/equinor/videx-wellog/commit/0801ceb5b33eeedb5145eda6639504185781b53e))
+
 ## [1.6.8](https://github.com/equinor/videx-wellog/compare/v1.6.7...v1.6.8) (2026-10-05)
 
 
