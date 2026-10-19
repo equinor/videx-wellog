@@ -1,10 +1,10 @@
+import { readFileSync } from 'node:fs';
 import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 
 import autoprefixer from 'autoprefixer';
 import postcss from 'rollup-plugin-postcss';
-import copy from 'rollup-plugin-copy';
 import glslify from 'rollup-plugin-glslify';
 
 import pkg from './package.json' with { type: 'json' };
@@ -21,6 +21,19 @@ const exportedStyles = [
   { src: 'src/ui/log-styles.scss', rename: 'log-styles.scss' },
   { src: 'src/ui/loader-styles.scss', rename: 'loader-styles.scss' },
 ];
+
+const copyStyles = () => ({
+  name: 'copy-styles',
+  generateBundle() {
+    for (const { src, rename } of exportedStyles) {
+      this.emitFile({
+        type: 'asset',
+        fileName: rename,
+        source: readFileSync(src),
+      });
+    }
+  },
+});
 
 export default [
   {
@@ -71,13 +84,7 @@ export default [
         extract: true,
         extensions: ['.scss', '.css'],
       }),
-      copy({
-        targets: exportedStyles.map(({ src, rename }) => ({
-          src,
-          dest: 'dist/styles',
-          rename,
-        })),
-      }),
+      copyStyles(),
     ],
   },
 ];
