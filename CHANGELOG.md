@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.9](https://github.com/equinor/videx-wellog/compare/v1.6.8...v1.6.9) (2026-10-21)
+
+
+### Bug Fixes
+
+* dependabot vulns ([#588](https://github.com/equinor/videx-wellog/issues/588)) ([1e7b1a8](https://github.com/equinor/videx-wellog/commit/1e7b1a8c35c842a3e358a38134685a635e545b3e))
+* **npm:** bump markdown-it from 14.3.2 to 14.3.3 ([#592](https://github.com/equinor/videx-wellog/issues/592)) ([74a60d0](https://github.com/equinor/videx-wellog/commit/74a60d055d7d9b3300e90941f4d60e22e34f2193))
+* **npm:** bump source-map-js from 1.2.1 to 1.2.2 ([#580](https://github.com/equinor/videx-wellog/issues/580)) ([21de1f8](https://github.com/equinor/videx-wellog/commit/21de1f8863563b4d72df9914702412415165be02))
+* **npm:** bump source-map-js from 1.2.1 to 1.2.2 in /examples/storybook ([#581](https://github.com/equinor/videx-wellog/issues/581)) ([0801ceb](https://github.com/equinor/videx-wellog/commit/0801ceb5b33eeedb5145eda6639504185781b53e))
+* **npm:** bump vite from 8.3.0 to 8.3.4 ([#589](https://github.com/equinor/videx-wellog/issues/589)) ([e6e687c](https://github.com/equinor/videx-wellog/commit/e6e687ce2de504ae5d429849ffc8c028fccf5c29))
+* **npm:** bump vite from 8.3.0 to 8.3.4 in /examples/storybook ([#590](https://github.com/equinor/videx-wellog/issues/590)) ([190898a](https://github.com/equinor/videx-wellog/commit/190898aa8316586907fc086dded2b9fdc88335ac))
+
 ## [1.6.8](https://github.com/equinor/videx-wellog/compare/v1.6.7...v1.6.8) (2026-10-05)
 
 
