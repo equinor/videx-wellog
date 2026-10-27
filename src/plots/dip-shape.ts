@@ -186,7 +186,8 @@ export default class DipShape {
 
     ctx.beginPath();
     ctx.lineWidth = 3;
-    const angleAdjust = 67.5;
+    // Crossbar perpendicular to the tail
+    const angleAdjust = Math.PI / 2;
     const xLeft = x1 + Math.cos(azimuth - angleAdjust) * teeLength;
     const yLeft = y1 + Math.sin(azimuth - angleAdjust) * teeLength;
     ctx.moveTo(xLeft, yLeft);
