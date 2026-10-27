@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.10](https://github.com/equinor/videx-wellog/compare/v1.6.9...v1.6.10) (2026-10-27)
+
+
+### Bug Fixes
+
+* **583:** tee shape mix radiant and degrees ([#596](https://github.com/equinor/videx-wellog/issues/596)) ([0178f67](https://github.com/equinor/videx-wellog/commit/0178f672516f260a4056672ec6c217c24f3ec7c2))
+
 ## [1.6.9](https://github.com/equinor/videx-wellog/compare/v1.6.8...v1.6.9) (2026-10-21)
 
 
