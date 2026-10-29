@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.11](https://github.com/equinor/videx-wellog/compare/v1.6.10...v1.6.11) (2026-10-29)
+
+
+### Bug Fixes
+
+* **npm:** bump serialize-javascript from 7.0.5 to 7.1.4 ([#598](https://github.com/equinor/videx-wellog/issues/598)) ([a537d3c](https://github.com/equinor/videx-wellog/commit/a537d3c4307ae645173998ef369be5e5bf3784e9))
+* **npm:** bump undici from 7.30.0 to 7.30.1 ([#599](https://github.com/equinor/videx-wellog/issues/599)) ([8e8a19b](https://github.com/equinor/videx-wellog/commit/8e8a19bbf09d59fa6dcca364da7db636ce3cbf3b))
+
 ## [1.6.10](https://github.com/equinor/videx-wellog/compare/v1.6.9...v1.6.10) (2026-10-27)
 
 
