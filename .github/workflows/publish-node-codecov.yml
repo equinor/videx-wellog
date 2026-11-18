@@ -273,7 +273,7 @@ jobs:
 
       - name: Publish test results
         if: ${{ steps.junit.outcome == 'success' && (github.event.workflow_run.event != 'pull_request' || needs.prepare-reports.outputs.is-same-repo == 'true') }}
-        uses: EnricoMi/publish-unit-test-result-action@7622c5bf3d112a72ab4fa3951c2aa5723d8ab92d # v2.25.0
+        uses: EnricoMi/publish-unit-test-result-action@da5b7be67623cd59bbbd1a0ce4f022050a55605f # v2.26.0
         with:
           files: test-results/junit.xml
           commit: ${{ github.event.workflow_run.head_sha }}
